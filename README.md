@@ -36,16 +36,16 @@ Avue | 1.5.0
 #### 模块说明
 ```lua
 pig
-├── pig-ui -- 前端工程[8080]
-├── pig-auth -- 授权服务提供[3000]
-└── pig-common -- 系统公共模块 
-     ├── pig-common-core -- 公共工具类核心包
-     ├── pig-common-log -- 日志服务
-     └── pig-common-security -- 安全工具类
-├── pig-config -- 配置中心[8888]
-├── pig-eureka -- 服务注册与发现[8761]
-├── pig-gateway -- Spring Cloud Gateway网关[9999]
-└── pig-upms -- 通用用户权限管理模块
+├── albedo-ui -- 前端工程[8080]
+├── albedo-auth -- 授权服务提供[3000]
+└── albedo-common -- 系统公共模块 
+     ├── albedo-common-core -- 公共工具类核心包
+     ├── albedo-common-log -- 日志服务
+     └── albedo-common-security -- 安全工具类
+├── albedo-config -- 配置中心[8888]
+├── albedo-eureka -- 服务注册与发现[8761]
+├── albedo-gateway -- Spring Cloud Gateway网关[9999]
+└── albedo-upms -- 通用用户权限管理模块
      └── pigx-upms-api -- 通用用户权限管理系统公共api模块
      └── pigx-upms-biz -- 通用用户权限管理系统业务处理模块[4000]
 └── pigx-visual  -- 图形化模块 
@@ -59,7 +59,7 @@ pig
 
 2. 不接受`功能请求`的 issue，功能请求可能会被直接关闭。  
 
-3. <a href="mailto:wangiegie@gmail.com">wangiegie@gmail.com</a>    
+3. <a href="mailto:somewhere0813@gmail.com">somewhere0813@gmail.com</a>    
 
 4. 冷冷QQ: 2270033969 |  技术问题 请码云提完工单再联系
 

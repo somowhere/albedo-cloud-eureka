@@ -1,0 +1,35 @@
+server:
+  port: 8761
+
+spring:
+  security:
+    user:
+      name: albedo
+      password: albedo
+  application:
+    name: albedo-eureka
+  cloud:
+    config:
+      enabled: false
+
+# docker-compose部署时候 hostname 换成albedo-eureka
+# 类似的 redis 使用albedo-redis ,gateway 换成 albedo-gateway
+eureka:
+  instance:
+    hostname: albedo-eureka
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://albedo:albedo@${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    eviction-interval-timer-in-ms: 4000
+    enable-self-preservation: false
+    renewal-percent-threshold: 0.9
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

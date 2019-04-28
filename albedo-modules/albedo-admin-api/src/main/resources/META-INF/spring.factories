@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.albedo.java.modules.sys.feign.fallback.RemoteUserServiceFallbackImpl,\
+  com.albedo.java.modules.sys.feign.fallback.RemoteLogServiceFallbackImpl,\
+  com.albedo.java.modules.sys.feign.fallback.RemoteTokenServiceFallbackImpl,\
+  com.albedo.java.modules.sys.feign.factory.RemoteUserServiceFallbackFactory,\
+  com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory,\
+  com.albedo.java.modules.sys.feign.factory.RemoteTokenServiceFallbackFactory

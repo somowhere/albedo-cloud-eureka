@@ -1,7 +1,7 @@
 FROM mysql:5.7
 
-MAINTAINER lengleng(wangiegie@gmail.com)
+MAINTAINER lengleng(somewhere0813@gmail.com)
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-COPY ./db/pig.sql /docker-entrypoint-initdb.d
+COPY ./db/albedo.sql /docker-entrypoint-initdb.d

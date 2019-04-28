@@ -58,7 +58,7 @@ public interface CommonConstants {
 	/**
 	 * 后端工程名
 	 */
-	String BACK_END_PROJECT = "pig";
+	String BACK_END_PROJECT = "albedo";
 
 	/**
 	 * 成功标记
@@ -73,4 +73,8 @@ public interface CommonConstants {
 	 * 验证码前缀
 	 */
 	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY_";
+
+
+	String SPRING_PROFILE_DEVELOPMENT = "dev";
+	String SPRING_PROFILE_PRODUCTION = "prod";
 }

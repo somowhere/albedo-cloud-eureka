@@ -27,8 +27,10 @@ import com.albedo.java.common.core.util.R;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +54,8 @@ import java.util.Set;
 public class PigUserDetailsServiceImpl implements UserDetailsService {
 	private final RemoteUserService remoteUserService;
 	private final CacheManager cacheManager;
+
+
 
 	/**
 	 * 用户密码登录

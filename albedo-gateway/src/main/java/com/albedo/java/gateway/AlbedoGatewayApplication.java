@@ -18,6 +18,7 @@ package com.albedo.java.gateway;
 
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.ApplicationContext;
@@ -32,7 +33,7 @@ import java.net.InetAddress;
  * 网关应用
  */
 @SpringCloudApplication
-@Log4j2
+@Slf4j
 public class AlbedoGatewayApplication {
 
 	static String SERVER_PORT = "server.port";

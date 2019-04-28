@@ -19,6 +19,7 @@ package com.albedo.java.monitor;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +34,7 @@ import java.net.InetAddress;
  */
 @EnableAdminServer
 @SpringBootApplication
-@Log4j2
+@Slf4j
 public class AlbedoMonitorApplication {
 
 	static String SERVER_PORT = "server.port";

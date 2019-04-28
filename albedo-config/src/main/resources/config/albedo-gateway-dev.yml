@@ -41,7 +41,7 @@ spring:
 security:
   encode:
     # 前端密码密钥，必须16位
-    key: 'thanks,albedo4cloud'
+    key: 'somewhere-albedo'
 
 # 不校验验证码终端
 ignore:

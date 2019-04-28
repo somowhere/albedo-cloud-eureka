@@ -1,6 +1,7 @@
 package com.albedo.java.zipkin;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.ApplicationContext;
@@ -20,7 +21,7 @@ import java.net.InetAddress;
  */
 @EnableZipkinServer
 @SpringCloudApplication
-@Log4j2
+@Slf4j
 public class AlbedoZipkinApplication {
 	static String SERVER_PORT = "server.port";
 	static String SPRING_APPLICATION_NAME = "spring.application.name";

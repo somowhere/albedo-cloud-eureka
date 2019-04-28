@@ -17,6 +17,7 @@
 package com.albedo.java.config;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
@@ -32,7 +33,7 @@ import java.net.InetAddress;
  */
 @EnableConfigServer
 @SpringCloudApplication
-@Log4j2
+@Slf4j
 public class AlbedoConfigApplication {
 
 	static String SERVER_PORT = "server.port";

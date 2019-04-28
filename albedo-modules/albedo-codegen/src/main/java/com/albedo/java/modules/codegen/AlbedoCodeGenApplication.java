@@ -19,6 +19,7 @@ package com.albedo.java.modules.codegen;
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;
 import com.albedo.java.common.security.annotation.EnablePigResourceServer;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +35,7 @@ import java.net.InetAddress;
 @EnablePigFeignClients
 @EnablePigResourceServer
 @SpringCloudApplication
-@Log4j2
+@Slf4j
 public class AlbedoCodeGenApplication {
 
 	static String SERVER_PORT = "server.port";

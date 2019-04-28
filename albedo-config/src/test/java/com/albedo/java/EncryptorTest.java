@@ -27,14 +27,26 @@ public class EncryptorTest {
 	 * app1:rx3fzaHBQSaXX0UptjhKUA==
 	 * daemon:4kJuzb5ms1VTlf1VhpftCQ==
 	 * daemon1:NNYYGamSt/R8ITj+Bm6vDg==
+	 *
+	 * albedo:M2gAZVKvwbr9d1HgCbReTQ==
+	 * albedo1:S/hBlHtEOYoFRQCP5xpAPQ==
+	 * albedo2:1m19Q5MbW3J2hrQLqF14aw==
+	 * gen:1+3hsdGbOFUBqF9lVoDmEg==
+	 * gen1:JlGBNtWzqS5KbBaliOrClA==
+	 * app:eOOG5rR4wx4SSKCf1KOK8A==
+	 * app1:lYn3A64z4DuY9lh/wXltaw==
+	 * daemon:GjCj/aHeNNBnWKDr49C6sQ==
+	 * daemon1:/Iy91UUlNl+kA4jqS4IXag==
 	 */
 	@Test
 	public void getPass() {
 
 		String albedo = encryptor.encrypt("albedo");
 		String albedo1 = encryptor.encrypt("albedo");
+		String albedo2= encryptor.encrypt("albedo");
 		System.out.println("albedo:"+albedo);
 		System.out.println("albedo1:"+albedo1);
+		System.out.println("albedo2:"+albedo2);
 
 
 		String gen = encryptor.encrypt("gen");

@@ -114,6 +114,7 @@
 		<module>albedo-auth</module>
 		<module>albedo-modules</module>
 		<module>albedo-common</module>
+		<module>albedo-plugins</module>
 	</modules>
 
 	<dependencyManagement>

@@ -37,7 +37,7 @@ public class MenuVO implements Serializable {
 	/**
 	 * 菜单ID
 	 */
-	private Integer menuId;
+	private String menuId;
 	/**
 	 * 菜单名称
 	 */
@@ -49,7 +49,7 @@ public class MenuVO implements Serializable {
 	/**
 	 * 父菜单ID
 	 */
-	private Integer parentId;
+	private String parentId;
 	/**
 	 * 图标
 	 */
@@ -102,7 +102,7 @@ public class MenuVO implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof MenuVO) {
-			Integer targetMenuId = ((MenuVO) obj).getMenuId();
+			String targetMenuId = ((MenuVO) obj).getMenuId();
 			return menuId.equals(targetMenuId);
 		}
 		return super.equals(obj);

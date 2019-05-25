@@ -1,7 +1,7 @@
 package com.albedo.java.common.core.service;
 
 
-import cn.hutool.core.collection.CollUtil;
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.SpringContextHolder;
 import lombok.AllArgsConstructor;

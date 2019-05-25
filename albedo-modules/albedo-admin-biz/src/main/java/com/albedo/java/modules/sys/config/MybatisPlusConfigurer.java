@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019/2/1
  */
 @Configuration
-@MapperScan("com.albedo.java.modules.sys.mapper")
+@MapperScan("com.albedo.java.modules.sys.repository")
 public class MybatisPlusConfigurer {
 	/**
 	 * 分页插件

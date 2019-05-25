@@ -15,10 +15,10 @@
  */
 package com.albedo.java.modules.sys.controller;
 
-import com.albedo.java.modules.sys.entity.SysLog;
+import com.albedo.java.modules.sys.entity.Log;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.SysLogService;
+import com.albedo.java.modules.sys.service.LogService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.security.annotation.Inner;
 import lombok.AllArgsConstructor;
@@ -39,18 +39,18 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/log")
 public class LogController {
-	private final SysLogService sysLogService;
+	private final LogService logService;
 
 	/**
 	 * 简单分页查询
 	 *
 	 * @param page   分页对象
-	 * @param sysLog 系统日志
+	 * @param log 系统日志
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getLogPage(Page page, SysLog sysLog) {
-		return new R<>(sysLogService.page(page, Wrappers.query(sysLog)));
+	public R getLogPage(Page page, Log log) {
+		return new R<>(logService.page(page, Wrappers.query(log)));
 	}
 
 	/**
@@ -62,19 +62,19 @@ public class LogController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
 	public R removeById(@PathVariable Long id) {
-		return new R<>(sysLogService.removeById(id));
+		return new R<>(logService.removeById(id));
 	}
 
 	/**
 	 * 插入日志
 	 *
-	 * @param sysLog 日志实体
+	 * @param log 日志实体
 	 * @return success/false
 	 */
 	@Inner
 	@PostMapping
-	public R save(@Valid @RequestBody SysLog sysLog) {
-		return new R<>(sysLogService.save(sysLog));
+	public R save(@Valid @RequestBody Log log) {
+		return new R<>(logService.save(log));
 	}
 
 }

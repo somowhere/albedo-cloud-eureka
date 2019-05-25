@@ -18,9 +18,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysLogMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.LogRepository">
 
-	<resultMap id="sysLogMap" type="com.albedo.java.modules.sys.entity.SysLog">
+	<resultMap id="sysLogMap" type="com.albedo.java.modules.sys.entity.Log">
 		<id property="id" column="id"/>
 		<result property="type" column="type"/>
 		<result property="title" column="title"/>

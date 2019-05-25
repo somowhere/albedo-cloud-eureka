@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.security.handler;
 
-import cn.hutool.core.collection.CollUtil;
+import com.albedo.java.common.core.util.CollUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;

@@ -32,6 +32,7 @@
 		<module>albedo-admin-api</module>
 		<module>albedo-admin-biz</module>
 		<module>albedo-codegen</module>
+		<module>albedo-codegen-old</module>
 		<module>albedo-monitor</module>
 		<module>albedo-zipkin</module>
 	</modules>

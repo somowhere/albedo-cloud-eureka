@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.dto;
 
-import com.albedo.java.modules.sys.entity.SysUser;
+import com.albedo.java.modules.sys.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,13 +28,13 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserDTO extends SysUser {
+public class UserDTO extends User {
 	/**
 	 * 角色ID
 	 */
-	private List<Integer> role;
+	private List<String> role;
 
-	private Integer deptId;
+	private String deptId;
 
 	/**
 	 * 新密码

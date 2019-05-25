@@ -17,20 +17,29 @@
 package com.albedo.java.modules.sys.controller;
 
 
-import com.albedo.java.modules.sys.entity.SysDict;
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.vo.SelectResult;
+import com.albedo.java.common.security.annotation.Inner;
+import com.albedo.java.modules.sys.entity.Dict;
+import com.albedo.java.modules.sys.util.DictUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.SysDictService;
+import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -44,7 +53,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/dict")
 public class DictController {
-	private final SysDictService sysDictService;
+	private final DictService dictService;
 
 	/**
 	 * 通过ID查询字典信息
@@ -54,7 +63,7 @@ public class DictController {
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
-		return new R<>(sysDictService.getById(id));
+		return new R<>(dictService.getById(id));
 	}
 
 	/**
@@ -64,64 +73,79 @@ public class DictController {
 	 * @return 分页对象
 	 */
 	@GetMapping("/page")
-	public R<IPage> getDictPage(Page page, SysDict sysDict) {
-		return new R<>(sysDictService.page(page, Wrappers.query(sysDict)));
+	public R<IPage> getPage(Page page, Dict dict) {
+		return new R<>(dictService.page(page, Wrappers.query(dict)));
 	}
 
 	/**
 	 * 通过字典类型查找字典
-	 *
-	 * @param type 类型
-	 * @return 同类型字典
+	 * @param codes
+	 * @return
 	 */
-	@GetMapping("/type/{type}")
-	@Cacheable(value = "dict_details", key = "#type")
-	public R getDictByType(@PathVariable String type) {
-		return new R<>(sysDictService.list(Wrappers
-			.<SysDict>query().lambda()
-			.eq(SysDict::getType, type)));
+	@ApiOperation(value = "获取字典数据", notes = "codes 不传获取所有的业务字典，多个用','隔开")
+	@GetMapping(value = "/codes")
+	public R getByCodes(String codes) {
+		Map<String,List<SelectResult>> map = dictService.findCodes(codes);
+		return new R<>(map);
 	}
+
+
+	/**
+	 * 所有类型字典
+	 *
+	 * @return 所有类型字典
+	 */
+	@Inner
+	@GetMapping("/all")
+	@Cacheable(value = Dict.CACHE_DICT_DETAILS, key=Dict.CACHE_GET_DICT_ALL)
+	public R getAll() {
+		List<Dict> list = dictService.list(Wrappers
+			.<Dict>query().lambda()
+			.ne(Dict::getStatus, Dict.FLAG_DELETE));
+		return new R<>(list);
+	}
+
 
 	/**
 	 * 添加字典
 	 *
-	 * @param sysDict 字典信息
+	 * @param dict 字典信息
 	 * @return success、false
 	 */
 	@SysLog("添加字典")
 	@PostMapping
-	@CacheEvict(value = "dict_details", key = "#sysDict.type")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
 	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
-	public R save(@Valid @RequestBody SysDict sysDict) {
-		return new R<>(sysDictService.save(sysDict));
+	public R save(@Valid @RequestBody Dict dict) {
+		return new R<>(dictService.save(dict));
 	}
 
 	/**
 	 * 删除字典，并且清除字典缓存
 	 *
 	 * @param id   ID
-	 * @param type 类型
+	 * @param code 类型
 	 * @return R
 	 */
 	@SysLog("删除字典")
-	@DeleteMapping("/{id}/{type}")
-	@CacheEvict(value = "dict_details", key = "#type")
+	@DeleteMapping("/{id}/{code}")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
-	public R removeById(@PathVariable Integer id, @PathVariable String type) {
-		return new R<>(sysDictService.removeById(id));
+	public R removeById(@PathVariable Integer id, @PathVariable String code) {
+		return new R<>(dictService.removeById(id));
 	}
 
 	/**
 	 * 修改字典
 	 *
-	 * @param sysDict 字典信息
+	 * @param dict 字典信息
 	 * @return success/false
 	 */
 	@PutMapping
 	@SysLog("修改字典")
-	@CacheEvict(value = "dict_details", key = "#sysDict.type")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R updateById(@Valid @RequestBody SysDict sysDict) {
-		return new R<>(sysDictService.updateById(sysDict));
+	public R updateById(@Valid @RequestBody Dict dict) {
+		return new R<>(dictService.updateById(dict));
 	}
 }

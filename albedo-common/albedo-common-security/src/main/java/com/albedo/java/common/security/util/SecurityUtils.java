@@ -71,16 +71,16 @@ public class SecurityUtils {
 	 *
 	 * @return 角色集合
 	 */
-	public List<Integer> getRoles() {
+	public List<String> getRoles() {
 		Authentication authentication = getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-		List<Integer> roleIds = new ArrayList<>();
+		List<String> roleIds = new ArrayList<>();
 		authorities.stream()
 			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstants.ROLE))
 			.forEach(granted -> {
 				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstants.ROLE);
-				roleIds.add(Integer.parseInt(id));
+				roleIds.add(id);
 			});
 		return roleIds;
 	}

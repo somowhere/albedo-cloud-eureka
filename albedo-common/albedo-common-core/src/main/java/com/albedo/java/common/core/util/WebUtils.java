@@ -41,7 +41,7 @@ import java.nio.charset.StandardCharsets;
 
 
 /**
- * Miscellaneous utilities for web applications.
+ * Miscellaneous utilities for controller applications.
  *
  * @author L.cm
  */
@@ -59,7 +59,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	 * @return 是否ajax请求
 	 */
 	public boolean isBody(HandlerMethod handlerMethod) {
-		ResponseBody responseBody = ClassUtils.getAnnotation(handlerMethod, ResponseBody.class);
+		ResponseBody responseBody = ClassUtil.getAnnotation(handlerMethod, ResponseBody.class);
 		return responseBody != null;
 	}
 

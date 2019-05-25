@@ -16,10 +16,10 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysDeptMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.DeptRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.SysDept">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.Dept">
 		<id column="dept_id" property="deptId"/>
 		<result column="name" property="name"/>
 		<result column="create_time" property="createTime"/>
@@ -33,7 +33,7 @@
     </sql>
 
 	<!--关联查询部门列表-->
-	<select id="listDepts" resultType="com.albedo.java.modules.sys.entity.SysDept">
+	<select id="listDepts" resultType="com.albedo.java.modules.sys.entity.Dept">
 		SELECT
 			t.*
 		FROM

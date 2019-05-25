@@ -16,10 +16,10 @@
 
 package com.albedo.java.modules.sys.controller;
 
-import com.albedo.java.modules.sys.entity.SysOauthClientDetails;
+import com.albedo.java.modules.sys.entity.OauthClientDetails;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.SysOauthClientDetailsService;
+import com.albedo.java.modules.sys.service.OauthClientDetailsService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import lombok.AllArgsConstructor;
@@ -40,17 +40,17 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/client")
 public class OauthClientDetailsController {
-	private final SysOauthClientDetailsService sysOauthClientDetailsService;
+	private final OauthClientDetailsService oauthClientDetailsService;
 
 	/**
 	 * 通过ID查询
 	 *
 	 * @param id ID
-	 * @return SysOauthClientDetails
+	 * @return OauthClientDetails
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
-		return new R<>(sysOauthClientDetailsService.getById(id));
+		return new R<>(oauthClientDetailsService.getById(id));
 	}
 
 
@@ -58,25 +58,25 @@ public class OauthClientDetailsController {
 	 * 简单分页查询
 	 *
 	 * @param page                  分页对象
-	 * @param sysOauthClientDetails 系统终端
+	 * @param oauthClientDetails 系统终端
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getOauthClientDetailsPage(Page page, SysOauthClientDetails sysOauthClientDetails) {
-		return new R<>(sysOauthClientDetailsService.page(page, Wrappers.query(sysOauthClientDetails)));
+	public R getOauthClientDetailsPage(Page page, OauthClientDetails oauthClientDetails) {
+		return new R<>(oauthClientDetailsService.page(page, Wrappers.query(oauthClientDetails)));
 	}
 
 	/**
 	 * 添加
 	 *
-	 * @param sysOauthClientDetails 实体
+	 * @param oauthClientDetails 实体
 	 * @return success/false
 	 */
 	@SysLog("添加终端")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_add')")
-	public R add(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
-		return new R<>(sysOauthClientDetailsService.save(sysOauthClientDetails));
+	public R add(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
+		return new R<>(oauthClientDetailsService.save(oauthClientDetails));
 	}
 
 	/**
@@ -89,19 +89,19 @@ public class OauthClientDetailsController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R removeById(@PathVariable String id) {
-		return new R<>(sysOauthClientDetailsService.removeClientDetailsById(id));
+		return new R<>(oauthClientDetailsService.removeClientDetailsById(id));
 	}
 
 	/**
 	 * 编辑
 	 *
-	 * @param sysOauthClientDetails 实体
+	 * @param oauthClientDetails 实体
 	 * @return success/false
 	 */
 	@SysLog("编辑终端")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R update(@Valid @RequestBody SysOauthClientDetails sysOauthClientDetails) {
-		return new R<>(sysOauthClientDetailsService.updateClientDetailsById(sysOauthClientDetails));
+	public R update(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
+		return new R<>(oauthClientDetailsService.updateClientDetailsById(oauthClientDetails));
 	}
 }

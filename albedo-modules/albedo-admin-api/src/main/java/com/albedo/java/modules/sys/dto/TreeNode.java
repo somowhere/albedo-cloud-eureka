@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Data
 public class TreeNode {
-	protected int id;
-	protected int parentId;
+	protected String id;
+	protected String parentId;
 	protected List<TreeNode> children = new ArrayList<TreeNode>();
 
 	public void add(TreeNode node) {

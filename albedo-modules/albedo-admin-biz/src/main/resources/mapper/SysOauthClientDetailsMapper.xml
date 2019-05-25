@@ -18,9 +18,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysOauthClientDetailsMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.OauthClientDetailsRepository">
 
-	<resultMap id="sysOauthClientDetailsMap" type="com.albedo.java.modules.sys.entity.SysOauthClientDetails">
+	<resultMap id="sysOauthClientDetailsMap" type="com.albedo.java.modules.sys.entity.OauthClientDetails">
 		<id property="clientId" column="client_id"/>
 		<result property="resourceIds" column="resource_ids"/>
 		<result property="clientSecret" column="client_secret"/>

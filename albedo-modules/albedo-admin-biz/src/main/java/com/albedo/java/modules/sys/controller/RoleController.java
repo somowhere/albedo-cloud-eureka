@@ -16,11 +16,11 @@
 
 package com.albedo.java.modules.sys.controller;
 
-import com.albedo.java.modules.sys.entity.SysRole;
+import com.albedo.java.modules.sys.entity.Role;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.SysRoleMenuService;
-import com.albedo.java.modules.sys.service.SysRoleService;
+import com.albedo.java.modules.sys.service.RoleMenuService;
+import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import lombok.AllArgsConstructor;
@@ -37,8 +37,8 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/role")
 public class RoleController {
-	private final SysRoleService sysRoleService;
-	private final SysRoleMenuService sysRoleMenuService;
+	private final RoleService roleService;
+	private final RoleMenuService roleMenuService;
 
 	/**
 	 * 通过ID查询角色信息
@@ -48,33 +48,33 @@ public class RoleController {
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
-		return new R<>(sysRoleService.getById(id));
+		return new R<>(roleService.getById(id));
 	}
 
 	/**
 	 * 添加角色
 	 *
-	 * @param sysRole 角色信息
+	 * @param role 角色信息
 	 * @return success、false
 	 */
 	@SysLog("添加角色")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_add')")
-	public R save(@Valid @RequestBody SysRole sysRole) {
-		return new R<>(sysRoleService.save(sysRole));
+	public R save(@Valid @RequestBody Role role) {
+		return new R<>(roleService.save(role));
 	}
 
 	/**
 	 * 修改角色
 	 *
-	 * @param sysRole 角色信息
+	 * @param role 角色信息
 	 * @return success/false
 	 */
 	@SysLog("修改角色")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
-	public R update(@Valid @RequestBody SysRole sysRole) {
-		return new R<>(sysRoleService.updateById(sysRole));
+	public R update(@Valid @RequestBody Role role) {
+		return new R<>(roleService.updateById(role));
 	}
 
 	/**
@@ -85,9 +85,8 @@ public class RoleController {
 	 */
 	@SysLog("删除角色")
 	@DeleteMapping("/{id}")
-	@PreAuthorize("@pms.hasPermission('sys_role_del')")
-	public R removeById(@PathVariable Integer id) {
-		return new R<>(sysRoleService.removeRoleById(id));
+	public R removeById(@PathVariable String id) {
+		return new R<>(roleService.removeRoleById(id));
 	}
 
 	/**
@@ -97,7 +96,7 @@ public class RoleController {
 	 */
 	@GetMapping("/list")
 	public R listRoles() {
-		return new R<>(sysRoleService.list(Wrappers.emptyWrapper()));
+		return new R<>(roleService.list(Wrappers.emptyWrapper()));
 	}
 
 	/**
@@ -108,7 +107,7 @@ public class RoleController {
 	 */
 	@GetMapping("/page")
 	public R getRolePage(Page page) {
-		return new R<>(sysRoleService.page(page, Wrappers.emptyWrapper()));
+		return new R<>(roleService.page(page, Wrappers.emptyWrapper()));
 	}
 
 	/**
@@ -121,8 +120,8 @@ public class RoleController {
 	@SysLog("更新角色菜单")
 	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
-	public R saveRoleMenus(Integer roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
-		SysRole sysRole = sysRoleService.getById(roleId);
-		return new R<>(sysRoleMenuService.saveRoleMenus(sysRole.getRoleCode(), roleId, menuIds));
+	public R saveRoleMenus(String roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
+		Role role = roleService.getById(roleId);
+		return new R<>(roleMenuService.saveRoleMenus(role.getRoleCode(), roleId, menuIds));
 	}
 }

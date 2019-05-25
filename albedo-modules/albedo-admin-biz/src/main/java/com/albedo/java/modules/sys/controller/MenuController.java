@@ -16,12 +16,14 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.security.annotation.Inner;
+import com.albedo.java.modules.sys.dto.GenSchemeDTO;
 import com.albedo.java.modules.sys.dto.MenuTree;
-import com.albedo.java.modules.sys.entity.SysMenu;
+import com.albedo.java.modules.sys.entity.Menu;
 import com.albedo.java.modules.sys.vo.MenuVO;
 import com.albedo.java.modules.sys.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.albedo.java.modules.sys.service.SysMenuService;
+import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
@@ -45,7 +47,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping("/menu")
 public class MenuController {
-	private final SysMenuService sysMenuService;
+	private final MenuService menuService;
 
 	/**
 	 * 返回当前用户的树形菜单集合
@@ -57,7 +59,7 @@ public class MenuController {
 		// 获取符合条件的菜单
 		Set<MenuVO> all = new HashSet<>();
 		SecurityUtils.getRoles()
-			.forEach(roleId -> all.addAll(sysMenuService.getMenuByRoleId(roleId)));
+			.forEach(roleId -> all.addAll(menuService.getMenuByRoleId(roleId)));
 		List<MenuTree> menuTreeList = all.stream()
 			.filter(menuVo -> CommonConstants.MENU.equals(menuVo.getType()))
 			.map(MenuTree::new)
@@ -73,7 +75,7 @@ public class MenuController {
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree() {
-		return new R<>(TreeUtil.buildTree(sysMenuService.list(Wrappers.emptyWrapper()), -1));
+		return new R<>(TreeUtil.buildTree(menuService.list(Wrappers.emptyWrapper()), -1));
 	}
 
 	/**
@@ -83,8 +85,8 @@ public class MenuController {
 	 * @return 属性集合
 	 */
 	@GetMapping("/tree/{roleId}")
-	public List getRoleTree(@PathVariable Integer roleId) {
-		return sysMenuService.getMenuByRoleId(roleId)
+	public List getRoleTree(@PathVariable String roleId) {
+		return menuService.getMenuByRoleId(roleId)
 			.stream()
 			.map(MenuVO::getMenuId)
 			.collect(Collectors.toList());
@@ -98,21 +100,35 @@ public class MenuController {
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
-		return new R<>(sysMenuService.getById(id));
+		return new R<>(menuService.getById(id));
 	}
 
 	/**
 	 * 新增菜单
 	 *
-	 * @param sysMenu 菜单信息
+	 * @param menu 菜单信息
 	 * @return success/false
 	 */
 	@SysLog("新增菜单")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
-	public R save(@Valid @RequestBody SysMenu sysMenu) {
-		return new R<>(sysMenuService.save(sysMenu));
+	public R save(@Valid @RequestBody Menu menu) {
+		return new R<>(menuService.save(menu));
 	}
+
+
+	/**
+	 * 新增菜单
+	 *
+	 * @param genSchemeDTO 菜单信息
+	 * @return success/false
+	 */
+	@Inner
+	@PostMapping("/gen")
+	public R saveByGenScheme(@Valid @RequestBody GenSchemeDTO genSchemeDTO) {
+		return new R<>(menuService.saveByGenScheme(genSchemeDTO));
+	}
+
 
 	/**
 	 * 删除菜单
@@ -123,21 +139,21 @@ public class MenuController {
 	@SysLog("删除菜单")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
-	public R removeById(@PathVariable Integer id) {
-		return sysMenuService.removeMenuById(id);
+	public R removeById(@PathVariable String id) {
+		return menuService.removeMenuById(id);
 	}
 
 	/**
 	 * 更新菜单
 	 *
-	 * @param sysMenu
+	 * @param menu
 	 * @return
 	 */
 	@SysLog("更新菜单")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R update(@Valid @RequestBody SysMenu sysMenu) {
-		return new R<>(sysMenuService.updateMenuById(sysMenu));
+	public R update(@Valid @RequestBody Menu menu) {
+		return new R<>(menuService.updateMenuById(menu));
 	}
 
 }

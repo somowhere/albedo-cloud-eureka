@@ -65,7 +65,7 @@ ribbon:
 
 # mybaits-plus配置
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/repository/*Mapper.xml
   global-config:
     banner: false
     db-config:
@@ -83,3 +83,13 @@ security:
     resource:
       loadBalanced: true
       token-info-uri: http://albedo-auth/oauth/check_token
+
+# ===================================================================
+# Albedo specific properties
+# ===================================================================
+
+application:
+  jedisKeyPrefix: albedoBootWebApp
+  developMode: true
+  className: com.albedo.java
+

@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.feign.fallback;
 
-import com.albedo.java.modules.sys.entity.SysLog;
+import com.albedo.java.modules.sys.entity.Log;
 import com.albedo.java.modules.sys.feign.RemoteLogService;
 import com.albedo.java.common.core.util.R;
 import lombok.Setter;
@@ -36,13 +36,13 @@ public class RemoteLogServiceFallbackImpl implements RemoteLogService {
 	/**
 	 * 保存日志
 	 *
-	 * @param sysLog 日志实体
+	 * @param log 日志实体
 	 * @param from   内部调用标志
 	 * @return succes、false
 	 */
 	@Override
-	public R<Boolean> saveLog(SysLog sysLog, String from) {
-		log.error("feign 插入日志失败", cause);
+	public R<Boolean> saveLog(Log log, String from) {
+		RemoteLogServiceFallbackImpl.log.error("feign 插入日志失败", cause);
 		return null;
 	}
 }

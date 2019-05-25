@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.security.feign;
 
-import cn.hutool.core.collection.CollUtil;
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;

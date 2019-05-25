@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.dto;
 
-import com.albedo.java.modules.sys.entity.SysUser;
+import com.albedo.java.modules.sys.entity.User;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息
 	 */
-	private SysUser sysUser;
+	private User user;
 	/**
 	 * 权限标识集合
 	 */
@@ -45,5 +45,5 @@ public class UserInfo implements Serializable {
 	/**
 	 * 角色集合
 	 */
-	private Integer[] roles;
+	private String[] roles;
 }

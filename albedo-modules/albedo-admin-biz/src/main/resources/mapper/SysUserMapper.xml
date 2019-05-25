@@ -16,7 +16,7 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysUserMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.UserRepository">
 	<!-- 通用查询映射结果 -->
 	<resultMap id="baseResultMap" type="com.albedo.java.modules.sys.vo.UserVO">
 		<id column="user_id" property="userId"/>
@@ -33,8 +33,8 @@
 		<result column="udel_flag" property="delFlag"/>
 		<result column="deptId" property="deptId"/>
 		<result column="deptName" property="deptName"/>
-		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.SysRole"
-					select="com.albedo.java.modules.sys.mapper.SysRoleMapper.listRolesByUserId" column="user_id">
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role"
+					select="com.albedo.java.modules.sys.repository.RoleRepository.listRolesByUserId" column="user_id">
 		</collection>
 	</resultMap>
 
@@ -54,7 +54,7 @@
 		<result column="udel_flag" property="delFlag"/>
 		<result column="deptId" property="deptId"/>
 		<result column="deptName" property="deptName"/>
-		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.SysRole">
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role">
 			<id column="role_id" property="roleId"/>
 			<result column="role_name" property="roleName"/>
 			<result column="role_code" property="roleCode"/>

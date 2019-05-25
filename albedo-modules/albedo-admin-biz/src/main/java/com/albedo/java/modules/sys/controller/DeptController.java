@@ -15,8 +15,9 @@
  */
 package com.albedo.java.modules.sys.controller;
 
-import com.albedo.java.modules.sys.entity.SysDept;
-import com.albedo.java.modules.sys.service.SysDeptService;
+import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.modules.sys.entity.Dept;
+import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import lombok.AllArgsConstructor;
@@ -38,13 +39,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequestMapping("/dept")
 public class DeptController {
-	private final SysDeptService sysDeptService;
+	private final DeptService sysDeptService;
 
 	/**
 	 * 通过ID查询
 	 *
 	 * @param id ID
-	 * @return SysDept
+	 * @return Dept
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
@@ -69,20 +70,21 @@ public class DeptController {
 	 */
 	@GetMapping(value = "/user-tree")
 	public R listCurrentUserDeptTrees() {
-		return new R<>(sysDeptService.listCurrentUserDeptTrees());
+		String deptId = SecurityUtils.getUser().getDeptId();
+		return new R<>(sysDeptService.listCurrentUserDeptTrees(deptId));
 	}
 
 	/**
 	 * 添加
 	 *
-	 * @param sysDept 实体
+	 * @param dept 实体
 	 * @return success/false
 	 */
 	@SysLog("添加部门")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
-	public R save(@Valid @RequestBody SysDept sysDept) {
-		return new R<>(sysDeptService.saveDept(sysDept));
+	public R save(@Valid @RequestBody Dept dept) {
+		return new R<>(sysDeptService.saveDept(dept));
 	}
 
 	/**
@@ -101,14 +103,14 @@ public class DeptController {
 	/**
 	 * 编辑
 	 *
-	 * @param sysDept 实体
+	 * @param dept 实体
 	 * @return success/false
 	 */
 	@SysLog("编辑部门")
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public R update(@Valid @RequestBody SysDept sysDept) {
-		sysDept.setUpdateTime(LocalDateTime.now());
-		return new R<>(sysDeptService.updateDeptById(sysDept));
+	public R update(@Valid @RequestBody Dept dept) {
+		dept.setLastModifiedDate(LocalDateTime.now());
+		return new R<>(sysDeptService.updateDeptById(dept));
 	}
 }

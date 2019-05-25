@@ -19,7 +19,7 @@ package com.albedo.java.gateway.filter;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.albedo.java.common.core.config.FilterIgnorePropertiesConfig;
+import com.albedo.java.common.core.config.FilterIgnoreProperties;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.exception.ValidateCodeException;
@@ -48,7 +48,7 @@ import reactor.core.publisher.Mono;
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 	private final ObjectMapper objectMapper;
 	private final RedisTemplate redisTemplate;
-	private final FilterIgnorePropertiesConfig filterIgnorePropertiesConfig;
+	private final FilterIgnoreProperties filterIgnoreProperties;
 
 	@Override
 	public GatewayFilter apply(Object config) {
@@ -70,7 +70,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 			// 终端设置不校验， 直接向下执行
 			try {
 				String[] clientInfos = WebUtils.getClientId(request);
-				if (filterIgnorePropertiesConfig.getClients().contains(clientInfos[0])) {
+				if (filterIgnoreProperties.getClients().contains(clientInfos[0])) {
 					return chain.filter(exchange);
 				}
 
@@ -82,8 +82,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 				try {
 					return response.writeWith(Mono.just(response.bufferFactory()
 						.wrap(objectMapper.writeValueAsBytes(
-							R.builder().msg(e.getMessage())
-								.code(CommonConstants.FAIL).build()))));
+							R.create(CommonConstants.FAIL, e.getMessage())))));
 				} catch (JsonProcessingException e1) {
 					log.error("对象输出异常", e1);
 				}

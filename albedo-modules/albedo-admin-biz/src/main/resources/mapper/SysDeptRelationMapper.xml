@@ -16,10 +16,10 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysDeptRelationMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.DeptRelationRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.SysDeptRelation">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.DeptRelation">
 		<id column="ancestor" property="ancestor"/>
 		<result column="descendant" property="descendant"/>
 	</resultMap>

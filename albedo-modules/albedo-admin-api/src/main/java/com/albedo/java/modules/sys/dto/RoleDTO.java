@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.dto;
 
-import com.albedo.java.modules.sys.entity.SysRole;
+import com.albedo.java.modules.sys.entity.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RoleDTO extends SysRole {
+public class RoleDTO extends Role {
 	/**
 	 * 角色部门Id
 	 */

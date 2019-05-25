@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.security.component;
 
-import com.albedo.java.common.core.config.FilterIgnorePropertiesConfig;
+import com.albedo.java.common.core.config.FilterIgnoreProperties;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class PigResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	@Autowired
 	protected RemoteTokenServices remoteTokenServices;
 	@Autowired
-	private FilterIgnorePropertiesConfig ignorePropertiesConfig;
+	private FilterIgnoreProperties ignorePropertiesConfig;
 	@Autowired
 	private AccessDeniedHandler pigAccessDeniedHandler;
 	@Autowired

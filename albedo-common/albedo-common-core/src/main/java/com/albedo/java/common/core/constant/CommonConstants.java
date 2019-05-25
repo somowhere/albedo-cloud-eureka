@@ -77,4 +77,62 @@ public interface CommonConstants {
 
 	String SPRING_PROFILE_DEVELOPMENT = "dev";
 	String SPRING_PROFILE_PRODUCTION = "prod";
+
+
+
+	// 对/错
+	String SYSTEM_TRUE = "true";
+	String SYSTEM_FALSE = "false";
+	// 是/否
+	Integer YES = 1;
+	Integer NO = 0;
+	// 是/否
+	String STR_YES = "1";
+	String STR_NO = "0";
+
+
+	String TYPE_STRING = "String";
+	String TYPE_INTEGER = "Integer";
+	String TYPE_INT = "int";
+	String TYPE_LONG = "Long";
+	String TYPE_SHORT = "Short";
+	String TYPE_FLOAT = "Float";
+	String TYPE_DOUBLE = "Double";
+	String TYPE_DATE = "Date";
+
+
+	String CONDITION_EQ = "eq";
+	String CONDITION_SQL_EQ = "=";
+	String CONDITION_NE = "ne";
+	String CONDITION_SQL_NE = "!=";
+	String CONDITION_BETWEEN = "between";
+	String CONDITION_IN = "in";
+	String CONDITION_NOTIN = "not in";
+	String CONDITION_EXIST = "exist";
+	String CONDITION_NOTEXIST = "notexist";
+	String CONDITION_GE = "ge";
+	String CONDITION_SQL_GE = ">=";
+	String CONDITION_GT = "gt";
+	String CONDITION_SQL_GT = ">";
+	String CONDITION_LE = "le";
+	String CONDITION_SQL_LE = "<=";
+	String CONDITION_LT = "lt";
+	String CONDITION_SQL_LT = "<";
+	String CONDITION_LIKE = "like";
+	String CONDITION_ILIKE = "ilike";
+	String CONDITION_QUERY = "query";
+	String CONDITION_EQPROPERTY = "eqproperty";
+	String CONDITION_NEPROPERTY = "neproperty";
+	String CONDITION_GEPROPERTY = "geproperty";
+	String CONDITION_GTPROPERTY = "gtproperty";
+	String CONDITION_LEPROPERTY = "leproperty";
+	String CONDITION_LTPROPERTY = "ltproperty";
+	String CONDITION_OR = "or";
+	String CONDITION_AND = "and";
+	String SORT_DESC = "desc";
+	String SORT_ASC = "asc";
+	String SPACE = " ";
+
+
+	public static final String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
 }

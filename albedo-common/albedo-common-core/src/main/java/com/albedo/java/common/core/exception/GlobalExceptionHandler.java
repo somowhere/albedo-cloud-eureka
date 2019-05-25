@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
 	public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		R result = new R();
-		result.setMsg(fieldErrors.get(0).getDefaultMessage());
+		result.addMessage(fieldErrors.get(0).getDefaultMessage());
 		log.warn(fieldErrors.get(0).getDefaultMessage());
 		return result;
 	}

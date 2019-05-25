@@ -19,7 +19,7 @@ package com.albedo.java.common.log.util;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
-import com.albedo.java.modules.sys.entity.SysLog;
+import com.albedo.java.modules.sys.entity.Log;
 import com.albedo.java.common.core.constant.CommonConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
@@ -38,19 +38,19 @@ import java.util.Objects;
  */
 @UtilityClass
 public class SysLogUtils {
-	public SysLog getSysLog() {
+	public Log getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-		SysLog sysLog = new SysLog();
-		sysLog.setCreateBy(Objects.requireNonNull(getUsername()));
-		sysLog.setType(CommonConstants.STATUS_NORMAL);
-		sysLog.setRemoteAddr(ServletUtil.getClientIP(request));
-		sysLog.setRequestUri(URLUtil.getPath(request.getRequestURI()));
-		sysLog.setMethod(request.getMethod());
-		sysLog.setUserAgent(request.getHeader("user-agent"));
-		sysLog.setParams(HttpUtil.toParams(request.getParameterMap()));
-		sysLog.setServiceId(getClientId());
-		return sysLog;
+		Log log = new Log();
+		log.setCreateBy(Objects.requireNonNull(getUsername()));
+		log.setType(CommonConstants.STATUS_NORMAL);
+		log.setRemoteAddr(ServletUtil.getClientIP(request));
+		log.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		log.setMethod(request.getMethod());
+		log.setUserAgent(request.getHeader("user-agent"));
+		log.setParams(HttpUtil.toParams(request.getParameterMap()));
+		log.setServiceId(getClientId());
+		return log;
 	}
 
 	/**

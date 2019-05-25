@@ -68,8 +68,8 @@ public class PigUserAuthenticationConverter implements UserAuthenticationConvert
 			Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
 
 			String username = (String) map.get(USERNAME);
-			Integer id = (Integer) map.get(USER_ID);
-			Integer deptId = (Integer) map.get(DEPT_ID);
+			String id = (String) map.get(USER_ID);
+			String deptId = (String) map.get(DEPT_ID);
 			PigUser user = new PigUser(id, deptId, username, N_A, true
 				, true, true, true, authorities);
 			return new UsernamePasswordAuthenticationToken(user, N_A, authorities);

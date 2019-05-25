@@ -17,16 +17,17 @@
 package com.albedo.java.modules.sys.controller;
 
 import com.albedo.java.modules.sys.dto.UserDTO;
-import com.albedo.java.modules.sys.entity.SysUser;
+import com.albedo.java.modules.sys.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.SysUserService;
+import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-	private final SysUserService userService;
+	private final UserService userService;
 
 	/**
 	 * 获取当前用户全部信息
@@ -50,8 +51,8 @@ public class UserController {
 	@GetMapping(value = {"/info"})
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
-		SysUser user = userService.getOne(Wrappers.<SysUser>query()
-			.lambda().eq(SysUser::getUsername, username));
+		User user = userService.getOne(Wrappers.<User>query()
+			.lambda().eq(User::getUsername, username));
 		if (user == null) {
 			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
@@ -66,8 +67,8 @@ public class UserController {
 	@Inner
 	@GetMapping("/info/{username}")
 	public R info(@PathVariable String username) {
-		SysUser user = userService.getOne(Wrappers.<SysUser>query()
-			.lambda().eq(SysUser::getUsername, username));
+		User user = userService.getOne(Wrappers.<User>query()
+			.lambda().eq(User::getUsername, username));
 		if (user == null) {
 			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
 		}
@@ -93,7 +94,7 @@ public class UserController {
 	 */
 	@GetMapping("/details/{username}")
 	public R user(@PathVariable String username) {
-		SysUser condition = new SysUser();
+		User condition = new User();
 		condition.setUsername(username);
 		return new R<>(userService.getOne(new QueryWrapper<>(condition)));
 	}
@@ -108,8 +109,8 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	public R userDel(@PathVariable Integer id) {
-		SysUser sysUser = userService.getById(id);
-		return new R<>(userService.removeUserById(sysUser));
+		User user = userService.getById(id);
+		return new R<>(userService.removeUserById(user));
 	}
 
 	/**

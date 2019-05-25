@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
-import com.albedo.java.modules.sys.entity.SysRole;
+import com.albedo.java.modules.sys.entity.Role;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -34,7 +34,7 @@ public class UserVO implements Serializable {
 	/**
 	 * 主键ID
 	 */
-	private Integer userId;
+	private String id;
 	/**
 	 * 用户名
 	 */
@@ -97,5 +97,5 @@ public class UserVO implements Serializable {
 	/**
 	 * 角色列表
 	 */
-	private List<SysRole> roleList;
+	private List<Role> roleList;
 }

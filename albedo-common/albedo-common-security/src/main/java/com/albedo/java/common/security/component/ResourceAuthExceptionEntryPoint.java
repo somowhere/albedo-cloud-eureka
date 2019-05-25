@@ -52,7 +52,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 		R<String> result = new R<>();
 		result.setCode(HttpStatus.HTTP_UNAUTHORIZED);
 		if (authException != null) {
-			result.setMsg("error");
+			result.addMessage("error");
 			result.setData(authException.getMessage());
 		}
 		response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);

@@ -18,9 +18,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.albedo.java.modules.sys.mapper.SysDictMapper">
+<mapper namespace="com.albedo.java.modules.sys.repository.DictRepository">
 
-	<resultMap id="sysDictMap" type="com.albedo.java.modules.sys.entity.SysDict">
+	<resultMap id="sysDictMap" type="com.albedo.java.modules.sys.entity.Dict">
 		<id property="id" column="id"/>
 		<result property="value" column="value"/>
 		<result property="label" column="label"/>

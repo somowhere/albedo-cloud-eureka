@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.vo;
 
 import com.albedo.java.modules.sys.dto.MenuTree;
 import com.albedo.java.modules.sys.dto.TreeNode;
-import com.albedo.java.modules.sys.entity.SysMenu;
+import com.albedo.java.modules.sys.entity.Menu;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -100,12 +100,12 @@ public class TreeUtil {
 	 * @param root
 	 * @return
 	 */
-	public List<MenuTree> buildTree(List<SysMenu> menus, int root) {
+	public List<MenuTree> buildTree(List<Menu> menus, int root) {
 		List<MenuTree> trees = new ArrayList<>();
 		MenuTree node;
-		for (SysMenu menu : menus) {
+		for (Menu menu : menus) {
 			node = new MenuTree();
-			node.setId(menu.getMenuId());
+			node.setId(menu.getId());
 			node.setParentId(menu.getParentId());
 			node.setName(menu.getName());
 			node.setPath(menu.getPath());

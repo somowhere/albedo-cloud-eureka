@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.feign;
 
-import com.albedo.java.modules.sys.entity.SysLog;
+import com.albedo.java.modules.sys.entity.Log;
 import com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
@@ -35,10 +35,10 @@ public interface RemoteLogService {
 	/**
 	 * 保存日志
 	 *
-	 * @param sysLog 日志实体
+	 * @param log 日志实体
 	 * @param from   内部调用标志
 	 * @return succes、false
 	 */
 	@PostMapping("/log")
-	R<Boolean> saveLog(@RequestBody SysLog sysLog, @RequestHeader(SecurityConstants.FROM) String from);
+	R<Boolean> saveLog(@RequestBody Log log, @RequestHeader(SecurityConstants.FROM) String from);
 }

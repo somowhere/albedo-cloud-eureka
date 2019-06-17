@@ -43,6 +43,7 @@
 		<security.oauth.version>2.3.5.RELEASE</security.oauth.version>
 		<security.oauth.auto.version>2.1.2.RELEASE</security.oauth.auto.version>
 		<jackson.modules>2.9.8</jackson.modules>
+		<h2.version>1.4.199</h2.version>
 		<!--zipkin2.12.x需要此版本jooq-->
 		<jooq.version>3.11.9</jooq.version>
 		<zipkin.version>2.12.2</zipkin.version>

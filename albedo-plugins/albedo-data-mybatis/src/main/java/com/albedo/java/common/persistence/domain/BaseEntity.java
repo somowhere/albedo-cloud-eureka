@@ -17,18 +17,18 @@ public abstract class BaseEntity<T extends GeneralEntity> extends GeneralEntity<
     private static final long serialVersionUID = 1L;
     @TableField(value = GeneralEntity.F_STATUS)
     @TableLogic(delval = "-1")
-    protected Integer status;
+    protected int status;
 
     public BaseEntity() {
         super();
         this.status = FLAG_NORMAL;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -16,12 +16,11 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.albedo.java.common.persistence.repository.BaseRepository;
+import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.dto.UserDTO;
 import com.albedo.java.modules.sys.entity.User;
-import com.albedo.java.modules.sys.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,23 +33,23 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface UserRepository extends BaseMapper<User> {
+public interface UserRepository extends BaseRepository<User> {
 	/**
 	 * 通过用户名查询用户信息（含有角色信息）
 	 *
 	 * @param username 用户名
 	 * @return userVo
 	 */
-	UserVO getUserVoByUsername(String username);
+	com.albedo.java.modules.sys.vo.UserVo getUserVoByUsername(String username);
 
 	/**
 	 * 分页查询用户信息（含角色）
 	 *
 	 * @param page    分页
-	 * @param userDTO 查询参数
+	 * @param userDataVo 查询参数
 	 * @return list
 	 */
-	IPage<List<UserVO>> getUserVosPage(Page page, @Param("query") UserDTO userDTO);
+	IPage<List<com.albedo.java.modules.sys.vo.UserVo>> getUserVosPage(Page page, @Param("query") UserDataVo userDataVo);
 
 	/**
 	 * 通过ID查询用户信息
@@ -58,5 +57,5 @@ public interface UserRepository extends BaseMapper<User> {
 	 * @param id 用户ID
 	 * @return userVo
 	 */
-	UserVO getUserVoById(Integer id);
+	com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id);
 }

@@ -17,10 +17,10 @@
 package com.albedo.java.modules.sys.controller;
 
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.modules.sys.dto.GenSchemeDTO;
-import com.albedo.java.modules.sys.dto.MenuTree;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.vo.MenuTree;
 import com.albedo.java.modules.sys.entity.Menu;
-import com.albedo.java.modules.sys.vo.MenuVO;
+import com.albedo.java.modules.sys.vo.MenuVo;
 import com.albedo.java.modules.sys.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.sys.service.MenuService;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping("${application.adminPath}/sys/menu")
 public class MenuController {
 	private final MenuService menuService;
 
@@ -57,7 +57,7 @@ public class MenuController {
 	@GetMapping
 	public R getUserMenu() {
 		// 获取符合条件的菜单
-		Set<MenuVO> all = new HashSet<>();
+		Set<MenuVo> all = new HashSet<>();
 		SecurityUtils.getRoles()
 			.forEach(roleId -> all.addAll(menuService.getMenuByRoleId(roleId)));
 		List<MenuTree> menuTreeList = all.stream()
@@ -88,7 +88,7 @@ public class MenuController {
 	public List getRoleTree(@PathVariable String roleId) {
 		return menuService.getMenuByRoleId(roleId)
 			.stream()
-			.map(MenuVO::getMenuId)
+			.map(MenuVo::getMenuId)
 			.collect(Collectors.toList());
 	}
 
@@ -120,13 +120,13 @@ public class MenuController {
 	/**
 	 * 新增菜单
 	 *
-	 * @param genSchemeDTO 菜单信息
+	 * @param genSchemeDataVo 菜单信息
 	 * @return success/false
 	 */
 	@Inner
 	@PostMapping("/gen")
-	public R saveByGenScheme(@Valid @RequestBody GenSchemeDTO genSchemeDTO) {
-		return new R<>(menuService.saveByGenScheme(genSchemeDTO));
+	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
+		return new R<>(menuService.saveByGenScheme(genSchemeDataVo));
 	}
 
 

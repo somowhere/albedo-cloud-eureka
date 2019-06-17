@@ -10,10 +10,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface TreeVoService<Repository extends TreeRepository<T, PK>, T extends TreeEntity,
-	PK extends Serializable, V extends TreeEntityVo> extends IService<T>, BaseService<Repository, T, PK>, DataService<Repository, T, PK>, TreeService<Repository, T, PK> {
+public interface TreeVoService<Repository extends TreeRepository<T>,
+	T extends TreeEntity, V extends TreeEntityVo> extends
+	DataService<Repository, T, String>, TreeService<Repository, T> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	V findOneVo(PK id);
+	V findOneVo(String id);
 
 	boolean doCheckByProperty(V entityForm);
 

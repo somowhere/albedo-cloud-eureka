@@ -6,6 +6,6 @@ import com.albedo.java.modules.gen.domain.GenScheme;
 /**
  * Spring Data JPA repository for the Authority entity.
  */
-public interface GenSchemeRepository extends BaseRepository<GenScheme, String> {
+public interface GenSchemeRepository extends BaseRepository<GenScheme> {
 
 }

@@ -21,8 +21,12 @@ public class IdEntity<T extends BaseEntity> extends DataEntity<T> {
     }
 
 	@Override
-	protected Serializable pkVal() {
+	public Serializable pkVal() {
 		return this.getId();
+	}
+	@Override
+	public void setPk(Serializable pk) {
+		this.setId((String) pk);
 	}
     public String getId() {
         return id;
@@ -33,7 +37,8 @@ public class IdEntity<T extends BaseEntity> extends DataEntity<T> {
     }
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+
+    	if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {

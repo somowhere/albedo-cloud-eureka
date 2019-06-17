@@ -19,5 +19,5 @@ public @interface DictType {
     /**
      * 如果是字典类型，请设置字典的name值
      */
-    String name() default "";
+    String value() default "";
 }

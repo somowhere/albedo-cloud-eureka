@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.feign.fallback;
 
-import com.albedo.java.modules.sys.dto.UserInfo;
+import com.albedo.java.modules.sys.vo.UserInfo;
 import com.albedo.java.modules.sys.feign.RemoteUserService;
 import com.albedo.java.common.core.util.R;
 import lombok.Setter;

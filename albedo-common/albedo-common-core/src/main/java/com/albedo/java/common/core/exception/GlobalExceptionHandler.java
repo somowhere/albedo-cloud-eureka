@@ -61,8 +61,21 @@ public class GlobalExceptionHandler {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		R result = new R();
 		result.addMessage(fieldErrors.get(0).getDefaultMessage());
-		log.warn(fieldErrors.get(0).getDefaultMessage());
+		log.warn("Valid Error:"+fieldErrors.get(0).getDefaultMessage());
 		return result;
 	}
+
+	/**
+	 * RuntimeMsgException
+	 *
+	 * @param exception
+	 * @return R
+	 */
+	@ExceptionHandler({RuntimeMsgException.class})
+	public R bodyRuntimeMsgExceptionHandler(RuntimeMsgException exception) {
+		log.error("runtime msg={}", exception.getMessage(), exception);
+		return R.createFail(exception.getMessage());
+	}
+
 
 }

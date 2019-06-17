@@ -1,0 +1,37 @@
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*/*Mapper.xml
+  typeAliasesPackage: com.albedo.java.modules.*.domain
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 3
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    logic-delete-value: -2
+    logic-not-delete-value: 1
+    #数据库大写下划线转换
+    #capital-mode: true
+  #    meta-object-handler: com.albedo.java.common.persistence.handler.EntityMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+# ===================================================================
+# Albedo specific properties
+# ===================================================================
+
+application:
+  adminPath: /a
+  jedisKeyPrefix: albedoBootWebApp
+  className: com.albedo.java
+

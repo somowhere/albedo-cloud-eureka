@@ -21,12 +21,6 @@ spring:
       # 更改采样比率为1，就能看到所有的请求数据了，但是这样会增加接口调用延迟
       probability: 1.0
 
-# 暴露监控端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
 
 # feign 配置
 feign:
@@ -63,20 +57,10 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 
-# mybaits-plus配置
+#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
 mybatis-plus:
-  mapper-locations: classpath:/repository/*Mapper.xml
-  global-config:
-    banner: false
-    db-config:
-      id-type: 0
-      field-strategy: 1
-      table-underline: true
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-  configuration:
-    map-underscore-to-camel-case: true
-
+    #刷新mapper 调试神器
+    refresh-mapper: true
 # spring security 配置
 security:
   oauth2:
@@ -89,7 +73,5 @@ security:
 # ===================================================================
 
 application:
-  jedisKeyPrefix: albedoBootWebApp
   developMode: true
-  className: com.albedo.java
 

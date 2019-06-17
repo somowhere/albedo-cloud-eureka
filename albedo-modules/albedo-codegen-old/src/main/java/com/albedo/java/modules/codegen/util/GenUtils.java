@@ -255,11 +255,11 @@ public class GenUtils {
 		}
 
 		if (template.contains(SERVICE_JAVA_VM)) {
-			return packagePath + "service" + File.separator + className + "Service.java";
+			return packagePath + "common" + File.separator + className + "Service.java";
 		}
 
 		if (template.contains(SERVICE_IMPL_JAVA_VM)) {
-			return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
+			return packagePath + "common" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
 		}
 
 		if (template.contains(CONTROLLER_JAVA_VM)) {

@@ -1,30 +1,30 @@
 package com.albedo.java.common.persistence.service;
 
 import com.albedo.java.common.core.vo.DataEntityVo;
-import com.albedo.java.common.persistence.domain.IdEntity;
+import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
-public interface DataVoService<Repository extends BaseRepository<T, PK>,
-	T extends IdEntity, PK extends Serializable, V extends DataEntityVo> extends IService<T>,
+public interface DataVoService<Repository extends BaseRepository<T>,
+	T extends DataEntity, PK extends Serializable, D extends DataEntityVo> extends IService<T>,
 	BaseService<Repository, T, PK>, DataService<Repository, T, PK> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	V findOneVo(PK id);
+	D findOneVo(PK id);
 
-	boolean doCheckByProperty(V entityForm);
+	boolean doCheckByProperty(D entityForm);
 
-	boolean doCheckByPK(V entityForm);
+	boolean doCheckByPK(D entityForm);
 
-	void copyBeanToVo(T module, V result);
+	void copyBeanToVo(T module, D result);
 
-	V copyBeanToVo(T module);
+	D copyBeanToVo(T module);
 
-	void copyVoToBean(V form, T entity);
+	void copyVoToBean(D form, T entity);
 
-	T copyVoToBean(V form);
+	T copyVoToBean(D form);
 
-	void save(V form);
+	void save(D form);
 }

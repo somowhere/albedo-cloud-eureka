@@ -18,18 +18,18 @@ package com.albedo.java.modules.sys.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.albedo.java.modules.sys.dto.UserDTO;
-import com.albedo.java.modules.sys.dto.UserInfo;
+import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.albedo.java.modules.sys.vo.UserInfo;
 import com.albedo.java.modules.sys.entity.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
-import com.albedo.java.modules.sys.vo.MenuVO;
-import com.albedo.java.modules.sys.vo.UserVO;
+import com.albedo.java.modules.sys.vo.MenuVo;
+import com.albedo.java.modules.sys.vo.UserVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -42,7 +42,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +54,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl extends ServiceImpl<UserRepository, User> implements UserService {
+public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, String, UserDataVo> implements UserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final MenuService menuService;
 	private final RoleService roleService;
@@ -66,23 +65,25 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 	/**
 	 * 保存用户信息
 	 *
-	 * @param userDto DTO 对象
+	 * @param userDataVo DTO 对象
 	 * @return success/fail
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean saveUser(UserDTO userDto) {
-		User user = new User();
-		BeanUtils.copyProperties(userDto, user);
-		user.setPassword(ENCODER.encode(userDto.getPassword()));
-		baseMapper.insert(user);
-		List<UserRole> userRoleList = userDto.getRole()
+	@CacheEvict(value = "user_details", key = "#userDataVo.username")
+	public Boolean saveUser(UserDataVo userDataVo) {
+		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
+		BeanUtils.copyProperties(userDataVo, user);
+		user.setPassword(ENCODER.encode(userDataVo.getPassword()));
+		super.saveOrUpdate(user);
+		List<UserRole> userRoleList = userDataVo.getRoleIdList()
 			.stream().map(roleId -> {
 				UserRole userRole = new UserRole();
 				userRole.setUserId(user.getId());
 				userRole.setRoleId(roleId);
 				return userRole;
 			}).collect(Collectors.toList());
+		userRoleService.removeRoleByUserId(user.getId());
 		return userRoleService.saveBatch(userRoleList);
 	}
 
@@ -109,7 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 			List<String> permissionList = menuService.getMenuByRoleId(roleId)
 				.stream()
 				.filter(menuVo -> StringUtils.isNotEmpty(menuVo.getPermission()))
-				.map(MenuVO::getPermission)
+				.map(MenuVo::getPermission)
 				.collect(Collectors.toList());
 			permissions.addAll(permissionList);
 		});
@@ -121,12 +122,13 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 	 * 分页查询用户信息（含有角色信息）
 	 *
 	 * @param page    分页对象
-	 * @param userDTO 参数列表
+	 * @param userDataVo 参数列表
 	 * @return
 	 */
 	@Override
-	public IPage getUserWithRolePage(Page page, UserDTO userDTO) {
-		return baseMapper.getUserVosPage(page, userDTO);
+	public IPage getUserWithRolePage(Page page, UserDataVo userDataVo) {
+		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(page, userDataVo);
+		return userVosPage;
 	}
 
 	/**
@@ -136,8 +138,9 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 	 * @return 用户信息
 	 */
 	@Override
-	public UserVO getUserVoById(Integer id) {
-		return baseMapper.getUserVoById(id);
+	public com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id) {
+		UserVo userVo = baseMapper.getUserVoById(id);
+		return userVo;
 	}
 
 	/**
@@ -155,47 +158,25 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 	}
 
 	@Override
-	@CacheEvict(value = "user_details", key = "#userDto.username")
-	public R<Boolean> updateUserInfo(UserDTO userDto) {
-		UserVO userVO = baseMapper.getUserVoByUsername(userDto.getUsername());
+	@CacheEvict(value = "user_details", key = "#userDataVo.username")
+	public R<Boolean> updateUserInfo(UserDataVo userDataVo) {
+		com.albedo.java.modules.sys.vo.UserVo userVO = baseMapper.getUserVoByUsername(userDataVo.getUsername());
 		User user = new User();
-		if (StrUtil.isNotBlank(userDto.getPassword())
-			&& StrUtil.isNotBlank(userDto.getNewpassword1())) {
-			if (ENCODER.matches(userDto.getPassword(), userVO.getPassword())) {
-				user.setPassword(ENCODER.encode(userDto.getNewpassword1()));
+		if (StrUtil.isNotBlank(userDataVo.getPassword())
+			&& StrUtil.isNotBlank(userDataVo.getNewpassword1())) {
+			if (ENCODER.matches(userDataVo.getPassword(), userVO.getPassword())) {
+				user.setPassword(ENCODER.encode(userDataVo.getNewpassword1()));
 			} else {
-				log.warn("原密码错误，修改密码失败:{}", userDto.getUsername());
+				log.warn("原密码错误，修改密码失败:{}", userDataVo.getUsername());
 				return new R<>(Boolean.FALSE, "原密码错误，修改失败");
 			}
 		}
-		user.setPhone(userDto.getPhone());
+		user.setPhone(userDataVo.getPhone());
 		user.setId(userVO.getId());
-		user.setAvatar(userDto.getAvatar());
+		user.setAvatar(userDataVo.getAvatar());
 		return new R<>(this.updateById(user));
 	}
 
-	@Override
-	@CacheEvict(value = "user_details", key = "#userDto.username")
-	public Boolean updateUser(UserDTO userDto) {
-		User user = new User();
-		BeanUtils.copyProperties(userDto, user);
-		user.setLastModifiedDate(LocalDateTime.now());
-
-		if (StrUtil.isNotBlank(userDto.getPassword())) {
-			user.setPassword(ENCODER.encode(userDto.getPassword()));
-		}
-		this.updateById(user);
-
-		userRoleService.remove(Wrappers.<UserRole>update().lambda()
-			.eq(UserRole::getUserId, userDto.getId()));
-		userDto.getRole().forEach(roleId -> {
-			UserRole userRole = new UserRole();
-			userRole.setUserId(user.getId());
-			userRole.setRoleId(roleId);
-			userRole.insert();
-		});
-		return Boolean.TRUE;
-	}
 
 	/**
 	 * 查询上级部门的用户信息

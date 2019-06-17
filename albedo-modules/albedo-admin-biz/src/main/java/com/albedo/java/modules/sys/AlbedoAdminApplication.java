@@ -19,10 +19,10 @@ package com.albedo.java.modules.sys;
 
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;
 import com.albedo.java.common.security.annotation.EnablePigResourceServer;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -36,6 +36,7 @@ import java.net.InetAddress;
 @EnablePigResourceServer
 @EnablePigFeignClients
 @SpringCloudApplication
+@EnableDiscoveryClient
 @Slf4j
 public class AlbedoAdminApplication {
 	static String SERVER_PORT = "server.port";

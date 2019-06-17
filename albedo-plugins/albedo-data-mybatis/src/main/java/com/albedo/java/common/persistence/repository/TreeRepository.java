@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author admin
  * @version 2017-01-01
  */
-public interface TreeRepository<T extends BaseEntity, PK extends Serializable> extends
-	BaseRepository<T, PK> {
+public interface TreeRepository<T extends BaseEntity> extends
+	BaseRepository<T> {
 
 
 }

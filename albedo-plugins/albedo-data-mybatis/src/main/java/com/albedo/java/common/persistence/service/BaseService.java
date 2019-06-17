@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface BaseService<Repository extends BaseRepository<T, pk>, T extends GeneralEntity, pk extends Serializable> extends IService<T> {
+public interface BaseService<Repository extends BaseRepository<T>,
+	T extends GeneralEntity, pk extends Serializable> extends IService<T> {
 	Class<T> getPersistentClass();
 
 	String getClassNameProfix();
@@ -88,7 +89,7 @@ public interface BaseService<Repository extends BaseRepository<T, pk>, T extends
 
 	long findCount(SpecificationDetail<T> specificationDetail);
 
-	T findOne(QueryWrapper<T> queryWrapper);
+	T findOne(Wrapper<T> queryWrapper);
 
 	List<T> findListByIds(Collection<pk> ids);
 

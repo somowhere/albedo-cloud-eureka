@@ -7,10 +7,10 @@ import com.albedo.java.common.core.vo.TreeEntityVo;
 import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
+import com.albedo.java.common.persistence.service.TreeVoService;
 import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,11 +21,10 @@ import java.util.stream.Collectors;
 /**
  * @author somewhere
  */
-@SuppressWarnings("ALL")
 @Data
-public class TreeVoServiceImpl<Repository extends TreeRepository<T, PK>,
-        T extends TreeEntity, PK extends Serializable, V extends TreeEntityVo>
-        extends TreeServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.TreeVoService<Repository, T, PK, V> {
+public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
+        T extends TreeEntity, V extends TreeEntityVo>
+        extends TreeServiceImpl<Repository, T> implements TreeVoService<Repository, T, V> {
 
     private Class<V> entityVoClz;
 
@@ -35,13 +34,13 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T, PK>,
         Type type = c.getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             Type[] parameterizedType = ((ParameterizedType) type).getActualTypeArguments();
-            entityVoClz = (Class<V>) parameterizedType[3];
+            entityVoClz = (Class<V>) parameterizedType[2];
         }
     }
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public V findOneVo(PK id) {
+    public V findOneVo(String id) {
         return copyBeanToVo(findTreeOne(id));
     }
 
@@ -60,7 +59,7 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T, PK>,
     @Override
 	public void copyBeanToVo(T module, V result) {
         if (result != null && module != null) {
-            BeanVoUtil.copyProperties(module, result, true);
+			BeanVoUtil.copyProperties(module, result, true);
             if (module.getParent() != null) {
                 result.setParentName(module.getParent().getName());
             }
@@ -107,7 +106,7 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T, PK>,
 	public V save(V form) {
         T entity = null;
         try {
-            entity = StringUtil.isNotEmpty(form.getId()) ? repository.selectById((PK) form.getId()) :
+            entity = StringUtil.isNotEmpty(form.getId()) ? repository.selectById(form.getId()) :
                     getPersistentClass().newInstance();
             copyVoToBean(form, entity);
         } catch (Exception e) {
@@ -129,7 +128,8 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T, PK>,
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
     public Optional<V> findOptionalTopByParentId(String parentId) {
-        List<T> tempList = super.findTop1ByParentIdAndStatusNotOrderBySortDesc(parentId, BaseEntity.FLAG_DELETE);
+        List<T> tempList = super.findTop1ByParentIdAndStatusNotOrderBySortDesc(
+        	parentId, BaseEntity.FLAG_DELETE);
         if(CollUtil.isNotEmpty(tempList)){
             T entity = tempList.get(0);
             entity.setParent(repository.selectById(entity.getParentId()));

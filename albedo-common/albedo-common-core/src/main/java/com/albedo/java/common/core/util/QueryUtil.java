@@ -3,7 +3,6 @@ package com.albedo.java.common.core.util;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import com.albedo.java.common.core.annotation.SearchField;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.vo.QueryCondition;
@@ -13,8 +12,6 @@ import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
 import java.io.UnsupportedEncodingException;
@@ -291,7 +288,7 @@ public class QueryUtil {
             List<Object> paramEntityList = Lists.newArrayList();
             paramEntityList.add(Lists.newArrayList(entity, argList));
             Object obj = null;
-			String targetClassName = obj.getClass().getName()
+			String targetClassName = entity.getClass().getName()
 				,baseClassName = StringUtil.sub(targetClassName, 0, StringUtil.getFromIndex(targetClassName, StringUtil.DOT, 3));
             while (CollUtil.isNotEmpty(paramEntityList)) {
                 List<Object> tempList = Lists.newArrayList(paramEntityList);

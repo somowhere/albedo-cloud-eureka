@@ -17,8 +17,6 @@
 package com.albedo.java.modules.sys.vo;
 
 
-import com.albedo.java.modules.sys.dto.MenuTree;
-import com.albedo.java.modules.sys.dto.TreeNode;
 import com.albedo.java.modules.sys.entity.Menu;
 import lombok.experimental.UtilityClass;
 

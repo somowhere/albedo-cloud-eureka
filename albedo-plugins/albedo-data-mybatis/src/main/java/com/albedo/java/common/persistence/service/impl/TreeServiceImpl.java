@@ -18,8 +18,10 @@ import java.util.List;
 
 
 @Transactional
-public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, T extends TreeEntity, PK extends Serializable>
-    extends DataServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.TreeService<Repository, T, PK> {
+public abstract class TreeServiceImpl<Repository extends TreeRepository<T>, 
+	T extends TreeEntity>
+    extends DataServiceImpl<Repository, T, String> implements
+	com.albedo.java.common.persistence.service.TreeService<Repository, T> {
 
 
     @Override
@@ -88,7 +90,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
         );
     }
     @Override
-	public List<T> findAllByIdOrParentIdsLike(PK id, String likeParentIds){
+	public List<T> findAllByIdOrParentIdsLike(String id, String likeParentIds){
         return repository.findRelationList(
             new QueryWrapper<T>().likeRight(getClassNameProfix()+TreeEntity.F_SQL_PARENTIDS, likeParentIds).or()
                 .eq(getClassNameProfix()+TreeEntity.F_SQL_ID, id)
@@ -102,7 +104,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
      * @return
      */
     @Override
-	public int deleteById(PK id, String likeParentIds, String lastModifiedBy) {
+	public int deleteById(String id, String likeParentIds, String lastModifiedBy) {
         Assert.notNull(id, "ids 信息为空，操作失败");
         Assert.notNull(likeParentIds, "likeParentIds 信息为空，操作失败");
         Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
@@ -110,7 +112,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
     }
 
     @Override
-	public int operateStatusById(PK id, String likeParentIds, Integer status, String lastModifiedBy) {
+	public int operateStatusById(String id, String likeParentIds, Integer status, String lastModifiedBy) {
         List<T> entityList = findAllByIdOrParentIdsLike(id, StringUtil.toAppendStr(likeParentIds, id, StringUtil.SPLIT_DEFAULT, "%"));
         Assert.notNull(id, "id 信息为空，操作失败");
         Assert.notNull(status, "status 信息为空，操作失败");
@@ -207,7 +209,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
      * @return
      */
     @Override
-	public void deleteByParentIds(List<PK> ids, String lastModifiedBy) {
+	public void deleteByParentIds(List<String> ids, String lastModifiedBy) {
         Assert.notNull(ids, "ids 信息为空，操作失败");
         Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         ids.forEach(id ->deleteByParentIds(id, lastModifiedBy));
@@ -220,7 +222,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
      * @return
      */
     @Override
-	public void deleteByParentIds(PK id, String lastModifiedBy) {
+	public void deleteByParentIds(String id, String lastModifiedBy) {
         Assert.notNull(id, "id 信息为空，操作失败");
         Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         T entity = repository.selectById(id);
@@ -234,7 +236,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
      * @return
      */
     @Override
-	public void lockOrUnLockByParentIds(PK id, String lastModifiedBy) {
+	public void lockOrUnLockByParentIds(String id, String lastModifiedBy) {
         Assert.notNull(id, "id 信息为空，操作失败");
         Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         T entity = repository.selectById(id);
@@ -250,7 +252,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T, PK>, 
      * @return
      */
     @Override
-	public void lockOrUnLockByParentIds(List<PK> ids, String lastModifiedBy) {
+	public void lockOrUnLockByParentIds(List<String> ids, String lastModifiedBy) {
         Assert.notNull(ids, "ids 信息为空，操作失败");
         Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         ids.forEach(id -> lockOrUnLockByParentIds(id, lastModifiedBy));

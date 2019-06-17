@@ -17,7 +17,9 @@
 package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
-import com.albedo.java.modules.sys.dto.DeptTree;
+import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
+import com.albedo.java.modules.sys.vo.DeptTree;
 import com.albedo.java.modules.sys.entity.Dept;
 import com.albedo.java.modules.sys.entity.DeptRelation;
 import com.albedo.java.modules.sys.repository.DeptRepository;
@@ -25,7 +27,6 @@ import com.albedo.java.modules.sys.service.DeptRelationService;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class DeptServiceImpl extends ServiceImpl<DeptRepository, Dept> implements DeptService {
+public class DeptServiceImpl  extends
+	TreeVoServiceImpl<DeptRepository, Dept, DeptDataVo> implements DeptService {
 	private final DeptRelationService deptRelationService;
 
 	/**

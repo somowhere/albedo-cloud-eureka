@@ -42,7 +42,7 @@ public class SysLogUtils {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 		Log log = new Log();
-		log.setCreateBy(Objects.requireNonNull(getUsername()));
+		log.setCreatedBy(Objects.requireNonNull(getUsername()));
 		log.setType(CommonConstants.STATUS_NORMAL);
 		log.setRemoteAddr(ServletUtil.getClientIP(request));
 		log.setRequestUri(URLUtil.getPath(request.getRequestURI()));

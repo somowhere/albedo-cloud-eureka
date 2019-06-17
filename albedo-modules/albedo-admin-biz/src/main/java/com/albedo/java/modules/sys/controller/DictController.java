@@ -51,7 +51,7 @@ import java.util.Map;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/dict")
+@RequestMapping("${application.adminPath}/sys/dict")
 public class DictController {
 	private final DictService dictService;
 

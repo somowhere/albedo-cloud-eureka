@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.feign;
 
 import com.albedo.java.modules.sys.feign.factory.RemoteUserServiceFallbackFactory;
-import com.albedo.java.modules.sys.dto.UserInfo;
+import com.albedo.java.modules.sys.vo.UserInfo;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;

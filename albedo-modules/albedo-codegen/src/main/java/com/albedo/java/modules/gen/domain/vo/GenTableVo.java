@@ -2,7 +2,6 @@ package com.albedo.java.modules.gen.domain.vo;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
-import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.DataEntityVo;
 import com.alibaba.fastjson.annotation.JSONField;

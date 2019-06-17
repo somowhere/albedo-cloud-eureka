@@ -134,7 +134,7 @@ public class DictUtil {
      * @param val
      * @return
      */
-    public static String getCode(String code, String val) {
+    public static String getCode(String code, Object val) {
         Dict dict = null;
         List<Dict> dictList = getDictListByCode(code);
         for (Dict item : dictList) {
@@ -339,12 +339,12 @@ public class DictUtil {
         return rsList;
     }
 
-    public static Map<String,List<SelectResult>> getCodeList(List<String> codeList) {
+    public static Map<String,List<SelectResult>> getSelectResultListByCodes(String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
 		//业务参数
 		List<Dict> dictList = DictUtil.getDictList();
 		List<Dict> dictCodes = Lists.newArrayList();
-		if(CollUtil.isEmpty(codeList)){
+		if(ObjectUtil.isEmpty(codes)){
 			for(Dict dict : dictList){
 				//业务字典
 				if(DICT_BIZPARENT_ID.equals(dict.getParentId())||DICT_SYSPARENT_ID.equals(dict.getParentId())){
@@ -352,7 +352,7 @@ public class DictUtil {
 				}
 			}
 		}else{
-			for(String codeItem : codeList){
+			for(String codeItem : codes){
 				for(Dict dict : dictList){
 					//命中的数据字段
 					if(codeItem.equals(dict.getCode())){

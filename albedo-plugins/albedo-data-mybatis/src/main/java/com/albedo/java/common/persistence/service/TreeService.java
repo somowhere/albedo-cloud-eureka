@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-public interface TreeService<Repository extends TreeRepository<T, PK>, T extends TreeEntity,
-	PK extends Serializable> extends IService<T>, BaseService<Repository, T, PK>,
-	DataService<Repository, T, PK> {
+public interface TreeService<Repository extends TreeRepository<T>, T extends TreeEntity> 
+	extends IService<T>, BaseService<Repository, T, String>,
+	DataService<Repository, T, String> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findTreeOne(Serializable id);
 
@@ -32,11 +32,11 @@ public interface TreeService<Repository extends TreeRepository<T, PK>, T extends
 
 	List<T> findAllByStatusNotOrderBySort(Integer status);
 
-	List<T> findAllByIdOrParentIdsLike(PK id, String likeParentIds);
+	List<T> findAllByIdOrParentIdsLike(String id, String likeParentIds);
 
-	int deleteById(PK id, String likeParentIds, String lastModifiedBy);
+	int deleteById(String id, String likeParentIds, String lastModifiedBy);
 
-	int operateStatusById(PK id, String likeParentIds, Integer status, String lastModifiedBy);
+	int operateStatusById(String id, String likeParentIds, Integer status, String lastModifiedBy);
 
 	@Override
 	boolean saveOrUpdate(T entity);
@@ -50,11 +50,11 @@ public interface TreeService<Repository extends TreeRepository<T, PK>, T extends
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findTopByParentId(String parentId);
 
-	void deleteByParentIds(List<PK> ids, String lastModifiedBy);
+	void deleteByParentIds(List<String> ids, String lastModifiedBy);
 
-	void deleteByParentIds(PK id, String lastModifiedBy);
+	void deleteByParentIds(String id, String lastModifiedBy);
 
-	void lockOrUnLockByParentIds(PK id, String lastModifiedBy);
+	void lockOrUnLockByParentIds(String id, String lastModifiedBy);
 
-	void lockOrUnLockByParentIds(List<PK> ids, String lastModifiedBy);
+	void lockOrUnLockByParentIds(List<String> ids, String lastModifiedBy);
 }

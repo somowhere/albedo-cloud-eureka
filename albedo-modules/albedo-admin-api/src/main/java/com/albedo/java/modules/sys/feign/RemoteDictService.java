@@ -3,7 +3,6 @@ package com.albedo.java.modules.sys.feign;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;
-import com.albedo.java.modules.sys.dto.UserInfo;
 import com.albedo.java.modules.sys.entity.Dict;
 import com.albedo.java.modules.sys.feign.factory.RemoteUserServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;

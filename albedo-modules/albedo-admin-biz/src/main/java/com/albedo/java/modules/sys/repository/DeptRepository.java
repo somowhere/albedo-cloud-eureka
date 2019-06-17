@@ -16,8 +16,8 @@
 
 package com.albedo.java.modules.sys.repository;
 
+import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.modules.sys.entity.Dept;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface DeptRepository extends BaseMapper<Dept> {
+public interface DeptRepository  extends TreeRepository<Dept> {
 
 	/**
 	 * 关联dept——relation

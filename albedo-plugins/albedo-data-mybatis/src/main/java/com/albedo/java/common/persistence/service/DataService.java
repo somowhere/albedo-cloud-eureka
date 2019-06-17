@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-public interface DataService<Repository extends BaseRepository<T, PK>, T extends DataEntity, PK extends Serializable>
+public interface DataService<Repository extends BaseRepository<T>, T extends DataEntity, PK extends Serializable>
 	extends IService<T>, BaseService<Repository, T,  PK> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findRelationOne(Serializable id);

@@ -16,8 +16,10 @@
 
 package com.albedo.java.modules.sys.service;
 
+import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.vo.LogDataVo;
 import com.albedo.java.modules.sys.entity.Log;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.albedo.java.modules.sys.repository.LogRepository;
 
 /**
  * <p>
@@ -27,6 +29,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface LogService extends IService<Log> {
+public interface LogService extends DataVoService<LogRepository, Log, Long, LogDataVo> {
 
 }

@@ -6,8 +6,9 @@ package com.albedo.java.common.persistence.service.impl;
 import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.vo.DataEntityVo;
-import com.albedo.java.common.persistence.domain.IdEntity;
+import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.common.persistence.repository.BaseRepository;
+import com.albedo.java.common.persistence.service.DataVoService;
 import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,9 @@ import java.lang.reflect.Type;
  * @version 2014-05-16
  */
 @Data
-public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>,
-        T extends IdEntity, PK extends Serializable, V extends DataEntityVo>
-        extends DataServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.DataVoService<Repository, T, PK, V> {
+public abstract class DataVoServiceImpl<Repository extends BaseRepository<T>,
+        T extends DataEntity, PK extends Serializable, V extends DataEntityVo>
+        extends DataServiceImpl<Repository, T, PK> implements DataVoService<Repository, T, PK, V> {
 
     private Class<V> entityVoClz;
 
@@ -60,8 +61,8 @@ public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>
 	public void copyBeanToVo(T module, V result) {
         if (result != null && module != null) {
             BeanVoUtil.copyProperties(module, result, true);
-            if(ObjectUtil.isNotEmpty(module.getId())){
-                result.setId(module.getId());
+            if(ObjectUtil.isNotEmpty(module.pkVal())){
+                result.setId(module.pkVal());
             }
         }
     }
@@ -73,8 +74,8 @@ public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>
             try {
                 result = entityVoClz.newInstance();
                 copyBeanToVo(module, result);
-                if(ObjectUtil.isNotEmpty(module.getId())){
-                    result.setId(module.getId());
+                if(ObjectUtil.isNotEmpty(module.pkVal())){
+                    result.setId(module.pkVal());
                 }
             } catch (Exception e) {
                 log.error("{}", e);
@@ -88,7 +89,7 @@ public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>
         if (form != null && entity != null) {
             BeanVoUtil.copyProperties(form, entity, true);
             if(ObjectUtil.isNotEmpty(form.getId())){
-                entity.setId((String) form.getId());
+                entity.setPk(form.getId());
             }
         }
     }
@@ -101,7 +102,7 @@ public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>
                 result = getPersistentClass().newInstance();
                 copyVoToBean(form, result);
                 if(ObjectUtil.isNotEmpty(form.getId())){
-                    result.setId((String) form.getId());
+                    result.setPk(form.getId());
                 }
             } catch (Exception e) {
                 log.error("{}", e);
@@ -122,6 +123,7 @@ public abstract class DataVoServiceImpl<Repository extends BaseRepository<T, PK>
             log.warn("{}", e);
         }
         saveOrUpdate(entity);
+        form.setId(entity.pkVal());
     }
 
 }

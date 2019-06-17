@@ -16,7 +16,10 @@
 
 package com.albedo.java.modules.sys.controller;
 
-import com.albedo.java.modules.sys.dto.UserDTO;
+import com.albedo.java.common.core.exception.RuntimeMsgException;
+import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -26,8 +29,9 @@ import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +43,8 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("${application.adminPath}/sys/user")
+@Log4j2
 public class UserController {
 	private final UserService userService;
 
@@ -82,8 +87,8 @@ public class UserController {
 	 * @return 用户信息
 	 */
 	@GetMapping("/{id}")
-	public R user(@PathVariable Integer id) {
-		return new R<>(userService.getUserVoById(id));
+	public R user(@PathVariable String id) {
+		return R.createSuccessData(userService.getUserVoById(id));
 	}
 
 	/**
@@ -93,7 +98,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/details/{username}")
-	public R user(@PathVariable String username) {
+	public R detailsUser(@PathVariable String username) {
 		User condition = new User();
 		condition.setUsername(username);
 		return new R<>(userService.getOne(new QueryWrapper<>(condition)));
@@ -108,59 +113,71 @@ public class UserController {
 	@SysLog("删除用户信息")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
-	public R userDel(@PathVariable Integer id) {
+	public R userDel(@PathVariable String id) {
 		User user = userService.getById(id);
 		return new R<>(userService.removeUserById(user));
 	}
 
-	/**
-	 * 添加用户
-	 *
-	 * @param userDto 用户信息
-	 * @return success/false
-	 */
-	@SysLog("添加用户")
-	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_user_add')")
-	public R user(@RequestBody UserDTO userDto) {
-		return new R<>(userService.saveUser(userDto));
+
+	@GetMapping(value = "checkByProperty")
+	public boolean checkByProperty(UserDataVo userDataVo) {
+		return userService.doCheckByProperty(userDataVo);
 	}
 
+
 	/**
-	 * 更新用户信息
+	 * 添加/更新用户信息
 	 *
-	 * @param userDto 用户信息
+	 * @param userDataVo 用户信息
 	 * @return R
 	 */
-	@SysLog("更新用户信息")
-	@PutMapping
+	@SysLog("添加/更新用户信息")
+	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
-	public R updateUser(@Valid @RequestBody UserDTO userDto) {
-		return new R<>(userService.updateUser(userDto));
+	public R saveUser(@Valid @RequestBody UserDataVo userDataVo) {
+		log.debug("REST request to save userDataVo : {}", userDataVo);
+		// beanValidatorAjax(user);
+		if (StringUtil.isNotEmpty(userDataVo.getPassword()) &&
+			!userDataVo.getPassword().equals(userDataVo.getNewpassword1())) {
+			throw new RuntimeMsgException("两次输入密码不一致");
+		}
+		// Lowercase the user login before comparing with database
+		if (!checkByProperty(ClassUtil.createObj(UserDataVo.class,
+			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_USERNAME),
+			userDataVo.getId(), userDataVo.getUsername()))) {
+			throw new RuntimeMsgException("登录Id已存在");
+		}
+		if (StringUtil.isNotEmpty(userDataVo.getEmail()) &&
+			!checkByProperty(ClassUtil.createObj(UserDataVo.class,
+			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {
+			throw new RuntimeMsgException("邮箱已存在");
+		}
+		userService.saveUser(userDataVo);
+		return R.createSuccess("操作成功");
 	}
 
 	/**
 	 * 分页查询用户
 	 *
 	 * @param page    参数集
-	 * @param userDTO 查询参数列表
+	 * @param userDataVo 查询参数列表
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R getUserPage(Page page, UserDTO userDTO) {
-		return new R<>(userService.getUserWithRolePage(page, userDTO));
+	public R getUserPage(Page page, UserDataVo userDataVo) {
+		return new R<>(userService.getUserWithRolePage(page, userDataVo));
 	}
 
 	/**
 	 * 修改个人信息
 	 *
-	 * @param userDto userDto
+	 * @param userDataVo userDataVo
 	 * @return success/false
 	 */
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
-	public R updateUserInfo(@Valid @RequestBody UserDTO userDto) {
-		return userService.updateUserInfo(userDto);
+	public R updateUserInfo(@Valid @RequestBody UserDataVo userDataVo) {
+		return userService.updateUserInfo(userDataVo);
 	}
 
 	/**

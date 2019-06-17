@@ -105,7 +105,7 @@ public class R<T> implements Serializable {
 	public static <T>R create(int code, String... messages) {
 		return new R(null, code, messages);
 	}
-	public String getMsg() {
+	public String getMessage() {
 		return readMessages();
 	}
 

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright (c) 2019-2020, 冷冷 (somewhere0813@gmail.com).
+  ~  <p>
+  ~  Licensed under the GNU Lesser General Public License 3.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~  <p>
+  ~ https://www.gnu.org/licenses/lgpl.html
+  ~  <p>
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.albedo.java.modules.sys.repository.UserRepository">
+	<!-- 通用查询映射结果 -->
+	<resultMap id="baseResultMap" type="com.albedo.java.modules.sys.vo.UserVo">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="avatar" property="avatar"/>
+		<result column="wx_openid" property="wxOpenid"/>
+		<result column="qq_openid" property="qqOpenid"/>
+		<result column="lock_flag" property="lockFlag"/>
+		<result column="created_by" property="createdBy"/>
+		<result column="created_date" property="createdDate"/>
+		<result column="last_modified_by" property="lastModifiedBy"/>
+		<result column="last_modified_date" property="lastModifiedDate"/>
+		<result column="description" property="description"/>
+		<result column="version" property="version"/>
+		<result column="status" property="status"/>
+		<result column="deptId" property="deptId"/>
+		<result column="description" property="deptName"/>
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role"
+					select="com.albedo.java.modules.sys.repository.RoleRepository.listRolesByUserId" column="id">
+		</collection>
+	</resultMap>
+
+	<!-- userVo结果集 -->
+	<resultMap id="userVoResultMap" type="com.albedo.java.modules.sys.vo.UserVo">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="avatar" property="avatar"/>
+		<result column="wx_openid" property="wxOpenid"/>
+		<result column="qq_openid" property="qqOpenid"/>
+		<result column="lock_flag" property="lockFlag"/>
+		<result column="created_by" property="createdBy"/>
+		<result column="created_date" property="createdDate"/>
+		<result column="last_modified_by" property="lastModifiedBy"/>
+		<result column="last_modified_date" property="lastModifiedDate"/>
+		<result column="description" property="description"/>
+		<result column="version" property="version"/>
+		<result column="status" property="status"/>
+		<result column="deptId" property="deptId"/>
+		<result column="deptName" property="deptName"/>
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role">
+			<id column="id" property="id"/>
+			<result column="role_name" property="roleName"/>
+			<result column="role_code" property="roleCode"/>
+			<result column="role_desc" property="roleDesc"/>
+			<result column="role_created_by" property="createdBy"/>
+			<result column="role_created_date" property="createdDate"/>
+			<result column="role_last_modified_by" property="lastModifiedBy"/>
+			<result column="role_last_modified_date" property="lastModifiedDate"/>
+			<result column="role_description" property="description"/>
+			<result column="role_version" property="version"/>
+			<result column="role_status" property="status"/>
+		</collection>
+	</resultMap>
+
+	<sql id="userRoleSql">
+		`user`.id,
+		`user`.username,
+		`user`.`password`,
+		`user`.salt,
+		`user`.phone,
+		`user`.email,
+		`user`.avatar,
+		`user`.wx_openid,
+		`user`.qq_openid,
+		`user`.created_by,
+		`user`.created_date,
+		`user`.last_modified_by,
+		`user`.last_modified_date,
+		`user`.description,
+		`user`.version,
+		`user`.status,
+		`user`.lock_flag AS lock_flag,
+		`user`.dept_id AS deptId,
+		r.id,
+		r.role_name,
+		r.role_code,
+		r.role_desc,
+		r.created_by AS role_created_by,
+		r.created_date AS role_created_date,
+		r.last_modified_by AS role_last_modified_by,
+		r.last_modified_date AS role_last_modified_date,
+		r.description AS role_description,
+		r.version AS role_version,
+		r.status AS role_status
+	</sql>
+
+	<sql id="userRoleDeptSql">
+		`user`.id,
+		`user`.username,
+		`user`.`password`,
+		`user`.salt,
+		`user`.phone,
+		`user`.email,
+		`user`.avatar,
+		`user`.wx_openid,
+		`user`.qq_openid,
+		`user`.created_by,
+		`user`.created_date,
+		`user`.last_modified_by,
+		`user`.last_modified_date,
+		`user`.description,
+		`user`.version,
+		`user`.status,
+		`user`.lock_flag AS lock_flag,
+		r.id,
+		r.role_name,
+		r.role_code,
+		r.role_desc,
+		r.created_by AS role_created_by,
+		r.created_date AS role_created_date,
+		r.last_modified_by AS role_last_modified_by,
+		r.last_modified_date AS role_last_modified_date,
+		r.description AS role_description,
+		r.version AS role_version,
+		r.status AS role_status,
+		d.name AS deptName,
+		d.id AS deptId
+    </sql>
+
+	<select id="getUserVoByUsername" resultMap="userVoResultMap">
+		SELECT
+		<include refid="userRoleSql"/>
+		FROM
+		sys_user AS `user`
+		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.id
+		LEFT JOIN sys_role AS r ON r.id = ur.role_id
+		WHERE `user`.username = #{username}
+	</select>
+
+	<select id="getUserVoById" resultMap="userVoResultMap">
+		SELECT
+		<include refid="userRoleDeptSql"/>
+		FROM
+		sys_user AS `user`
+		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.id
+		LEFT JOIN sys_role AS r ON r.id = ur.role_id
+		LEFT JOIN sys_dept AS d ON d.id = `user`.dept_id
+		WHERE
+		`user`.id = #{id}
+	</select>
+
+	<select id="getUserVosPage" resultMap="baseResultMap">
+		SELECT
+		`user`.id,
+		`user`.username,
+		`user`.`password`,
+		`user`.salt,
+		`user`.phone,
+		`user`.email,
+		`user`.avatar,
+		`user`.wx_openid,
+		`user`.qq_openid,
+		`user`.dept_id,
+		`user`.created_by,
+		`user`.created_date,
+		`user`.last_modified_by,
+		`user`.last_modified_date,
+		`user`.description,
+		`user`.version,
+		`user`.status,
+		`user`.lock_flag AS lock_flag,
+		`user`.dept_id AS deptId,
+		d.name AS deptName
+		FROM
+		sys_user AS `user`
+		LEFT JOIN sys_dept AS d ON d.id = `user`.dept_id
+		<where>
+			<if test="query.username != null and query.username != ''">
+				and `user`.username LIKE CONCAT('%',#{query.username},'%')
+			</if>
+		</where>
+		ORDER BY `user`.created_date DESC
+	</select>
+</mapper>

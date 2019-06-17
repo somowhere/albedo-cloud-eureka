@@ -26,7 +26,7 @@ import java.util.List;
  * @version 2014-05-16
  */
 @Transactional(rollbackFor = Exception.class)
-public abstract class DataServiceImpl<Repository extends BaseRepository<T, PK>, T extends DataEntity, PK extends Serializable>
+public abstract class DataServiceImpl<Repository extends BaseRepository<T>, T extends DataEntity, PK extends Serializable>
         extends BaseServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.DataService<Repository, T, PK> {
 
 

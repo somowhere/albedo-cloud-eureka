@@ -18,7 +18,7 @@ import java.util.List;
  * @author somewhere
  * @version 2018-03-07
  */
-public interface BaseRepository<T extends GeneralEntity, pk extends Serializable> extends
+public interface BaseRepository<T extends GeneralEntity> extends
 	BaseMapper<T> {
 
 	/**

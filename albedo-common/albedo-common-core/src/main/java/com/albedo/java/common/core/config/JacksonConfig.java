@@ -17,7 +17,7 @@
 package com.albedo.java.common.core.config;
 
 import cn.hutool.core.date.DatePattern;
-import com.albedo.java.common.core.jackson.PigJavaTimeModule;
+import com.albedo.java.common.core.jackson.JavaTimeModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -48,7 +48,7 @@ public class JacksonConfig {
 			builder.locale(Locale.CHINA);
 			builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 			builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
-			builder.modules(new PigJavaTimeModule());
+			builder.modules(new JavaTimeModule());
 		};
 	}
 }

@@ -37,7 +37,7 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/log")
+@RequestMapping("${application.adminPath}/sys/log")
 public class LogController {
 	private final LogService logService;
 

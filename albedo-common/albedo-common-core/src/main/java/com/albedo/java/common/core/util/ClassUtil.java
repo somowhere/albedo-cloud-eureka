@@ -16,6 +16,7 @@
 
 package com.albedo.java.common.core.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.albedo.java.common.core.config.ApplicationProperties;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 /**
  * 类工具类
@@ -190,5 +192,54 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		Class<?> beanType = handlerMethod.getBeanType();
 		return AnnotatedElementUtils.findMergedAnnotation(beanType, annotationType);
 	}
+
+	/**
+	 * 创建对象，注入指定属性值
+	 *
+	 * @param cls
+	 * @param fields
+	 * @param value
+	 * @param <T>
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T createObj(Class<T> cls, List<String> fields, Object... value) {
+		Object obj = null;
+		try {
+			obj = updateObj(cls.newInstance(), fields, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (T) obj;
+	}
+
+	/**
+	 * 更新对象，注入指定属性值
+	 *
+	 * @param obj
+	 * @param fields
+	 * @param value
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T updateObj(Object obj, List<String> fields, Object... value) {
+		try {
+			if (obj != null) {
+				if (ObjectUtil.isNotEmpty(fields) && ObjectUtil.isNotEmpty(value) && value.length == fields.size()) {
+					for (int i = 0; i < fields.size(); i++) {
+						BeanUtil.setFieldValue(obj, fields.get(i), value[i]);
+					}
+				} else {
+					log.warn("obj {} fields {} value {}", obj, fields, value);
+				}
+			} else {
+				log.warn("obj is null");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (T) obj;
+	}
+
 
 }

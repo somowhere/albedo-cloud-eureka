@@ -61,7 +61,7 @@ public class Dict extends TreeEntity<Dict> {
 	private String code;
 	@NotNull
 	@TableField(F_SQL_SHOW)
-	@DictType(name = "sys_yes_no")
+	@DictType("sys_yes_no")
 	private Integer show = 1;
 	/**
 	 * 备注信息

@@ -16,8 +16,10 @@
 
 package com.albedo.java.modules.sys.service;
 
+import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.albedo.java.modules.sys.entity.Role;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.albedo.java.modules.sys.repository.RoleRepository;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface RoleService extends IService<Role> {
+public interface RoleService extends DataVoService<RoleRepository, Role, String, RoleDataVo> {
 
 	/**
 	 * 通过用户ID，查询角色信息

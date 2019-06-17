@@ -3,8 +3,8 @@ package com.albedo.java.modules.gen.repository;
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.gen.domain.GenTable;
 import com.albedo.java.modules.gen.domain.vo.GenTableColumnVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableQuery;
 import com.albedo.java.modules.gen.domain.vo.GenTableVo;
+import com.albedo.java.modules.gen.domain.vo.GenTableQuery;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Authority entity.
  */
-public interface GenTableRepository extends BaseRepository<GenTable, String> {
+public interface GenTableRepository extends BaseRepository<GenTable> {
     /**
      * 查询表列表
      *

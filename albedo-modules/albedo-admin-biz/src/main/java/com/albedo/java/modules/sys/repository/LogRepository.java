@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.sys.entity.Log;
 
 /**
@@ -27,5 +27,5 @@ import com.albedo.java.modules.sys.entity.Log;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface LogRepository extends BaseMapper<Log> {
+public interface LogRepository extends BaseRepository<Log> {
 }

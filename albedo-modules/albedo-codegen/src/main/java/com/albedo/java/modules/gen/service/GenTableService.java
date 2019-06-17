@@ -10,9 +10,8 @@ import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
 import com.albedo.java.modules.gen.domain.GenTable;
 import com.albedo.java.modules.gen.domain.GenTableColumn;
+import com.albedo.java.modules.gen.domain.vo.*;
 import com.albedo.java.modules.gen.domain.vo.GenTableColumnVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableFormVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableQuery;
 import com.albedo.java.modules.gen.domain.vo.GenTableVo;
 import com.albedo.java.modules.gen.domain.xml.GenConfig;
 import com.albedo.java.modules.gen.repository.GenTableRepository;
@@ -38,7 +37,8 @@ import java.util.stream.Collectors;
  * @author somewhere
  */
 @Service
-public class GenTableService extends DataVoServiceImpl<GenTableRepository, GenTable, String, GenTableVo> {
+public class GenTableService extends
+	DataVoServiceImpl<GenTableRepository, GenTable, String, GenTableVo> {
 
     @Autowired
     private GenTableColumnService genTableColumnService;

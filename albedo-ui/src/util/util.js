@@ -1,5 +1,4 @@
 import {validatenull} from './validate'
-import request from '@/router/axios'
 
 // 表单序列化
 export const serialize = data => {

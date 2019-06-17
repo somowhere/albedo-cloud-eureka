@@ -7,10 +7,9 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.gen.domain.GenTable;
-import com.albedo.java.modules.gen.domain.vo.GenTableFormVo;
 import com.albedo.java.modules.gen.domain.vo.GenTableVo;
+import com.albedo.java.modules.gen.domain.vo.GenTableFormVo;
 import com.albedo.java.modules.gen.service.GenTableService;
-import com.albedo.java.modules.sys.util.JsonUtil;
 import com.alibaba.fastjson.JSON;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
@@ -56,10 +55,8 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
     @GetMapping(value = "/")
     @Timed
     public ResponseEntity getPage(PageModel<GenTable> pm) {
-
         pm = service.findPage(pm);
-        JSON rs = JsonUtil.getInstance().setRecurrenceStr("org_name").toJsonObject(pm);
-        return ResponseBuilder.buildObject(rs);
+        return ResponseBuilder.buildObject(pm);
     }
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)

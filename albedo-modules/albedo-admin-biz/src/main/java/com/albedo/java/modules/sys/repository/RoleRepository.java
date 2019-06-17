@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.sys.entity.Role;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface RoleRepository extends BaseMapper<Role> {
+public interface RoleRepository  extends BaseRepository<Role> {
 	/**
 	 * 通过用户ID，查询角色信息
 	 *

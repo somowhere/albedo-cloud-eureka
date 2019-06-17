@@ -15,6 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 import request from '@/router/axios'
+
 const scope = 'server'
 
 export const loginByUsername = (username, password, code, randomStr) => {

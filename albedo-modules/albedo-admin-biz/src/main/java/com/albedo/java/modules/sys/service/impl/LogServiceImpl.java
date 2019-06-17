@@ -16,9 +16,10 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.vo.LogDataVo;
 import com.albedo.java.modules.sys.entity.Log;
 import com.albedo.java.modules.sys.repository.LogRepository;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.sys.service.LogService;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
  * @since 2019/2/1
  */
 @Service
-public class LogServiceImpl extends ServiceImpl<LogRepository, Log> implements LogService {
+public class LogServiceImpl extends
+	DataVoServiceImpl<LogRepository, Log, Long, LogDataVo> implements LogService {
 
 }

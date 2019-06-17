@@ -58,18 +58,6 @@ public class Log extends DataEntity<Log> {
 	@NotBlank(message = "日志标题不能为空")
 	private String title;
 	/**
-	 * 创建者
-	 */
-	private String createBy;
-	/**
-	 * 创建时间
-	 */
-	private LocalDateTime createTime;
-	/**
-	 * 更新时间
-	 */
-	private LocalDateTime updateTime;
-	/**
 	 * 操作IP地址
 	 */
 	private String remoteAddr;
@@ -104,11 +92,14 @@ public class Log extends DataEntity<Log> {
 	 */
 	private String serviceId;
 
-	/**
-	 * 删除标记
-	 */
-	@TableLogic
-	private String delFlag;
 
+	@Override
+	public Serializable pkVal() {
+		return id;
+	}
 
+	@Override
+	public void setPk(Serializable pk) {
+		this.id= (Long) pk;
+	}
 }

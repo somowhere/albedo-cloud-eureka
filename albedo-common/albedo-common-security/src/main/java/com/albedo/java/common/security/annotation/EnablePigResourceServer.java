@@ -16,9 +16,12 @@
 
 package com.albedo.java.common.security.annotation;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.security.component.PigResourceServerAutoConfiguration;
 import com.albedo.java.common.security.component.PigSecurityBeanDefinitionRegistrar;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 

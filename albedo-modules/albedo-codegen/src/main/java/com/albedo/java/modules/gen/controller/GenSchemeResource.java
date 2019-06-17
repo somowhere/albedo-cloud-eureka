@@ -11,10 +11,8 @@ import com.albedo.java.modules.gen.domain.vo.GenSchemeVo;
 import com.albedo.java.modules.gen.domain.vo.GenTableVo;
 import com.albedo.java.modules.gen.service.GenSchemeService;
 import com.albedo.java.modules.gen.service.GenTableService;
-import com.albedo.java.modules.sys.dto.GenSchemeDTO;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.albedo.java.modules.sys.feign.RemoteMenuService;
-import com.albedo.java.modules.sys.util.JsonUtil;
-import com.alibaba.fastjson.JSON;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.MediaType;
@@ -53,8 +51,8 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
     @Timed
     public ResponseEntity getPage(PageModel pm) {
         service.findPage(pm);
-        JSON rs = JsonUtil.getInstance().setRecurrenceStr("genTable_name").toJsonObject(pm);
-        return ResponseBuilder.buildObject(rs);
+//        JSON rs = JsonUtil.getInstance().setRecurrenceStr("genTable_name").toJsonObject(pm);
+        return ResponseBuilder.buildObject(pm);
     }
     @GetMapping(value = "/formData")
     @Timed
@@ -77,7 +75,7 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
             String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(genSchemeVo.getModuleName()), (StringUtil.isNotBlank(genSchemeVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(genSchemeVo.getSubModuleName()) : ""), "/",
                 StringUtil.lowerFirst(genTableVo.getClassName()), "/");
 			remoteMenuService.saveByGenScheme(
-				new GenSchemeDTO(genSchemeVo.getName(), genSchemeVo.getParentModuleId(), url), SecurityConstants.FROM_IN);
+				new GenSchemeDataVo(genSchemeVo.getName(), genSchemeVo.getParentModuleId(), url), SecurityConstants.FROM_IN);
         }
         // 生成代码
         if (genSchemeVo.getGenCode()) {

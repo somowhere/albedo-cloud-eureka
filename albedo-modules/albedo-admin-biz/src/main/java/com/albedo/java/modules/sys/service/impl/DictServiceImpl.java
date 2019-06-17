@@ -16,17 +16,15 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
-import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.persistence.service.impl.DataServiceImpl;
+import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
+import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.albedo.java.modules.sys.entity.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.util.DictUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +39,8 @@ import java.util.Map;
  * @since 2019/2/1
  */
 @Service
-public class DictServiceImpl extends DataServiceImpl<DictRepository, Dict, String> implements DictService {
+public class DictServiceImpl extends
+	TreeVoServiceImpl<DictRepository, Dict, DictDataVo> implements DictService {
 
 	public List<Dict> findAllByStatusOrderBySortAsc(Integer status) {
 		return repository.findRelationList(
@@ -50,12 +49,12 @@ public class DictServiceImpl extends DataServiceImpl<DictRepository, Dict, Strin
 		);
 
 	}
-	public Map<String, List<SelectResult>> findCodes(String codes) {
-		return findCodeList(StringUtil.isNotEmpty(codes) ?
-			Lists.newArrayList(codes.split(StringUtil.SPLIT_DEFAULT)) : null);
+	public Map<String, List<SelectResult>> findCodeStr(String codes) {
+		return findCodes(StringUtil.isNotEmpty(codes) ?
+			codes.split(StringUtil.SPLIT_DEFAULT) : null);
 	}
-	public Map<String,List<SelectResult>> findCodeList(List<String> codeList) {
-		return DictUtil.getCodeList(codeList);
+	public Map<String,List<SelectResult>> findCodes(String... codes) {
+		return DictUtil.getSelectResultListByCodes(codes);
 	}
 
 

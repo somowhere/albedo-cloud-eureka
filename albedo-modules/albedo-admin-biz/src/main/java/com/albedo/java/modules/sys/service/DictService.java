@@ -17,7 +17,8 @@
 package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.persistence.service.DataService;
+import com.albedo.java.common.persistence.service.TreeVoService;
+import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.albedo.java.modules.sys.entity.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
 
@@ -32,8 +33,8 @@ import java.util.Map;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface DictService extends DataService<DictRepository, Dict, String> {
+public interface DictService  extends TreeVoService<DictRepository, Dict, DictDataVo> {
 	List<Dict> findAllByStatusOrderBySortAsc(Integer status);
-	Map<String, List<SelectResult>> findCodes(String codes);
-	Map<String,List<SelectResult>> findCodeList(List<String> codeList);
+	Map<String, List<SelectResult>> findCodeStr(String codes);
+	Map<String, List<SelectResult>> findCodes(String... codes);
 }

@@ -18,16 +18,15 @@ package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
-import com.albedo.java.common.persistence.DynamicSpecifications;
-import com.albedo.java.modules.sys.dto.GenSchemeDTO;
+import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.vo.MenuDataVo;
 import com.albedo.java.modules.sys.entity.Menu;
 import com.albedo.java.modules.sys.entity.RoleMenu;
-import com.albedo.java.modules.sys.entity.User;
 import com.albedo.java.modules.sys.repository.MenuRepository;
 import com.albedo.java.modules.sys.repository.RoleMenuRepository;
-import com.albedo.java.modules.sys.vo.MenuVO;
+import com.albedo.java.modules.sys.vo.MenuVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.common.core.util.R;
 import lombok.AllArgsConstructor;
@@ -49,12 +48,13 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
-public class MenuServiceImpl extends ServiceImpl<MenuRepository, Menu> implements MenuService {
+public class MenuServiceImpl extends
+	TreeVoServiceImpl<MenuRepository, Menu, MenuDataVo> implements MenuService {
 	private final RoleMenuRepository roleMenuRepository;
 
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
-	public List<MenuVO> getMenuByRoleId(String roleId) {
+	public List<MenuVo> getMenuByRoleId(String roleId) {
 		return baseMapper.listMenusByRoleId(roleId);
 	}
 
@@ -84,11 +84,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuRepository, Menu> implement
 	}
 
 	@Override
-	public boolean saveByGenScheme(GenSchemeDTO genSchemeDTO) {
+	public boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo) {
 
-		String moduleName=genSchemeDTO.getSchemeName(),
-			parentMenuId=genSchemeDTO.getParentMenuId(),
-			url=genSchemeDTO.getUrl();
+		String moduleName= genSchemeDataVo.getSchemeName(),
+			parentMenuId= genSchemeDataVo.getParentMenuId(),
+			url= genSchemeDataVo.getUrl();
 		String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0,permission.length()-1)+"%";
 		List<Menu> currentMenuList = baseMapper.selectList(Wrappers.<Menu>query()
 				.lambda().eq(Menu::getName, moduleName)

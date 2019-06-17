@@ -43,7 +43,7 @@ import java.util.Optional;
  * @version 2014-05-16
  */
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseServiceImpl<Repository extends BaseRepository<T, pk>,
+public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
     T extends GeneralEntity, pk extends Serializable> extends ServiceImpl<Repository, T> implements com.albedo.java.common.persistence.service.BaseService<Repository, T, pk> {
 	public final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 	@Autowired
@@ -104,12 +104,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T, pk>,
 	public boolean doCheckWithEntity(T entity, Map<String, QueryCondition.Operator> maps) {
 		boolean rs = false;
 		if (ObjectUtil.isNotEmpty(entity)) {
-//            Map<String, Object> paramsMap = Maps.newHashMap();
 			List<QueryCondition> conditionList = QueryUtil.convertObjectToQueryCondition(entity, maps);
-//            String sqlConditionDsf = QueryUtil.convertQueryConditionToStr(conditionList,
-//                    null,
-//                    paramsMap, true, true);
-//            paramsMap.put(DynamicSpecifications.MYBITS_SEARCH_DSF, sqlConditionDsf);
 			QueryWrapper<T> entityWrapper = createEntityWrapper(conditionList);
 			Integer obj = countBasicAll(entityWrapper);
 			if (obj == null || obj == 0) {
@@ -318,7 +313,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T, pk>,
 		return repository.selectCount(specificationDetail.toEntityWrapper(persistentClass));
 	}
 	@Override
-	public T findOne(QueryWrapper<T> queryWrapper) {
+	public T findOne(Wrapper<T> queryWrapper) {
 		return repository.selectOne(queryWrapper);
 	}
 

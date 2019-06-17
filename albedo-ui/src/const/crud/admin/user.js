@@ -104,7 +104,7 @@ export const tableOption = {
     }]
   }, {
     label: '角色',
-    prop: 'role',
+    prop: 'roleIdList',
     formsolt: true,
     solt: true,
     overHidden: true,

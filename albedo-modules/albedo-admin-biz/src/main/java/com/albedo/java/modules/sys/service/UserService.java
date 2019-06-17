@@ -16,13 +16,13 @@
 
 package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.modules.sys.dto.UserDTO;
-import com.albedo.java.modules.sys.dto.UserInfo;
+import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.albedo.java.modules.sys.vo.UserInfo;
 import com.albedo.java.modules.sys.entity.User;
-import com.albedo.java.modules.sys.vo.UserVO;
+import com.albedo.java.modules.sys.repository.UserRepository;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.albedo.java.common.core.util.R;
 
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author lengleng
  * @date 2019/2/1
  */
-public interface UserService extends IService<User> {
+public interface UserService extends DataVoService<UserRepository, User, String, UserDataVo> {
 	/**
 	 * 查询用户信息
 	 *
@@ -44,10 +44,10 @@ public interface UserService extends IService<User> {
 	 * 分页查询用户信息（含有角色信息）
 	 *
 	 * @param page    分页对象
-	 * @param userDTO 参数列表
+	 * @param userDataVo 参数列表
 	 * @return
 	 */
-	IPage getUserWithRolePage(Page page, UserDTO userDTO);
+	IPage getUserWithRolePage(Page page, UserDataVo userDataVo);
 
 	/**
 	 * 删除用户
@@ -60,18 +60,11 @@ public interface UserService extends IService<User> {
 	/**
 	 * 更新当前用户基本信息
 	 *
-	 * @param userDto 用户信息
+	 * @param userDataVo 用户信息
 	 * @return Boolean
 	 */
-	R<Boolean> updateUserInfo(UserDTO userDto);
+	R<Boolean> updateUserInfo(UserDataVo userDataVo);
 
-	/**
-	 * 更新指定用户信息
-	 *
-	 * @param userDto 用户信息
-	 * @return
-	 */
-	Boolean updateUser(UserDTO userDto);
 
 	/**
 	 * 通过ID查询用户信息
@@ -79,7 +72,7 @@ public interface UserService extends IService<User> {
 	 * @param id 用户ID
 	 * @return 用户信息
 	 */
-	UserVO getUserVoById(Integer id);
+	com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id);
 
 	/**
 	 * 查询上级部门的用户信息
@@ -92,8 +85,8 @@ public interface UserService extends IService<User> {
 	/**
 	 * 保存用户信息
 	 *
-	 * @param userDto DTO 对象
+	 * @param userDataVo DTO 对象
 	 * @return success/fail
 	 */
-	Boolean saveUser(UserDTO userDto);
+	Boolean saveUser(UserDataVo userDataVo);
 }

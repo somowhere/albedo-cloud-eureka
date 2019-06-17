@@ -16,12 +16,13 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.albedo.java.modules.sys.entity.Role;
 import com.albedo.java.modules.sys.entity.RoleMenu;
 import com.albedo.java.modules.sys.repository.RoleRepository;
 import com.albedo.java.modules.sys.repository.RoleMenuRepository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.sys.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -40,7 +41,8 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
-public class RoleServiceImpl extends ServiceImpl<RoleRepository, Role> implements RoleService {
+public class RoleServiceImpl extends
+	DataVoServiceImpl<RoleRepository, Role, String, RoleDataVo> implements RoleService {
 	private RoleMenuRepository roleMenuRepository;
 
 	/**

@@ -63,11 +63,11 @@ public interface CommonConstants {
 	/**
 	 * 成功标记
 	 */
-	Integer SUCCESS = 0;
+	Integer SUCCESS = 1;
 	/**
 	 * 失败标记
 	 */
-	Integer FAIL = 1;
+	Integer FAIL = 0;
 
 	/**
 	 * 验证码前缀
@@ -75,6 +75,7 @@ public interface CommonConstants {
 	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY_";
 
 
+	String SPRING_PROFILE_TEST = "test";
 	String SPRING_PROFILE_DEVELOPMENT = "dev";
 	String SPRING_PROFILE_PRODUCTION = "prod";
 
@@ -134,5 +135,6 @@ public interface CommonConstants {
 	String SPACE = " ";
 
 
-	public static final String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
+	String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
+	String SYSTEM = "system";
 }

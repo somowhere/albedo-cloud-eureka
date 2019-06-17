@@ -16,9 +16,11 @@
 
 package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.modules.sys.dto.DeptTree;
+import com.albedo.java.common.persistence.service.TreeVoService;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
+import com.albedo.java.modules.sys.vo.DeptTree;
 import com.albedo.java.modules.sys.entity.Dept;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.albedo.java.modules.sys.repository.DeptRepository;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface DeptService extends IService<Dept> {
+public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
 
 	/**
 	 * 查询部门树菜单

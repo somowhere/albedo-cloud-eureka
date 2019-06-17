@@ -33,15 +33,15 @@ public abstract class GeneralEntity<T extends Model> extends Model<T> implements
     public static final String F_VERSION = "version";
     public static final String F_DESCRIPTION = "description";
 
-    public static final String F_SQL_ID = "id_";
+    public static final String F_SQL_ID = "id";
     public static final String F_SQL_CREATEDBY = "created_by";
     public static final String F_SQL_CREATEDDATE = "created_date";
     public static final String F_SQL_LASTMODIFIEDBY = "last_modified_by";
     public static final String F_SQL_MODIFIER = "modifier";
     public static final String F_SQL_LASTMODIFIEDDATE = "last_modified_date";
-    public static final String F_SQL_VERSION = "version_";
-    public static final String F_SQL_DESCRIPTION = "description_";
-    public static final String F_SQL_STATUS = "status_";
+    public static final String F_SQL_VERSION = "version";
+    public static final String F_SQL_DESCRIPTION = "description";
+    public static final String F_SQL_STATUS = "status";
     private static final long serialVersionUID = 1L;
 
 

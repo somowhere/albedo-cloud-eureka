@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.entity;
 
+import com.albedo.java.common.core.annotation.SearchField;
 import com.albedo.java.common.persistence.domain.IdEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,6 +24,9 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -35,7 +39,9 @@ import java.time.LocalDateTime;
  * @author lengleng
  * @since 2019/2/1
  */
-@Data
+@Getter
+@Setter
+@ToString
 @TableName("sys_user")
 public class User extends IdEntity<User> {
 
@@ -44,6 +50,7 @@ public class User extends IdEntity<User> {
 	/**
 	 * 用户名
 	 */
+	@SearchField
 	private String username;
 
 	private String password;
@@ -59,7 +66,12 @@ public class User extends IdEntity<User> {
 	private String lockFlag;
 
 	/**
-	 * 简介
+	 * 邮箱
+	 */
+	@SearchField
+	private String email;
+	/**
+	 * 电话
 	 */
 	private String phone;
 	/**

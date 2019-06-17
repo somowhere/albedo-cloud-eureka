@@ -16,9 +16,9 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.modules.sys.entity.Menu;
-import com.albedo.java.modules.sys.vo.MenuVO;
+import com.albedo.java.modules.sys.vo.MenuVo;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import java.util.List;
  * @author lengleng
  * @since 2019/2/1
  */
-public interface MenuRepository extends BaseMapper<Menu> {
+public interface MenuRepository extends TreeRepository<Menu> {
 
 	/**
 	 * 通过角色编号查询菜单
@@ -38,7 +38,7 @@ public interface MenuRepository extends BaseMapper<Menu> {
 	 * @param roleId 角色ID
 	 * @return
 	 */
-	List<MenuVO> listMenusByRoleId(String roleId);
+	List<MenuVo> listMenusByRoleId(String roleId);
 
 	/**
 	 * 通过角色ID查询权限

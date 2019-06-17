@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.albedo.java.common.config.JacksonMapperConfig,\
   com.albedo.java.modules.sys.feign.fallback.RemoteUserServiceFallbackImpl,\
   com.albedo.java.modules.sys.feign.fallback.RemoteLogServiceFallbackImpl,\
   com.albedo.java.modules.sys.feign.fallback.RemoteTokenServiceFallbackImpl,\

@@ -16,6 +16,7 @@
 
 package com.albedo.java.gateway.config;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.gateway.handler.HystrixFallbackHandler;
 import com.albedo.java.gateway.handler.ImageCodeHandler;
 import lombok.AllArgsConstructor;
@@ -38,13 +39,14 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 public class RouterFunctionConfiguration {
 	private final HystrixFallbackHandler hystrixFallbackHandler;
 	private final ImageCodeHandler imageCodeHandler;
+	private final ApplicationProperties applicationProperties;
 
 	@Bean
 	public RouterFunction routerFunction() {
 		return RouterFunctions.route(
 			RequestPredicates.path("/fallback")
 				.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), hystrixFallbackHandler)
-			.andRoute(RequestPredicates.GET("/code")
+			.andRoute(RequestPredicates.GET(applicationProperties.getAdminPath("/code"))
 				.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), imageCodeHandler);
 
 	}

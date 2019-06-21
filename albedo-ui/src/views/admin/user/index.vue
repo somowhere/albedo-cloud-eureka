@@ -200,7 +200,7 @@
         this.form.password = undefined
       },
       create(row, done, loading) {
-        addObj(this.form).then(() => {
+        addObj(this.form).then((data) => {
           this.getList(this.page);
           done();
           this.$notify({

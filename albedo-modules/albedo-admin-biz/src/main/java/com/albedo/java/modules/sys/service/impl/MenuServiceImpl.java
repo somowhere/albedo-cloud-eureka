@@ -74,7 +74,7 @@ public class MenuServiceImpl extends
 				.lambda().eq(RoleMenu::getMenuId, id));
 
 		//删除当前菜单及其子菜单
-		return new R(this.removeById(id));
+		return R.createSuccessData(this.removeById(id));
 	}
 
 	@Override

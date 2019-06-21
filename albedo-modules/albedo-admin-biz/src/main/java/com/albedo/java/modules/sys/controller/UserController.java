@@ -115,7 +115,8 @@ public class UserController {
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	public R userDel(@PathVariable String id) {
 		User user = userService.getById(id);
-		return new R<>(userService.removeUserById(user));
+		userService.removeUserById(user);
+		return R.createSuccess("删除用户信息");
 	}
 
 

@@ -61,7 +61,7 @@ pig
 
 3. <a href="mailto:somewhere0813@gmail.com">somewhere0813@gmail.com</a>    
 
-4. 冷冷QQ: 2270033969 |  技术问题 请码云提完工单再联系
+4. QQ群: 685728393 
 
 #### 开源协议
 
@@ -71,5 +71,3 @@ pig
 
 #### 关注我们
 
-
-![](https://images.gitee.com/uploads/images/2019/0330/065148_f0ada806_410595.jpeg)

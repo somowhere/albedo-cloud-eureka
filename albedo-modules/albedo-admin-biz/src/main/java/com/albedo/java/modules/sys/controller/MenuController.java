@@ -100,7 +100,7 @@ public class MenuController {
 	 */
 	@GetMapping("/{id}")
 	public R getById(@PathVariable Integer id) {
-		return new R<>(menuService.getById(id));
+		return R.createSuccessData(menuService.getById(id));
 	}
 
 	/**
@@ -113,7 +113,8 @@ public class MenuController {
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
 	public R save(@Valid @RequestBody Menu menu) {
-		return new R<>(menuService.save(menu));
+		menuService.save(menu);
+		return R.createSuccess("操作成功");
 	}
 
 
@@ -126,7 +127,8 @@ public class MenuController {
 	@Inner
 	@PostMapping("/gen")
 	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
-		return new R<>(menuService.saveByGenScheme(genSchemeDataVo));
+		menuService.saveByGenScheme(genSchemeDataVo);
+		return R.createSuccess("操作成功");
 	}
 
 
@@ -153,7 +155,8 @@ public class MenuController {
 	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
 	public R update(@Valid @RequestBody Menu menu) {
-		return new R<>(menuService.updateMenuById(menu));
+		menuService.updateMenuById(menu);
+		return R.createSuccess("更新菜单");
 	}
 
 }

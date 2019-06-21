@@ -86,6 +86,7 @@ public class RoleController {
 	@SysLog("删除角色")
 	@DeleteMapping("/{id}")
 	public R removeById(@PathVariable String id) {
+
 		return new R<>(roleService.removeRoleById(id));
 	}
 

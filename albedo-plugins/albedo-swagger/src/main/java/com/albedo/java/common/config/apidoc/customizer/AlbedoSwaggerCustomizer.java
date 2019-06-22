@@ -1,6 +1,6 @@
 package com.albedo.java.common.config.apidoc.customizer;
 
-import com.albedo.java.common.config.AlbedoSwaggerProperties;
+import com.albedo.java.common.config.ApplicationSwaggerProperties;
 import com.google.common.collect.Lists;
 import org.springframework.core.Ordered;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +18,25 @@ import java.util.List;
 public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
     public static final int DEFAULT_ORDER = 0;
     private int order = 0;
-    private final AlbedoSwaggerProperties albedoSwaggerProperties;
+    private final ApplicationSwaggerProperties applicationSwaggerProperties;
 
-    public AlbedoSwaggerCustomizer(AlbedoSwaggerProperties albedoSwaggerProperties) {
-        this.albedoSwaggerProperties = albedoSwaggerProperties;
+    public AlbedoSwaggerCustomizer(ApplicationSwaggerProperties applicationSwaggerProperties) {
+        this.applicationSwaggerProperties = applicationSwaggerProperties;
     }
 
     @Override
     public void customize(Docket docket) {
-        Contact contact = new Contact(this.albedoSwaggerProperties.getContactName(), this.albedoSwaggerProperties.getContactUrl(), this.albedoSwaggerProperties.getContactEmail());
-        ApiInfo apiInfo = new ApiInfo(this.albedoSwaggerProperties.getTitle(), this.albedoSwaggerProperties.getDescription(), this.albedoSwaggerProperties.getVersion(), this.albedoSwaggerProperties.getTermsOfServiceUrl(), contact, this.albedoSwaggerProperties.getLicense(), this.albedoSwaggerProperties.getLicenseUrl(), new ArrayList());
-        docket.host(this.albedoSwaggerProperties.getHost())
-            .protocols(new HashSet(Arrays.asList(this.albedoSwaggerProperties.getProtocols())))
-            .apiInfo(apiInfo).useDefaultResponseMessages(this.albedoSwaggerProperties.isUseDefaultResponseMessages())
+        Contact contact = new Contact(this.applicationSwaggerProperties.getContactName(), this.applicationSwaggerProperties.getContactUrl(), this.applicationSwaggerProperties.getContactEmail());
+        ApiInfo apiInfo = new ApiInfo(this.applicationSwaggerProperties.getTitle(), this.applicationSwaggerProperties.getDescription(), this.applicationSwaggerProperties.getVersion(), this.applicationSwaggerProperties.getTermsOfServiceUrl(), contact, this.applicationSwaggerProperties.getLicense(), this.applicationSwaggerProperties.getLicenseUrl(), new ArrayList());
+        docket.host(this.applicationSwaggerProperties.getHost())
+            .protocols(new HashSet(Arrays.asList(this.applicationSwaggerProperties.getProtocols())))
+            .apiInfo(apiInfo).useDefaultResponseMessages(this.applicationSwaggerProperties.isUseDefaultResponseMessages())
             .forCodeGeneration(true)
             .securitySchemes(securitySchemes())
             .securityContexts(securityContexts())
             .forCodeGeneration(true).directModelSubstitute(ByteBuffer.class, String.class)
             .genericModelSubstitutes(new Class[]{ResponseEntity.class}).select()
-            .paths(PathSelectors.regex(this.albedoSwaggerProperties.getDefaultIncludePattern())).build();
+            .paths(PathSelectors.regex(this.applicationSwaggerProperties.getDefaultIncludePattern())).build();
     }
 
     public void setOrder(int order) {

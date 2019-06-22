@@ -77,14 +77,3 @@ application:
   adminPath: /a
   jedisKeyPrefix: albedoBootWebApp
   className: com.albedo.java
-  swagger:
-    default-include-pattern: /.*
-    title: ${spring.application.name} API
-    description: ${spring.application.name} API documentation
-    version: 0.0.1
-    termsOfServiceUrl:
-    contactName:
-    contactUrl:
-    contactEmail:
-    license:
-    licenseUrl:

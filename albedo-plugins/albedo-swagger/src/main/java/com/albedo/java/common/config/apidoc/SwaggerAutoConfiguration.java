@@ -1,9 +1,8 @@
 package com.albedo.java.common.config.apidoc;
 
-import com.albedo.java.common.config.AlbedoSwaggerProperties;
+import com.albedo.java.common.config.ApplicationSwaggerProperties;
 import com.albedo.java.common.config.apidoc.customizer.AlbedoSwaggerCustomizer;
 import com.albedo.java.common.config.apidoc.customizer.SwaggerCustomizer;
-import com.fasterxml.classmate.TypeResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -19,11 +18,8 @@ import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
-import springfox.documentation.schema.TypeNameExtractor;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -46,7 +42,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @ConditionalOnClass({ApiInfo.class, BeanValidatorPluginsConfiguration.class,
 	Servlet.class, DispatcherServlet.class})
 @Profile({"swagger"})
-@AutoConfigureAfter({AlbedoSwaggerProperties.class})
+@AutoConfigureAfter({ApplicationSwaggerProperties.class})
 @EnableSwagger2
 @Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerAutoConfiguration {
@@ -57,10 +53,10 @@ public class SwaggerAutoConfiguration {
     public static final String MANAGEMENT_DESCRIPTION = "Management endpoints documentation";
     private final Logger log = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
 
-    private final AlbedoSwaggerProperties albedoSwaggerProperties;
+    private final ApplicationSwaggerProperties applicationSwaggerProperties;
 
-    public SwaggerAutoConfiguration(AlbedoSwaggerProperties albedoSwaggerProperties) {
-        this.albedoSwaggerProperties = albedoSwaggerProperties;
+    public SwaggerAutoConfiguration(ApplicationSwaggerProperties applicationSwaggerProperties) {
+        this.applicationSwaggerProperties = applicationSwaggerProperties;
     }
 
     /**
@@ -99,7 +95,7 @@ public class SwaggerAutoConfiguration {
      */
     @Bean
     public AlbedoSwaggerCustomizer jHipsterSwaggerCustomizer() {
-        return new AlbedoSwaggerCustomizer(albedoSwaggerProperties);
+        return new AlbedoSwaggerCustomizer(applicationSwaggerProperties);
     }
 
     /**
@@ -120,7 +116,7 @@ public class SwaggerAutoConfiguration {
         ApiInfo apiInfo = new ApiInfo(
             StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX,
             MANAGEMENT_DESCRIPTION,
-            albedoSwaggerProperties.getVersion(),
+            applicationSwaggerProperties.getVersion(),
             "",
             ApiInfo.DEFAULT_CONTACT,
             "",
@@ -130,10 +126,10 @@ public class SwaggerAutoConfiguration {
 
         return createDocket()
             .apiInfo(apiInfo)
-            .useDefaultResponseMessages(albedoSwaggerProperties.isUseDefaultResponseMessages())
+            .useDefaultResponseMessages(applicationSwaggerProperties.isUseDefaultResponseMessages())
             .groupName(MANAGEMENT_GROUP_NAME)
-            .host(albedoSwaggerProperties.getHost())
-            .protocols(new HashSet<>(Arrays.asList(albedoSwaggerProperties.getProtocols())))
+            .host(applicationSwaggerProperties.getHost())
+            .protocols(new HashSet<>(Arrays.asList(applicationSwaggerProperties.getProtocols())))
             .forCodeGeneration(true)
             .directModelSubstitute(ByteBuffer.class, String.class)
             .genericModelSubstitutes(ResponseEntity.class)

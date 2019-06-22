@@ -18,7 +18,8 @@ eureka:
   instance:
     hostname: albedo-eureka
     prefer-ip-address: true
-    status-page-url: /swagger-ui.html # ${server.port}
+    status-page-url-path: /swagger-ui.html
+    status-page-url: /swagger-ui.html
   client:
     register-with-eureka: false
     fetch-registry: false

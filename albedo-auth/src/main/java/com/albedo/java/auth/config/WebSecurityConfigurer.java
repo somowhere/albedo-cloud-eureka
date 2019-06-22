@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,13 +53,20 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	private AuthorizationServerTokenServices defaultAuthorizationServerTokenServices;
 
 	@Override
+	public void configure(WebSecurity web) {
+		web.ignoring()
+			.antMatchers("/*.{js,html}")
+			.antMatchers("/webjars/**");
+	}
+	@Override
 	@SneakyThrows
 	protected void configure(HttpSecurity http) {
 		http
 			.authorizeRequests()
-			.antMatchers(
-				"/actuator/**",
-				"/token/**").permitAll()
+			.antMatchers("/actuator/**",
+				"/token/**",
+				"/v2/**",
+				"/swagger-resources/**").permitAll()
 			.anyRequest().authenticated()
 			.and().csrf().disable();
 	}

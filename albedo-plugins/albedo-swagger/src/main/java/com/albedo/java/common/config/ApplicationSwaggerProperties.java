@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "application.swagger", ignoreUnknownFields = false)
 @Data
-public class AlbedoSwaggerProperties {
+public class ApplicationSwaggerProperties {
     private String title = "Application API";
     private String description = "API documentation";
     private String version = "0.0.1";

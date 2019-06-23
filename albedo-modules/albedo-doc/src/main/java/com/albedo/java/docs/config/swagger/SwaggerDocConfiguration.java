@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import springfox.documentation.swagger.web.InMemorySwaggerResourcesProvider;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 
@@ -22,8 +23,9 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
  *   read data from in-memory contex 	
  * </pre>
  */
+@EnableSwagger2
 @Configuration
-public class SwaggerUIConfiguration {
+public class SwaggerDocConfiguration {
 	
 	@Autowired
 	private ServiceDefinitionsContext definitionContext;

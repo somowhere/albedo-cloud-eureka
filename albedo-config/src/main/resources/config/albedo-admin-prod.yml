@@ -17,6 +17,8 @@ spring:
 # 直接放行URL
 ignore:
   urls:
+    - /v2/**
     - /actuator/**
     - /user/info/*
     - /log/**
+

@@ -2,6 +2,7 @@ package com.albedo.java.docs.config.swagger;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -59,13 +60,17 @@ public class ServiceDescriptionUpdater {
 				
 				Optional<Object> jsonData = getSwaggerDefinitionForAPI(serviceId, swaggerURL);
 				
-				if(jsonData.isPresent()){
-					String content = getJSON(serviceId, jsonData.get());
-					definitionContext.addServiceDefinition(serviceId, content);
+				if(jsonData.isPresent() && jsonData.get() instanceof Map){
+					Map<String, Object> valueMap = (Map<String, Object>) jsonData.get();
+					if(valueMap.containsKey("swagger")){
+						String content = getJSON(serviceId, valueMap);
+						definitionContext.addServiceDefinition(serviceId, content);
+					}else{
+						logger.warn("Skipping service id : {} Error : Swagegr definition from API Object : {} ",serviceId, jsonData.get());
+					}
 				}else{
-					logger.error("Skipping service id : {} Error : Could not get Swagegr definition from API ",serviceId);
+					logger.warn("Skipping service id : {} Error : Could not get Swagegr definition from API ",serviceId);
 				}
-				
 				logger.info("Service Definition Context Refreshed at :  {}",LocalDate.now());
 			}
 		});

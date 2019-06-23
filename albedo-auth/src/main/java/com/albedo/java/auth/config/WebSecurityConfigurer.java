@@ -36,7 +36,7 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 认证相关配置
  */

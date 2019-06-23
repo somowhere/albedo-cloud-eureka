@@ -19,7 +19,7 @@ package com.albedo.java.common.core.exception;
 import lombok.NoArgsConstructor;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 😴2018年06月22日16:21:57
  */
 @NoArgsConstructor

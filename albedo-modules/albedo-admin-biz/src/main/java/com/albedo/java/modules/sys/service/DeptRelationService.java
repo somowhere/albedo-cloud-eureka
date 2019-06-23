@@ -25,7 +25,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 服务类
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface DeptRelationService extends IService<DeptRelation> {

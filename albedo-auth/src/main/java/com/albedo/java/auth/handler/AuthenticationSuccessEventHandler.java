@@ -22,7 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 @Slf4j

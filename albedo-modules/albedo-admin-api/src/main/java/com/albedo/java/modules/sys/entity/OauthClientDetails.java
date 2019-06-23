@@ -31,7 +31,7 @@ import java.io.Serializable;
  * 客户端信息
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 @Data

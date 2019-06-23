@@ -19,7 +19,7 @@ package com.albedo.java.modules.codegen.entity;
 import lombok.Data;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 列属性： https://blog.csdn.net/lkforce/article/details/79557482
  */

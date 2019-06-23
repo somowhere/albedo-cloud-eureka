@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.albedo.java.common.security.component.PigAuth2ExceptionSerializer;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 @JsonSerialize(using = PigAuth2ExceptionSerializer.class)

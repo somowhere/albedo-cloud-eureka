@@ -30,7 +30,7 @@ import java.util.List;
  * 用户表 Mapper 接口
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface UserRepository extends BaseRepository<User> {

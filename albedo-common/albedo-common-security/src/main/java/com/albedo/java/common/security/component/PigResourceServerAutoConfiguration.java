@@ -29,7 +29,7 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/03/08
  */
 @ComponentScan("com.albedo.java.common.security")

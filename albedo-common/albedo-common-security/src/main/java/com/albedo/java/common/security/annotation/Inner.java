@@ -19,7 +19,7 @@ package com.albedo.java.common.security.annotation;
 import java.lang.annotation.*;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2018/11/26
  * <p>
  * 服务调用不鉴权注解

@@ -1,0 +1,3 @@
+swagger:
+  config:
+    refreshrate: 5000

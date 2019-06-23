@@ -26,7 +26,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * Redis 配置类
  */

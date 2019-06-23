@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 @Configuration

@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * Mapper 接口
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface DeptRelationRepository extends BaseMapper<DeptRelation> {

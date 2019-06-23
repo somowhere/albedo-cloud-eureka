@@ -25,7 +25,7 @@ import com.albedo.java.modules.sys.entity.RoleMenu;
  * 角色菜单表 Mapper 接口
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface RoleMenuRepository extends BaseMapper<RoleMenu> {

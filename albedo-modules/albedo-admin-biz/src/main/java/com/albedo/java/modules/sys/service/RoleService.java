@@ -28,7 +28,7 @@ import java.util.List;
  * 服务类
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface RoleService extends DataVoService<RoleRepository, Role, String, RoleDataVo> {

@@ -26,7 +26,7 @@ import org.apache.ibatis.annotations.Param;
  * 用户角色表 Mapper 接口
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface UserRoleRepository extends BaseMapper<UserRole> {

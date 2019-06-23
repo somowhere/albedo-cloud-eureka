@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  * 菜单权限表
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 @Data

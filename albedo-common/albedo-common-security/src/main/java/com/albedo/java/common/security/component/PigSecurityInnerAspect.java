@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/02/14
  * <p>
  * 服务间接口不鉴权处理逻辑

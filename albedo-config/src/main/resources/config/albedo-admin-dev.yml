@@ -17,6 +17,7 @@ spring:
 # 直接放行URL
 ignore:
   urls:
+    - /swagger-ui/**
     - /actuator/**
     - /user/info/*
     - /log/**

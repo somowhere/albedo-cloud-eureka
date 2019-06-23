@@ -32,7 +32,7 @@ import java.util.List;
  * 菜单权限表 服务类
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDataVo> {

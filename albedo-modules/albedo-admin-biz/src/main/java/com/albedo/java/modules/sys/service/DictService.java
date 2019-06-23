@@ -30,7 +30,7 @@ import java.util.Map;
  * 字典表 服务类
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface DictService  extends TreeVoService<DictRepository, Dict, DictDataVo> {

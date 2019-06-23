@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 删除token端点
  */

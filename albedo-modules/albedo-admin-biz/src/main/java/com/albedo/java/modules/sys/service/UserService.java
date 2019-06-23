@@ -28,7 +28,7 @@ import com.albedo.java.common.core.util.R;
 import java.util.List;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 public interface UserService extends DataVoService<UserRepository, User, String, UserDataVo> {

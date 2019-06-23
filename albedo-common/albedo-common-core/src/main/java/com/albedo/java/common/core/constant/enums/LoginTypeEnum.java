@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2018/8/15
  * 社交登录类型
  */

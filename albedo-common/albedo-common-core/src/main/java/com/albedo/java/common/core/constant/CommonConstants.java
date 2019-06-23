@@ -17,7 +17,7 @@
 package com.albedo.java.common.core.constant;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 public interface CommonConstants {

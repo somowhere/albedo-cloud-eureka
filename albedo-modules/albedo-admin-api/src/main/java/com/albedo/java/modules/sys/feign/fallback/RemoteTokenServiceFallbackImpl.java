@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * feign token  fallback
  */

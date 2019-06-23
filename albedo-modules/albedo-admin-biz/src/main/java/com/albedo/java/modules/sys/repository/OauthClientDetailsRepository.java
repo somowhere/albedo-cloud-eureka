@@ -25,7 +25,7 @@ import com.albedo.java.modules.sys.entity.OauthClientDetails;
  * Mapper 接口
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface OauthClientDetailsRepository extends BaseMapper<OauthClientDetails> {

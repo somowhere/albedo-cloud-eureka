@@ -35,5 +35,6 @@
 		<module>albedo-codegen-old</module>
 		<module>albedo-monitor</module>
 		<module>albedo-zipkin</module>
+		<module>albedo-doc</module>
 	</modules>
 </project>

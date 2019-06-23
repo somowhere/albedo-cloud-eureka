@@ -27,7 +27,7 @@ import org.springframework.core.env.Environment;
 import java.net.InetAddress;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2018年06月22日
  * 配置中心
  */

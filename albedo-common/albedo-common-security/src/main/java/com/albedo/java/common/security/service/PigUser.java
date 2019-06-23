@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 扩展用户信息
  */

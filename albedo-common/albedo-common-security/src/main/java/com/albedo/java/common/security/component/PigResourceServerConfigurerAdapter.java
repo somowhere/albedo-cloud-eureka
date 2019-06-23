@@ -21,6 +21,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -31,7 +32,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/03/08
  *
  * <p>
@@ -75,7 +76,6 @@ public class PigResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
 		UserAuthenticationConverter userTokenConverter = new PigUserAuthenticationConverter();
 		accessTokenConverter.setUserTokenConverter(userTokenConverter);
-
 		remoteTokenServices.setRestTemplate(lbRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)

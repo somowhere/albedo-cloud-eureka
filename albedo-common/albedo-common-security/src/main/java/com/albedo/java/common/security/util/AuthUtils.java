@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 认证授权相关工具类
  */

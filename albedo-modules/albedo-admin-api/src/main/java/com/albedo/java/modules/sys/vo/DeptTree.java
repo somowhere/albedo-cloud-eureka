@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  * 部门树
  */

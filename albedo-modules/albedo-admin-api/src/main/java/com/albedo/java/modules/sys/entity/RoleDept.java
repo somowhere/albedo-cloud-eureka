@@ -29,7 +29,7 @@ import lombok.EqualsAndHashCode;
  * 角色与部门对应关系
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 @Data

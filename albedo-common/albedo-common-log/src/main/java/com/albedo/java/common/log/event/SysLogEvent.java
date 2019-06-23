@@ -20,7 +20,7 @@ import com.albedo.java.modules.sys.entity.Log;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @author lengleng
+ * @author somewhere
  * 系统日志事件
  */
 public class SysLogEvent extends ApplicationEvent {

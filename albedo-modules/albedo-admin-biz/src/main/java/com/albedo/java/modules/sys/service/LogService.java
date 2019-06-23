@@ -26,7 +26,7 @@ import com.albedo.java.modules.sys.repository.LogRepository;
  * 日志表 服务类
  * </p>
  *
- * @author lengleng
+ * @author somewhere
  * @since 2019/2/1
  */
 public interface LogService extends DataVoService<LogRepository, Log, Long, LogDataVo> {

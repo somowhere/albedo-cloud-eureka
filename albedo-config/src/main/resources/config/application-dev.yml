@@ -67,7 +67,11 @@ security:
     resource:
       loadBalanced: true
       token-info-uri: http://albedo-auth/oauth/check_token
-
+logging:
+  level:
+    ROOT: DEBUG
+    com.albedo.java: DEBUG
+    org.springframework.cloud.gateway: DEBUG
 # ===================================================================
 # Albedo specific properties
 # ===================================================================

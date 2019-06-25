@@ -16,14 +16,14 @@ import com.albedo.java.docs.config.swagger.ServiceDefinitionsContext;
 @Controller
 public class ServiceDefinitionController {
 	
-	@Autowired
-	private ServiceDefinitionsContext definitionContext;
-	
-	@GetMapping("/service/{servicename}")
-	@ResponseBody
-	public String getServiceDefinition(@PathVariable("servicename") String serviceName){
-		return definitionContext.getSwaggerDefinition(serviceName);
-	}
+//	@Autowired
+//	private ServiceDefinitionsContext definitionContext;
+//
+//	@GetMapping("/service/{servicename}")
+//	@ResponseBody
+//	public String getServiceDefinition(@PathVariable("servicename") String serviceName){
+//		return definitionContext.getSwaggerDefinition(serviceName);
+//	}
 
 	@RequestMapping("/")
 	public String index() {

@@ -19,19 +19,9 @@
 		</dependency>
 		<!--swagger-->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+			<groupId>com.albedo.java</groupId>
+			<artifactId>albedo-swagger-api</artifactId>
+			<version>${project.release.version}</version>
 		</dependency>
 		<!--controller 模块-->
 		<dependency>

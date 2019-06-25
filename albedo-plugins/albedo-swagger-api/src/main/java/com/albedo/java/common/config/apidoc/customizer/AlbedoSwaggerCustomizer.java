@@ -4,16 +4,14 @@ import com.albedo.java.common.config.ApplicationSwaggerProperties;
 import com.google.common.collect.Lists;
 import org.springframework.core.Ordered;
 import org.springframework.http.ResponseEntity;
+import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
     public static final int DEFAULT_ORDER = 0;
@@ -48,26 +46,63 @@ public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
         return this.order;
     }
 
-    private List<ApiKey> securitySchemes() {
-        return Lists.newArrayList(
-            new ApiKey("Authorization", "Authorization", "header"));
+	/**
+	 * 这个类决定了你使用哪种认证方式，我这里使用密码模式
+	 * 其他方式自己摸索一下，完全莫问题啊
+	 */
+	private SecurityScheme securityOauthScheme() {
+		GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(
+			applicationSwaggerProperties.getOauthServer() + "/oauth/token");
+
+		return new OAuthBuilder()
+			.name("spring_oauth")
+			.grantTypes(Collections.singletonList(grantType))
+			.scopes(Arrays.asList(scopes()))
+			.build();
+	}
+
+	/**
+	 * 这里设置 swagger2 认证的安全上下文
+	 */
+	private SecurityContext securityOauthContext() {
+		return SecurityContext.builder()
+			.securityReferences(Collections.singletonList(new SecurityReference("spring_oauth", scopes())))
+			.forPaths(PathSelectors.any())
+			.build();
+	}
+
+	/**
+	 * 这里是写允许认证的scope
+	 */
+	private AuthorizationScope[] scopes() {
+		return new AuthorizationScope[]{
+			new AuthorizationScope("all", "All scope is trusted!")
+		};
+	}
+
+
+    private List<SecurityScheme> securitySchemes() {
+        return Lists.newArrayList(securityOauthScheme()
+//			,new ApiKey("Authorization", "Authorization", "header")
+		);
     }
 
     private List<SecurityContext> securityContexts() {
         return Lists.newArrayList(
-            SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("^(?!auth).*$"))
-                .build()
+			securityOauthContext()
+//			, SecurityContext.builder()
+//                .securityReferences(defaultAuth())
+//                .forPaths(PathSelectors.regex("^(?!auth).*$"))
+//                .build()
         );
     }
 
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global",
-            "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(
-            new SecurityReference("Authorization", authorizationScopes));
-    }
+//    List<SecurityReference> defaultAuth() {
+//        AuthorizationScope authorizationScope = new AuthorizationScope("global",
+//            "accessEverything");
+//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+//        authorizationScopes[0] = authorizationScope;
+//        return Lists.newArrayList(
+//            new SecurityReference("Authorization", authorizationScopes));
+//    }
 }

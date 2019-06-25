@@ -14,3 +14,4 @@ application:
     contactEmail:
     license:
     licenseUrl:
+    oauthServer: http://albedo-gateway:9999

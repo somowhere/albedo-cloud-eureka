@@ -5,7 +5,7 @@ spring:
   application:
     name: albedo-doc
   profiles:
-    active: dev
+    active: dev,swagger
   #配置中心
   cloud:
     config:

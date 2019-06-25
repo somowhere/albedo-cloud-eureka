@@ -1,10 +1,11 @@
 package com.albedo.java.docs.web;
 
+import com.albedo.java.docs.config.swagger.ServiceDefinitionsContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.albedo.java.docs.config.swagger.ServiceDefinitionsContext;
+//import com.albedo.java.docs.config.swagger.ServiceDefinitionsContext;
 
 /**
  * 
@@ -16,14 +17,14 @@ import com.albedo.java.docs.config.swagger.ServiceDefinitionsContext;
 @Controller
 public class ServiceDefinitionController {
 	
-//	@Autowired
-//	private ServiceDefinitionsContext definitionContext;
-//
-//	@GetMapping("/service/{servicename}")
-//	@ResponseBody
-//	public String getServiceDefinition(@PathVariable("servicename") String serviceName){
-//		return definitionContext.getSwaggerDefinition(serviceName);
-//	}
+	@Autowired
+	private ServiceDefinitionsContext definitionContext;
+
+	@GetMapping("/service/{servicename}")
+	@ResponseBody
+	public String getServiceDefinition(@PathVariable("servicename") String serviceName){
+		return definitionContext.getSwaggerDefinition(serviceName);
+	}
 
 	@RequestMapping("/")
 	public String index() {

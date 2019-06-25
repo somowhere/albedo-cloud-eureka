@@ -26,4 +26,5 @@ public class ApplicationSwaggerProperties {
     private String host;
     private String[] protocols = {};
     private boolean useDefaultResponseMessages=true;
+    private String oauthServer="http://albedo-gateway:9999/";
 }

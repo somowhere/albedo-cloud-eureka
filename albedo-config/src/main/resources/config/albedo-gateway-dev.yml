@@ -8,7 +8,7 @@ spring:
         - id: albedo-auth
           uri: lb://albedo-auth
           predicates:
-            - Path=/${application.adminPath}/auth/**
+            - Path=${application.adminPath}/auth/**
           filters:
             # 验证码处理
             - ValidateCodeGatewayFilter
@@ -18,7 +18,7 @@ spring:
         - id: albedo-admin
           uri: lb://albedo-admin
           predicates:
-            - Path=/${application.adminPath}/sys/**
+            - Path=${application.adminPath}/sys/**
           filters:
             # 限流配置
             - name: RequestRateLimiter
@@ -35,7 +35,7 @@ spring:
         - id: albedo-codegen
           uri: lb://albedo-codegen
           predicates:
-            - Path=/${application.adminPath}/gen/**
+            - Path=${application.adminPath}/gen/**
 
 
 security:

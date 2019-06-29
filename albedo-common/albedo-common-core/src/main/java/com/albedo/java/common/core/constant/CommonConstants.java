@@ -137,4 +137,9 @@ public interface CommonConstants {
 
 	String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
 	String SYSTEM = "system";
+
+
+
+	String BASIC_ = "Basic ";
+	String UNKNOWN = "unknown";
 }

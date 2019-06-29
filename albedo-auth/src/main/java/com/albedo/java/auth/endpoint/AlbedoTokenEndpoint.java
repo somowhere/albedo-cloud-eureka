@@ -60,7 +60,7 @@ public class AlbedoTokenEndpoint {
 	private final RedisTemplate redisTemplate;
 
 	/**
-	 * 退出并删除token
+	 * 退出并删除tokenF
 	 *
 	 * @param authHeader Authorization
 	 */

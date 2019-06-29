@@ -67,6 +67,12 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 				return chain.filter(exchange);
 			}
 
+			// swagger，直接向下执行
+			String clientId = request.getQueryParams().getFirst("client_id");
+			if (filterIgnoreProperties.getClients().contains(clientId)) {
+				return chain.filter(exchange);
+			}
+
 			// 终端设置不校验， 直接向下执行
 			try {
 				String[] clientInfos = WebUtils.getClientId(request);

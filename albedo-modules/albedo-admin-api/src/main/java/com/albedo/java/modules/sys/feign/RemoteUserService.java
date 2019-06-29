@@ -39,16 +39,16 @@ public interface RemoteUserService {
 	 * @param from     调用标志
 	 * @return R
 	 */
-	@GetMapping("/user/info/{username}")
+	@GetMapping("${application.adminPath}/sys/user/info/{username}")
 	R<UserInfo> info(@PathVariable("username") String username
 		, @RequestHeader(SecurityConstants.FROM) String from);
 
-	/**
-	 * 通过社交账号查询用户、角色信息
-	 *
-	 * @param inStr appid@code
-	 * @return
-	 */
-	@GetMapping("/social/info/{inStr}")
-	R<UserInfo> social(@PathVariable("inStr") String inStr);
+//	/**
+//	 * 通过社交账号查询用户、角色信息
+//	 *
+//	 * @param inStr appid@code
+//	 * @return
+//	 */
+//	@GetMapping("${application.adminPath}/sys/social/info/{inStr}")
+//	R<UserInfo> social(@PathVariable("inStr") String inStr);
 }

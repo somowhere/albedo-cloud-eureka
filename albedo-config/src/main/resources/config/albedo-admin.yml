@@ -19,4 +19,11 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: true
 
-
+# 直接放行URL
+ignore:
+  urls:
+    - /v2/**
+    - /actuator/**
+  adminUrls:
+    - /sys/user/info/*
+    - /sys/log/**

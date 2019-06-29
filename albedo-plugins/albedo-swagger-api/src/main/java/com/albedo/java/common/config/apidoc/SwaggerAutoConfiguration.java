@@ -3,12 +3,14 @@ package com.albedo.java.common.config.apidoc;
 import com.albedo.java.common.config.ApplicationSwaggerProperties;
 import com.albedo.java.common.config.apidoc.customizer.AlbedoSwaggerCustomizer;
 import com.albedo.java.common.config.apidoc.customizer.SwaggerCustomizer;
+import com.albedo.java.common.core.config.ApplicationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -54,10 +56,12 @@ public class SwaggerAutoConfiguration {
     private final Logger log = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
 
     private final ApplicationSwaggerProperties applicationSwaggerProperties;
+	private final ApplicationProperties applicationProperties;
 
-    public SwaggerAutoConfiguration(ApplicationSwaggerProperties applicationSwaggerProperties) {
+    public SwaggerAutoConfiguration(ApplicationSwaggerProperties applicationSwaggerProperties, ApplicationProperties applicationProperties) {
         this.applicationSwaggerProperties = applicationSwaggerProperties;
-    }
+		this.applicationProperties = applicationProperties;
+	}
 
     /**
      * Springfox configuration for the API Swagger docs.
@@ -95,7 +99,7 @@ public class SwaggerAutoConfiguration {
      */
     @Bean
     public AlbedoSwaggerCustomizer jHipsterSwaggerCustomizer() {
-        return new AlbedoSwaggerCustomizer(applicationSwaggerProperties);
+        return new AlbedoSwaggerCustomizer(applicationSwaggerProperties, applicationProperties);
     }
 
     /**
@@ -110,6 +114,7 @@ public class SwaggerAutoConfiguration {
     @ConditionalOnProperty("management.endpoints.web.base-path")
     @ConditionalOnExpression("'${management.endpoints.web.base-path}'.length() > 0")
     @ConditionalOnMissingBean(name = "swaggerSpringfoxManagementDocket")
+	@RefreshScope
     public Docket swaggerSpringfoxManagementDocket(@Value("${spring.application.name:application}") String appName,
                                                    @Value("${management.endpoints.web.base-path}") String managementContextPath) {
 

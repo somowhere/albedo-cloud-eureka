@@ -58,6 +58,10 @@ public interface SecurityConstants {
 	 * 默认登录URL
 	 */
 	String OAUTH_TOKEN_URL = "/oauth/token";
+	/**
+	 * 默认登录URL
+	 */
+	String OAUTH_URL = "/oauth";
 
 	/**
 	 * grant_type

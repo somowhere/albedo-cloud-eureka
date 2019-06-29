@@ -18,6 +18,7 @@ package com.albedo.java.common.core.util;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.json.JSONUtil;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.CheckedException;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -48,8 +49,6 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @UtilityClass
 public class WebUtils extends org.springframework.web.util.WebUtils {
-	private final String BASIC_ = "Basic ";
-	private final String UNKNOWN = "unknown";
 
 	/**
 	 * 判断是否ajax请求
@@ -176,22 +175,22 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	public String getIP(HttpServletRequest request) {
 		Assert.notNull(request, "HttpServletRequest is null");
 		String ip = request.getHeader("X-Requested-For");
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("X-Forwarded-For");
 		}
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
 		}
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_CLIENT_IP");
 		}
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 		}
-		if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+		if (StringUtils.isBlank(ip) || CommonConstants.UNKNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
 		return StringUtils.isBlank(ip) ? null : ip.split(",")[0];
@@ -206,7 +205,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	public String[] getClientId(ServerHttpRequest request) {
 		String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-		if (header == null || !header.startsWith(BASIC_)) {
+		if (header == null || !header.startsWith(CommonConstants.BASIC_)) {
 			throw new CheckedException("请求头中client信息为空");
 		}
 		byte[] base64Token = header.substring(6).getBytes("UTF-8");

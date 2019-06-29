@@ -12,6 +12,7 @@ spring:
       server:
         native:
           search-locations: classpath:/config/
+        prefix: /config
 
 # 注册中心配置
 eureka:

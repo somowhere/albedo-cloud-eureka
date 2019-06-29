@@ -3,6 +3,7 @@ package com.albedo.java.common.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "application.swagger", ignoreUnknownFields = false)
 @Data
+@RefreshScope
 public class ApplicationSwaggerProperties {
     private String title = "Application API";
     private String description = "API documentation";

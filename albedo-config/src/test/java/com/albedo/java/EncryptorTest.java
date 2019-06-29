@@ -39,7 +39,7 @@ public class EncryptorTest {
 	 * daemon1:/Iy91UUlNl+kA4jqS4IXag==
 	 */
 	@Test
-	public void getPass() {
+	public void encrypt() {
 
 		String albedo = encryptor.encrypt("albedo");
 		String albedo1 = encryptor.encrypt("albedo");
@@ -66,7 +66,18 @@ public class EncryptorTest {
 		System.out.println("daemon:"+daemon);
 		System.out.println("daemon1:"+daemon1);
 
+		String swagger = encryptor.encrypt("swagger");
+		String swagger1 = encryptor.encrypt("swagger");
+		System.out.println("swagger:"+swagger);
+		System.out.println("swagger1:"+swagger1);
 
 	}
+
+	@Test
+	public void decrypt(){
+		System.out.println(encryptor.decrypt("ToJTk3p6JF+h0gsHeHVRoQ=="));
+
+	}
+
 
 }

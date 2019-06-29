@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,7 @@ import java.util.Date;
 /**
  * Created by somewhere on 2017/3/23.
  */
+@RefreshScope
 public class GeneralResource {
 
     /*** 返回消息状态头 type */

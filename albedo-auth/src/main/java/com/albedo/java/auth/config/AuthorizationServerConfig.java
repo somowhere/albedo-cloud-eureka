@@ -16,6 +16,7 @@
 
 package com.albedo.java.auth.config;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.security.component.PigWebResponseExceptionTranslator;
 import com.albedo.java.common.security.service.PigClientDetailsService;
@@ -54,6 +55,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private final UserDetailsService userDetailsService;
 	private final AuthenticationManager authenticationManager;
 	private final RedisConnectionFactory redisConnectionFactory;
+	private final ApplicationProperties applicationProperties;
 
 	@Override
 	@SneakyThrows
@@ -73,8 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-		endpoints
-			.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
+		endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
 			.tokenStore(tokenStore())
 			.tokenEnhancer(tokenEnhancer())
 			.userDetailsService(userDetailsService)

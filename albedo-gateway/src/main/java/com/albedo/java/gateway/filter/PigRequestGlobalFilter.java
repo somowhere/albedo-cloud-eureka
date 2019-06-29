@@ -16,7 +16,10 @@
 
 package com.albedo.java.gateway.filter;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.SecurityConstants;
+import com.albedo.java.common.core.util.StringUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -44,7 +47,10 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.a
  * 支持swagger添加X-Forwarded-Prefix header  （F SR2 已经支持，不需要自己维护）
  */
 @Component
+@AllArgsConstructor
 public class PigRequestGlobalFilter implements GlobalFilter, Ordered {
+
+	private final ApplicationProperties applicationProperties;
 
 	/**
 	 * Process the Web request and (optionally) delegate to the next
@@ -64,8 +70,14 @@ public class PigRequestGlobalFilter implements GlobalFilter, Ordered {
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());
 		String rawPath = request.getURI().getRawPath();
+		if(StringUtil.isNotBlank(applicationProperties.getAdminPath())){
+			rawPath = rawPath.replaceFirst(applicationProperties.getAdminPath(), "");
+		}
 		String newPath = "/" + Arrays.stream(StringUtils.tokenizeToStringArray(rawPath, "/"))
 			.skip(1L).collect(Collectors.joining("/"));
+		if(!newPath.startsWith(SecurityConstants.OAUTH_URL)){
+			newPath = applicationProperties.getAdminPath() +newPath;
+		}
 		ServerHttpRequest newRequest = request.mutate()
 			.path(newPath)
 			.build();

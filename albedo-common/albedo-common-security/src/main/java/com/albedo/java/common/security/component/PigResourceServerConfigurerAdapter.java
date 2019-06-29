@@ -16,6 +16,7 @@
 
 package com.albedo.java.common.security.component;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.config.FilterIgnoreProperties;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,8 @@ public class PigResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	private AccessDeniedHandler pigAccessDeniedHandler;
 	@Autowired
 	private RestTemplate lbRestTemplate;
+	@Autowired
+	private ApplicationProperties applicationProperties;
 
 	/**
 	 * 默认的配置，对外暴露
@@ -67,6 +70,8 @@ public class PigResourceServerConfigurerAdapter extends ResourceServerConfigurer
 			.authorizeRequests();
 		ignorePropertiesConfig.getUrls()
 			.forEach(url -> registry.antMatchers(url).permitAll());
+		ignorePropertiesConfig.getAdminUrls()
+			.forEach(url -> registry.antMatchers(applicationProperties.getAdminPath()+url).permitAll());
 		registry.anyRequest().authenticated()
 			.and().csrf().disable();
 	}

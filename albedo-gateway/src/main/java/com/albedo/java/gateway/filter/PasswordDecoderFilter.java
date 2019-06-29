@@ -23,9 +23,11 @@ import cn.hutool.crypto.Mode;
 import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.http.HttpUtil;
+import com.albedo.java.common.core.config.FilterIgnoreProperties;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -46,11 +48,18 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@RefreshScope
 public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 	private static final String PASSWORD = "password";
 	private static final String KEY_ALGORITHM = "AES";
 	@Value("${security.encode.key:1234567812345678}")
 	private String encodeKey;
+
+	private final FilterIgnoreProperties filterIgnoreProperties;
+
+	public PasswordDecoderFilter(FilterIgnoreProperties filterIgnoreProperties) {
+		this.filterIgnoreProperties = filterIgnoreProperties;
+	}
 
 	private static String decryptAES(String data, String pass) {
 		AES aes = new AES(Mode.CBC, Padding.NoPadding,
@@ -67,6 +76,12 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 
 			// 不是登录请求，直接向下执行
 			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), SecurityConstants.OAUTH_TOKEN_URL)) {
+				return chain.filter(exchange);
+			}
+
+			// swagger，直接向下执行
+			String clientId = request.getQueryParams().getFirst("client_id");
+			if (filterIgnoreProperties.getClients().contains(clientId)) {
 				return chain.filter(exchange);
 			}
 

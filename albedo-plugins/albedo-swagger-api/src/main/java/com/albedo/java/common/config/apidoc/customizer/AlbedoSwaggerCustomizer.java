@@ -1,16 +1,11 @@
 package com.albedo.java.common.config.apidoc.customizer;
 
-import cn.hutool.core.codec.Base64;
 import com.albedo.java.common.config.ApplicationSwaggerProperties;
-import com.albedo.java.common.core.config.ApplicationProperties;
-import com.albedo.java.common.core.constant.CommonConstants;
 import com.google.common.collect.Lists;
 import org.springframework.core.Ordered;
 import org.springframework.http.ResponseEntity;
 import springfox.documentation.builders.OAuthBuilder;
-import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -22,11 +17,9 @@ public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
     public static final int DEFAULT_ORDER = 0;
     private int order = 0;
     private final ApplicationSwaggerProperties applicationSwaggerProperties;
-	private final ApplicationProperties applicationProperties;
 
-    public AlbedoSwaggerCustomizer(ApplicationSwaggerProperties applicationSwaggerProperties, ApplicationProperties applicationProperties) {
+    public AlbedoSwaggerCustomizer(ApplicationSwaggerProperties applicationSwaggerProperties) {
         this.applicationSwaggerProperties = applicationSwaggerProperties;
-		this.applicationProperties = applicationProperties;
 	}
 
     @Override
@@ -60,8 +53,7 @@ public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
 	 */
 	private SecurityScheme securityOauthScheme() {
 		GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(
-			applicationSwaggerProperties.getOauthServer() +
-				applicationProperties.getAdminPath() + "/auth/oauth/token");
+			applicationSwaggerProperties.getOauthServer() + "/oauth/token");
 
 		return new OAuthBuilder()
 			.name("spring_oauth")

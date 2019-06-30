@@ -1,7 +1,7 @@
 
 logging:
   level:
-    ROOT: INFO
+    ROOT: ${logback.loglevel}
     com.albedo.java: DEBUG
 # ===================================================================
 # Albedo specific properties
@@ -12,4 +12,11 @@ application:
   adminPath: /a
   jedisKeyPrefix: albedoBootWebApp
   className: com.albedo.java
-  logPath: target/.logs/${spring.application.name}
+  logPath: target/.logs
+  cors: #By default CORS are not enabled. Uncomment to enable.
+    allowed-origins: "*"
+    allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+    allowed-headers: "*"
+    exposed-headers:
+    allow-credentials: true
+    max-age: 1800

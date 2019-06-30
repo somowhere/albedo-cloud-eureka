@@ -5,7 +5,7 @@ spring:
   application:
     name: albedo-codegen
   profiles:
-    active: dev
+    active: ${spring.profiles.active}
   #配置中心
   cloud:
     config:
@@ -24,6 +24,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://albedo:albedo@albedo-eureka:8761/eureka/
-logging:
-  level:
-    root: info
+#logging:
+#  level:
+#    root: info

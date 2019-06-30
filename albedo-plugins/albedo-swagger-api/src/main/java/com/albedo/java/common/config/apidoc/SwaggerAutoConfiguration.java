@@ -3,7 +3,6 @@ package com.albedo.java.common.config.apidoc;
 import com.albedo.java.common.config.ApplicationSwaggerProperties;
 import com.albedo.java.common.config.apidoc.customizer.AlbedoSwaggerCustomizer;
 import com.albedo.java.common.config.apidoc.customizer.SwaggerCustomizer;
-import com.albedo.java.common.core.config.ApplicationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -56,11 +55,9 @@ public class SwaggerAutoConfiguration {
     private final Logger log = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
 
     private final ApplicationSwaggerProperties applicationSwaggerProperties;
-	private final ApplicationProperties applicationProperties;
 
-    public SwaggerAutoConfiguration(ApplicationSwaggerProperties applicationSwaggerProperties, ApplicationProperties applicationProperties) {
+    public SwaggerAutoConfiguration(ApplicationSwaggerProperties applicationSwaggerProperties) {
         this.applicationSwaggerProperties = applicationSwaggerProperties;
-		this.applicationProperties = applicationProperties;
 	}
 
     /**
@@ -99,7 +96,7 @@ public class SwaggerAutoConfiguration {
      */
     @Bean
     public AlbedoSwaggerCustomizer jHipsterSwaggerCustomizer() {
-        return new AlbedoSwaggerCustomizer(applicationSwaggerProperties, applicationProperties);
+        return new AlbedoSwaggerCustomizer(applicationSwaggerProperties);
     }
 
     /**

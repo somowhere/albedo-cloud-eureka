@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * Properties specific to albedo.
@@ -32,7 +33,12 @@ public class ApplicationProperties {
 	private String className;
 	private String logPath=".logs/";
 
-    public String getAdminPath(String strs) {
+
+	private final CorsConfiguration cors = new CorsConfiguration();
+
+
+
+	public String getAdminPath(String strs) {
         return StringUtil.toAppendStr(adminPath, strs);
     }
 

@@ -14,7 +14,7 @@ spring:
         enabled: true
         service-id: albedo-config
   profiles:
-    active: dev,app,swagger
+    active: ${spring.profiles.active}
   main:
     allow-bean-definition-overriding: true
 # 注册中心配置

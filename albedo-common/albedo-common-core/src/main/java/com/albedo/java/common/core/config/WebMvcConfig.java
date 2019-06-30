@@ -17,11 +17,14 @@
 
 package com.albedo.java.common.core.config;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * @author lengleng
@@ -30,9 +33,29 @@ import java.util.List;
  * 注入自自定义SQL 过滤
  */
 @Configuration
+@Slf4j
+@AllArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(new SqlFilterArgumentResolver());
+
+//	@Override
+//	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+//		argumentResolvers.add(new SqlFilterArgumentResolver());
+//	}
+
+	private final ApplicationProperties applicationProperties;
+
+
+	@Bean
+	public CorsFilter corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = applicationProperties.getCors();
+		if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
+			log.debug("Registering CORS filter");
+			source.registerCorsConfiguration(applicationProperties.getAdminPath("/**"), config);
+			source.registerCorsConfiguration("/oauth/**", config);
+			source.registerCorsConfiguration("/management/**", config);
+			source.registerCorsConfiguration("/v2/api-docs", config);
+		}
+		return new CorsFilter(source);
 	}
 }

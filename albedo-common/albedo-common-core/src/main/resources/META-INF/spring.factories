@@ -6,4 +6,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.albedo.java.common.core.config.FilterIgnoreProperties,\
   com.albedo.java.common.core.exception.GlobalExceptionHandler,\
   com.albedo.java.common.core.util.SpringContextHolder,\
+  com.albedo.java.common.core.config.WebMvcConfig,\
   com.albedo.java.common.core.service.InitCacheDataService

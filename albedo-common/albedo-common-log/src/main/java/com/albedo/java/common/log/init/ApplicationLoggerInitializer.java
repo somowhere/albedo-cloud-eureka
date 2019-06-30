@@ -34,9 +34,10 @@ public class ApplicationLoggerInitializer implements ApplicationContextInitializ
 		ConfigurableEnvironment environment = applicationContext.getEnvironment();
 
 		String logPath = environment.getProperty("application.logPath");
+		String applicationName = environment.getProperty("spring.application.name");
 
 //		String logBase = environment.getProperty("LOGGING_PATH", "logs");
 		// spring boot admin 直接加载日志
-		System.setProperty("logging.file", String.format("%s/debug.log", logPath));
+		System.setProperty("logging.file", String.format("%s/%s/debug.log", logPath, applicationName));
 	}
 }

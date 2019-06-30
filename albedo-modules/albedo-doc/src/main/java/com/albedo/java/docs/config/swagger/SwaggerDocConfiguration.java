@@ -31,11 +31,11 @@ public class SwaggerDocConfiguration {
 	@Autowired
 	private ServiceDefinitionsContext definitionContext;
 
-//	@Bean
-//	@ConditionalOnMissingBean
-//	public RestTemplate configureTempalte(){
-//		return new RestTemplate();
-//	}
+	@Bean
+	@ConditionalOnMissingBean
+	public RestTemplate configureTempalte(){
+		return new RestTemplate();
+	}
 
     @Primary
     @Bean

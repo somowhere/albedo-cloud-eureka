@@ -5,6 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,6 +30,8 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
 
     @TableField(value = GeneralEntity.F_SQL_CREATEDDATE,
 		fill = FieldFill.INSERT)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
     protected LocalDateTime createdDate;
 
     @TableField(value = GeneralEntity.F_SQL_LASTMODIFIEDBY,
@@ -34,6 +40,8 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
 
     @TableField(value = GeneralEntity.F_SQL_LASTMODIFIEDDATE,
 		fill = FieldFill.INSERT_UPDATE)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
     protected LocalDateTime lastModifiedDate;
 
     /*** 默认0，必填，离线乐观锁 */

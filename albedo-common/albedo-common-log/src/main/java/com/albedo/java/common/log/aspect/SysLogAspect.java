@@ -19,7 +19,7 @@ package com.albedo.java.common.log.aspect;
 import com.albedo.java.common.core.util.SpringContextHolder;
 import com.albedo.java.common.log.event.SysLogEvent;
 import com.albedo.java.common.log.util.SysLogUtils;
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

@@ -57,10 +57,20 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 
-#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
+# mybaits-plus配置
 mybatis-plus:
-    #刷新mapper 调试神器
-    refresh-mapper: true
+  mapper-locations: classpath:/mapper/*/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      id-type: UUID
+      field-strategy: NOT_NULL
+      table-underline: true
+      logic-delete-value: -1
+      logic-not-delete-value: 1
+  configuration:
+    map-underscore-to-camel-case: true
+
 # spring security 配置
 security:
   oauth2:

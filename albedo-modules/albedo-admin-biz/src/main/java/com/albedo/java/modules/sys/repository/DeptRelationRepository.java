@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.albedo.java.modules.sys.entity.DeptRelation;
+import com.albedo.java.modules.sys.domain.DeptRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.time.LocalDateTime;
 
 /**
  * <p>

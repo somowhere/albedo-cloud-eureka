@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.sys.entity.Dept;
+import com.albedo.java.modules.sys.domain.Dept;
 
 import java.util.List;
 

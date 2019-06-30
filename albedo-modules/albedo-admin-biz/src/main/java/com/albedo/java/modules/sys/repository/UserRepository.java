@@ -20,7 +20,7 @@ import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.entity.User;
+import com.albedo.java.modules.sys.domain.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

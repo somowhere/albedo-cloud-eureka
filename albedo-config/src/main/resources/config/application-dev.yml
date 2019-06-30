@@ -1,9 +1,8 @@
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
     com.albedo.java: DEBUG
-    org.springframework.cloud.gateway: DEBUG
 # ===================================================================
 # Albedo specific properties
 # ===================================================================

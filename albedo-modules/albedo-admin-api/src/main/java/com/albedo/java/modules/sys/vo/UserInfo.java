@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
-import com.albedo.java.modules.sys.entity.User;
+import com.albedo.java.modules.sys.domain.User;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -20,7 +20,7 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.entity.Dict;
+import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.util.DictUtil;

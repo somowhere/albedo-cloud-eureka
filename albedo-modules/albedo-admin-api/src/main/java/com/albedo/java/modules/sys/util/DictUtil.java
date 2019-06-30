@@ -5,7 +5,7 @@ import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.core.vo.DictQuery;
 import com.albedo.java.common.core.vo.DictResult;
 import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.modules.sys.entity.Dict;
+import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.feign.RemoteDictService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

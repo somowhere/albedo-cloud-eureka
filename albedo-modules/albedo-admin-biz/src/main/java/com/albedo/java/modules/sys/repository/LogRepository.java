@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 
 /**
  * <p>

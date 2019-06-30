@@ -16,8 +16,8 @@
 
 package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.modules.sys.entity.Dept;
-import com.albedo.java.modules.sys.entity.DeptRelation;
+import com.albedo.java.modules.sys.domain.Dept;
+import com.albedo.java.modules.sys.domain.DeptRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

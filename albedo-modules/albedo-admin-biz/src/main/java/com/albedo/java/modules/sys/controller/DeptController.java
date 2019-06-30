@@ -16,7 +16,7 @@
 package com.albedo.java.modules.sys.controller;
 
 import com.albedo.java.common.security.util.SecurityUtils;
-import com.albedo.java.modules.sys.entity.Dept;
+import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;

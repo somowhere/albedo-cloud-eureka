@@ -4,7 +4,7 @@ import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.gen.domain.GenTableColumn;
 
 /**
- * Spring Data JPA repository for the Authority entity.
+ * Spring Data JPA repository for the Authority domain.
  */
 public interface GenTableColumnRepository extends BaseRepository<GenTableColumn> {
 

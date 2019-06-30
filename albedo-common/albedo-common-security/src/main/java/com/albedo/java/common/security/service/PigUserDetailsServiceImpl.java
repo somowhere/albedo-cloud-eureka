@@ -19,7 +19,7 @@ package com.albedo.java.common.security.service;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.modules.sys.vo.UserInfo;
-import com.albedo.java.modules.sys.entity.User;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.feign.RemoteUserService;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;

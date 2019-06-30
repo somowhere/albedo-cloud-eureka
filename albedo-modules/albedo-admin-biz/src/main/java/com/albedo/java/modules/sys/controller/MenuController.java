@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.controller;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.albedo.java.modules.sys.vo.MenuTree;
-import com.albedo.java.modules.sys.entity.Menu;
+import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.vo.MenuVo;
 import com.albedo.java.modules.sys.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;

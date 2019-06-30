@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.persistence.domain.DataEntity;
-import com.albedo.java.common.persistence.domain.IdEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>

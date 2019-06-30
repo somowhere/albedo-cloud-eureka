@@ -18,7 +18,7 @@ package com.albedo.java.modules.sys.repository;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.albedo.java.modules.sys.entity.OauthClientDetails;
+import com.albedo.java.modules.sys.domain.OauthClientDetails;
 
 /**
  * <p>

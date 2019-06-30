@@ -17,11 +17,9 @@
 package com.albedo.java.modules.sys.controller;
 
 
-import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.modules.sys.entity.Dict;
-import com.albedo.java.modules.sys.util.DictUtil;
+import com.albedo.java.modules.sys.domain.Dict;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,8 +30,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

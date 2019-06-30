@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.service;
 
 
-import com.albedo.java.modules.sys.entity.RoleMenu;
+import com.albedo.java.modules.sys.domain.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -149,7 +149,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
         } else {
             entity.setLeaf(true);
         }
-//        checkSave(entity);
+//        checkSave(domain);
         boolean flag = super.saveOrUpdate(entity);
         // 更新子节点 parentIds
         List<T> list = findAllByParentIdsLike((String) entity.getId());

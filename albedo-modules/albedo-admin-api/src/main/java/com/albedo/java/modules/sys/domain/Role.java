@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
-import com.albedo.java.common.persistence.domain.GeneralEntity;
+import com.albedo.java.common.persistence.domain.IdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
- * 角色菜单表
+ * 角色表
  * </p>
  *
  * @author somewhere
@@ -32,17 +33,19 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_role_menu")
-public class RoleMenu extends GeneralEntity<RoleMenu> {
+@TableName("sys_role")
+public class Role extends IdEntity<Role> {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 角色ID
-	 */
-	private String roleId;
-	/**
-	 * 菜单ID
-	 */
-	private String menuId;
+	@NotBlank(message = "角色名称 不能为空")
+	private String roleName;
+
+	@NotBlank(message = "角色标识 不能为空")
+	private String roleCode;
+
+	@NotBlank(message = "角色描述 不能为空")
+	private String roleDesc;
+
+
 }

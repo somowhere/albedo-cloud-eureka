@@ -16,10 +16,8 @@
 
 package com.albedo.java.modules.sys.repository;
 
-import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.sys.entity.Dict;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.albedo.java.modules.sys.domain.Dict;
 
 /**
  * <p>

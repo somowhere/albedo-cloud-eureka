@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.modules.sys.entity.OauthClientDetails;
+import com.albedo.java.modules.sys.domain.OauthClientDetails;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.vo.DeptTree;
-import com.albedo.java.modules.sys.entity.Dept;
+import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.repository.DeptRepository;
 
 import java.util.List;

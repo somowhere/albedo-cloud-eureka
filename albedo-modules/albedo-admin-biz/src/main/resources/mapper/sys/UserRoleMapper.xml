@@ -19,7 +19,7 @@
 <mapper namespace="com.albedo.java.modules.sys.repository.UserRoleRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.UserRole">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.domain.UserRole">
 		<id column="user_id" property="userId"/>
 		<result column="role_id" property="roleId"/>
 	</resultMap>

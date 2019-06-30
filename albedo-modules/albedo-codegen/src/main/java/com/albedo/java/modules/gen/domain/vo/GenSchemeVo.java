@@ -28,13 +28,13 @@ public class GenSchemeVo extends DataEntityVo<String> {
      */
     public static final String CATEGORY_CURD_MANY = "curd_many";
     /**
-     * @Fields CATEGORY_SERVICE : 仅持久层（common/entity）
+     * @Fields CATEGORY_SERVICE : 仅持久层（common/domain）
      */
     public static final String CATEGORY_SERVICE = "common";
     /**
-     * @Fields CATEGORY_CURD : 数据层（entity）
+     * @Fields CATEGORY_CURD : 数据层（domain）
      */
-    public static final String CATEGORY_ENITY = "entity";
+    public static final String CATEGORY_ENITY = "domain";
     /**
      * @Fields CATEGORY_CURD : 树结构表（一体）
      */

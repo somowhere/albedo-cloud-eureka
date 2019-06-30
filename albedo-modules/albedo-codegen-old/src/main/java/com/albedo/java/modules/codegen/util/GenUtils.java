@@ -247,7 +247,7 @@ public class GenUtils {
 		}
 
 		if (template.contains(ENTITY_JAVA_VM)) {
-			return packagePath + "entity" + File.separator + className + ".java";
+			return packagePath + "domain" + File.separator + className + ".java";
 		}
 
 		if (template.contains(MAPPER_JAVA_VM)) {

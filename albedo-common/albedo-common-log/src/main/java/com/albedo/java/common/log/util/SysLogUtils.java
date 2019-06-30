@@ -19,7 +19,7 @@ package com.albedo.java.common.log.util;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import com.albedo.java.common.core.constant.CommonConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;

@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
-import com.albedo.java.common.persistence.domain.TreeEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 菜单权限表
+ * 部门关系表
  * </p>
  *
  * @author somewhere
@@ -39,39 +31,19 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_menu")
-public class Menu extends TreeEntity<Menu> {
+@TableName("sys_deptRelation")
+public class DeptRelation extends Model<DeptRelation> {
 
-	public static final String TYPE_MENU = "0";
-	public static final String TYPE_BUTTON = "1";
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 菜单权限标识
+	 * 祖先节点
 	 */
-	private String permission;
+	private String ancestor;
 	/**
-	 * 图标
+	 * 后代节点
 	 */
-	private String icon;
-	/**
-	 * VUE页面
-	 */
-	private String component;
-	/**
-	 * 菜单类型 （0菜单 1按钮）
-	 */
-	@NotNull(message = "菜单类型不能为空")
-	private String type;
-	/**
-	 * 路由缓冲
-	 */
-	private String keepAlive;
-
-	/**
-	 * 前端URL
-	 */
-	private String path;
+	private String descendant;
 
 
 }

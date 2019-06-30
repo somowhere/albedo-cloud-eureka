@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.feign.fallback;
 
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import com.albedo.java.modules.sys.feign.RemoteLogService;
 import com.albedo.java.common.core.util.R;
 import lombok.Setter;

@@ -18,7 +18,7 @@ package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
-import com.albedo.java.modules.sys.entity.Role;
+import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.repository.RoleRepository;
 
 import java.util.List;

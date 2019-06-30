@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
-import com.albedo.java.common.persistence.domain.IdEntity;
+import com.albedo.java.common.persistence.domain.GeneralEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 角色表
+ * 角色与部门对应关系
  * </p>
  *
  * @author somewhere
@@ -39,19 +33,20 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_role")
-public class Role extends IdEntity<Role> {
+@TableName("sys_role_dept")
+public class RoleDept extends GeneralEntity<RoleDept> {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "角色名称 不能为空")
-	private String roleName;
-
-	@NotBlank(message = "角色标识 不能为空")
-	private String roleCode;
-
-	@NotBlank(message = "角色描述 不能为空")
-	private String roleDesc;
-
+	@TableId(value = "id", type = IdType.UUID)
+	private String id;
+	/**
+	 * 角色ID
+	 */
+	private String roleId;
+	/**
+	 * 部门ID
+	 */
+	private String deptId;
 
 }

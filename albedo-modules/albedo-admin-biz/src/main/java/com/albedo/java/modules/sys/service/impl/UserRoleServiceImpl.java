@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
-import com.albedo.java.modules.sys.entity.UserRole;
+import com.albedo.java.modules.sys.domain.UserRole;
 import com.albedo.java.modules.sys.repository.UserRoleRepository;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.sys.service.UserRoleService;

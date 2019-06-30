@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * Spring Data JPA repository for the Authority entity.
+ * Spring Data JPA repository for the Authority domain.
  */
 public interface GenTableRepository extends BaseRepository<GenTable> {
     /**

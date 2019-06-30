@@ -20,7 +20,7 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.albedo.java.modules.sys.vo.MenuDataVo;
-import com.albedo.java.modules.sys.entity.Menu;
+import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.repository.MenuRepository;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.sys.vo.MenuVo;

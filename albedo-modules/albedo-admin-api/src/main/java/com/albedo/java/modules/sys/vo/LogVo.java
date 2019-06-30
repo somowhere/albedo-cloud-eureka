@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import lombok.Data;
 
 import java.io.Serializable;

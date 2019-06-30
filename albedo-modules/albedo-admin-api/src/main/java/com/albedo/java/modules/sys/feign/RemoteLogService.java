@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.sys.feign;
 
-import com.albedo.java.modules.sys.entity.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;

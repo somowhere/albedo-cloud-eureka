@@ -7,13 +7,12 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
 import com.albedo.java.modules.sys.controller.UserController;
 import com.albedo.java.modules.sys.vo.UserDataVo;
-import com.albedo.java.modules.sys.entity.Dept;
-import com.albedo.java.modules.sys.entity.Role;
-import com.albedo.java.modules.sys.entity.User;
+import com.albedo.java.modules.sys.domain.Dept;
+import com.albedo.java.modules.sys.domain.Role;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.service.UserService;
-import com.albedo.java.modules.sys.util.DictUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -101,7 +100,7 @@ public class UserResourceIntTest {
      * Create a User.
      *
      * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which has a required relationship to the User entity.
+     * if they test an domain which has a required relationship to the User domain.
      */
     public UserDataVo createEntity() {
 		UserDataVo user = new UserDataVo();

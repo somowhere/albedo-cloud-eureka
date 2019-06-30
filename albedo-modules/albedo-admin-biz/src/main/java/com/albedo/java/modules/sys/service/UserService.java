@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.vo.UserInfo;
-import com.albedo.java.modules.sys.entity.User;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

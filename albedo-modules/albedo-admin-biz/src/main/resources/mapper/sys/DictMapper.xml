@@ -20,7 +20,7 @@
 
 <mapper namespace="com.albedo.java.modules.sys.repository.DictRepository">
 
-	<resultMap id="sysDictMap" type="com.albedo.java.modules.sys.entity.Dict">
+	<resultMap id="sysDictMap" type="com.albedo.java.modules.sys.domain.Dict">
 		<id property="id" column="id"/>
 		<result property="value" column="value"/>
 		<result property="label" column="label"/>

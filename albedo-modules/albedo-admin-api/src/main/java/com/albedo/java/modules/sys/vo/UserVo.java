@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.vo;
 
 import com.albedo.java.common.core.vo.DataEntityVo;
-import com.albedo.java.modules.sys.entity.Role;
+import com.albedo.java.modules.sys.domain.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 

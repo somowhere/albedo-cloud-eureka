@@ -20,7 +20,7 @@
 
 <mapper namespace="com.albedo.java.modules.sys.repository.OauthClientDetailsRepository">
 
-	<resultMap id="sysOauthClientDetailsMap" type="com.albedo.java.modules.sys.entity.OauthClientDetails">
+	<resultMap id="sysOauthClientDetailsMap" type="com.albedo.java.modules.sys.domain.OauthClientDetails">
 		<id property="clientId" column="client_id"/>
 		<result property="resourceIds" column="resource_ids"/>
 		<result property="clientSecret" column="client_secret"/>

@@ -19,7 +19,7 @@
 <mapper namespace="com.albedo.java.modules.sys.repository.DeptRelationRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.entity.DeptRelation">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.domain.DeptRelation">
 		<id column="ancestor" property="ancestor"/>
 		<result column="descendant" property="descendant"/>
 	</resultMap>

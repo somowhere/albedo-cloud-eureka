@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.persistence.domain.GeneralEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 用户角色表
+ * 角色菜单表
  * </p>
  *
  * @author somewhere
@@ -32,18 +31,17 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_user_role")
-public class UserRole extends GeneralEntity<UserRole> {
+@TableName("sys_role_menu")
+public class RoleMenu extends GeneralEntity<RoleMenu> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 用户ID
-	 */
-	private String userId;
-	/**
 	 * 角色ID
 	 */
 	private String roleId;
-
+	/**
+	 * 菜单ID
+	 */
+	private String menuId;
 }

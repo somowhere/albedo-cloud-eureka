@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
+import com.albedo.java.common.persistence.domain.GeneralEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 部门关系表
+ * 用户角色表
  * </p>
  *
  * @author somewhere
@@ -31,19 +31,18 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_deptRelation")
-public class DeptRelation extends Model<DeptRelation> {
+@TableName("sys_user_role")
+public class UserRole extends GeneralEntity<UserRole> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 祖先节点
+	 * 用户ID
 	 */
-	private String ancestor;
+	private String userId;
 	/**
-	 * 后代节点
+	 * 角色ID
 	 */
-	private String descendant;
-
+	private String roleId;
 
 }

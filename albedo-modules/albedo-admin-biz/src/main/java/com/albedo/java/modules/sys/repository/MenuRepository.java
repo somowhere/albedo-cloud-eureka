@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.sys.entity.Menu;
+import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.vo.MenuVo;
 
 import java.util.List;

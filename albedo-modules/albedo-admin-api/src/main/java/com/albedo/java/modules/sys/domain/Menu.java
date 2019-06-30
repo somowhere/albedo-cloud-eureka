@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
- * 部门管理
+ * 菜单权限表
  * </p>
  *
  * @author somewhere
@@ -31,8 +33,39 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_Dept")
-public class Dept extends TreeEntity<Dept> {
+@TableName("sys_menu")
+public class Menu extends TreeEntity<Menu> {
+
+	public static final String TYPE_MENU = "0";
+	public static final String TYPE_BUTTON = "1";
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 菜单权限标识
+	 */
+	private String permission;
+	/**
+	 * 图标
+	 */
+	private String icon;
+	/**
+	 * VUE页面
+	 */
+	private String component;
+	/**
+	 * 菜单类型 （0菜单 1按钮）
+	 */
+	@NotNull(message = "菜单类型不能为空")
+	private String type;
+	/**
+	 * 路由缓冲
+	 */
+	private String keepAlive;
+
+	/**
+	 * 前端URL
+	 */
+	private String path;
 
 
 }

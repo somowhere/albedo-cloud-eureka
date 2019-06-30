@@ -22,7 +22,7 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.vo.UserInfo;
-import com.albedo.java.modules.sys.entity.*;
+import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
 import com.albedo.java.modules.sys.vo.MenuVo;

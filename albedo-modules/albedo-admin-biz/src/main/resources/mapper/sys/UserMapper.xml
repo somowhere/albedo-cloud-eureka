@@ -38,7 +38,7 @@
 		<result column="status" property="status"/>
 		<result column="deptId" property="deptId"/>
 		<result column="description" property="deptName"/>
-		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role"
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.domain.Role"
 					select="com.albedo.java.modules.sys.repository.RoleRepository.listRolesByUserId" column="id">
 		</collection>
 	</resultMap>
@@ -64,7 +64,7 @@
 		<result column="status" property="status"/>
 		<result column="deptId" property="deptId"/>
 		<result column="deptName" property="deptName"/>
-		<collection property="roleList" ofType="com.albedo.java.modules.sys.entity.Role">
+		<collection property="roleList" ofType="com.albedo.java.modules.sys.domain.Role">
 			<id column="id" property="id"/>
 			<result column="role_name" property="roleName"/>
 			<result column="role_code" property="roleCode"/>

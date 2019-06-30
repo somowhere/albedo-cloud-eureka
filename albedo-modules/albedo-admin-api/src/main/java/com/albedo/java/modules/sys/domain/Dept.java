@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.entity;
+package com.albedo.java.modules.sys.domain;
 
-import com.albedo.java.common.persistence.domain.GeneralEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 角色与部门对应关系
+ * 部门管理
  * </p>
  *
  * @author somewhere
@@ -34,20 +31,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_role_dept")
-public class RoleDept extends GeneralEntity<RoleDept> {
+@TableName("sys_Dept")
+public class Dept extends TreeEntity<Dept> {
 
-	private static final long serialVersionUID = 1L;
-
-	@TableId(value = "id", type = IdType.UUID)
-	private String id;
-	/**
-	 * 角色ID
-	 */
-	private String roleId;
-	/**
-	 * 部门ID
-	 */
-	private String deptId;
 
 }

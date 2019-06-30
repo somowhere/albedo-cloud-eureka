@@ -32,7 +32,7 @@ public interface BaseRepository<T extends GeneralEntity> extends
 
 	/**
 	 * <p>
-	 * 根据 entity 条件，查询全部记录（并翻页）
+	 * 根据 domain 条件，查询全部记录（并翻页）
 	 * </p>
 	 *
 	 * @param rowBounds 分页查询条件（可以为 RowBounds.DEFAULT）

@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.entity.Dict;
+import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
 
 import java.util.List;

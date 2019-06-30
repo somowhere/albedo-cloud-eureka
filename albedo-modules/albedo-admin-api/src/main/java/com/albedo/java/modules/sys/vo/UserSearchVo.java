@@ -14,34 +14,61 @@
  * limitations under the License.
  */
 
-package com.albedo.java.common.core.datascope;
+package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.vo.DataEntityVo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.HashMap;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author somewhere
  * @date 2019/2/1
- * 数据权限查询参数
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DataScope extends HashMap {
+public class UserSearchVo implements Serializable {
+
+	public static final String F_USERNAME = "username";
+	public static final String F_EMAIL = "email";
 	/**
-	 * 限制范围的字段名称
+	 * 用户名
 	 */
-	private String scopeName = "deptId";
+	private String username;
 
 	/**
-	 * 具体的数据范围
+	 * 锁定标记
 	 */
-	private List<Integer> deptIds;
+	private String lockFlag;
 
 	/**
-	 * 是否只查询本部门
+	 * 邮箱
 	 */
-	private Boolean isOnly = false;
+	private String email;
+	/**
+	 * 电话
+	 */
+	private String phone;
+	/**
+	 * 头像
+	 */
+	private String avatar;
+
+	/**
+	 * 部门ID
+	 */
+	private String deptId;
+
+	/**
+	 * 微信openid
+	 */
+	private String wxOpenid;
+
+	/**
+	 * QQ openid
+	 */
+	private String qqOpenid;
 }

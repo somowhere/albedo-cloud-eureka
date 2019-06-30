@@ -33,8 +33,8 @@ public abstract class LogicAbstractCustomMethod extends AbstractLogicMethod {
 
     protected String sqlWhereEntityWrapper(TableInfo table, String columnPrefix) {
         if (table.isLogicDelete()) {
-            String sqlScript = getAllSqlWhere(table,true, true, "ew.domain.", columnPrefix);
-            sqlScript = SqlScriptUtils.convertIf(sqlScript, String.format("%s != null", "ew.domain"), true);
+            String sqlScript = getAllSqlWhere(table,true, true, "ew.entity.", columnPrefix);
+            sqlScript = SqlScriptUtils.convertIf(sqlScript, String.format("%s != null", "ew.entity"), true);
             sqlScript = sqlScript + "\n"+getLogicDeleteSql(table, false, false, columnPrefix) + "\n";
             String normalSqlScript = SqlScriptUtils.convertIf(String.format("AND ${%s}", "ew.sqlSegment"), String.format("%s != null and %s != '' and %s", "ew.sqlSegment", "ew.sqlSegment", "ew.nonEmptyOfNormal"), true);
             normalSqlScript = normalSqlScript + "\n";
@@ -44,8 +44,8 @@ public abstract class LogicAbstractCustomMethod extends AbstractLogicMethod {
             sqlScript = SqlScriptUtils.convertWhere(sqlScript);
             return "\n" + sqlScript;
         } else {
-            String sqlScript = getAllSqlWhere(table,false, true, "ew.domain.", columnPrefix);
-            sqlScript = SqlScriptUtils.convertIf(sqlScript, String.format("%s != null", "ew.domain"), true);
+            String sqlScript = getAllSqlWhere(table,false, true, "ew.entity.", columnPrefix);
+            sqlScript = SqlScriptUtils.convertIf(sqlScript, String.format("%s != null", "ew.entity"), true);
             sqlScript = sqlScript + "\n";
             sqlScript = sqlScript + SqlScriptUtils.convertIf(String.format(SqlScriptUtils.convertIf(" AND", String.format("%s and %s", "ew.nonEmptyOfEntity", "ew.nonEmptyOfNormal"), false) + " ${%s}", "ew.sqlSegment"), String.format("%s != null and %s != '' and %s", "ew.sqlSegment", "ew.sqlSegment", "ew.nonEmptyOfWhere"), true);
             sqlScript = SqlScriptUtils.convertWhere(sqlScript) + "\n";

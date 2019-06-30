@@ -21,6 +21,7 @@ import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.vo.UserInfo;
 import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.UserRepository;
+import com.albedo.java.modules.sys.vo.UserSearchVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.util.R;
@@ -47,7 +48,7 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 * @param userDataVo 参数列表
 	 * @return
 	 */
-	IPage getUserWithRolePage(Page page, UserDataVo userDataVo);
+	IPage getUserWithRolePage(Page page, UserSearchVo userDataVo);
 
 	/**
 	 * 删除用户
@@ -82,11 +83,4 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 */
 	List<User> listAncestorUsersByUsername(String username);
 
-	/**
-	 * 保存用户信息
-	 *
-	 * @param userDataVo DTO 对象
-	 * @return success/fail
-	 */
-	Boolean saveUser(UserDataVo userDataVo);
 }

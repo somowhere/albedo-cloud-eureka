@@ -21,6 +21,7 @@ import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.User;
+import com.albedo.java.modules.sys.vo.UserSearchVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -153,7 +154,7 @@ public class UserController {
 			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {
 			throw new RuntimeMsgException("邮箱已存在");
 		}
-		userService.saveUser(userDataVo);
+		userService.save(userDataVo);
 		return R.createSuccess("操作成功");
 	}
 
@@ -165,7 +166,7 @@ public class UserController {
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R getUserPage(Page page, UserDataVo userDataVo) {
+	public R getUserPage(Page page, UserSearchVo userDataVo) {
 		return new R<>(userService.getUserWithRolePage(page, userDataVo));
 	}
 

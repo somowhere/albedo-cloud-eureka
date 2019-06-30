@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.vo.TreeEntityVo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,26 +31,14 @@ import java.time.LocalDateTime;
  * @since 2019/2/1
  */
 @Data
-public class MenuVo implements Serializable {
+public class MenuVo extends TreeEntityVo {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 菜单ID
-	 */
-	private String menuId;
-	/**
-	 * 菜单名称
-	 */
-	private String name;
-	/**
 	 * 菜单权限标识
 	 */
 	private String permission;
-	/**
-	 * 父菜单ID
-	 */
-	private String parentId;
 	/**
 	 * 图标
 	 */
@@ -63,10 +52,6 @@ public class MenuVo implements Serializable {
 	 */
 	private String component;
 	/**
-	 * 排序值
-	 */
-	private Integer sort;
-	/**
 	 * 菜单类型 （0菜单 1按钮）
 	 */
 	private String type;
@@ -74,23 +59,11 @@ public class MenuVo implements Serializable {
 	 * 是否缓冲
 	 */
 	private String keepAlive;
-	/**
-	 * 创建时间
-	 */
-	private LocalDateTime createTime;
-	/**
-	 * 更新时间
-	 */
-	private LocalDateTime updateTime;
-	/**
-	 * 0--正常 1--删除
-	 */
-	private String delFlag;
 
 
 	@Override
 	public int hashCode() {
-		return menuId.hashCode();
+		return getId().hashCode();
 	}
 
 	/**
@@ -102,8 +75,8 @@ public class MenuVo implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof MenuVo) {
-			String targetMenuId = ((MenuVo) obj).getMenuId();
-			return menuId.equals(targetMenuId);
+			String targetMenuId = ((MenuVo) obj).getId();
+			return getId().equals(targetMenuId);
 		}
 		return super.equals(obj);
 	}

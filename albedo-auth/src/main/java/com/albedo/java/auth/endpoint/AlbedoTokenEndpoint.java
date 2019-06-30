@@ -32,6 +32,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -76,6 +77,11 @@ public class AlbedoTokenEndpoint {
 			return R.createFailData(Boolean.FALSE,"退出失败，token 无效");
 		}
 		tokenStore.removeAccessToken(accessToken);
+
+		OAuth2RefreshToken refreshToken = accessToken.getRefreshToken();
+		tokenStore.removeRefreshToken(refreshToken);
+
+
 		return R.createSuccessData(Boolean.TRUE);
 	}
 

@@ -18,6 +18,7 @@ package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.albedo.java.modules.sys.vo.UserSearchVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.domain.User;
@@ -49,7 +50,7 @@ public interface UserRepository extends BaseRepository<User> {
 	 * @param userDataVo 查询参数
 	 * @return list
 	 */
-	IPage<List<com.albedo.java.modules.sys.vo.UserVo>> getUserVosPage(Page page, @Param("query") UserDataVo userDataVo);
+	IPage<List<com.albedo.java.modules.sys.vo.UserVo>> getUserVosPage(Page page, @Param("query") UserSearchVo userDataVo);
 
 	/**
 	 * 通过ID查询用户信息

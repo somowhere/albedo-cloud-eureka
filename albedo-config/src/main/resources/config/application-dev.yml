@@ -12,3 +12,4 @@ application:
   adminPath: /a
   jedisKeyPrefix: albedoBootWebApp
   className: com.albedo.java
+  logPath: target/.logs/${spring.application.name}

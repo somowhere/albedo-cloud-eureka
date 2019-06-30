@@ -57,7 +57,7 @@ public class MenuTree extends TreeNode {
 	}
 
 	public MenuTree(MenuVo menuVo) {
-		this.id = menuVo.getMenuId();
+		this.id = menuVo.getId();
 		this.parentId = menuVo.getParentId();
 		this.icon = menuVo.getIcon();
 		this.name = menuVo.getName();

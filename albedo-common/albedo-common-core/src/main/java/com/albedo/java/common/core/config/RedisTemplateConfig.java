@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, 冷冷 (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, 冷冷 (wangiegie@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package com.albedo.java.common.core.config;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +28,15 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @author somewhere
+ * @author lengleng
  * @date 2019/2/1
  * Redis 配置类
  */
 @EnableCaching
 @Configuration
 @AllArgsConstructor
-public class RedisConfig {
+@AutoConfigureBefore(RedisAutoConfiguration.class)
+public class RedisTemplateConfig {
 	private final RedisConnectionFactory factory;
 
 	@Bean

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
-@FeignClient(value = ServiceNameConstants.UMPS_SERVICE,
+@FeignClient(contextId = "remoteMenuService", value = ServiceNameConstants.UMPS_SERVICE,
 	fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteMenuService {
 

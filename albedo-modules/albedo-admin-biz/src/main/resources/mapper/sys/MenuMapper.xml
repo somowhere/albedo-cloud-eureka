@@ -65,7 +65,7 @@
 			sys_menu.*
 		FROM
 			sys_menu
-		LEFT JOIN sys_role_menu ON sys_menu.menu_id = sys_role_menu.menu_id
+		LEFT JOIN sys_role_menu ON sys_menu.id = sys_role_menu.menu_id
 		WHERE
 			sys_menu.status = 1
 		AND sys_role_menu.role_id = #{roleId}

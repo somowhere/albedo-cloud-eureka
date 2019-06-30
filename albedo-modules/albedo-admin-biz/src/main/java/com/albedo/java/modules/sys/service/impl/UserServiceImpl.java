@@ -20,13 +20,10 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.sys.vo.UserDataVo;
-import com.albedo.java.modules.sys.vo.UserInfo;
+import com.albedo.java.modules.sys.vo.*;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
-import com.albedo.java.modules.sys.vo.MenuVo;
-import com.albedo.java.modules.sys.vo.UserVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -66,16 +63,16 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * 保存用户信息
 	 *
 	 * @param userDataVo DTO 对象
-	 * @return success/fail
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
-	public Boolean saveUser(UserDataVo userDataVo) {
+	public void save(UserDataVo userDataVo) {
 		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
 		BeanUtils.copyProperties(userDataVo, user);
 		user.setPassword(ENCODER.encode(userDataVo.getPassword()));
 		super.saveOrUpdate(user);
+		userDataVo.setId(user.getId());
 		List<UserRole> userRoleList = userDataVo.getRoleIdList()
 			.stream().map(roleId -> {
 				UserRole userRole = new UserRole();
@@ -84,7 +81,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 				return userRole;
 			}).collect(Collectors.toList());
 		userRoleService.removeRoleByUserId(user.getId());
-		return userRoleService.saveBatch(userRoleList);
+		userRoleService.saveBatch(userRoleList);
 	}
 
 	/**
@@ -126,7 +123,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return
 	 */
 	@Override
-	public IPage getUserWithRolePage(Page page, UserDataVo userDataVo) {
+	public IPage getUserWithRolePage(Page page, UserSearchVo userDataVo) {
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(page, userDataVo);
 		return userVosPage;
 	}

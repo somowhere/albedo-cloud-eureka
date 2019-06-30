@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.config;
 
-import com.albedo.java.common.core.datascope.DataScopeInterceptor;
+import com.albedo.java.common.persistence.datascope.DataScopeInterceptor;
 import com.albedo.java.common.persistence.handler.EntityMetaObjectHandler;
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;

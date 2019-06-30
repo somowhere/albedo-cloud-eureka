@@ -30,6 +30,7 @@ import java.util.List;
 
 import static com.albedo.java.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -129,7 +130,7 @@ public class UserResourceIntTest {
 		anotherUser.setPhone(DEFAULT_PHONE);
 		anotherUser.setDeptId(deptList.get(0).getId());
 		anotherUser.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
-        userService.saveUser(anotherUser);
+        userService.save(anotherUser);
 	}
 
     @Test
@@ -211,6 +212,22 @@ public class UserResourceIntTest {
                 .andExpect(jsonPath("$.data.phone").value(DEFAULT_PHONE))
                 .andExpect(jsonPath("$.data.email").value(DEFAULT_EMAIL));
     }
+	@Test
+	@Transactional
+	public void getUserInfo() throws Exception {
+		// Initialize the database
+		userService.save(user);
+
+		// Get the user
+		restUserMockMvc.perform(get(DEFAULT_API_URL+"/info/{username}", user.getUsername()))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+			.andExpect(jsonPath("$.data.user.username").value(user.getUsername()))
+			.andExpect(jsonPath("$.data.user.qqOpenid").value(DEFAULT_QQOPENID))
+			.andExpect(jsonPath("$.data.roles").value(equalTo(CollUtil.extractToList(roleList, Role.F_ID))))
+			.andExpect(jsonPath("$.data.permissions").isNotEmpty())
+		;
+	}
 
     @Test
     @Transactional

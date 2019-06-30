@@ -88,7 +88,7 @@ public class MenuController {
 	public List getRoleTree(@PathVariable String roleId) {
 		return menuService.getMenuByRoleId(roleId)
 			.stream()
-			.map(MenuVo::getMenuId)
+			.map(MenuVo::getId)
 			.collect(Collectors.toList());
 	}
 

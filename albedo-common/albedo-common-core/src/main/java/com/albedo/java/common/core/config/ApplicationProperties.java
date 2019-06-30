@@ -30,6 +30,7 @@ public class ApplicationProperties {
     private Boolean cluster = false;
 	private String staticFileDirectory = "";
 	private String className;
+	private String logPath=".logs/";
 
     public String getAdminPath(String strs) {
         return StringUtil.toAppendStr(adminPath, strs);

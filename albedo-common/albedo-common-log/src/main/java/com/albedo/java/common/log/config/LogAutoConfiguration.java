@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, 冷冷 (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, 冷冷 (wangiegie@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.albedo.java.common.log;
+package com.albedo.java.common.log.config;
 
 import com.albedo.java.common.log.event.SysLogListener;
 import com.albedo.java.modules.sys.feign.RemoteLogService;
 import com.albedo.java.common.log.aspect.SysLogAspect;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -35,7 +34,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Configuration
 @AllArgsConstructor
 @ConditionalOnWebApplication
-@EnableFeignClients({"com.albedo.java.admin.api.feign"})
 public class LogAutoConfiguration {
 	private final RemoteLogService remoteLogService;
 

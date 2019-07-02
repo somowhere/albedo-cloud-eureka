@@ -15,8 +15,8 @@ application:
   logPath: target/.logs
   cors: #By default CORS are not enabled. Uncomment to enable.
     allowed-origins: "*"
-    allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+    allowed-methods: "*"
     allowed-headers: "*"
-    exposed-headers:
+    exposed-headers: "Authorization,Link,X-Total-Count"
     allow-credentials: true
     max-age: 1800

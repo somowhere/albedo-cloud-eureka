@@ -17,13 +17,16 @@
 
 package com.albedo.java.common.core.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -34,6 +37,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @Slf4j
+@ConditionalOnClass(WebMvcConfigurer.class)
 @AllArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -43,7 +47,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //	}
 
 	private final ApplicationProperties applicationProperties;
-
 
 	@Bean
 	public CorsFilter corsFilter() {

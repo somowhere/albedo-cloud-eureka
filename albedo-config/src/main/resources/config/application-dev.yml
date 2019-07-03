@@ -9,7 +9,6 @@ logging:
 
 application:
   developMode: true
-  adminPath: /a
   jedisKeyPrefix: albedoBootWebApp
   className: com.albedo.java
   logPath: target/.logs

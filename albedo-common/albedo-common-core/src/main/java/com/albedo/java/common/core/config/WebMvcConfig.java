@@ -54,10 +54,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		CorsConfiguration config = applicationProperties.getCors();
 		if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
 			log.debug("Registering CORS filter");
-			source.registerCorsConfiguration(applicationProperties.getAdminPath("/**"), config);
-			source.registerCorsConfiguration("/oauth/**", config);
-			source.registerCorsConfiguration("/management/**", config);
-			source.registerCorsConfiguration("/v2/api-docs", config);
+			source.registerCorsConfiguration("/**", config);
+//			source.registerCorsConfiguration("/oauth/**", config);
+//			source.registerCorsConfiguration("/management/**", config);
+//			source.registerCorsConfiguration("/v2/api-docs", config);
 		}
 		return new CorsFilter(source);
 	}

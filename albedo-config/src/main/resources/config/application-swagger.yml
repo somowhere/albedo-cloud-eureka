@@ -14,4 +14,4 @@ application:
     contactEmail:
     license:
     licenseUrl:
-    oauthServer: http://albedo-auth:3000
+    oauthServer: http://albedo-gateway:9999/auth/oauth/token

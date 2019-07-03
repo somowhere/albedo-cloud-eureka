@@ -56,6 +56,16 @@
 			<artifactId>albedo-common-core</artifactId>
 			<version>${project.release.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -70,5 +80,18 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- log configuration -->
+				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
+				<!-- default Spring profiles -->
+				<spring.profiles.active>dev,swagger</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 </project>

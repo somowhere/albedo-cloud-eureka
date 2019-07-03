@@ -75,6 +75,11 @@ public interface CommonConstants {
 	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY_";
 
 
+	/**
+	 *
+	 */
+	String SWAGGER_API_URI="/v2/api-docs";
+
 	String SPRING_PROFILE_TEST = "test";
 	String SPRING_PROFILE_DEVELOPMENT = "dev";
 	String SPRING_PROFILE_APP = "prod";

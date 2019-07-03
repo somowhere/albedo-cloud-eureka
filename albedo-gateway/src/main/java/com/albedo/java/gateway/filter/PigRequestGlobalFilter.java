@@ -17,6 +17,8 @@
 package com.albedo.java.gateway.filter;
 
 import com.albedo.java.common.core.config.ApplicationProperties;
+import com.albedo.java.common.core.config.FilterIgnoreProperties;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -51,6 +53,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.a
 public class PigRequestGlobalFilter implements GlobalFilter, Ordered {
 
 	private final ApplicationProperties applicationProperties;
+	private final FilterIgnoreProperties filterIgnoreProperties;
 
 	/**
 	 * Process the Web request and (optionally) delegate to the next
@@ -70,14 +73,8 @@ public class PigRequestGlobalFilter implements GlobalFilter, Ordered {
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());
 		String rawPath = request.getURI().getRawPath();
-		if(StringUtil.isNotBlank(applicationProperties.getAdminPath())){
-			rawPath = rawPath.replaceFirst(applicationProperties.getAdminPath(), "");
-		}
 		String newPath = "/" + Arrays.stream(StringUtils.tokenizeToStringArray(rawPath, "/"))
 			.skip(1L).collect(Collectors.joining("/"));
-		if(!newPath.startsWith(SecurityConstants.OAUTH_URL)){
-			newPath = applicationProperties.getAdminPath() +newPath;
-		}
 		ServerHttpRequest newRequest = request.mutate()
 			.path(newPath)
 			.build();

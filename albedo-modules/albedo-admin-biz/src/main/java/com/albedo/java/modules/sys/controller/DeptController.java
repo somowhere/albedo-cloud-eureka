@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("${application.adminPath}/sys/dept")
+@RequestMapping("/sys/dept")
 public class DeptController {
 	private final DeptService sysDeptService;
 

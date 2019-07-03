@@ -70,8 +70,6 @@ public class PigResourceServerConfigurerAdapter extends ResourceServerConfigurer
 			.authorizeRequests();
 		ignorePropertiesConfig.getUrls()
 			.forEach(url -> registry.antMatchers(url).permitAll());
-		ignorePropertiesConfig.getAdminUrls()
-			.forEach(url -> registry.antMatchers(applicationProperties.getAdminPath()+url).permitAll());
 		registry.anyRequest().authenticated()
 			.and().csrf().disable();
 	}

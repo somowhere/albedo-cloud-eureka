@@ -86,11 +86,10 @@ public class UserResourceIntTest {
 	private List<Dept> deptList;
     @BeforeEach
     public void setup() {
-		DEFAULT_API_URL = applicationProperties.getAdminPath("/sys/user/");
+		DEFAULT_API_URL = "/sys/user/";
 		MockitoAnnotations.initMocks(this);
 		final UserController userController = new UserController(userService);
 		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userController)
-			.addPlaceholderValue("application.adminPath", applicationProperties.getAdminPath())
 			.setControllerAdvice(globalExceptionHandler)
 			.setConversionService(createFormattingConversionService())
 			.setMessageConverters(jacksonMessageConverter)
@@ -232,7 +231,7 @@ public class UserResourceIntTest {
     @Test
     @Transactional
     public void getNonExistingUser() throws Exception {
-        restUserMockMvc.perform(get(applicationProperties.getAdminPath("/sys/user/ddd/unknown")))
+        restUserMockMvc.perform(get("/sys/user/ddd/unknown"))
                 .andExpect(status().isNotFound());
     }
 

@@ -27,7 +27,7 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "${application.adminPath}/gen/genTable")
+@RequestMapping(value = "/gen/genTable")
 public class GenTableResource extends DataVoResource<GenTableService, GenTableVo> {
 
     public GenTableResource(GenTableService service) {

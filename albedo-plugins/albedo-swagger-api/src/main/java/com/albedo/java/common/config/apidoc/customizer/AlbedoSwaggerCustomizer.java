@@ -53,7 +53,7 @@ public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
 	 */
 	private SecurityScheme securityOauthScheme() {
 		GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(
-			applicationSwaggerProperties.getOauthServer() + "/oauth/token");
+			applicationSwaggerProperties.getOauthServer());
 
 		return new OAuthBuilder()
 			.name("spring_oauth")

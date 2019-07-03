@@ -38,7 +38,7 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("${application.adminPath}/sys/client")
+@RequestMapping("/sys/client")
 public class OauthClientDetailsController {
 	private final OauthClientDetailsService oauthClientDetailsService;
 

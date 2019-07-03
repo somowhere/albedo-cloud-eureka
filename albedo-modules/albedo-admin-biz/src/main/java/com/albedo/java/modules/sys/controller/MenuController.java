@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("${application.adminPath}/sys/menu")
+@RequestMapping("/sys/menu")
 public class MenuController {
 	private final MenuService menuService;
 

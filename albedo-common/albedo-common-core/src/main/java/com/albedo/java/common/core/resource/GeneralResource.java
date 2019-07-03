@@ -39,7 +39,7 @@ public class GeneralResource {
     /**
      * 1 管理基础路径
      */
-    @Value("${application.adminPath}")
+    @Value("")
     protected String adminPath;
 
     /**

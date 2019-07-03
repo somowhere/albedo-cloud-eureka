@@ -39,7 +39,7 @@ public interface RemoteUserService {
 	 * @param from     调用标志
 	 * @return R
 	 */
-	@GetMapping("${application.adminPath}/sys/user/info/{username}")
+	@GetMapping("/sys/user/info/{username}")
 	R<UserInfo> info(@PathVariable("username") String username
 		, @RequestHeader(SecurityConstants.FROM) String from);
 
@@ -49,6 +49,6 @@ public interface RemoteUserService {
 //	 * @param inStr appid@code
 //	 * @return
 //	 */
-//	@GetMapping("${application.adminPath}/sys/social/info/{inStr}")
+//	@GetMapping("/sys/social/info/{inStr}")
 //	R<UserInfo> social(@PathVariable("inStr") String inStr);
 }

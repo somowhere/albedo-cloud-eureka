@@ -35,7 +35,7 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("${application.adminPath}/sys/role")
+@RequestMapping("/sys/role")
 public class RoleController {
 	private final RoleService roleService;
 	private final RoleMenuService roleMenuService;

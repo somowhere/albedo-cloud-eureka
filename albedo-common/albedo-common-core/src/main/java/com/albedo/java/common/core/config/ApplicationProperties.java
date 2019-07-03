@@ -21,8 +21,6 @@ import org.springframework.web.cors.CorsConfiguration;
 @RefreshScope
 public class ApplicationProperties {
 
-
-    private String adminPath = "/a";
     private String defaultView;
     private String name = "albedo";
     private String jedisKeyPrefix = "";
@@ -37,14 +35,9 @@ public class ApplicationProperties {
 	private final CorsConfiguration cors = new CorsConfiguration();
 
 
-
-	public String getAdminPath(String strs) {
-        return StringUtil.toAppendStr(adminPath, strs);
-    }
-
-    public String getStaticUrlPath(String strs) {
-        return StringUtil.toAppendStr(adminPath, "/file/get", strs);
-    }
+//    public String getStaticUrlPath(String strs) {
+//        return StringUtil.toAppendStr( "/file/get", strs);
+//    }
 
     public String getStaticFileDirectory(String strs) {
         return StringUtil.toAppendStr(

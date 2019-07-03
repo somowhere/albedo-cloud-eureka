@@ -29,7 +29,7 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "${application.adminPath}/gen/genScheme")
+@RequestMapping(value = "/gen/genScheme")
 public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchemeVo> {
 
     private final GenTableService genTableService;

@@ -44,7 +44,7 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("${application.adminPath}/sys/user")
+@RequestMapping("/sys/user")
 @Log4j2
 public class UserController {
 	private final UserService userService;

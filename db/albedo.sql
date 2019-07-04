@@ -323,7 +323,7 @@ INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', NUL
 INSERT INTO `sys_menu` VALUES ('1101', '用户新增', 'sys_user_add', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:09', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
 INSERT INTO `sys_menu` VALUES ('1102', '用户修改', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:48', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
 INSERT INTO `sys_menu` VALUES ('1103', '用户删除', 'sys_user_del', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:54:01', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/admin/sys/menu/index', '0', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
+INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/admin/menu/index', '0', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
 INSERT INTO `sys_menu` VALUES ('1201', '菜单新增', 'sys_menu_add', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:15:53', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
 INSERT INTO `sys_menu` VALUES ('1202', '菜单修改', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:23', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
 INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:43', NULL, '2019-06-15 10:56:41', 1, NULL, 0);

@@ -56,7 +56,7 @@ axios.interceptors.response.use(res => {
     return Promise.reject(new Error(message))
   }
 
-  return res
+  return res.data
 }, error => {
   NProgress.done()
   return Promise.reject(new Error(error))

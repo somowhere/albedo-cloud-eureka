@@ -1,6 +1,6 @@
 import {getStore, setStore} from '@/util/store'
 import {isURL} from '@/util/validate'
-import {getUserInfo, loginByUsername, logout, refreshToken} from '@/api/login'
+import {getUserInfo, getDicts, loginByUsername, logout, refreshToken} from '@/api/login'
 import {deepClone, encryption} from '@/util/util'
 import webiste from '@/const/website'
 import {GetMenu} from '@/api/admin/menu'
@@ -69,10 +69,18 @@ const user = {
     GetUserInfo({commit}) {
       return new Promise((resolve, reject) => {
         getUserInfo().then((res) => {
-          const data = res.data.data || {}
+          const data = res.data || {}
           commit('SET_USERIFNO', data.sysUser)
           commit('SET_ROLES', data.roles || [])
           commit('SET_PERMISSIONS', data.permissions || [])
+          resolve(data)
+        }).catch((err) => {
+          reject()
+        })
+        getDicts().then((res) => {
+          console.log("dictCodes"+res)
+          const data = res.data || {}
+          commit('SET_DICTS', data)
           resolve(data)
         }).catch((err) => {
           reject()
@@ -133,7 +141,7 @@ const user = {
             }) {
       return new Promise(resolve => {
         GetMenu().then((res) => {
-          const data = res.data.data
+          const data = res.data
           let menu = deepClone(data)
           menu.forEach(ele => {
             addPath(ele)
@@ -172,6 +180,9 @@ const user = {
     },
     SET_USERIFNO: (state, userInfo) => {
       state.userInfo = userInfo
+    },
+    SET_DICTS: (state, dicts) => {
+      state.dicts = dicts
     },
     SET_MENU: (state, menu) => {
       state.menu = menu

@@ -52,6 +52,12 @@ export const getUserInfo = () => {
   })
 }
 
+export const getDicts = () => {
+  return request({
+    url: '/admin/sys/dict/codes',
+    method: 'get'
+  })
+}
 export const logout = () => {
   return request({
     url: '/auth/token/logout',

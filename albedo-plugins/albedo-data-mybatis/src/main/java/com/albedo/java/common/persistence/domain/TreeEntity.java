@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 public class TreeEntity<T extends TreeEntity> extends IdEntity<T> {
 
-    public static final String ROOT = "1";
+    public static final String ROOT = "-1";
     public static final String F_NAME = "name";
     public static final String F_PARENTID = "parentId";
     public static final String F_PARENTIDS = "parentIds";

@@ -64,8 +64,7 @@
 		</filter>
 	</appender>
 
-<!--	<logger name="org.springframework.web" level="TRACE"/>-->
-	<logger name="org.springframework" level="DEBUG"/>
+	<logger name="org.springframework.web" level="TRACE"/>
 	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
 	<root level="INFO">
 		<appender-ref ref="console"/>

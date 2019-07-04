@@ -46,7 +46,7 @@ public class TreeUtil {
 			}
 
 			for (T it : treeNodes) {
-				if (it.getParentId() == treeNode.getId()) {
+				if (it.getParentId().equals(treeNode.getId())) {
 					if (treeNode.getChildren() == null) {
 						treeNode.setChildren(new ArrayList<>());
 					}
@@ -98,7 +98,7 @@ public class TreeUtil {
 	 * @param root
 	 * @return
 	 */
-	public List<MenuTree> buildTree(List<Menu> menus, int root) {
+	public List<MenuTree> buildTree(List<Menu> menus, String root) {
 		List<MenuTree> trees = new ArrayList<>();
 		MenuTree node;
 		for (Menu menu : menus) {

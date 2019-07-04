@@ -39,6 +39,6 @@ public interface RemoteLogService {
 	 * @param from   内部调用标志
 	 * @return succes、false
 	 */
-	@PostMapping("/log")
+	@PostMapping("/sys/log")
 	R<Boolean> saveLog(@RequestBody Log log, @RequestHeader(SecurityConstants.FROM) String from);
 }

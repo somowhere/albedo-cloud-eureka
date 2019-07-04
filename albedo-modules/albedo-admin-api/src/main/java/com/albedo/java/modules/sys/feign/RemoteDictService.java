@@ -16,11 +16,11 @@ import java.util.List;
 	fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteDictService {
 
-	@GetMapping("/dict/type/{code}")
+	@GetMapping("/sys/dict/type/{code}")
 	R<List<Dict>> getDictByCode(@PathVariable("code") String code
 		, @RequestHeader(SecurityConstants.FROM) String from);
 
 
-	@GetMapping("/dict/all")
+	@GetMapping("/sys/dict/all")
 	R<List<Dict>> getDictAll(@RequestHeader(SecurityConstants.FROM) String from);
 }

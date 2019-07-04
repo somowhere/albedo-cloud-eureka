@@ -17,7 +17,7 @@ import java.util.List;
 	fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteMenuService {
 
-	@GetMapping("/menu/gen")
+	@GetMapping("/sys/menu/gen")
 	R<List<Dict>> saveByGenScheme(@RequestBody GenSchemeDataVo genSchemeDataVo
 		, @RequestHeader(SecurityConstants.FROM) String from);
 

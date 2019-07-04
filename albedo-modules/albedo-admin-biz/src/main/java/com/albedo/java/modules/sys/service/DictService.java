@@ -37,4 +37,6 @@ public interface DictService  extends TreeVoService<DictRepository, Dict, DictDa
 	List<Dict> findAllByStatusOrderBySortAsc(Integer status);
 	Map<String, List<SelectResult>> findCodeStr(String codes);
 	Map<String, List<SelectResult>> findCodes(String... codes);
+
+	List<Dict> getAll();
 }

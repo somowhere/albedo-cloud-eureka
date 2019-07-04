@@ -154,6 +154,6 @@ public class DeptServiceImpl  extends
 				node.setName(dept.getName());
 				return node;
 			}).collect(Collectors.toList());
-		return TreeUtil.buildByLoop(treeList, 0);
+		return TreeUtil.buildByLoop(treeList, Dept.ROOT);
 	}
 }

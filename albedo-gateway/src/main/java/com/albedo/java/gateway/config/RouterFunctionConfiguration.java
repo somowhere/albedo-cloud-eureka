@@ -53,9 +53,9 @@ public class RouterFunctionConfiguration {
 			.andRoute(RequestPredicates.GET("/swagger-resources")
 				.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler)
 			.andRoute(RequestPredicates.GET("/swagger-resources/configuration/ui")
-				.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler)
+				.and(RequestPredicates.accept(MediaType.ALL)), swaggerUiHandler)
 			.andRoute(RequestPredicates.GET("/swagger-resources/configuration/security")
-				.and(RequestPredicates.accept(MediaType.ALL)), swaggerResourceHandler);
+				.and(RequestPredicates.accept(MediaType.ALL)), swaggerSecurityHandler);
 
 	}
 

@@ -5,6 +5,8 @@ ignore:
   urls:
     - /v2/**
     - /actuator/**
-  adminUrls:
     - /sys/user/info/*
+    - /sys/dict/type/*
+    - /sys/dict/all
+    - /sys/menu/gen
     - /sys/log/**

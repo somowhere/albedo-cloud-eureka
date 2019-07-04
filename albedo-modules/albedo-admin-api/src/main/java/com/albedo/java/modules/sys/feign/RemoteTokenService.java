@@ -38,7 +38,7 @@ public interface RemoteTokenService {
 	 * @param from   内部调用标志
 	 * @return page
 	 */
-	@PostMapping("/token/page")
+	@PostMapping("/sys/token/page")
 	R getTokenPage(@RequestBody Map<String, Object> params, @RequestHeader(SecurityConstants.FROM) String from);
 
 	/**
@@ -48,6 +48,6 @@ public interface RemoteTokenService {
 	 * @param from  调用标志
 	 * @return
 	 */
-	@DeleteMapping("/token/{token}")
+	@DeleteMapping("/sys/token/{token}")
 	R<Boolean> removeToken(@PathVariable("token") String token, @RequestHeader(SecurityConstants.FROM) String from);
 }

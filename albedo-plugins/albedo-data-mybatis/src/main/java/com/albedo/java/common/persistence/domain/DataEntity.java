@@ -30,8 +30,6 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
 
     @TableField(value = GeneralEntity.F_SQL_CREATEDDATE,
 		fill = FieldFill.INSERT)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
     protected LocalDateTime createdDate;
 
     @TableField(value = GeneralEntity.F_SQL_LASTMODIFIEDBY,
@@ -40,8 +38,6 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
 
     @TableField(value = GeneralEntity.F_SQL_LASTMODIFIEDDATE,
 		fill = FieldFill.INSERT_UPDATE)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
     protected LocalDateTime lastModifiedDate;
 
     /*** 默认0，必填，离线乐观锁 */

@@ -266,7 +266,7 @@ public class GenTableVo extends DataEntityVo<String> {
      */
     public Boolean getCreateTimeExists() {
         for (GenTableColumnVo c : columnList) {
-            if ("create_time".equals(c.getName())) {
+            if ("created_time".equals(c.getName())) {
                 return true;
             }
         }

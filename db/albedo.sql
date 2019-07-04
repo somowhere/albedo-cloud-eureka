@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80016
+ Source Server Version : 50725
  Source Host           : localhost:3306
  Source Schema         : albedo
 
  Target Server Type    : MySQL
- Target Server Version : 80016
+ Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 21/06/2019 12:45:58
+ Date: 04/07/2019 17:15:02
 */
 
 SET NAMES utf8mb4;
@@ -165,9 +165,9 @@ CREATE TABLE `sys_dept`  (
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES ('1', '0', NULL, '山东农信', NULL, b'0', '', '2018-01-22 19:00:23', NULL, '2019-06-15 10:56:41', 1, 0, '');
+INSERT INTO `sys_dept` VALUES ('1', '-1', NULL, '山东农信', NULL, b'0', '', '2018-01-22 19:00:23', NULL, '2019-07-04 16:57:18', 1, 0, '');
 INSERT INTO `sys_dept` VALUES ('10', '8', NULL, '院校沙县', NULL, b'0', '', '2018-12-10 21:19:26', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('2', '0', NULL, '沙县国际', NULL, b'0', '', '2018-01-22 19:00:38', NULL, '2019-06-15 10:56:41', 1, 0, '');
+INSERT INTO `sys_dept` VALUES ('2', '-1', NULL, '沙县国际', NULL, b'0', '', '2018-01-22 19:00:38', NULL, '2019-07-04 16:57:22', 1, 0, '');
 INSERT INTO `sys_dept` VALUES ('3', '1', NULL, '潍坊农信', NULL, b'0', '', '2018-01-22 19:00:44', NULL, '2019-06-15 10:56:41', 1, 0, '');
 INSERT INTO `sys_dept` VALUES ('4', '3', NULL, '高新农信', NULL, b'0', '', '2018-01-22 19:00:52', NULL, '2019-06-15 10:56:41', 1, 0, '');
 INSERT INTO `sys_dept` VALUES ('5', '4', NULL, '院校农信', NULL, b'0', '', '2018-01-22 19:00:57', NULL, '2019-06-15 10:56:41', 1, 0, '');
@@ -266,7 +266,7 @@ CREATE TABLE `sys_log`  (
   `params` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '操作提交的数据',
   `time` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行时间',
   `exception` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '异常信息',
-  `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+  `created_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `created_date` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
@@ -274,7 +274,7 @@ CREATE TABLE `sys_log`  (
   `status` int(2) NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `sys_log_create_by`(`create_by`) USING BTREE,
+  INDEX `sys_log_create_by`(`created_by`) USING BTREE,
   INDEX `sys_log_request_uri`(`request_uri`) USING BTREE,
   INDEX `sys_log_type`(`type`) USING BTREE,
   INDEX `sys_log_create_date`(`created_date`) USING BTREE
@@ -363,19 +363,19 @@ INSERT INTO `sys_menu` VALUES ('9999', '系统官网', NULL, 'https://pig4cloud.
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oauth_client_details`;
 CREATE TABLE `sys_oauth_client_details`  (
-  `client_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `scope` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `authorized_grant_types` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `authorities` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `client_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `scope` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `authorized_grant_types` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `authorities` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `access_token_validity` int(11) NULL DEFAULT NULL,
   `refresh_token_validity` int(11) NULL DEFAULT NULL,
-  `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   PRIMARY KEY (`client_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '终端信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '终端信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oauth_client_details
@@ -384,7 +384,7 @@ INSERT INTO `sys_oauth_client_details` VALUES ('albedo', NULL, 'albedo', 'server
 INSERT INTO `sys_oauth_client_details` VALUES ('app', NULL, 'app', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 INSERT INTO `sys_oauth_client_details` VALUES ('daemon', NULL, 'daemon', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 INSERT INTO `sys_oauth_client_details` VALUES ('gen', NULL, 'gen', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('test', NULL, 'test', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_details` VALUES ('swagger', NULL, 'swagger', 'all', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -525,7 +525,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$RpFJjxYiXdEsAGnWp/8fsOetMuOON96Ntk/Ym2M/RKRyU0GZseaDC', NULL, '17034642999', NULL, '', '1', '0', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '', '2018-04-20 07:15:18', NULL, '2019-06-15 10:51:17', 1, NULL, 0);
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$4IPlLRSEhiCiDlEUYVACteSJOjphUjpq6wfff1WqdGuJY00xEVdBa', NULL, '17034642999', NULL, '', '1', '0', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '', '2018-04-20 07:15:18', NULL, '2019-07-04 13:18:23', 1, NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_user_role

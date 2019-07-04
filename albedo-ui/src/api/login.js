@@ -47,7 +47,7 @@ export const refreshToken = (refresh_token) => {
 
 export const getUserInfo = () => {
   return request({
-    url: '/admin/user/info',
+    url: '/admin/sys/user/info',
     method: 'get'
   })
 }

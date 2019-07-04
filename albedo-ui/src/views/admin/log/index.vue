@@ -71,7 +71,7 @@
       getList(page, params) {
         this.tableLoading = true
         fetchList(Object.assign({
-          descs: 'create_time',
+          descs: 'created_date',
           current: page.currentPage,
           size: page.pageSize
         }, params)).then(response => {

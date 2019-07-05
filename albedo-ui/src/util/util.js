@@ -284,3 +284,42 @@ export const randomLenNum = (len, date) => {
   if (date) random = random + Date.now()
   return random
 }
+
+export const parseJsonItemForm = function (formItems) {
+  var i = 0, json_list = [];
+  if(validateNull(formItems)){
+    return null;
+  }
+  let option =
+    formItems.forEach(item => {
+      var filterItem={}
+      if(item instanceof String){
+        filterItem = {
+          format:'',
+          fieldName:item,
+          attrType:'String',
+          fieldNode:'',
+          operate:'like',
+          weight:0,
+          value:formItems[item],
+          endValue:'',
+        }
+      }else{
+        filterItem = Object.assign({
+          format:'',
+          fieldName:'',
+          attrType:'String',
+          fieldNode:'',
+          operate:'like',
+          weight:0,
+          value:'',
+          endValue:'',
+        }, item)
+      }
+
+      if(validateNotNull(filterItem.value)){
+        json_list[i++] = filterItem;
+      }
+    })
+  return JSON.stringify(json_list);
+}

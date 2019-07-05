@@ -7,12 +7,12 @@ import org.apache.commons.lang.StringEscapeUtils;
 @Data
 public class PageModel<T> extends Page<T> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 查询条件json
-     */
-    private String queryConditionJson;
+	/**
+	 * 查询条件json
+	 */
+	private String queryConditionJson;
 
 
 	public void setQueryConditionJson(String queryConditionJson) {

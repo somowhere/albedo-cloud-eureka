@@ -38,6 +38,7 @@ public class PigUser extends User {
 	/**
 	 * 部门ID
 	 */
+	@Getter
 	private String deptId;
 
 	/**
@@ -66,11 +67,4 @@ public class PigUser extends User {
 		this.deptId = deptId;
 	}
 
-	public String getDeptId() {
-		return deptId;
-	}
-
-	public void setDeptId(String deptId) {
-		this.deptId = deptId;
-	}
 }

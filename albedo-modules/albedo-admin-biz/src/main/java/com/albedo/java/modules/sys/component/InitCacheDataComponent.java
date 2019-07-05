@@ -1,4 +1,4 @@
-package com.albedo.java.common.core.service;
+package com.albedo.java.modules.sys.component;
 
 
 import com.albedo.java.common.core.util.CollUtil;
@@ -12,16 +12,17 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
-@Service
+@Component
 @Slf4j
 @AllArgsConstructor
-public class InitCacheDataService implements InitializingBean {
+public class InitCacheDataComponent implements InitializingBean {
 
 	private final Environment environment;
 	private final CacheManager cacheManager;

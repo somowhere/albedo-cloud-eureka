@@ -1,6 +1,7 @@
 package com.albedo.java.common.config;
 
 import com.albedo.java.common.core.annotation.DictType;
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
@@ -111,7 +112,12 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 	private List<SelectResult> getCodeItemData(String code) {
 		List<SelectResult> jobj = codeItemData.get(code);
 		if (jobj == null) {
-			codeItemData.putAll(DictUtil.getSelectResultListByCodes(code));
+			Map<String, List<SelectResult>> selectResultListByCodes = DictUtil.getSelectResultListByCodes(code);
+			if(CollUtil.isNotEmpty(selectResultListByCodes)){
+				codeItemData.putAll(selectResultListByCodes);
+			}else{
+				log.warn("can not find code {} dict data ", code);
+			}
 		}
 		jobj = codeItemData.get(code);
 		return jobj;

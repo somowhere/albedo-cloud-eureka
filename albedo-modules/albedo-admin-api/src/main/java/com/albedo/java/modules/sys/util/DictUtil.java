@@ -338,6 +338,9 @@ public class DictUtil {
 	}
     public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
+		if(ObjectUtil.isEmpty(dictList)){
+			return map;
+		}
 		List<Dict> dictCodes = Lists.newArrayList();
 		if(ObjectUtil.isEmpty(codes)){
 			for(Dict dict : dictList){

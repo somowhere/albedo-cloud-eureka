@@ -148,4 +148,10 @@ public interface CommonConstants {
 
 	String BASIC_ = "Basic ";
 	String UNKNOWN = "unknown";
+
+
+
+
+	String MYSQL_QUOTE="`";
+	String ORACLE_QUOTE="\"";
 }

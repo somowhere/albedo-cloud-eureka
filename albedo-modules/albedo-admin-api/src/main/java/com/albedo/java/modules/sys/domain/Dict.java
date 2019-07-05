@@ -17,6 +17,7 @@
 package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.core.annotation.DictType;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.baomidou.mybatisplus.annotation.*;
@@ -45,7 +46,7 @@ public class Dict extends TreeEntity<Dict> {
 	public static final String F_VAL = "val";
 	public static final String F_SHOW = "show";
 	public static final String F_SQL_SHOW = "show";
-	public static final String CACHE_GET_DICT_ALL = "getDictAll";
+	public static final String CACHE_GET_DICT_ALL = "'getDictAll'";
 	public static final String CACHE_DICT_DETAILS = "dict_details";
 	/**
 	 * 数据值
@@ -58,7 +59,7 @@ public class Dict extends TreeEntity<Dict> {
 	@NotBlank(message = "字典项数据类型不能为空")
 	private String code;
 	@NotNull
-	@TableField(F_SQL_SHOW)
+	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
 	@DictType("sys_yes_no")
 	private Integer show = 1;
 	/**

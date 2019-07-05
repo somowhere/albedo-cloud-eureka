@@ -1,12 +1,11 @@
 package com.albedo.java.modules.sys.util;
 
-import com.albedo.java.common.core.constant.SecurityConstants;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.core.vo.DictQuery;
 import com.albedo.java.common.core.vo.DictResult;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.modules.sys.domain.Dict;
-import com.albedo.java.modules.sys.feign.RemoteDictService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
@@ -21,13 +20,12 @@ import java.util.Map;
  * 2015年1月27日 上午9:52:55
  */
 public class DictUtil {
-    public static RemoteDictService remoteDictService = SpringContextHolder.getBean(RemoteDictService.class);
 	public static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
 
 	/**
 	 * 业务数据
 	 */
-	private static final String DICT_BIZPARENT_ID = "28a368fdbbd44a7a99af28d01b12c089";
+	private static final String DICT_BIZPARENT_ID = "1";
 	private static final String DICT_SYSPARENT_ID = "5ea249bb780348eb8ea6a0efade684a6";
     /**
      * 获取ehcache中所有字典对象
@@ -37,10 +35,7 @@ public class DictUtil {
 		if (cache != null && cache.get(Dict.CACHE_GET_DICT_ALL) != null) {
 			return (List<Dict>) cache.get(Dict.CACHE_GET_DICT_ALL).get();
 		}
-		R<List<Dict>> result = remoteDictService.getDictAll(SecurityConstants.FROM_IN);
-		List<Dict> dictList = result.getData();
-		cache.put(Dict.CACHE_GET_DICT_ALL, dictList);
-        return dictList;
+		return null;
     }
 
     /**
@@ -338,11 +333,11 @@ public class DictUtil {
         }
         return rsList;
     }
-
-    public static Map<String,List<SelectResult>> getSelectResultListByCodes(String... codes) {
+	public static Map<String,List<SelectResult>> getSelectResultListByCodes(String... codes) {
+    	return getSelectResultListByCodes(DictUtil.getDictList(), codes);
+	}
+    public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
-		//业务参数
-		List<Dict> dictList = DictUtil.getDictList();
 		List<Dict> dictCodes = Lists.newArrayList();
 		if(ObjectUtil.isEmpty(codes)){
 			for(Dict dict : dictList){
@@ -377,7 +372,7 @@ public class DictUtil {
 		List<SelectResult> list = Lists.newLinkedList();
 		if(CollUtil.isNotEmpty(dictList)){
 			for(Dict item : dictList){
-				if(StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dict.getId())){
+				if(CommonConstants.YES.equals(item.getShow()) && StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dict.getId())){
 					list.add(new SelectResult(item.getVal(), item.getName(), item.getVersion()));
 				}
 			}

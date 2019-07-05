@@ -3,6 +3,7 @@
  */
 package com.albedo.java.common.persistence.domain;
 
+import com.albedo.java.common.core.annotation.DictType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 
@@ -17,6 +18,7 @@ public abstract class BaseEntity<T extends GeneralEntity> extends GeneralEntity<
     private static final long serialVersionUID = 1L;
     @TableField(value = GeneralEntity.F_STATUS)
     @TableLogic(delval = "-1")
+	@DictType("sys_status")
     protected int status;
 
     public BaseEntity() {

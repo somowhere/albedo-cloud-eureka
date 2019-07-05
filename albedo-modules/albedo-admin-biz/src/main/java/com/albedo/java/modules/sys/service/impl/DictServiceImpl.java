@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.base.BaseInit;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.R;
@@ -48,8 +49,9 @@ import java.util.Map;
  * @since 2019/2/1
  */
 @Service
+@BaseInit
 public class DictServiceImpl extends
-	TreeVoServiceImpl<DictRepository, Dict, DictDataVo> implements DictService, InitializingBean {
+	TreeVoServiceImpl<DictRepository, Dict, DictDataVo> implements DictService {
 
 	@Autowired
 	private CacheManager cacheManager;
@@ -64,25 +66,25 @@ public class DictServiceImpl extends
 		return findCodes(StringUtil.isNotEmpty(codes) ?
 			codes.split(StringUtil.SPLIT_DEFAULT) : null);
 	}
+
+	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+Dict.CACHE_DICT_RESULT_ALL+"'")
 	public Map<String,List<SelectResult>> findCodes(String... codes) {
 		return DictUtil.getSelectResultListByCodes(getAll(), codes);
 	}
 
 	@Override
-	@Cacheable(value = Dict.CACHE_DICT_DETAILS, key=Dict.CACHE_GET_DICT_ALL)
 	public List<Dict> getAll() {
 		return list(Wrappers
 			.<Dict>query().lambda()
 			.ne(Dict::getStatus, Dict.FLAG_DELETE));
 	}
 
-
-	@Override
 	public void afterPropertiesSet() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
-		if (cache == null || cache.get(Dict.CACHE_GET_DICT_ALL) == null || ObjectUtil.isEmpty(cache.get(Dict.CACHE_GET_DICT_ALL))) {
+		if (cache == null || cache.get(Dict.CACHE_DICT_ALL) == null ||
+			ObjectUtil.isEmpty(cache.get(Dict.CACHE_DICT_ALL))) {
 			List<Dict> dictList = getAll();
-			cache.put(Dict.CACHE_GET_DICT_ALL, dictList);
+			cache.put(Dict.CACHE_DICT_ALL, dictList);
 		}
 	}
 }

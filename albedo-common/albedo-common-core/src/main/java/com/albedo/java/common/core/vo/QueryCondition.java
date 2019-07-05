@@ -1,5 +1,6 @@
 package com.albedo.java.common.core.vo;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.SecuritySqlUtil;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class QueryCondition implements Comparable<QueryCondition>, java.io.Seria
     /**
      * 操作符
      */
-    private Operator operate;
+    private Operator operate = Operator.like;
     /**
      * 值类型
      */
@@ -371,6 +372,14 @@ public class QueryCondition implements Comparable<QueryCondition>, java.io.Seria
          * 类似
          */
         like("like"),
+		/**
+		 * 类似
+		 */
+		likeLeft("likeLeft"),
+		/**
+		 * 类似
+		 */
+		likeRight("likeRight"),
         /**
          * 类似
          */

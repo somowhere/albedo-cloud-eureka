@@ -130,7 +130,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 */
 	@Override
 	public PageModel getUserWithRolePage(PageModel pm) {
-		Wrapper wrapper = QueryWrapperUtil.getWrapperByPageMode(pm, getPersistentClass());
+		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
 		return (PageModel) userVosPage;
 	}
@@ -142,7 +142,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return 用户信息
 	 */
 	@Override
-	public com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id) {
+	public UserVo getUserVoById(String id) {
 		UserVo userVo = baseMapper.getUserVoById(id);
 		return userVo;
 	}

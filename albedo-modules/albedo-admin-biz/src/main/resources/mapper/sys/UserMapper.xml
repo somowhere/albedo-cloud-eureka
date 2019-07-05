@@ -80,24 +80,24 @@
 	</resultMap>
 
 	<sql id="userRoleSql">
-		`user`.id,
-		`user`.username,
-		`user`.`password`,
-		`user`.salt,
-		`user`.phone,
-		`user`.email,
-		`user`.avatar,
-		`user`.wx_openid,
-		`user`.qq_openid,
-		`user`.created_by,
-		`user`.created_date,
-		`user`.last_modified_by,
-		`user`.last_modified_date,
-		`user`.description,
-		`user`.version,
-		`user`.status,
-		`user`.lock_flag AS lock_flag,
-		`user`.dept_id AS deptId,
+		a.id,
+		a.username,
+		a.`password`,
+		a.salt,
+		a.phone,
+		a.email,
+		a.avatar,
+		a.wx_openid,
+		a.qq_openid,
+		a.created_by,
+		a.created_date,
+		a.last_modified_by,
+		a.last_modified_date,
+		a.description,
+		a.version,
+		a.status,
+		a.lock_flag AS lock_flag,
+		a.dept_id AS deptId,
 		r.id,
 		r.role_name,
 		r.role_code,
@@ -112,23 +112,23 @@
 	</sql>
 
 	<sql id="userRoleDeptSql">
-		`user`.id,
-		`user`.username,
-		`user`.`password`,
-		`user`.salt,
-		`user`.phone,
-		`user`.email,
-		`user`.avatar,
-		`user`.wx_openid,
-		`user`.qq_openid,
-		`user`.created_by,
-		`user`.created_date,
-		`user`.last_modified_by,
-		`user`.last_modified_date,
-		`user`.description,
-		`user`.version,
-		`user`.status,
-		`user`.lock_flag AS lock_flag,
+		a.id,
+		a.username,
+		a.`password`,
+		a.salt,
+		a.phone,
+		a.email,
+		a.avatar,
+		a.wx_openid,
+		a.qq_openid,
+		a.created_by,
+		a.created_date,
+		a.last_modified_by,
+		a.last_modified_date,
+		a.description,
+		a.version,
+		a.status,
+		a.lock_flag AS lock_flag,
 		r.id,
 		r.role_name,
 		r.role_code,
@@ -148,52 +148,52 @@
 		SELECT
 		<include refid="userRoleSql"/>
 		FROM
-		sys_user AS `user`
-		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.id
+		sys_user AS a
+		LEFT JOIN sys_user_role AS ur ON ur.user_id = a.id
 		LEFT JOIN sys_role AS r ON r.id = ur.role_id
-		WHERE `user`.username = #{username}
+		WHERE a.username = #{username}
 	</select>
 
 	<select id="getUserVoById" resultMap="userVoResultMap">
 		SELECT
 		<include refid="userRoleDeptSql"/>
 		FROM
-		sys_user AS `user`
-		LEFT JOIN sys_user_role AS ur ON ur.user_id = `user`.id
+		sys_user AS a
+		LEFT JOIN sys_user_role AS ur ON ur.user_id = a.id
 		LEFT JOIN sys_role AS r ON r.id = ur.role_id
-		LEFT JOIN sys_dept AS d ON d.id = `user`.dept_id
+		LEFT JOIN sys_dept AS d ON d.id = a.dept_id
 		WHERE
-		`user`.id = #{id}
+		a.id = #{id}
 	</select>
 
 	<select id="getUserVosPage" resultMap="baseResultMap">
 		SELECT
-		`user`.id,
-		`user`.username,
-		`user`.`password`,
-		`user`.salt,
-		`user`.phone,
-		`user`.email,
-		`user`.avatar,
-		`user`.wx_openid,
-		`user`.qq_openid,
-		`user`.dept_id,
-		`user`.created_by,
-		`user`.created_date,
-		`user`.last_modified_by,
-		`user`.last_modified_date,
-		`user`.description,
-		`user`.version,
-		`user`.status,
-		`user`.lock_flag AS lock_flag,
-		`user`.dept_id AS deptId,
+		a.id,
+		a.username,
+		a.`password`,
+		a.salt,
+		a.phone,
+		a.email,
+		a.avatar,
+		a.wx_openid,
+		a.qq_openid,
+		a.dept_id,
+		a.created_by,
+		a.created_date,
+		a.last_modified_by,
+		a.last_modified_date,
+		a.description,
+		a.version,
+		a.status,
+		a.lock_flag AS lock_flag,
+		a.dept_id AS deptId,
 		d.name AS deptName
 		FROM
-		sys_user AS `user`
-		LEFT JOIN sys_dept AS d ON d.id = `user`.dept_id
+		sys_user AS a
+		LEFT JOIN sys_dept AS d ON d.id = a.dept_id
 		<where>
 			${ew.sqlSegment}
 		</where>
-		ORDER BY `user`.created_date DESC
+		ORDER BY a.created_date DESC
 	</select>
 </mapper>

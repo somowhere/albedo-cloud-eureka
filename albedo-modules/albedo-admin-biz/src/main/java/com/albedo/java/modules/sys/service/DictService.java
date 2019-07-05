@@ -39,4 +39,6 @@ public interface DictService  extends TreeVoService<DictRepository, Dict, DictDa
 	Map<String, List<SelectResult>> findCodes(String... codes);
 
 	List<Dict> getAll();
+
+	void afterPropertiesSet();
 }

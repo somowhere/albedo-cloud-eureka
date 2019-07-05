@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_deptRelation")
+@TableName("sys_dept_relation")
 public class DeptRelation extends Model<DeptRelation> {
 
 	private static final long serialVersionUID = 1L;

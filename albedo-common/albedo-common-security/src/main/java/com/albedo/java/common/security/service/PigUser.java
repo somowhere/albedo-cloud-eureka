@@ -17,6 +17,7 @@
 package com.albedo.java.common.security.service;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -37,7 +38,6 @@ public class PigUser extends User {
 	/**
 	 * 部门ID
 	 */
-	@Getter
 	private String deptId;
 
 	/**
@@ -63,6 +63,14 @@ public class PigUser extends User {
 	public PigUser(String id, String deptId, String loginId, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(loginId, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.id = id;
+		this.deptId = deptId;
+	}
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
 }

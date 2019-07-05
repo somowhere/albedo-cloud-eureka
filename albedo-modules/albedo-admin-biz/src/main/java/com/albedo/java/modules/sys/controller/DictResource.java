@@ -58,7 +58,7 @@ public class DictResource {
 	 * @return 字典信息
 	 */
 	@GetMapping("/{id}")
-	public R getById(@PathVariable Integer id) {
+	public R getById(@PathVariable String id) {
 		return new R<>(dictService.getById(id));
 	}
 
@@ -78,11 +78,11 @@ public class DictResource {
 	 * @param codes
 	 * @return
 	 */
-	@ApiOperation(value = "获取字典数据", notes = "codes 不传获取所有的业务字典，多个用','隔开")
-	@GetMapping(value = "/codes")
-	public R getByCodes(String codes) {
-		Map<String,List<SelectResult>> map = codes!=null ?
-			dictService.findCodes(codes):dictService.findCodes();
+	@ApiOperation(value = "获取字典数据", notes = "codes 多个用','隔开")
+	@GetMapping(value = "/get/{codes}")
+	@Cacheable(value = Dict.CACHE_DICT_DETAILS, key = "#codes")
+	public R getByCodes(@PathVariable String codes) {
+		Map<String,List<SelectResult>> map = dictService.findCodeStr(codes);
 		return new R<>(map);
 	}
 
@@ -92,13 +92,11 @@ public class DictResource {
 	 *
 	 * @return 所有类型字典
 	 */
-	@Inner
 	@GetMapping("/all")
 	public R getAll() {
-		List<Dict> list = dictService.getAll();
-		return new R<>(list);
+		Map<String,List<SelectResult>> map = dictService.findCodes();
+		return new R<>(map);
 	}
-
 
 	/**
 	 * 添加字典
@@ -108,8 +106,8 @@ public class DictResource {
 	 */
 	@SysLog("添加字典")
 	@PostMapping
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
-	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
+	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
 	public R save(@Valid @RequestBody Dict dict) {
 		return new R<>(dictService.save(dict));
 	}
@@ -118,28 +116,14 @@ public class DictResource {
 	 * 删除字典，并且清除字典缓存
 	 *
 	 * @param id   ID
-	 * @param code 类型
 	 * @return R
 	 */
 	@SysLog("删除字典")
-	@DeleteMapping("/{id}/{code}")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
+	@DeleteMapping("/{id}")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
-	public R removeById(@PathVariable Integer id, @PathVariable String code) {
+	public R removeById(@PathVariable Integer id) {
 		return new R<>(dictService.removeById(id));
 	}
 
-	/**
-	 * 修改字典
-	 *
-	 * @param dict 字典信息
-	 * @return success/false
-	 */
-	@PutMapping
-	@SysLog("修改字典")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
-	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R updateById(@Valid @RequestBody Dict dict) {
-		return new R<>(dictService.updateById(dict));
-	}
 }

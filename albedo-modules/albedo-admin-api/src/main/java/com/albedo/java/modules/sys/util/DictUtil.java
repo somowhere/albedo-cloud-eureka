@@ -32,8 +32,8 @@ public class DictUtil {
      */
     public static List<Dict> getDictList() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
-		if (cache != null && cache.get(Dict.CACHE_GET_DICT_ALL) != null) {
-			return (List<Dict>) cache.get(Dict.CACHE_GET_DICT_ALL).get();
+		if (cache != null && cache.get(Dict.CACHE_DICT_ALL) != null) {
+			return (List<Dict>) cache.get(Dict.CACHE_DICT_ALL).get();
 		}
 		return null;
     }

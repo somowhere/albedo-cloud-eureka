@@ -9,6 +9,7 @@ import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
+import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -40,8 +41,10 @@ public class QueryWrapperUtil {
     }
     private static String handlerQueryConditionLikeValue(QueryCondition queryCondition){
         String val = (String) queryCondition.getValue();
-        return  !val.startsWith("%") && !val.toString().endsWith("%")
-            ? StringUtil.toAppendStr("%", val, "%") : val;
+        return
+//			!val.startsWith("%") && !val.endsWith("%") ? StringUtil.toAppendStr("%", val, "%") :
+			val
+			;
     }
 
     public static String getFieldRealColumnName(Class<?> targetPersistentClass, String fieldPropery) {
@@ -82,7 +85,13 @@ public class QueryWrapperUtil {
                     case like:
                         entityWrapper.like(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
-                    case notLike:
+					case likeLeft:
+						entityWrapper.likeLeft(fieldName, handlerQueryConditionLikeValue(queryCondition));
+						break;
+					case likeRight:
+						entityWrapper.likeRight(fieldName, handlerQueryConditionLikeValue(queryCondition));
+						break;
+					case notLike:
                         entityWrapper.notLike(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
                     case between:
@@ -146,9 +155,13 @@ public class QueryWrapperUtil {
 		}
 		return queryWrapper;
 	}
-
-	public static Wrapper getWrapperByPageMode(PageModel pm, Class<?> clazz) {
-		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson());
+	public static Wrapper getWrapperByPageAndQuery(PageModel pm, Class<?> clazz, QueryCondition... queryConditions) {
+		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(), queryConditions);
+		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
+	}
+	public static Wrapper getWrapperByPage(PageModel pm, Class<?> clazz) {
+		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
+			QueryCondition.ne("a.status",  BaseEntity.FLAG_DELETE));
 		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
 	}
 }

@@ -23,7 +23,6 @@ import java.util.List;
 
 @Slf4j
 public class SqlInjectorUtil {
-
     protected enum CustomDbType{
         MYSQL("mysql", "`%s`", "MySql数据库"),
         MARIADB("mariadb", "`%s`", "MariaDB数据库"),

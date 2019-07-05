@@ -81,7 +81,6 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 			for(int len = props.length; i < len; ++i) {
 				BeanPropertyWriter prop = props[i];
 				if (prop != null) {
-					prop.serializeAsField(bean, gen, provider);
 					DictType dictType = prop.getAnnotation(DictType.class);
 					if (dictType != null) {
 						String code = dictType.value();
@@ -90,7 +89,7 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 							gen.writeStringField(prop.getName()+"Text", result);
 						}
 					}
-
+					prop.serializeAsField(bean, gen, provider);
 				}
 			}
 

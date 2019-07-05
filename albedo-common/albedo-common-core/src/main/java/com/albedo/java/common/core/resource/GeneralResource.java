@@ -43,11 +43,6 @@ public class GeneralResource {
     protected String adminPath;
 
     /**
-     * 前端基础路径
-     */
-    @Value("${application.frontPath}")
-    protected String frontPath;
-    /**
      * 前端URL后缀
      */
     @Value("${application.urlSuffix}")

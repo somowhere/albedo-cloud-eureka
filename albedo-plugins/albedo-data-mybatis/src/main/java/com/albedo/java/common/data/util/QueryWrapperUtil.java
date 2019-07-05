@@ -9,7 +9,11 @@ import com.albedo.java.common.core.vo.QueryCondition;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
@@ -116,4 +120,28 @@ public class QueryWrapperUtil {
     public static <T> QueryWrapper<T> create() {
         return new QueryWrapper();
     }
+
+
+
+    public static Wrapper<?> fillWrapper(IPage<?> page, Wrapper<?> wrapper){
+    	if(null == page){
+    		return wrapper;
+		}
+    	if(ArrayUtils.isEmpty(page.ascs())
+			&& ArrayUtils.isEmpty(page.descs())
+			&& ObjectUtils.isEmpty(page.condition())){
+    		return wrapper;
+		}
+    	QueryWrapper queryWrapper = null == wrapper? new QueryWrapper() : (QueryWrapper) wrapper;
+    	if(ArrayUtils.isNotEmpty(page.ascs())){
+    		queryWrapper.orderByAsc(page.ascs());
+		}
+		if(ArrayUtils.isNotEmpty(page.descs())){
+			queryWrapper.orderByDesc(page.descs());
+		}
+		if(ObjectUtils.isNotEmpty(page.condition())){
+			queryWrapper.allEq(page.condition());
+		}
+		return queryWrapper;
+	}
 }

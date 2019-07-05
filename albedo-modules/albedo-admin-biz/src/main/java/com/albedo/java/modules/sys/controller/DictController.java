@@ -81,7 +81,8 @@ public class DictController {
 	@ApiOperation(value = "获取字典数据", notes = "codes 不传获取所有的业务字典，多个用','隔开")
 	@GetMapping(value = "/codes")
 	public R getByCodes(String codes) {
-		Map<String,List<SelectResult>> map = dictService.findCodes(codes);
+		Map<String,List<SelectResult>> map = codes!=null ?
+			dictService.findCodes(codes):dictService.findCodes();
 		return new R<>(map);
 	}
 
@@ -93,11 +94,8 @@ public class DictController {
 	 */
 	@Inner
 	@GetMapping("/all")
-	@Cacheable(value = Dict.CACHE_DICT_DETAILS, key=Dict.CACHE_GET_DICT_ALL)
 	public R getAll() {
-		List<Dict> list = dictService.list(Wrappers
-			.<Dict>query().lambda()
-			.ne(Dict::getStatus, Dict.FLAG_DELETE));
+		List<Dict> list = dictService.getAll();
 		return new R<>(list);
 	}
 

@@ -192,9 +192,7 @@
 		sys_user AS `user`
 		LEFT JOIN sys_dept AS d ON d.id = `user`.dept_id
 		<where>
-			<if test="query.username != null and query.username != ''">
-				and `user`.username LIKE CONCAT('%',#{query.username},'%')
-			</if>
+			${ew.sqlSegment}
 		</where>
 		ORDER BY `user`.created_date DESC
 	</select>

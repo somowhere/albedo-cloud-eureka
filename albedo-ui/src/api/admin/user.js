@@ -19,7 +19,7 @@ import request from '@/router/axios'
 
 export function fetchList (query) {
   return request({
-    url: '/sys/user/page',
+    url: '/admin/sys/user/page',
     method: 'get',
     params: query
   })
@@ -27,7 +27,7 @@ export function fetchList (query) {
 
 export function addObj (obj) {
   return request({
-    url: '/sys/user',
+    url: '/admin/sys/user',
     method: 'post',
     data: obj
   })
@@ -35,21 +35,21 @@ export function addObj (obj) {
 
 export function getObj (id) {
   return request({
-    url: '/sys/user/' + id,
+    url: '/admin/sys/user/' + id,
     method: 'get'
   })
 }
 
 export function delObj (id) {
   return request({
-    url: '/sys/user/' + id,
+    url: '/admin/sys/user/' + id,
     method: 'delete'
   })
 }
 
 export function putObj (obj) {
   return request({
-    url: '/sys/user',
+    url: '/admin/sys/user',
     method: 'put',
     data: obj
   })
@@ -57,7 +57,7 @@ export function putObj (obj) {
 
 export function getDetails (obj) {
   return request({
-    url: '/sys/user/details/' + obj,
+    url: '/admin/sys/user/details/' + obj,
     method: 'get'
   })
 }

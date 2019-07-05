@@ -47,11 +47,17 @@ export const refreshToken = (refresh_token) => {
 
 export const getUserInfo = () => {
   return request({
-    url: '/admin/user/info',
+    url: '/admin/sys/user/info',
     method: 'get'
   })
 }
 
+export const getDicts = () => {
+  return request({
+    url: '/admin/sys/dict/codes',
+    method: 'get'
+  })
+}
 export const logout = () => {
   return request({
     url: '/auth/token/logout',

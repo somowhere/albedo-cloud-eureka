@@ -33,7 +33,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/sys/token")
-public class TokenController {
+public class TokenResource {
 	private final RemoteTokenService remoteTokenService;
 
 	/**

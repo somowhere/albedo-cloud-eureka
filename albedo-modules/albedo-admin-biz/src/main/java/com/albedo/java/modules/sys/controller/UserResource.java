@@ -19,6 +19,8 @@ package com.albedo.java.modules.sys.controller;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.vo.UserSearchVo;
@@ -31,7 +33,6 @@ import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -43,11 +44,14 @@ import javax.validation.Valid;
  * @date 2019/2/1
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/sys/user")
 @Log4j2
-public class UserController {
-	private final UserService userService;
+public class UserResource extends DataVoResource<UserService, UserDataVo> {
+
+
+	public UserResource(UserService service) {
+		super(service);
+	}
 
 	/**
 	 * 获取当前用户全部信息
@@ -57,12 +61,12 @@ public class UserController {
 	@GetMapping(value = {"/info"})
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
-		User user = userService.getOne(Wrappers.<User>query()
+		User user = service.getOne(Wrappers.<User>query()
 			.lambda().eq(User::getUsername, username));
 		if (user == null) {
 			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
-		return new R<>(userService.getUserInfo(user));
+		return new R<>(service.getUserInfo(user));
 	}
 
 	/**
@@ -73,12 +77,12 @@ public class UserController {
 	@Inner
 	@GetMapping("/info/{username}")
 	public R info(@PathVariable String username) {
-		User user = userService.getOne(Wrappers.<User>query()
+		User user = service.getOne(Wrappers.<User>query()
 			.lambda().eq(User::getUsername, username));
 		if (user == null) {
 			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
 		}
-		return new R<>(userService.getUserInfo(user));
+		return new R<>(service.getUserInfo(user));
 	}
 
 	/**
@@ -89,7 +93,7 @@ public class UserController {
 	 */
 	@GetMapping("/{id}")
 	public R user(@PathVariable String id) {
-		return R.createSuccessData(userService.getUserVoById(id));
+		return R.createSuccessData(service.getUserVoById(id));
 	}
 
 	/**
@@ -102,7 +106,7 @@ public class UserController {
 	public R detailsUser(@PathVariable String username) {
 		User condition = new User();
 		condition.setUsername(username);
-		return new R<>(userService.getOne(new QueryWrapper<>(condition)));
+		return new R<>(service.getOne(new QueryWrapper<>(condition)));
 	}
 
 	/**
@@ -115,17 +119,10 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_user_del')")
 	public R userDel(@PathVariable String id) {
-		User user = userService.getById(id);
-		userService.removeUserById(user);
+		User user = service.getById(id);
+		service.removeUserById(user);
 		return R.createSuccess("删除用户信息");
 	}
-
-
-	@GetMapping(value = "checkByProperty")
-	public boolean checkByProperty(UserDataVo userDataVo) {
-		return userService.doCheckByProperty(userDataVo);
-	}
-
 
 	/**
 	 * 添加/更新用户信息
@@ -154,20 +151,19 @@ public class UserController {
 			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {
 			throw new RuntimeMsgException("邮箱已存在");
 		}
-		userService.save(userDataVo);
+		service.save(userDataVo);
 		return R.createSuccess("操作成功");
 	}
 
 	/**
 	 * 分页查询用户
 	 *
-	 * @param page    参数集
-	 * @param userDataVo 查询参数列表
+	 * @param pm    参数集
 	 * @return 用户集合
 	 */
 	@GetMapping("/page")
-	public R getUserPage(Page page, UserSearchVo userDataVo) {
-		return new R<>(userService.getUserWithRolePage(page, userDataVo));
+	public R getUserPage(PageModel pm) {
+		return R.createSuccessData(service.getUserWithRolePage(pm));
 	}
 
 	/**
@@ -179,7 +175,7 @@ public class UserController {
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
 	public R updateUserInfo(@Valid @RequestBody UserDataVo userDataVo) {
-		return userService.updateUserInfo(userDataVo);
+		return service.updateUserInfo(userDataVo);
 	}
 
 	/**
@@ -188,6 +184,6 @@ public class UserController {
 	 */
 	@GetMapping("/ancestor/{username}")
 	public R listAncestorUsers(@PathVariable String username) {
-		return new R<>(userService.listAncestorUsersByUsername(username));
+		return new R<>(service.listAncestorUsersByUsername(username));
 	}
 }

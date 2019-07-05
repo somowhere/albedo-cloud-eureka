@@ -48,7 +48,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/sys/dict")
-public class DictController {
+public class DictResource {
 	private final DictService dictService;
 
 	/**

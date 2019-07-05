@@ -19,16 +19,23 @@ package com.albedo.java.modules.sys.service.impl;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.data.util.QueryWrapperUtil;
+import com.albedo.java.common.persistence.DynamicSpecifications;
+import com.albedo.java.common.persistence.PageQuery;
+import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
 import com.albedo.java.modules.sys.vo.*;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -118,14 +125,14 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	/**
 	 * 分页查询用户信息（含有角色信息）
 	 *
-	 * @param page    分页对象
-	 * @param userDataVo 参数列表
+	 * @param pm    分页对象
 	 * @return
 	 */
 	@Override
-	public IPage getUserWithRolePage(Page page, UserSearchVo userDataVo) {
-		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(page, userDataVo);
-		return userVosPage;
+	public PageModel getUserWithRolePage(PageModel pm) {
+		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
+		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
+		return (PageModel) userVosPage;
 	}
 
 	/**
@@ -135,7 +142,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return 用户信息
 	 */
 	@Override
-	public com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id) {
+	public UserVo getUserVoById(String id) {
 		UserVo userVo = baseMapper.getUserVoById(id);
 		return userVo;
 	}

@@ -5,11 +5,18 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.QueryUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.Order;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
+import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
+import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
@@ -34,8 +41,10 @@ public class QueryWrapperUtil {
     }
     private static String handlerQueryConditionLikeValue(QueryCondition queryCondition){
         String val = (String) queryCondition.getValue();
-        return  !val.startsWith("%") && !val.toString().endsWith("%")
-            ? StringUtil.toAppendStr("%", val, "%") : val;
+        return
+//			!val.startsWith("%") && !val.endsWith("%") ? StringUtil.toAppendStr("%", val, "%") :
+			val
+			;
     }
 
     public static String getFieldRealColumnName(Class<?> targetPersistentClass, String fieldPropery) {
@@ -76,7 +85,13 @@ public class QueryWrapperUtil {
                     case like:
                         entityWrapper.like(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
-                    case notLike:
+					case likeLeft:
+						entityWrapper.likeLeft(fieldName, handlerQueryConditionLikeValue(queryCondition));
+						break;
+					case likeRight:
+						entityWrapper.likeRight(fieldName, handlerQueryConditionLikeValue(queryCondition));
+						break;
+					case notLike:
                         entityWrapper.notLike(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
                     case between:
@@ -116,4 +131,37 @@ public class QueryWrapperUtil {
     public static <T> QueryWrapper<T> create() {
         return new QueryWrapper();
     }
+
+
+
+    public static Wrapper<?> fillWrapper(IPage<?> page, Wrapper<?> wrapper){
+    	if(null == page){
+    		return wrapper;
+		}
+    	if(ArrayUtils.isEmpty(page.ascs())
+			&& ArrayUtils.isEmpty(page.descs())
+			&& ObjectUtils.isEmpty(page.condition())){
+    		return wrapper;
+		}
+    	QueryWrapper queryWrapper = null == wrapper? new QueryWrapper() : (QueryWrapper) wrapper;
+    	if(ArrayUtils.isNotEmpty(page.ascs())){
+    		queryWrapper.orderByAsc(page.ascs());
+		}
+		if(ArrayUtils.isNotEmpty(page.descs())){
+			queryWrapper.orderByDesc(page.descs());
+		}
+		if(ObjectUtils.isNotEmpty(page.condition())){
+			queryWrapper.allEq(page.condition());
+		}
+		return queryWrapper;
+	}
+	public static Wrapper getWrapperByPageAndQuery(PageModel pm, Class<?> clazz, QueryCondition... queryConditions) {
+		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(), queryConditions);
+		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
+	}
+	public static Wrapper getWrapperByPage(PageModel pm, Class<?> clazz) {
+		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
+			QueryCondition.ne("a.status",  BaseEntity.FLAG_DELETE));
+		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
+	}
 }

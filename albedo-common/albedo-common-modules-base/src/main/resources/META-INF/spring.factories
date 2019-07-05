@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.albedo.java.common.config.MybatisPlusConfigurer
+  com.albedo.java.common.config.MybatisPlusConfigurer,\
+  com.albedo.java.common.listener.ContextInitListener

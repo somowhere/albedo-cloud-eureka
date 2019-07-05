@@ -52,7 +52,7 @@ public class R<T> implements Serializable {
 	private T data;
 
 
-	private String[] messages = {"success"};
+	private String[] messages = {};
 
 
 	public R() {

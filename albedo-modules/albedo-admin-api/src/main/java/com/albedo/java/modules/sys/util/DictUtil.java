@@ -32,8 +32,8 @@ public class DictUtil {
      */
     public static List<Dict> getDictList() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
-		if (cache != null && cache.get(Dict.CACHE_GET_DICT_ALL) != null) {
-			return (List<Dict>) cache.get(Dict.CACHE_GET_DICT_ALL).get();
+		if (cache != null && cache.get(Dict.CACHE_DICT_ALL) != null) {
+			return (List<Dict>) cache.get(Dict.CACHE_DICT_ALL).get();
 		}
 		return null;
     }
@@ -338,6 +338,9 @@ public class DictUtil {
 	}
     public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
+		if(ObjectUtil.isEmpty(dictList)){
+			return map;
+		}
 		List<Dict> dictCodes = Lists.newArrayList();
 		if(ObjectUtil.isEmpty(codes)){
 			for(Dict dict : dictList){

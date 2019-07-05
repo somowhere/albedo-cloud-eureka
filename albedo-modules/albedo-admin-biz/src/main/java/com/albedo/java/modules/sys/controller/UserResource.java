@@ -46,10 +46,10 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/sys/user")
 @Log4j2
-public class UserController extends DataVoResource<UserService, UserDataVo> {
+public class UserResource extends DataVoResource<UserService, UserDataVo> {
 
 
-	public UserController(UserService service) {
+	public UserResource(UserService service) {
 		super(service);
 	}
 

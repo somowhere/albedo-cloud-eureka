@@ -50,8 +50,6 @@ public interface BaseService<Repository extends BaseRepository<T>,
 
 	List<T> findAll(Map<String, Object> paramsMap);
 
-	IPage<T> findAll(Pageable pageable, Wrapper<T> queryWrapper);
-
 	Integer countBasicAll(Wrapper<T> wrapper);
 
 	List<Sort.Order> toOrders(List<Order> orders);

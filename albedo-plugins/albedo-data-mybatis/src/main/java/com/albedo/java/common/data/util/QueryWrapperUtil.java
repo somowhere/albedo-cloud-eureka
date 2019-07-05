@@ -5,7 +5,9 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.QueryUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.Order;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
+import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -143,5 +145,10 @@ public class QueryWrapperUtil {
 			queryWrapper.allEq(page.condition());
 		}
 		return queryWrapper;
+	}
+
+	public static Wrapper getWrapperByPageMode(PageModel pm, Class<?> clazz) {
+		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson());
+		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
 	}
 }

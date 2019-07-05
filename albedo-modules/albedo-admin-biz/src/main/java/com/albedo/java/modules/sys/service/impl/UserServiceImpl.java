@@ -129,12 +129,10 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return
 	 */
 	@Override
-	public IPage getUserWithRolePage(PageModel pm) {
-		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson());
-		PageQuery page = new PageQuery(pm);
-		Wrapper wrapper = QueryWrapperUtil.fillWrapper(page, spec.toEntityWrapper(getPersistentClass()));
-		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(page, wrapper);
-		return userVosPage;
+	public PageModel getUserWithRolePage(PageModel pm) {
+		Wrapper wrapper = QueryWrapperUtil.getWrapperByPageMode(pm, getPersistentClass());
+		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
+		return (PageModel) userVosPage;
 	}
 
 	/**

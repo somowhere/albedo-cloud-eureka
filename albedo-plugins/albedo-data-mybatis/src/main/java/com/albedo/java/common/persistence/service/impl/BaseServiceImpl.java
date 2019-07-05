@@ -20,6 +20,7 @@ import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -163,11 +164,6 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	}
 
 	@Override
-	public IPage<T> findAll(Pageable pageable, Wrapper<T> queryWrapper) {
-		return super.page(new PageQuery(pageable), queryWrapper);
-	}
-
-	@Override
 	public Integer countBasicAll(Wrapper<T> wrapper) {
 		return repository.selectCount(wrapper);
 	}
@@ -253,10 +249,8 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel<T> findPageWrapper(PageModel<T> pm, Wrapper<T> wrapper) {
-		IPage page = findAll(pm, wrapper);
-		pm.setData(page.getRecords());
-		pm.setRecordsTotal(page.getTotal());
-		return pm;
+		IPage<T> tiPage = baseMapper.selectPage(pm, wrapper);
+		return (PageModel<T>) tiPage;
 	}
 	/**
 	 * 动态分页查询
@@ -286,11 +280,8 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel<T> findRelationPageWrapper(PageModel<T> pm, Wrapper<T> wrapper) {
-		PageQuery<T> page = new PageQuery(pm);
-		page.setRecords(repository.findRelationPage(page, wrapper));
-		pm.setData(page.getRecords());
-		pm.setRecordsTotal(page.getTotal());
-		return pm;
+		IPage<T> relationPage = repository.findRelationPage(pm, wrapper);
+		return (PageModel<T>) relationPage;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/sys/client")
-public class OauthClientDetailsController {
+public class OauthClientDetailsResource {
 	private final OauthClientDetailsService oauthClientDetailsService;
 
 	/**

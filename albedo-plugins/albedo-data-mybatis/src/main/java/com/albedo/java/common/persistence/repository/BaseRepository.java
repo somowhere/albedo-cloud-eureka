@@ -39,5 +39,5 @@ public interface BaseRepository<T extends GeneralEntity> extends
 	 * @param wrapper   实体对象封装操作类（可以为 null）
 	 * @return List<T>
 	 */
-	List<T> findRelationPage(IPage<T> rowBounds, @Param("ew") Wrapper<T> wrapper);
+	IPage<T> findRelationPage(IPage<T> rowBounds, @Param("ew") Wrapper<T> wrapper);
 }

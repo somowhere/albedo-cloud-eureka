@@ -1,5 +1,6 @@
 package com.albedo.java.common.core.vo;
 
+import com.albedo.java.common.core.annotation.DictType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 public class DataEntityVo<PK extends Serializable> extends GeneralEntityVo {
 
     private PK id;
+    @DictType("sys_status")
     private int status = FLAG_NORMAL;
 	private String createdBy;
 	private LocalDateTime createdDate;

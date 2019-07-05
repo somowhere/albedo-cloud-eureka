@@ -43,11 +43,6 @@ public class GeneralResource {
     protected String adminPath;
 
     /**
-     * 前端URL后缀
-     */
-    @Value("${application.urlSuffix}")
-    protected String urlSuffix;
-    /**
      * 验证Bean实例对象
      */
     @Resource

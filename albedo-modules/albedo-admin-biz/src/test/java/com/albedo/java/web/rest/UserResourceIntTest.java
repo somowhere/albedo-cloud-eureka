@@ -5,7 +5,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
-import com.albedo.java.modules.sys.controller.UserController;
+import com.albedo.java.modules.sys.controller.UserResource;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.domain.Role;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test class for the UserResource REST controller.
  *
- * @see com.albedo.java.modules.sys.controller.UserController
+ * @see com.albedo.java.modules.sys.controller.UserResource
  */
 @SpringBootTest(classes = AlbedoAdminApplication.class)
 @Slf4j
@@ -88,8 +88,8 @@ public class UserResourceIntTest {
     public void setup() {
 		DEFAULT_API_URL = "/sys/user/";
 		MockitoAnnotations.initMocks(this);
-		final UserController userController = new UserController(userService);
-		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userController)
+		final UserResource userResource = new UserResource(userService);
+		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
 			.setControllerAdvice(globalExceptionHandler)
 			.setConversionService(createFormattingConversionService())
 			.setMessageConverters(jacksonMessageConverter)

@@ -36,7 +36,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/sys/role")
-public class RoleController {
+public class RoleResource {
 	private final RoleService roleService;
 	private final RoleMenuService roleMenuService;
 

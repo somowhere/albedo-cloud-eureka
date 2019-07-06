@@ -33,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
  * @date 2019/03/08
  */
 @ComponentScan("com.albedo.java.common.security")
-public class PigResourceServerAutoConfiguration {
+public class ResourceServerAutoConfiguration {
 	@Bean
 	@Primary
 	@LoadBalanced

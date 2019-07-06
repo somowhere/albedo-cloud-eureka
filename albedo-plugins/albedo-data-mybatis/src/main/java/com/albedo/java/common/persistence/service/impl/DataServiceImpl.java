@@ -37,16 +37,17 @@ public abstract class DataServiceImpl<Repository extends BaseRepository<T>, T ex
 		return SqlHelper.getObject(relationList);
 	}
 
+	public void lockOrUnLock(PK id){
+		T entity = repository.selectById(id);
+		Assert.notNull(entity, "对象 " + id + " 信息为空，操作失败");
+		entity.setStatus(BaseEntity.FLAG_NORMAL.equals(entity.getStatus()) ? BaseEntity.FLAG_UNABLE : BaseEntity.FLAG_NORMAL);
+		updateById(entity);
+		log.debug("LockOrUnLock Entity: {}", entity);
+	}
+
     @Override
 	public void lockOrUnLock(List<PK> ids) {
-        ids.forEach(id -> {
-            T entity = repository.selectById(id);
-            Assert.notNull(entity, "对象 " + id + " 信息为空，操作失败");
-            entity.setStatus(BaseEntity.FLAG_NORMAL.equals(entity.getStatus()) ? BaseEntity.FLAG_UNABLE : BaseEntity.FLAG_NORMAL);
-            updateById(entity);
-            log.debug("LockOrUnLock Entity: {}", entity);
-
-        });
+        ids.forEach(id -> lockOrUnLock(id));
     }
 
     @Override

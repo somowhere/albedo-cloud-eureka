@@ -18,10 +18,10 @@ package com.albedo.java.auth.endpoint;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.albedo.java.common.security.service.UserDetail;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.security.service.PigUser;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.ConvertingCursor;
 import org.springframework.data.redis.core.Cursor;
@@ -140,16 +140,16 @@ public class AlbedoTokenEndpoint {
 			if (authentication instanceof UsernamePasswordAuthenticationToken) {
 				UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authentication;
 
-				if (authenticationToken.getPrincipal() instanceof PigUser) {
-					PigUser user = (PigUser) authenticationToken.getPrincipal();
+				if (authenticationToken.getPrincipal() instanceof UserDetail) {
+					UserDetail user = (UserDetail) authenticationToken.getPrincipal();
 					map.put("user_id", user.getId() + "");
 					map.put("username", user.getUsername() + "");
 				}
 			} else if (authentication instanceof PreAuthenticatedAuthenticationToken) {
 				//刷新token方式
 				PreAuthenticatedAuthenticationToken authenticationToken = (PreAuthenticatedAuthenticationToken) authentication;
-				if (authenticationToken.getPrincipal() instanceof PigUser) {
-					PigUser user = (PigUser) authenticationToken.getPrincipal();
+				if (authenticationToken.getPrincipal() instanceof UserDetail) {
+					UserDetail user = (UserDetail) authenticationToken.getPrincipal();
 					map.put("user_id", user.getId() + "");
 					map.put("username", user.getUsername() + "");
 				}

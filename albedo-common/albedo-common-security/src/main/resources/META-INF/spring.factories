@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.albedo.java.common.security.service.PigUserDetailsServiceImpl
+  com.albedo.java.common.security.service.UserDetailsServiceImpl

@@ -68,7 +68,7 @@ public class ${className}Controller {
    */
   @SysLog("新增${comments}")
   @PostMapping
-  @PreAuthorize("@pms.hasPermission('${moduleName}_${pathName}_add')")
+  @PreAuthorize("@pms.hasPermission('${moduleName}_${pathName}_edit')")
   public R save(@RequestBody ${className} ${classname}){
     return new R<>(${classname}Service.save(${classname}));
   }

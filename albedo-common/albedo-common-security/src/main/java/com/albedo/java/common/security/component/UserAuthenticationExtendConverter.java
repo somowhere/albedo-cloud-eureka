@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.security.component;
 
-import com.albedo.java.common.security.service.PigUser;
+import com.albedo.java.common.security.service.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,7 +34,7 @@ import java.util.Map;
  * <p>
  * 根据checktoken 的结果转化用户信息
  */
-public class PigUserAuthenticationConverter implements UserAuthenticationConverter {
+public class UserAuthenticationExtendConverter implements UserAuthenticationConverter {
 	private static final String USER_ID = "user_id";
 	private static final String DEPT_ID = "dept_id";
 	private static final String TENANT_ID = "tenant_id";
@@ -50,6 +50,11 @@ public class PigUserAuthenticationConverter implements UserAuthenticationConvert
 	public Map<String, ?> convertUserAuthentication(Authentication authentication) {
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(USERNAME, authentication.getName());
+		if(authentication.getPrincipal() instanceof UserDetail){
+			UserDetail userDetail = (UserDetail) authentication.getPrincipal();
+			response.put(USER_ID, userDetail.getId());
+			response.put(DEPT_ID, userDetail.getDeptId());
+		}
 		if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
 			response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
 		}
@@ -70,7 +75,7 @@ public class PigUserAuthenticationConverter implements UserAuthenticationConvert
 			String username = (String) map.get(USERNAME);
 			String id = (String) map.get(USER_ID);
 			String deptId = (String) map.get(DEPT_ID);
-			PigUser user = new PigUser(id, deptId, username, N_A, true
+			UserDetail user = new UserDetail(id, deptId, username, N_A, true
 				, true, true, true, authorities);
 			return new UsernamePasswordAuthenticationToken(user, N_A, authorities);
 		}

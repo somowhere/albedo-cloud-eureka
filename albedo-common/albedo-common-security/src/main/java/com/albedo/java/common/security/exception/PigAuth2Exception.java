@@ -17,7 +17,7 @@
 package com.albedo.java.common.security.exception;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.albedo.java.common.security.component.PigAuth2ExceptionSerializer;
+import com.albedo.java.common.security.component.Auth2ExceptionSerializer;
 import lombok.Getter;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
  * @date 2019/2/1
  * 自定义OAuth2Exception
  */
-@JsonSerialize(using = PigAuth2ExceptionSerializer.class)
+@JsonSerialize(using = Auth2ExceptionSerializer.class)
 public class PigAuth2Exception extends OAuth2Exception {
 	@Getter
 	private String errorCode;

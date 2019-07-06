@@ -28,7 +28,7 @@ public class TreeVoResource<Service extends TreeVoService, V extends TreeEntityV
      * @param id
      * @return
      */
-    @GetMapping("/{id:" + CommonConstants.LOGIN_REGEX + "}")
+    @GetMapping(CommonConstants.URL_ID_REGEX)
     @Timed
     public ResponseEntity<V> get(@PathVariable String id) {
         log.debug("REST request to get Entity : {}", id);

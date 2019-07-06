@@ -53,19 +53,17 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	/**
 	 * 删除用户
 	 *
-	 * @param user 用户
+	 * @param idList 用户
 	 * @return boolean
 	 */
-	Boolean removeUserById(User user);
-
+	Boolean removeByIds(List<String> idList);
 	/**
-	 * 更新当前用户基本信息
+	 * 删除用户
 	 *
-	 * @param userDataVo 用户信息
-	 * @return Boolean
+	 * @param idList 用户
+	 * @return boolean
 	 */
-	R<Boolean> updateUserInfo(UserDataVo userDataVo);
-
+	void lockOrUnLock(List<String> idList);
 
 	/**
 	 * 通过ID查询用户信息

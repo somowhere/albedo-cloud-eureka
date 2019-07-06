@@ -126,7 +126,7 @@
       }
     },
     created() {
-      this.roleManager_btn_add = this.permissions['sys_role_add']
+      this.roleManager_btn_add = this.permissions['sys_role_edit']
       this.roleManager_btn_edit = this.permissions['sys_role_edit']
       this.roleManager_btn_del = this.permissions['sys_role_del']
       this.roleManager_btn_perm = this.permissions['sys_role_perm']

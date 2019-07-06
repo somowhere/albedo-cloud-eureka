@@ -69,7 +69,7 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
         return ResponseBuilder.buildOk(StringUtil.toAppendStr("保存", genTableVo.getName(), "成功"));
     }
 
-    @DeleteMapping(value = "/{ids:" + CommonConstants.LOGIN_REGEX + "}")
+    @DeleteMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity delete(@PathVariable String ids) {
         log.debug("REST request to delete genTable: {}", ids);
@@ -77,7 +77,7 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
 		return ResponseBuilder.buildOk("删除成功");
     }
 
-    @PutMapping(value = "/{ids:" + CommonConstants.LOGIN_REGEX + "}")
+    @PutMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity lockOrUnLock(@PathVariable String ids) {
         log.debug("REST request to lockOrUnLock genTable: {}", ids);

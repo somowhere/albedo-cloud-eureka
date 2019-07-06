@@ -64,12 +64,5 @@ public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDa
 	 */
 	Boolean removeDeptById(Integer id);
 
-	/**
-	 * 更新部门
-	 *
-	 * @param dept 部门信息
-	 * @return 成功、失败
-	 */
-	Boolean updateDeptById(Dept dept);
 
 }

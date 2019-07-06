@@ -16,14 +16,22 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.domain.Role;
+import com.albedo.java.modules.sys.service.UserService;
+import com.albedo.java.modules.sys.vo.RoleDataVo;
+import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.RoleMenuService;
 import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
-import lombok.AllArgsConstructor;
+import com.google.common.collect.Lists;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,60 +42,51 @@ import javax.validation.Valid;
  * @date 2019/2/1
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/sys/role")
-public class RoleResource {
-	private final RoleService roleService;
+public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	private final RoleMenuService roleMenuService;
 
-	/**
-	 * 通过ID查询角色信息
-	 *
-	 * @param id ID
-	 * @return 角色信息
-	 */
-	@GetMapping("/{id}")
-	public R getById(@PathVariable Integer id) {
-		return new R<>(roleService.getById(id));
+	public RoleResource(RoleService service, RoleMenuService roleMenuService) {
+		super(service);
+		this.roleMenuService = roleMenuService;
 	}
 
 	/**
 	 * 添加角色
 	 *
-	 * @param role 角色信息
+	 * @param roleDataVo 角色信息
 	 * @return success、false
 	 */
-	@SysLog("添加角色")
+	@SysLog("新增/编辑角色")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_role_add')")
-	public R save(@Valid @RequestBody Role role) {
-		return new R<>(roleService.save(role));
-	}
-
-	/**
-	 * 修改角色
-	 *
-	 * @param role 角色信息
-	 * @return success/false
-	 */
-	@SysLog("修改角色")
-	@PutMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
-	public R update(@Valid @RequestBody Role role) {
-		return new R<>(roleService.updateById(role));
+	public R save(@Valid @RequestBody RoleDataVo roleDataVo) {
+		service.save(roleDataVo);
+		return R.createSuccess("操作成功");
+	}
+	/**
+	 * @param ids
+	 * @return
+	 */
+	@PutMapping(CommonConstants.URL_IDS_REGEX)
+	@SysLog("锁定/解锁角色")
+	@PreAuthorize("@pms.hasPermission('sys_role_lock')")
+	public R lockOrUnLock(@PathVariable String ids) {
+		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
 
 	/**
 	 * 删除角色
 	 *
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
 	@SysLog("删除角色")
-	@DeleteMapping("/{id}")
-	public R removeById(@PathVariable String id) {
-
-		return new R<>(roleService.removeRoleById(id));
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
+	public R removeByIds(@PathVariable String ids) {
+		service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
 
 	/**
@@ -95,9 +94,9 @@ public class RoleResource {
 	 *
 	 * @return 角色列表
 	 */
-	@GetMapping("/list")
-	public R listRoles() {
-		return new R<>(roleService.list(Wrappers.emptyWrapper()));
+	@GetMapping("/comboData")
+	public R comboData() {
+		return R.createSuccessData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), Role.F_ID, Role.F_NAME));
 	}
 
 	/**
@@ -106,9 +105,9 @@ public class RoleResource {
 	 * @param page 分页对象
 	 * @return 分页对象
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R getRolePage(Page page) {
-		return new R<>(roleService.page(page, Wrappers.emptyWrapper()));
+		return new R<>(service.page(page, Wrappers.emptyWrapper()));
 	}
 
 	/**
@@ -122,7 +121,7 @@ public class RoleResource {
 	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R saveRoleMenus(String roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
-		Role role = roleService.getById(roleId);
-		return new R<>(roleMenuService.saveRoleMenus(role.getRoleCode(), roleId, menuIds));
+		Role role = service.getById(roleId);
+		return new R<>(roleMenuService.saveRoleMenus(role.getCode(), roleId, menuIds));
 	}
 }

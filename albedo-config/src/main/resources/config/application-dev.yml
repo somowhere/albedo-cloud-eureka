@@ -10,7 +10,6 @@ logging:
 application:
   developMode: true
   jedisKeyPrefix: albedoBootWebApp
-  className: com.albedo.java
   logPath: target/.logs
   cors: #By default CORS are not enabled. Uncomment to enable.
     allowed-origins: "*"

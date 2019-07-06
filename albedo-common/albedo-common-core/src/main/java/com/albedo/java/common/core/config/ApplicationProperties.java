@@ -28,7 +28,6 @@ public class ApplicationProperties {
     private Boolean developMode = true;
     private Boolean cluster = false;
 	private String staticFileDirectory = "";
-	private String className;
 	private String logPath=".logs/";
 
 

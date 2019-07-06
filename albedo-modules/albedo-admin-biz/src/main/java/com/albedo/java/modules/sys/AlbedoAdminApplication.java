@@ -36,7 +36,6 @@ import java.net.InetAddress;
 @EnablePigResourceServer
 @EnablePigFeignClients
 @SpringCloudApplication
-@EnableDiscoveryClient
 @Slf4j
 public class AlbedoAdminApplication {
 	static String SERVER_PORT = "server.port";

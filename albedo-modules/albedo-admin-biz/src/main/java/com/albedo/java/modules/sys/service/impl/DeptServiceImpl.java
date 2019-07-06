@@ -17,6 +17,7 @@
 package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.vo.DeptTree;
@@ -58,10 +59,14 @@ public class DeptServiceImpl  extends
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean saveDept(Dept dept) {
-		Dept sysDept = new Dept();
-		BeanUtils.copyProperties(dept, sysDept);
-		this.save(sysDept);
-		deptRelationService.saveDeptRelation(sysDept);
+		if(StringUtil.isEmpty(dept.getId())){
+			Dept sysDept = new Dept();
+			BeanUtils.copyProperties(dept, sysDept);
+			this.save(sysDept);
+			deptRelationService.saveDeptRelation(sysDept);
+		}else{
+			updateDept(dept);
+		}
 		return Boolean.TRUE;
 	}
 
@@ -98,9 +103,8 @@ public class DeptServiceImpl  extends
 	 * @param dept 部门信息
 	 * @return 成功、失败
 	 */
-	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateDeptById(Dept dept) {
+	public Boolean updateDept(Dept dept) {
 		//更新部门状态
 		this.updateById(dept);
 		//更新部门关系

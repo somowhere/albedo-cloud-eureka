@@ -17,15 +17,22 @@
 package com.albedo.java.modules.sys.controller;
 
 
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.security.annotation.Inner;
+import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dict;
+import com.albedo.java.modules.sys.service.MenuService;
+import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.albedo.java.modules.sys.vo.MenuDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -46,20 +53,11 @@ import java.util.Map;
  * @since 2019/2/1
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/sys/dict")
-public class DictResource {
-	private final DictService dictService;
+public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 
-	/**
-	 * 通过ID查询字典信息
-	 *
-	 * @param id ID
-	 * @return 字典信息
-	 */
-	@GetMapping("/{id}")
-	public R getById(@PathVariable Integer id) {
-		return new R<>(dictService.getById(id));
+	public DictResource(DictService service) {
+		super(service);
 	}
 
 	/**
@@ -70,7 +68,7 @@ public class DictResource {
 	 */
 	@GetMapping("/page")
 	public R<IPage> getPage(Page page, Dict dict) {
-		return new R<>(dictService.page(page, Wrappers.query(dict)));
+		return new R<>(service.page(page, Wrappers.query(dict)));
 	}
 
 	/**
@@ -82,23 +80,9 @@ public class DictResource {
 	@GetMapping(value = "/codes")
 	public R getByCodes(String codes) {
 		Map<String,List<SelectResult>> map = codes!=null ?
-			dictService.findCodes(codes):dictService.findCodes();
+			service.findCodes(codes):service.findCodes();
 		return new R<>(map);
 	}
-
-
-	/**
-	 * 所有类型字典
-	 *
-	 * @return 所有类型字典
-	 */
-	@Inner
-	@GetMapping("/all")
-	public R getAll() {
-		List<Dict> list = dictService.getAll();
-		return new R<>(list);
-	}
-
 
 	/**
 	 * 添加字典
@@ -108,38 +92,38 @@ public class DictResource {
 	 */
 	@SysLog("添加字典")
 	@PostMapping
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
-	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
+	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
 	public R save(@Valid @RequestBody Dict dict) {
-		return new R<>(dictService.save(dict));
+		return new R<>(service.save(dict));
 	}
 
 	/**
 	 * 删除字典，并且清除字典缓存
 	 *
 	 * @param id   ID
-	 * @param code 类型
 	 * @return R
 	 */
 	@SysLog("删除字典")
-	@DeleteMapping("/{id}/{code}")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
+	@DeleteMapping("/{id}")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
-	public R removeById(@PathVariable Integer id, @PathVariable String code) {
-		return new R<>(dictService.removeById(id));
+	public R removeByIds(@PathVariable Integer id) {
+		return new R<>(service.removeById(id));
 	}
 
+
 	/**
-	 * 修改字典
-	 *
-	 * @param dict 字典信息
-	 * @return success/false
+	 * @param ids
+	 * @return
 	 */
-	@PutMapping
-	@SysLog("修改字典")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, key = Dict.CACHE_GET_DICT_ALL)
-	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R updateById(@Valid @RequestBody Dict dict) {
-		return new R<>(dictService.updateById(dict));
+	@PutMapping(CommonConstants.URL_IDS_REGEX)
+	@SysLog("锁定/解锁字典")
+	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
+	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
+	public R lockOrUnLock(@PathVariable String ids) {
+		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
+
 }

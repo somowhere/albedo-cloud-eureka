@@ -26,7 +26,7 @@ public class DataVoResource<Service extends DataVoService, V extends DataEntityV
      * @param id
      * @return
      */
-    @GetMapping("/{id:" + CommonConstants.LOGIN_REGEX + "}")
+    @GetMapping(CommonConstants.URL_ID_REGEX)
     @Timed
     public ResponseEntity<V> get(@PathVariable String id) {
         log.debug("REST request to get Entity : {}", id);

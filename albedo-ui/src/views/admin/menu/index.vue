@@ -213,7 +213,7 @@
     },
     created() {
       this.getList()
-      this.menuManager_btn_add = this.permissions['sys_menu_add']
+      this.menuManager_btn_add = this.permissions['sys_menu_edit']
       this.menuManager_btn_edit = this.permissions['sys_menu_edit']
       this.menuManager_btn_del = this.permissions['sys_menu_del']
     },

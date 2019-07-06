@@ -77,7 +77,9 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	public void save(UserDataVo userDataVo) {
 		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
 		BeanUtils.copyProperties(userDataVo, user);
-		user.setPassword(ENCODER.encode(userDataVo.getPassword()));
+		if(StringUtil.isNotEmpty(userDataVo.getPassword())){
+			user.setPassword(ENCODER.encode(userDataVo.getPassword()));
+		}
 		super.saveOrUpdate(user);
 		userDataVo.setId(user.getId());
 		List<UserRole> userRoleList = userDataVo.getRoleIdList()
@@ -135,6 +137,12 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 		return (PageModel) userVosPage;
 	}
 
+	@Override
+	public Boolean removeByIds(List<String> idList) {
+		idList.stream().forEach(id->removeUserById(baseMapper.selectById(id)));
+		return Boolean.TRUE;
+	}
+
 	/**
 	 * 通过ID查询用户信息
 	 *
@@ -153,34 +161,12 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @param user 用户
 	 * @return Boolean
 	 */
-	@Override
 	@CacheEvict(value = "user_details", key = "#user.username")
 	public Boolean removeUserById(User user) {
 		userRoleService.removeRoleByUserId(user.getId());
 		this.removeById(user.getId());
 		return Boolean.TRUE;
 	}
-
-	@Override
-	@CacheEvict(value = "user_details", key = "#userDataVo.username")
-	public R<Boolean> updateUserInfo(UserDataVo userDataVo) {
-		com.albedo.java.modules.sys.vo.UserVo userVO = baseMapper.getUserVoByUsername(userDataVo.getUsername());
-		User user = new User();
-		if (StrUtil.isNotBlank(userDataVo.getPassword())
-			&& StrUtil.isNotBlank(userDataVo.getNewpassword1())) {
-			if (ENCODER.matches(userDataVo.getPassword(), userVO.getPassword())) {
-				user.setPassword(ENCODER.encode(userDataVo.getNewpassword1()));
-			} else {
-				log.warn("原密码错误，修改密码失败:{}", userDataVo.getUsername());
-				return new R<>(Boolean.FALSE, "原密码错误，修改失败");
-			}
-		}
-		user.setPhone(userDataVo.getPhone());
-		user.setId(userVO.getId());
-		user.setAvatar(userDataVo.getAvatar());
-		return new R<>(this.updateById(user));
-	}
-
 
 	/**
 	 * 查询上级部门的用户信息
@@ -219,4 +205,12 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 			.collect(Collectors.toList());
 	}
 
+	@CacheEvict(value = "user_details", key = "#user.username")
+	public void lockOrUnLock(User user) {
+		super.lockOrUnLock(user.getId());
+	}
+	@Override
+	public void lockOrUnLock(List<String> ids) {
+		ids.forEach(id->lockOrUnLock(baseMapper.selectById(id)));
+	}
 }

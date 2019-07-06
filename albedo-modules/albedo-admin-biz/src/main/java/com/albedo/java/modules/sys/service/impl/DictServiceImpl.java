@@ -16,21 +16,18 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
-import com.albedo.java.common.base.BaseInit;
-import com.albedo.java.common.core.constant.SecurityConstants;
+import com.albedo.java.common.core.annotation.BaseInit;
 import com.albedo.java.common.core.util.ObjectUtil;
-import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.util.DictUtil;
+import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;

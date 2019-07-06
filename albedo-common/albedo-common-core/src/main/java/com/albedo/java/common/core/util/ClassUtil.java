@@ -17,7 +17,7 @@
 package com.albedo.java.common.core.util;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.albedo.java.common.core.config.ApplicationProperties;
+import com.albedo.java.common.core.config.ApplicationConfig;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.Validate;
@@ -45,7 +45,8 @@ import java.util.List;
 @Slf4j
 public class ClassUtil extends org.springframework.util.ClassUtils {
 	private final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();
-	public static String classPackge = SpringContextHolder.getBean(ApplicationProperties.class).getClassName();
+	public static String classPackge = ApplicationConfig.get("system.base.class.path");
+
 	public static boolean checkClassIsBase(String className) {
 		if (StringUtil.isNotEmpty(className) && StringUtil.isNotEmpty(classPackge)) {
 			String[] strs = classPackge.split(StringUtil.SPLIT_DEFAULT);
@@ -240,6 +241,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		}
 		return (T) obj;
 	}
+
 
 
 }

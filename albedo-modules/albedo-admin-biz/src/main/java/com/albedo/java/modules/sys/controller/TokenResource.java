@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.feign.RemoteTokenService;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.R;
@@ -42,7 +43,7 @@ public class TokenResource {
 	 * @param params 参数集
 	 * @return token集合
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R token(@RequestParam Map<String, Object> params) {
 		return remoteTokenService.getTokenPage(params, SecurityConstants.FROM_IN);
 	}
@@ -53,7 +54,7 @@ public class TokenResource {
 	 * @param id ID
 	 * @return success/false
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
 	public R<Boolean> delete(@PathVariable String id) {
 		return remoteTokenService.removeToken(id, SecurityConstants.FROM_IN);

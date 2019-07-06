@@ -140,8 +140,10 @@ public interface CommonConstants {
 	String SORT_ASC = "asc";
 	String SPACE = " ";
 
+	String ID_REGEX = "^[_',.@A-Za-z0-9-]*$";
 
-	String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
+	String URL_IDS_REGEX = "/{ids:^[_',.@A-Za-z0-9-]*$}";
+	String URL_ID_REGEX = "/{id:^[_',.@A-Za-z0-9-]*$}";
 	String SYSTEM = "system";
 
 

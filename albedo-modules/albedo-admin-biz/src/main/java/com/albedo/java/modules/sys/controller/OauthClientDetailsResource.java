@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.domain.OauthClientDetails;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -48,7 +49,7 @@ public class OauthClientDetailsResource {
 	 * @param id ID
 	 * @return OauthClientDetails
 	 */
-	@GetMapping("/{id}")
+	@GetMapping(CommonConstants.URL_ID_REGEX)
 	public R getById(@PathVariable Integer id) {
 		return new R<>(oauthClientDetailsService.getById(id));
 	}
@@ -74,7 +75,7 @@ public class OauthClientDetailsResource {
 	 */
 	@SysLog("添加终端")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_client_add')")
+	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R add(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
 		return new R<>(oauthClientDetailsService.save(oauthClientDetails));
 	}
@@ -86,7 +87,7 @@ public class OauthClientDetailsResource {
 	 * @return success/false
 	 */
 	@SysLog("删除终端")
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R removeById(@PathVariable String id) {
 		return new R<>(oauthClientDetailsService.removeClientDetailsById(id));

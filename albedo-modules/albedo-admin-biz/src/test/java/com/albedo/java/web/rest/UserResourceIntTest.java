@@ -184,7 +184,7 @@ public class UserResourceIntTest {
         // Initialize the database
         userService.save(user);
         // Get all the users
-        restUserMockMvc.perform(get(DEFAULT_API_URL+"page")
+        restUserMockMvc.perform(get(DEFAULT_API_URL)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

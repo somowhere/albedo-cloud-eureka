@@ -27,5 +27,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DeptTree extends TreeNode {
-	private String name;
+	private String label;
 }

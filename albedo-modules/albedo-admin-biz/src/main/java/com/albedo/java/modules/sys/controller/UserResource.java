@@ -129,7 +129,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 * @return R
 	 */
 	@SysLog("添加/更新用户信息")
-	@PostMapping
+	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R saveUser(@Valid @RequestBody UserDataVo userDataVo) {
 		log.debug("REST request to save userDataVo : {}", userDataVo);

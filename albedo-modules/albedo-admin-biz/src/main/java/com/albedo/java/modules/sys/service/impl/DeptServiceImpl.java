@@ -155,7 +155,7 @@ public class DeptServiceImpl  extends
 				DeptTree node = new DeptTree();
 				node.setId(dept.getId());
 				node.setParentId(dept.getParentId());
-				node.setName(dept.getName());
+				node.setLabel(dept.getName());
 				return node;
 			}).collect(Collectors.toList());
 		return TreeUtil.buildByLoop(treeList, Dept.ROOT);

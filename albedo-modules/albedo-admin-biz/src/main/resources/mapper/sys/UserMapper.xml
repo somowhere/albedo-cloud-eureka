@@ -18,7 +18,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.albedo.java.modules.sys.repository.UserRepository">
 	<!-- 通用查询映射结果 -->
-	<resultMap id="baseResultMap" type="com.albedo.java.modules.sys.vo.UserVo">
+	<resultMap id="userVoPageResultMap" type="com.albedo.java.modules.sys.vo.UserVo">
 		<id column="id" property="id"/>
 		<result column="username" property="username"/>
 		<result column="password" property="password"/>
@@ -37,7 +37,7 @@
 		<result column="version" property="version"/>
 		<result column="status" property="status"/>
 		<result column="deptId" property="deptId"/>
-		<result column="description" property="deptName"/>
+		<result column="deptName" property="deptName"/>
 		<collection property="roleList" ofType="com.albedo.java.modules.sys.domain.Role"
 					select="com.albedo.java.modules.sys.repository.RoleRepository.listRolesByUserId" column="id">
 		</collection>
@@ -166,7 +166,7 @@
 		a.id = #{id}
 	</select>
 
-	<select id="getUserVosPage" resultMap="baseResultMap">
+	<select id="getUserVosPage" resultMap="userVoPageResultMap">
 		SELECT
 		a.id,
 		a.username,

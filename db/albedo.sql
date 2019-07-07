@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50725
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : albedo
 
  Target Server Type    : MySQL
- Target Server Version : 50725
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 04/07/2019 17:15:02
+ Date: 07/07/2019 23:25:54
 */
 
 SET NAMES utf8mb4;
@@ -33,13 +33,13 @@ CREATE TABLE `gen_scheme`  (
   `function_name_simple` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能名（简写）',
   `function_author` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能作者',
   `gen_table_id` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成表编号',
-  `status` int(2) NULL DEFAULT 0 COMMENT '状态 -2 已删除 -1停用 0 正常',
   `version` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生成方案' ROW_FORMAT = Dynamic;
 
@@ -54,13 +54,13 @@ CREATE TABLE `gen_table`  (
   `class_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '实体类名称',
   `parent_table` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联父表',
   `parent_table_fk` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联父表外键',
-  `status` int(2) NULL DEFAULT 0 COMMENT '状态 -2 已删除 -1停用 0 正常',
   `version` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
   INDEX `gen_table_name`(`name`) USING BTREE
@@ -91,13 +91,13 @@ CREATE TABLE `gen_table_column`  (
   `dict_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典类型',
   `settings` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
   `sort_` decimal(10, 0) NULL DEFAULT NULL COMMENT '排序（升序）',
-  `status` int(2) NULL DEFAULT 0 COMMENT '状态 -2 已删除 -1停用 0 正常',
   `version` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `gen_table_column_table_id`(`gen_table_id`) USING BTREE,
   INDEX `gen_table_column_name`(`name`) USING BTREE,
@@ -128,13 +128,13 @@ CREATE TABLE `gen_table_fk`  (
   `dict_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典类型',
   `settings` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
   `sort` decimal(10, 0) NULL DEFAULT NULL COMMENT '排序（升序）',
-  `status` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
   `version` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `gen_table_column_table_id`(`gen_table_id`) USING BTREE,
   INDEX `gen_table_column_name`(`name`) USING BTREE,
@@ -156,25 +156,25 @@ CREATE TABLE `sys_dept`  (
   `created_date` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  `status` int(2) NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `version` int(11) NOT NULL,
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '描述',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门管理' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES ('1', '-1', NULL, '山东农信', NULL, b'0', '', '2018-01-22 19:00:23', NULL, '2019-07-04 16:57:18', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('10', '8', NULL, '院校沙县', NULL, b'0', '', '2018-12-10 21:19:26', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('2', '-1', NULL, '沙县国际', NULL, b'0', '', '2018-01-22 19:00:38', NULL, '2019-07-04 16:57:22', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('3', '1', NULL, '潍坊农信', NULL, b'0', '', '2018-01-22 19:00:44', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('4', '3', NULL, '高新农信', NULL, b'0', '', '2018-01-22 19:00:52', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('5', '4', NULL, '院校农信', NULL, b'0', '', '2018-01-22 19:00:57', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('6', '5', NULL, '潍院农信', NULL, b'0', '', '2018-01-22 19:01:06', NULL, '2019-01-09 10:58:18', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('7', '2', NULL, '山东沙县', NULL, b'0', '', '2018-01-22 19:01:57', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('8', '7', NULL, '潍坊沙县', NULL, b'0', '', '2018-01-22 19:02:03', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dept` VALUES ('9', '8', NULL, '高新沙县', NULL, b'0', '', '2018-01-22 19:02:14', NULL, '2018-09-13 01:46:44', 1, 0, '');
+INSERT INTO `sys_dept` VALUES ('1', '-1', NULL, '山东农信', NULL, b'0', '', '2018-01-22 19:00:23', NULL, '2019-07-04 16:57:18', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('10', '8', NULL, '院校沙县', NULL, b'0', '', '2018-12-10 21:19:26', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('2', '-1', NULL, '沙县国际', NULL, b'0', '', '2018-01-22 19:00:38', NULL, '2019-07-04 16:57:22', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('3', '1', NULL, '潍坊农信', NULL, b'0', '', '2018-01-22 19:00:44', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('4', '3', NULL, '高新农信', NULL, b'0', '', '2018-01-22 19:00:52', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('5', '4', NULL, '院校农信', NULL, b'0', '', '2018-01-22 19:00:57', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('6', '5', NULL, '潍院农信', NULL, b'0', '', '2018-01-22 19:01:06', NULL, '2019-01-09 10:58:18', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('7', '2', NULL, '山东沙县', NULL, b'0', '', '2018-01-22 19:01:57', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('8', '7', NULL, '潍坊沙县', NULL, b'0', '', '2018-01-22 19:02:03', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('9', '8', NULL, '高新沙县', NULL, b'0', '', '2018-01-22 19:02:14', NULL, '2018-09-13 01:46:44', 0, '', '0');
 
 -- ----------------------------
 -- Table structure for sys_dept_relation
@@ -191,7 +191,7 @@ CREATE TABLE `sys_dept_relation`  (
 -- ----------------------------
 -- Records of sys_dept_relation
 -- ----------------------------
-INSERT INTO `sys_dept_relation` VALUES ('1', '1');
+INSERT INTO `sys_dept_relation` VALUES ('1', '0');
 INSERT INTO `sys_dept_relation` VALUES ('1', '3');
 INSERT INTO `sys_dept_relation` VALUES ('1', '4');
 INSERT INTO `sys_dept_relation` VALUES ('1', '5');
@@ -232,30 +232,29 @@ CREATE TABLE `sys_dict`  (
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `status` int(2) NOT NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `version` int(11) NOT NULL DEFAULT 0,
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sys_dict_value`(`val`) USING BTREE,
-  INDEX `sys_dict_label`(`name`) USING BTREE,
-  INDEX `sys_dict_del_flag`(`status`) USING BTREE
+  INDEX `sys_dict_label`(`name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', NULL, NULL, 1, NULL, b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dict` VALUES ('2', '数据状态', '', 'sys_status', 1, '1', 0, NULL, b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-06-15 10:56:41', 1, 0, NULL);
-INSERT INTO `sys_dict` VALUES ('3', '正常', '1', 'sys_status_normal', 2, NULL, 0, NULL, b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-06-15 10:56:41', 1, 0, '');
-INSERT INTO `sys_dict` VALUES ('4', '异常', '0', 'sys_status_unable', 2, NULL, 0, NULL, b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-06-15 10:56:41', 1, 0, NULL);
-INSERT INTO `sys_dict` VALUES ('5', '删除', '-1', 'sys_status_delete', 2, NULL, 0, NULL, b'1', NULL, '1', '2019-06-02 17:30:10', NULL, '2019-06-15 10:56:41', 1, 0, NULL);
+INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', NULL, NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-07-04 22:45:10', 0, '', '0');
+INSERT INTO `sys_dict` VALUES ('2', '数据状态', '', 'sys_status', 1, '1', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('3', '正常', '1', 'sys_status_normal', 2, NULL, 0, b'1', b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-07-04 22:45:07', 0, '', '0');
+INSERT INTO `sys_dict` VALUES ('4', '锁定', '0', 'sys_status_unable', 2, NULL, 0, b'0', b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-07-04 22:45:15', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('5', '删除', '-1', 'sys_status_delete', 2, NULL, 0, b'1', b'1', NULL, '1', '2019-06-02 17:30:10', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log`  (
-  `id` bigint(64) NOT NULL COMMENT '编号',
+  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '日志类型',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '日志标题',
   `service_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '服务ID',
@@ -271,22 +270,24 @@ CREATE TABLE `sys_log`  (
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `version` int(11) NOT NULL,
-  `status` int(2) NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sys_log_create_by`(`created_by`) USING BTREE,
   INDEX `sys_log_request_uri`(`request_uri`) USING BTREE,
   INDEX `sys_log_type`(`type`) USING BTREE,
   INDEX `sys_log_create_date`(`created_date`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, 'admin', '2019-01-24 20:56:43', NULL, '2019-06-15 10:56:41', 0, 1, '');
-INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, 'admin', '2019-04-27 14:55:07', NULL, '2019-06-15 10:56:41', 0, 1, '');
-INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, 'admin', '2019-04-27 14:55:19', NULL, '2019-06-15 10:56:41', 0, 1, '');
-INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, 'admin', '2019-04-27 15:45:30', NULL, '2019-06-15 10:56:41', 0, 1, '');
+INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, 'admin', '2019-01-24 20:56:43', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, 'admin', '2019-04-27 14:55:07', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, 'admin', '2019-04-27 14:55:19', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, 'admin', '2019-04-27 15:45:30', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, 'system', '2019-07-07 22:16:43', 'system', '2019-07-07 22:16:43', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, 'system', '2019-07-07 22:19:27', 'system', '2019-07-07 22:19:27', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -309,54 +310,54 @@ CREATE TABLE `sys_menu`  (
   `created_date` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `status` int(2) NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `version` int(11) NOT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1000', '权限管理', NULL, '/upms', '-1', NULL, 'icon-quanxianguanli', 'Layout', '0', '0', b'0', 0, '', '2018-09-28 08:29:53', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', NULL, 'icon-yonghuguanli', 'views/admin/user/index', '0', '0', b'0', 1, '', '2017-11-02 22:24:37', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1101', '用户新增', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:09', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1102', '用户修改', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:48', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1103', '用户删除', 'sys_user_del', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:54:01', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/admin/menu/index', '0', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1201', '菜单新增', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:15:53', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1202', '菜单修改', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:23', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:43', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/admin/role/index', '0', '0', b'0', 3, '', '2017-11-08 10:13:37', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1301', '角色新增', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:18', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1302', '角色修改', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:41', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1303', '角色删除', 'sys_role_del', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:59', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1304', '分配权限', 'sys_role_perm', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-04-20 07:22:55', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NULL, 'icon-web-icon-', 'views/admin/dept/index', '0', '0', b'0', 4, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1401', '部门新增', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:56:16', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1402', '部门修改', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:56:59', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('1403', '部门删除', 'sys_dept_del', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:57:28', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/admin', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '0', b'0', 1, '', '2017-11-07 20:56:00', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/admin/log/index', '0', '0', b'0', 5, '', '2017-11-20 14:06:22', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2101', '日志删除', 'sys_log_del', NULL, '2100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-20 20:37:37', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/admin/dict/index', '0', '0', b'0', 6, '', '2017-11-29 11:30:52', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2201', '字典删除', 'sys_dict_del', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-29 11:30:11', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2202', '字典新增', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-11 22:34:55', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2203', '字典修改', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-11 22:36:03', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'gen', '2000', NULL, 'icon-weibiaoti46', 'views/gen/index', '0', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/admin/client/index', '0', '0', b'0', 9, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_edit', NULL, '2400', NULL, '1', NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:35:18', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:37:06', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL, '2400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:39:16', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '0', b'0', 10, '', '2018-06-26 10:50:32', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/admin/token/index', '0', '0', b'0', 11, '', '2018-09-04 05:58:41', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', b'0', 1, '', '2018-09-04 05:59:50', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('5000', '一级菜单', NULL, '/crud', '-1', NULL, 'icon-caidanguanli', '', '0', '0', b'0', 4, '', '2018-08-28 01:50:22', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('5001', '一级菜单', NULL, 'index', '5000', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-08-28 01:50:48', NULL, '2018-11-21 17:48:19', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('5002', '二级菜单', NULL, 'crud', '5001', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-08-28 01:51:23', NULL, '2018-11-21 17:47:40', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('5003', '二级菜单', NULL, '', '5000', NULL, 'icon-caidanguanli', '', '0', '0', b'0', 1, '', '2018-11-21 17:49:18', NULL, '2019-06-15 10:56:41', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('5004', '二级菜单', NULL, 'index', '5003', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-11-21 17:53:51', NULL, '2018-12-20 14:26:53', 1, NULL, 0);
-INSERT INTO `sys_menu` VALUES ('9999', '系统官网', NULL, 'https://pig4cloud.com/#/', '-1', NULL, 'icon-guanwangfangwen', NULL, '0', '0', b'0', 9, '', '2019-01-17 17:05:19', NULL, '2019-04-27 15:45:29', 1, NULL, 0);
+INSERT INTO `sys_menu` VALUES ('1000', '权限管理', NULL, '/upms', '-1', NULL, 'icon-quanxianguanli', 'Layout', '0', '0', b'0', 0, '', '2018-09-28 08:29:53', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', NULL, 'icon-yonghuguanli', 'views/admin/user/index', '0', '0', b'0', 1, '', '2017-11-02 22:24:37', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1101', '用户编辑', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:09', NULL, '2019-07-06 16:18:07', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1102', '用户锁定', 'sys_user_lock', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:52:48', NULL, '2019-07-06 16:18:26', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1103', '用户删除', 'sys_user_del', NULL, '1100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 09:54:01', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/admin/menu/index', '0', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1201', '菜单编辑', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:15:53', NULL, '2019-07-06 16:20:21', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1202', '菜单锁定', 'sys_menu_lock', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:23', NULL, '2019-07-06 16:18:47', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:16:43', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/admin/role/index', '0', '0', b'0', 3, '', '2017-11-08 10:13:37', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1301', '角色编辑', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:18', NULL, '2019-07-06 16:20:18', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1302', '角色锁定', 'sys_role_lock', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:41', NULL, '2019-07-06 16:19:55', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1303', '角色删除', 'sys_role_del', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-08 10:14:59', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1304', '分配权限', 'sys_role_perm', NULL, '1300', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-04-20 07:22:55', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NULL, 'icon-web-icon-', 'views/admin/dept/index', '0', '0', b'0', 4, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1401', '部门编辑', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:56:16', NULL, '2019-07-06 16:20:15', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1402', '部门锁定', 'sys_dept_lock', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:56:59', NULL, '2019-07-06 16:19:58', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1403', '部门删除', 'sys_dept_del', NULL, '1400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-01-20 14:57:28', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/admin', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '0', b'0', 1, '', '2017-11-07 20:56:00', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/admin/log/index', '0', '0', b'0', 5, '', '2017-11-20 14:06:22', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2101', '日志删除', 'sys_log_del', NULL, '2100', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-20 20:37:37', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/admin/dict/index', '0', '0', b'0', 6, '', '2017-11-29 11:30:52', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2201', '字典删除', 'sys_dict_del', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2017-11-29 11:30:11', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2202', '字典编辑', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-11 22:34:55', NULL, '2019-07-06 16:20:10', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2203', '字典锁定', 'sys_dict_lock', NULL, '2200', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-11 22:36:03', NULL, '2019-07-06 16:20:03', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'gen', '2000', NULL, 'icon-weibiaoti46', 'views/gen/index', '0', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/admin/client/index', '0', '0', b'0', 9, '', '2018-01-20 13:17:19', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_add', NULL, '2400', NULL, '1', NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:35:18', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:37:06', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL, '2400', NULL, NULL, NULL, '0', '1', b'0', NULL, '', '2018-05-15 21:39:16', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '0', b'0', 10, '', '2018-06-26 10:50:32', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/admin/token/index', '0', '0', b'0', 11, '', '2018-09-04 05:58:41', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', b'0', 1, '', '2018-09-04 05:59:50', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('5000', '一级菜单', NULL, '/crud', '-1', NULL, 'icon-caidanguanli', '', '0', '0', b'0', 4, '', '2018-08-28 01:50:22', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('5001', '一级菜单', NULL, 'index', '5000', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-08-28 01:50:48', NULL, '2018-11-21 17:48:19', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('5002', '二级菜单', NULL, 'crud', '5001', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-08-28 01:51:23', NULL, '2018-11-21 17:47:40', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('5003', '二级菜单', NULL, '', '5000', NULL, 'icon-caidanguanli', '', '0', '0', b'0', 1, '', '2018-11-21 17:49:18', NULL, '2019-06-15 10:56:41', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('5004', '二级菜单', NULL, 'index', '5003', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '0', b'0', 1, '', '2018-11-21 17:53:51', NULL, '2018-12-20 14:26:53', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('9999', '系统官网', NULL, 'https://pig4cloud.com/#/', '-1', NULL, 'icon-guanwangfangwen', NULL, '0', '0', b'0', 9, '', '2019-01-17 17:05:19', NULL, '2019-04-27 15:45:29', NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
@@ -399,18 +400,18 @@ CREATE TABLE `sys_role`  (
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-  `status` int(2) NULL DEFAULT 0 COMMENT '逻辑删除标记状态（-1：删除；0：停用 1：正常）',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `version` int(11) NOT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `role_idx1_code`(`code`) USING BTREE
+  UNIQUE INDEX `role_idx1_role_code`(`code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '系统角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', 1, NULL, 0);
-INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', 1, NULL, 0);
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -498,7 +499,7 @@ INSERT INTO `sys_role_menu` VALUES ('2', '1403');
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '主键ID',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '1' COMMENT '主键ID',
   `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `salt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '随机盐',
@@ -506,26 +507,28 @@ CREATE TABLE `sys_user`  (
   `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '邮箱',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '头像',
   `dept_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '部门ID',
-  `lock_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，9-锁定',
-  `qq_openid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT 'QQ openid',
-  `wx_openid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '微信openid',
+  `qq_open_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT 'QQ openid',
+  `wx_open_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '微信openid',
+  `lock_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '1' COMMENT '1-正常，0-锁定',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  `status` int(2) NULL DEFAULT 0 COMMENT '-1-删除 0-停用 1-正常',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `version` int(11) NOT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_wx_openid`(`wx_openid`) USING BTREE,
-  INDEX `user_qq_openid`(`qq_openid`) USING BTREE,
+  INDEX `user_wx_openid`(`wx_open_id`) USING BTREE,
+  INDEX `user_qq_openid`(`qq_open_id`) USING BTREE,
   INDEX `user_idx1_username`(`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$4IPlLRSEhiCiDlEUYVACteSJOjphUjpq6wfff1WqdGuJY00xEVdBa', NULL, '17034642999', NULL, '', '1', '0', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '', '2018-04-20 07:15:18', NULL, '2019-07-04 13:18:23', 1, NULL, 0);
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-07 20:58:44', NULL, 1, '0');
+INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:32:17', '1', '2019-07-07 20:59:40', NULL, 3, '0');
+INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-07 22:19:27', NULL, 9, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -540,8 +543,10 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1');
+INSERT INTO `sys_user_role` VALUES ('1', '0');
 INSERT INTO `sys_user_role` VALUES ('2', '2');
+INSERT INTO `sys_user_role` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', '0');
+INSERT INTO `sys_user_role` VALUES ('90da0206c39867a1b36ac36ced80c1a9', '0');
 
 -- ----------------------------
 -- Table structure for zipkin_annotations

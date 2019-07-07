@@ -52,13 +52,6 @@ public class DictServiceImpl extends
 
 	@Autowired
 	private CacheManager cacheManager;
-	public List<Dict> findAllByStatusOrderBySortAsc(Integer status) {
-		return repository.findRelationList(
-			new QueryWrapper<Dict>().eq(super.getClassNameProfix(Dict.F_SQL_STATUS), status)
-				.orderByAsc(super.getClassNameProfix(Dict.F_SQL_SORT))
-		);
-
-	}
 	public Map<String, List<SelectResult>> findCodeStr(String codes) {
 		return findCodes(StringUtil.isNotEmpty(codes) ?
 			codes.split(StringUtil.SPLIT_DEFAULT) : null);
@@ -66,21 +59,14 @@ public class DictServiceImpl extends
 
 	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+Dict.CACHE_DICT_RESULT_ALL+"'")
 	public Map<String,List<SelectResult>> findCodes(String... codes) {
-		return DictUtil.getSelectResultListByCodes(getAll(), codes);
-	}
-
-	@Override
-	public List<Dict> getAll() {
-		return list(Wrappers
-			.<Dict>query().lambda()
-			.ne(Dict::getStatus, Dict.FLAG_DELETE));
+		return DictUtil.getSelectResultListByCodes(list(), codes);
 	}
 
 	public void afterPropertiesSet() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
 		if (cache == null || cache.get(Dict.CACHE_DICT_ALL) == null ||
 			ObjectUtil.isEmpty(cache.get(Dict.CACHE_DICT_ALL))) {
-			List<Dict> dictList = getAll();
+			List<Dict> dictList = list();
 			cache.put(Dict.CACHE_DICT_ALL, dictList);
 		}
 	}

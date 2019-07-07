@@ -152,7 +152,7 @@ public class UserResourceIntTest {
         assertThat(testUser.getPhone()).isEqualTo(DEFAULT_PHONE);
 		assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
 		assertThat(testUser.getQqOpenId()).isEqualTo(DEFAULT_QQOPENID);
-		assertThat(testUser.getStatus()).isEqualTo(User.FLAG_NORMAL);
+		assertThat(testUser.getDelFlag()).isEqualTo(User.FLAG_NORMAL);
     }
 
     @Test

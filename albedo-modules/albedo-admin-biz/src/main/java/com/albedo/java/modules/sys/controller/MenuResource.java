@@ -146,17 +146,4 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public R removeByIds(@PathVariable String ids) {
 		return service.removeMenuById(ids);
 	}
-
-	/**
-	 * @param ids
-	 * @return
-	 */
-	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁菜单")
-	@PreAuthorize("@pms.hasPermission('sys_menu_lock')")
-	public R lockOrUnLock(@PathVariable String ids) {
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
-	}
-
 }

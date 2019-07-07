@@ -75,18 +75,6 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		return R.createSuccess("操作成功");
 	}
 	/**
-	 * @param ids
-	 * @return
-	 */
-	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁角色")
-	@PreAuthorize("@pms.hasPermission('sys_role_lock')")
-	public R lockOrUnLock(@PathVariable String ids) {
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
-	}
-
-	/**
 	 * 删除角色
 	 *
 	 * @param ids

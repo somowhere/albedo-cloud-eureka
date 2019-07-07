@@ -45,8 +45,8 @@ mybatis-plus:
       id-type: UUID
       #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
       field-strategy: NOT_NULL
-      logic-delete-value: -2
-      logic-not-delete-value: 1
+      logic-delete-value: 1
+      logic-not-delete-value: 0
     #数据库大写下划线转换
     #capital-mode: true
   #    meta-object-handler: com.albedo.java.common.persistence.handler.EntityMetaObjectHandler

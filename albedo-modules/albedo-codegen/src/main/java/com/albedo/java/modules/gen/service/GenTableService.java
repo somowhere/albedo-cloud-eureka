@@ -48,8 +48,7 @@ public class GenTableService extends
     public PageModel<GenTable> findPage(PageModel<GenTable> pm, List<QueryCondition> authQueryConditions) {
         //拼接查询动态对象
         SpecificationDetail<GenTable> spec = DynamicSpecifications.
-                buildSpecification(pm.getQueryConditionJson(),
-                        QueryCondition.ne(User.F_STATUS, User.FLAG_DELETE));
+                buildSpecification(pm.getQueryConditionJson());
         spec.orAll(authQueryConditions);
         findPage(pm, spec);
         return pm;
@@ -113,12 +112,6 @@ public class GenTableService extends
     }
 
 
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<GenTable> findAll() {
-        return findAll(DynamicSpecifications
-                .bySearchQueryCondition(QueryCondition.ne(GenTable.F_STATUS, GenTable.FLAG_DELETE)));
-    }
 
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -127,8 +120,7 @@ public class GenTableService extends
             return true;
         }
         List<GenTable> list = findAll(
-                DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(GenTable.F_STATUS, GenTable.FLAG_NORMAL),
-                        QueryCondition.eq(GenTable.F_NAME, tableName)));
+                DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(GenTable.F_NAME, tableName)));
         return list.size() == 0;
     }
 

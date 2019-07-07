@@ -266,9 +266,7 @@ public class DictUtil {
     public static List<Dict> getDictList(String code) {
         List<Dict> itemList = Lists.newArrayList();
         for (Dict item : getDictListByCode(code)) {
-            if (Dict.FLAG_NORMAL.equals(item.getStatus())) {
-                itemList.add(item);
-            }
+            itemList.add(item);
         }
         return itemList;
     }
@@ -277,8 +275,7 @@ public class DictUtil {
         List<Dict> itemList = Lists.newArrayList();
         List<String> filterList = ObjectUtil.isEmpty(filters) ? null : Lists.newArrayList(filters.split(","));
         for (Dict item : getDictListByCode(code)) {
-            if (Dict.FLAG_NORMAL.equals(item.getStatus())
-                    && (ObjectUtil.isEmpty(filterList) || !filterList.contains(item.getVal())))
+            if ((ObjectUtil.isEmpty(filterList) || !filterList.contains(item.getVal())))
                 itemList.add(item);
         }
         return itemList;
@@ -288,7 +285,7 @@ public class DictUtil {
         List<Dict> itemList = Lists.newArrayList();
         List<String> filterList = ObjectUtil.isEmpty(contains) ? null : Lists.newArrayList(contains.split(","));
         for (Dict item : getDictListByCode(code)) {
-            if (Dict.FLAG_NORMAL.equals(item.getStatus()) && ObjectUtil.isNotEmpty(filterList)
+            if (ObjectUtil.isNotEmpty(filterList)
                     && filterList.contains(item.getVal()))
                 itemList.add(item);
         }

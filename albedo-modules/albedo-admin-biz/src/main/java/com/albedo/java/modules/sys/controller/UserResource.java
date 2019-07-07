@@ -125,17 +125,6 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 		return R.createSuccess("操作成功");
 	}
 	/**
-	 * @param ids
-	 * @return
-	 */
-	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁用户")
-	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
-	public R lockOrUnLock(@PathVariable String ids) {
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
-	}
-	/**
 	 * 添加/更新用户信息
 	 *
 	 * @param userDataVo 用户信息
@@ -185,4 +174,18 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	public R listAncestorUsers(@PathVariable String username) {
 		return new R<>(service.listAncestorUsersByUsername(username));
 	}
+
+
+	/**
+	 * @param ids
+	 * @return
+	 */
+	@PutMapping(CommonConstants.URL_IDS_REGEX)
+	@SysLog("锁定/解锁用户")
+	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
+	public R lockOrUnLock(@PathVariable String ids) {
+		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
+	}
+
 }

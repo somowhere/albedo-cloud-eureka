@@ -101,6 +101,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		// 构造security用户
 		return new UserDetail(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
-			StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL), true, true, true, authorities);
+			StrUtil.equals(user.getLockFlag(), CommonConstants.STR_YES), true, true, true, authorities);
 	}
 }

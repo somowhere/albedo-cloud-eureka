@@ -16,22 +16,20 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 public abstract class BaseEntity<T extends GeneralEntity> extends GeneralEntity<T> {
 
     private static final long serialVersionUID = 1L;
-    @TableField(value = GeneralEntity.F_STATUS)
-    @TableLogic(delval = "-1")
-	@DictType("sys_status")
-    protected int status;
+    @TableField(value = GeneralEntity.F_SQL_DELFLAG)
+    @TableLogic(delval = "1")
+    protected String delFlag;
 
     public BaseEntity() {
         super();
-        this.status = FLAG_NORMAL;
+        this.delFlag = FLAG_NORMAL;
     }
 
-    public int getStatus() {
-        return status;
-    }
+	public String getDelFlag() {
+		return delFlag;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
 }

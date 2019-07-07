@@ -19,11 +19,4 @@ import java.util.List;
 @Service
 public class GenTemplateService extends DataServiceImpl<GenTemplateRepository, GenTemplate, String> {
 
-
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<GenTemplate> findAll() {
-        return findAll(DynamicSpecifications.bySearchQueryCondition(QueryCondition.ne(GenTable.F_STATUS, GenTable.FLAG_DELETE)));
-    }
-
 }

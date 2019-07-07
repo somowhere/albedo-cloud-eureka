@@ -33,6 +33,6 @@
 		<result column="last_modified_date" property="lastModifiedDate"/>
 		<result column="description" property="description"/>
 		<result column="version" property="version"/>
-		<result column="status" property="status"/>
+		<result column="del_flag" property="delFlag"/>
 	</resultMap>
 </mapper>

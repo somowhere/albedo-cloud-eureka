@@ -119,8 +119,8 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<V> findAllByParentId(String parentId) {
-        return super.findAllByParentIdAndStatusNot(parentId, BaseEntity.FLAG_DELETE).stream()
+    public List<V> findAllVoByParentId(String parentId) {
+        return super.findAllByParentId(parentId).stream()
                 .map(item -> copyBeanToVo(item))
                 .collect(Collectors.toList());
     }
@@ -128,8 +128,7 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
     public Optional<V> findOptionalTopByParentId(String parentId) {
-        List<T> tempList = super.findTop1ByParentIdAndStatusNotOrderBySortDesc(
-        	parentId, BaseEntity.FLAG_DELETE);
+        List<T> tempList = super.findTop1ByParentIdOrderBySortDesc(parentId);
         if(CollUtil.isNotEmpty(tempList)){
             T entity = tempList.get(0);
             entity.setParent(repository.selectById(entity.getParentId()));

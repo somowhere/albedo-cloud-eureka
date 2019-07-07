@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.util.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,13 +58,6 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 * @return boolean
 	 */
 	Boolean removeByIds(List<String> idList);
-	/**
-	 * 删除用户
-	 *
-	 * @param idList 用户
-	 * @return boolean
-	 */
-	void lockOrUnLock(List<String> idList);
 
 	/**
 	 * 通过ID查询用户信息
@@ -81,4 +75,5 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 */
 	List<User> listAncestorUsersByUsername(String username);
 
+	void lockOrUnLock(ArrayList<String> newArrayList);
 }

@@ -31,7 +31,7 @@ public interface TreeVoService<Repository extends TreeRepository<T>,
 	V save(V form);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	List<V> findAllByParentId(String parentId);
+	List<V> findAllVoByParentId(String parentId);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	Optional<V> findOptionalTopByParentId(String parentId);

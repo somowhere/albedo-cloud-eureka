@@ -13,15 +13,13 @@ import java.io.Serializable;
 public abstract class GeneralEntity<T extends Model> extends Model<T> implements Serializable {
 
 	/*** 状态 正常 */
-	public static final Integer FLAG_NORMAL = 1;
-	/*** 状态 停用 */
-	public static final Integer FLAG_UNABLE = 0;
+	public static final String FLAG_NORMAL = "0";
 	/*** 状态 已删除 */
-	public static final Integer FLAG_DELETE = -1;
+	public static final String FLAG_DELETE = "1";
     /**
-     * 状态（-1：删除；0：停用 1：正常）
+     * 状态（0：正常 1：删除）
      */
-    public static final String F_STATUS = "status";
+    public static final String F_DELFLAG = "delFlag";
     /*** ID */
     public static final String F_ID = "id";
     public static final String F_CREATEDBY = "createdBy";
@@ -41,7 +39,7 @@ public abstract class GeneralEntity<T extends Model> extends Model<T> implements
     public static final String F_SQL_LASTMODIFIEDDATE = "last_modified_date";
     public static final String F_SQL_VERSION = "version";
     public static final String F_SQL_DESCRIPTION = "description";
-    public static final String F_SQL_STATUS = "status";
+    public static final String F_SQL_DELFLAG = "del_flag";
     private static final long serialVersionUID = 1L;
 
 

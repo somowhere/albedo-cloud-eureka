@@ -46,9 +46,7 @@ public class GenSchemeService extends DataVoServiceImpl<GenSchemeRepository, Gen
     }
 
     public List<GenScheme> findAll(String id) {
-
         SpecificationDetail specificationDetail = DynamicSpecifications.bySearchQueryCondition(
-                QueryCondition.eq(GenTable.F_STATUS, GenTable.FLAG_NORMAL),
                 QueryCondition.ne(GenTable.F_ID, id == null ? "-1" : id));
         return findAll(specificationDetail);
 //		return repository.findAllByStatusAndId(GenTableVo.FLAG_NORMAL, id == null ? "-1" : id);

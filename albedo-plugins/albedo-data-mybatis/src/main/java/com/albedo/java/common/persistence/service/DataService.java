@@ -14,8 +14,6 @@ public interface DataService<Repository extends BaseRepository<T>, T extends Dat
 	extends IService<T>, BaseService<Repository, T,  PK> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findRelationOne(Serializable id);
-	void lockOrUnLock(PK id);
-	void lockOrUnLock(List<PK> ids);
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)

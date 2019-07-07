@@ -77,12 +77,5 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
 		return ResponseBuilder.buildOk("删除成功");
     }
 
-    @PutMapping(CommonConstants.URL_IDS_REGEX)
-    @Timed
-    public ResponseEntity lockOrUnLock(@PathVariable String ids) {
-        log.debug("REST request to lockOrUnLock genTable: {}", ids);
-        service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-        return ResponseBuilder.buildOk("操作成功");
-    }
 
 }

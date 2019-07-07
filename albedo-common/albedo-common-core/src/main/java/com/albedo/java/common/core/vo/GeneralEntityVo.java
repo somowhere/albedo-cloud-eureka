@@ -10,16 +10,14 @@ import java.io.Serializable;
 @Data
 public class GeneralEntityVo<ID extends Serializable> implements Serializable {
 
-    /*** 状态 正常 */
-    public static final Integer FLAG_NORMAL = 1;
-    /*** 状态 停用 */
-    public static final Integer FLAG_UNABLE = 0;
-    /*** 状态 已删除 */
-    public static final Integer FLAG_DELETE = -1;
-    /**
-     * 状态（-1：删除；0：停用 1：正常）
-     */
-    public static final String F_STATUS = "status";
+	/*** 状态 正常 */
+	public static final String FLAG_NORMAL = "0";
+	/*** 状态 已删除 */
+	public static final String FLAG_DELETE = "1";
+	/**
+	 * 状态（0：正常 1：删除）
+	 */
+	public static final String F_DELFLAG = "delFlag";
     /*** ID */
     public static final String F_ID = "id";
     public static final String F_CREATEDBY = "createdBy";

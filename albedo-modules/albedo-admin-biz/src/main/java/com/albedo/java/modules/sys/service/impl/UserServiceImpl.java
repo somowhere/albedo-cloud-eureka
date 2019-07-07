@@ -18,6 +18,8 @@ package com.albedo.java.modules.sys.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.data.util.QueryWrapperUtil;
@@ -46,6 +48,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,7 +79,10 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
 	public void save(UserDataVo userDataVo) {
 		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
-		BeanUtils.copyProperties(userDataVo, user);
+		if(StringUtil.isEmpty(userDataVo.getPassword())){
+			userDataVo.setPassword(null);
+		}
+		BeanVoUtil.copyProperties(userDataVo, user, true);
 		if(StringUtil.isNotEmpty(userDataVo.getPassword())){
 			user.setPassword(ENCODER.encode(userDataVo.getPassword()));
 		}
@@ -190,6 +196,15 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 			.eq(User::getDeptId, parentId));
 	}
 
+	@Override
+	public void lockOrUnLock(ArrayList<String> idList) {
+		idList.forEach(id -> {
+			User user = baseMapper.selectById(id);
+			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			baseMapper.updateById(user);
+		});
+	}
+
 	/**
 	 * 获取当前用户的子部门信息
 	 *
@@ -204,14 +219,5 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 			.stream()
 			.map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
-	}
-
-	@CacheEvict(value = "user_details", key = "#user.username")
-	public void lockOrUnLock(User user) {
-		super.lockOrUnLock(user.getId());
-	}
-	@Override
-	public void lockOrUnLock(List<String> ids) {
-		ids.forEach(id->lockOrUnLock(baseMapper.selectById(id)));
 	}
 }

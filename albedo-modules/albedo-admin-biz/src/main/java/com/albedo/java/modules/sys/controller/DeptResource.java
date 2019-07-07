@@ -108,15 +108,4 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 		return new R<>(service.removeDeptById(id));
 	}
 
-	/**
-	 * @param ids
-	 * @return
-	 */
-	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁部门")
-	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
-	public R lockOrUnLock(@PathVariable String ids) {
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
-	}
 }

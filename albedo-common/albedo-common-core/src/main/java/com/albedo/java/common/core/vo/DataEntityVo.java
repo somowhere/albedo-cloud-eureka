@@ -17,8 +17,7 @@ import java.time.LocalDateTime;
 public class DataEntityVo<PK extends Serializable> extends GeneralEntityVo {
 
     private PK id;
-    @DictType("sys_status")
-    private int status = FLAG_NORMAL;
+    private String delFlag = FLAG_NORMAL;
 	private String createdBy;
 	private LocalDateTime createdDate;
 	private String lastModifiedBy;

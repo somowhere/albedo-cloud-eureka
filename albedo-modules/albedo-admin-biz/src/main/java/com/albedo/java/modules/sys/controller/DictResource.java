@@ -122,18 +122,4 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 		return new R<>(service.removeById(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
 
-
-	/**
-	 * @param ids
-	 * @return
-	 */
-	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁字典")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
-	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
-	public R lockOrUnLock(@PathVariable String ids) {
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
-	}
-
 }

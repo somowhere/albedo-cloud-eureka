@@ -30,6 +30,7 @@ import com.albedo.java.modules.sys.service.RoleMenuService;
 import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,7 +51,16 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		super(service);
 		this.roleMenuService = roleMenuService;
 	}
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 添加角色
 	 *

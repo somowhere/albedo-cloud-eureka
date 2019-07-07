@@ -82,7 +82,7 @@
       <div slot="footer"
            class="dialog-footer">
         <el-button type="primary"
-                   @click="updatePermession(roleId, roleCode)">更 新
+                   @click="updatePermession(roleId, code)">更 新
         </el-button>
       </div>
     </el-dialog>
@@ -116,7 +116,7 @@
         listLoading: true,
         form: {},
         roleId: undefined,
-        roleCode: undefined,
+        code: undefined,
         rolesOptions: undefined,
         dialogPermissionVisible: false,
         roleManager_btn_add: false,
@@ -175,7 +175,7 @@
             this.dialogStatus = 'permission'
             this.dialogPermissionVisible = true
             this.roleId = row.roleId
-            this.roleCode = row.roleCode
+            this.code = row.code
           })
       },
       /**
@@ -206,7 +206,7 @@
       },
       handleDelete(row, index) {
         var _this = this
-        this.$confirm('是否确认删除名称为"' + row.roleName + '"'+ '"的数据项?', '警告', {
+        this.$confirm('是否确认删除名称为"' + row.name + '"'+ '"的数据项?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -251,7 +251,7 @@
           loading();
         });
       },
-      updatePermession(roleId, roleCode) {
+      updatePermession(roleId, code) {
         this.menuIds = ''
         this.menuIds = this.$refs.menuTree.getCheckedKeys().join(',').concat(',').concat(this.$refs.menuTree.getHalfCheckedKeys().join(','))
         permissionUpd(roleId, this.menuIds).then(() => {

@@ -29,6 +29,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,7 +53,16 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public MenuResource(MenuService service) {
 		super(service);
 	}
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 返回当前用户的树形菜单集合
 	 *

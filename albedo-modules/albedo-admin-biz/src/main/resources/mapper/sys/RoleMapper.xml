@@ -21,9 +21,9 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.albedo.java.modules.sys.domain.Role">
 		<id column="id" property="id"/>
-		<result column="role_name" property="roleName"/>
-		<result column="role_code" property="roleCode"/>
-		<result column="role_desc" property="roleDesc"/>
+		<result column="name" property="name"/>
+		<result column="code" property="code"/>
+		<result column="remark" property="remark"/>
 		<result column="created_by" property="createdBy"/>
 		<result column="created_date" property="createdDate"/>
 		<result column="last_modified_by" property="lastModifiedBy"/>

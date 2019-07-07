@@ -32,6 +32,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -59,14 +60,23 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	public DictResource(DictService service) {
 		super(service);
 	}
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 分页查询字典信息
 	 *
 	 * @param page 分页对象
 	 * @return 分页对象
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R<IPage> getPage(Page page, Dict dict) {
 		return new R<>(service.page(page, Wrappers.query(dict)));
 	}
@@ -101,15 +111,15 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	/**
 	 * 删除字典，并且清除字典缓存
 	 *
-	 * @param id   ID
+	 * @param ids   ID
 	 * @return R
 	 */
 	@SysLog("删除字典")
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
-	public R removeByIds(@PathVariable Integer id) {
-		return new R<>(service.removeById(id));
+	public R removeByIds(@PathVariable String ids) {
+		return new R<>(service.removeById(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
 
 

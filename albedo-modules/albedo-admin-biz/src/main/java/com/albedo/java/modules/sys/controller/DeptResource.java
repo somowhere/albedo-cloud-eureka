@@ -26,6 +26,7 @@ import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,7 +51,16 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 		super(service);
 	}
 
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 返回树形菜单集合
 	 *

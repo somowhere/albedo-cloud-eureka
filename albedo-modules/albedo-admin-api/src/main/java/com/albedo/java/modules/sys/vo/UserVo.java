@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.DataEntityVo;
 import com.albedo.java.modules.sys.domain.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,17 +73,27 @@ public class UserVo  extends DataEntityVo<String> {
 	private String deptName;
 
 	/**
-	 * 微信openid
+	 * 微信openId
 	 */
-	private String wxOpenid;
+	private String wxOpenId;
 
 	/**
-	 * QQ openid
+	 * QQ openId
 	 */
-	private String qqOpenid;
+	private String qqOpenId;
 
 	/**
 	 * 角色ID
 	 */
 	private List<Role> roleList;
+
+	private List<String> roleIdList;
+
+	public List<String> getRoleIdList(){
+		if(CollUtil.isEmpty(roleIdList) && CollUtil.isNotEmpty(roleList)){
+			roleIdList = CollUtil.extractToList(roleList, Role.F_ID);
+		}
+		return roleIdList;
+	}
+
 }

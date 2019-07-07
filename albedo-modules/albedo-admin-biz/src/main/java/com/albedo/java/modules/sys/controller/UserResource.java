@@ -19,6 +19,7 @@ package com.albedo.java.modules.sys.controller;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.ResponseBuilder;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
@@ -33,12 +34,15 @@ import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * @author somewhere
@@ -53,7 +57,16 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	public UserResource(UserService service) {
 		super(service);
 	}
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.getUserVoById(id));
+	}
 	/**
 	 * 获取当前用户全部信息
 	 *
@@ -135,7 +148,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 		log.debug("REST request to save userDataVo : {}", userDataVo);
 		// beanValidatorAjax(user);
 		if (StringUtil.isNotEmpty(userDataVo.getPassword()) &&
-			!userDataVo.getPassword().equals(userDataVo.getNewpassword1())) {
+			!userDataVo.getPassword().equals(userDataVo.getConfirmPassword())) {
 			throw new RuntimeMsgException("两次输入密码不一致");
 		}
 		// Lowercase the user login before comparing with database

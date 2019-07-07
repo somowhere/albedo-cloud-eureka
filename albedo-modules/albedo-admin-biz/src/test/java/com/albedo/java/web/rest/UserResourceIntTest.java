@@ -106,10 +106,10 @@ public class UserResourceIntTest {
 		UserDataVo user = new UserDataVo();
         user.setUsername(DEFAULT_USERNAME);
         user.setPassword(DEFAULT_PASSWORD);
-        user.setNewpassword1(DEFAULT_PASSWORD);
+        user.setConfirmPassword(DEFAULT_PASSWORD);
 		user.setEmail(DEFAULT_EMAIL);
         user.setPhone(DEFAULT_PHONE);
-		user.setQqOpenid(DEFAULT_QQOPENID);
+		user.setQqOpenId(DEFAULT_QQOPENID);
         user.setDeptId(deptList.get(0).getId());
         user.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         return user;
@@ -151,7 +151,7 @@ public class UserResourceIntTest {
         assertThat(testUser.getUsername()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testUser.getPhone()).isEqualTo(DEFAULT_PHONE);
 		assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-		assertThat(testUser.getQqOpenid()).isEqualTo(DEFAULT_QQOPENID);
+		assertThat(testUser.getQqOpenId()).isEqualTo(DEFAULT_QQOPENID);
 		assertThat(testUser.getStatus()).isEqualTo(User.FLAG_NORMAL);
     }
 
@@ -189,7 +189,7 @@ public class UserResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.data.records.[*].username").value(hasItem(DEFAULT_USERNAME)))
-                .andExpect(jsonPath("$.data.records.[*].qqOpenid").value(hasItem(DEFAULT_QQOPENID)))
+                .andExpect(jsonPath("$.data.records.[*].qqOpenId").value(hasItem(DEFAULT_QQOPENID)))
                 .andExpect(jsonPath("$.data.records.[*].phone").value(hasItem(DEFAULT_PHONE)))
                 .andExpect(jsonPath("$.data.records.[*].email").value(hasItem(DEFAULT_EMAIL)))
 //			.andExpect(jsonPath("$.data.records.[*].status").value(hasItem(DictUtil.getCode("sys_status", user.getStatus()))))
@@ -207,7 +207,7 @@ public class UserResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.data.username").value(user.getUsername()))
-                .andExpect(jsonPath("$.data.qqOpenid").value(DEFAULT_QQOPENID))
+                .andExpect(jsonPath("$.data.qqOpenId").value(DEFAULT_QQOPENID))
                 .andExpect(jsonPath("$.data.phone").value(DEFAULT_PHONE))
                 .andExpect(jsonPath("$.data.email").value(DEFAULT_EMAIL));
     }
@@ -222,7 +222,7 @@ public class UserResourceIntTest {
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(jsonPath("$.data.user.username").value(user.getUsername()))
-			.andExpect(jsonPath("$.data.user.qqOpenid").value(DEFAULT_QQOPENID))
+			.andExpect(jsonPath("$.data.user.qqOpenId").value(DEFAULT_QQOPENID))
 			.andExpect(jsonPath("$.data.roles").value(equalTo(CollUtil.extractToList(roleList, Role.F_ID))))
 			.andExpect(jsonPath("$.data.permissions").isNotEmpty())
 		;
@@ -249,10 +249,10 @@ public class UserResourceIntTest {
 		UserDataVo managedUserVM = new UserDataVo();
 		managedUserVM.setUsername(UPDATED_USERNAME);
 		managedUserVM.setPassword(UPDATED_PASSWORD);
-		managedUserVM.setNewpassword1(UPDATED_PASSWORD);
+		managedUserVM.setConfirmPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
-		managedUserVM.setQqOpenid(UPDATED_QQOPENID);
+		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         
         managedUserVM.setId(updatedUser.getId());
@@ -269,7 +269,7 @@ public class UserResourceIntTest {
         assertThat(testUser.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testUser.getPhone()).isEqualTo(UPDATED_PHONE);
-        assertThat(testUser.getQqOpenid()).isEqualTo(UPDATED_QQOPENID);
+        assertThat(testUser.getQqOpenId()).isEqualTo(UPDATED_QQOPENID);
     }
 
 
@@ -288,7 +288,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
-		managedUserVM.setQqOpenid(UPDATED_QQOPENID);
+		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
         restUserMockMvc.perform(post(DEFAULT_API_URL)
@@ -314,7 +314,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
-		managedUserVM.setQqOpenid(UPDATED_QQOPENID);
+		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
         restUserMockMvc.perform(post(DEFAULT_API_URL)

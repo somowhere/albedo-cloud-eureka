@@ -70,14 +70,14 @@ public class UserDataVo extends DataEntityVo<String> {
 	private String deptId;
 
 	/**
-	 * 微信openid
+	 * 微信openId
 	 */
-	private String wxOpenid;
+	private String wxOpenId;
 
 	/**
-	 * QQ openid
+	 * QQ openId
 	 */
-	private String qqOpenid;
+	private String qqOpenId;
 
 	/**
 	 * 角色ID
@@ -88,5 +88,5 @@ public class UserDataVo extends DataEntityVo<String> {
 	/**
 	 * 新密码
 	 */
-	private String newpassword1;
+	private String confirmPassword;
 }

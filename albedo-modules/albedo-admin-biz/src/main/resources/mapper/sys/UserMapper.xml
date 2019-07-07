@@ -75,7 +75,7 @@
 			<result column="role_last_modified_date" property="lastModifiedDate"/>
 			<result column="role_description" property="description"/>
 			<result column="role_version" property="version"/>
-			<result column="role_status" property="status"/>
+			<result column="role_del_flag" property="delFlag"/>
 		</collection>
 	</resultMap>
 
@@ -139,7 +139,7 @@
 		r.last_modified_date AS role_last_modified_date,
 		r.description AS role_description,
 		r.version AS role_version,
-		r.del_flag AS role_status,
+		r.del_flag AS role_del_flag,
 		d.name AS deptName,
 		d.id AS deptId
     </sql>

@@ -164,7 +164,7 @@ public class GenTableService extends
                         }
                     }
                     if (!b) {
-                        e.setStatus(GenTableColumnVo.FLAG_DELETE);
+                        e.setDelFlag(GenTableColumnVo.FLAG_DELETE);
                     }
                 }
 

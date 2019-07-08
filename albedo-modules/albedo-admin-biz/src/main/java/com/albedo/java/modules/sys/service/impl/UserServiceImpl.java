@@ -141,7 +141,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel getUserWithRolePage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
-		pm.addDesc(User.F_SQL_CREATEDDATE);
+		pm.setDesc(User.F_SQL_CREATEDDATE);
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
 		return (PageModel) userVosPage;
 	}

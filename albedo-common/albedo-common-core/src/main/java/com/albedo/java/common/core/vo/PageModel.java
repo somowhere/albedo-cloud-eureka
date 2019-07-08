@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class PageModel<T> implements IPage<T> {
 
+	public static final String F_DESC = "desc";
+	public static final String F_ASC = "asc";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -159,8 +161,10 @@ public class PageModel<T> implements IPage<T> {
 	 *
 	 * @param asc 升序字段
 	 */
-	public PageModel<T> addAsc(String asc) {
-		ascList.add(asc);
+	public PageModel<T> setAsc(String asc) {
+		if(!ascList.contains(asc)){
+			ascList.add(asc);
+		}
 		return this;
 	}
 
@@ -181,8 +185,10 @@ public class PageModel<T> implements IPage<T> {
 	 *
 	 * @param desc 多个降序字段
 	 */
-	public PageModel<T> addDesc(String desc) {
-		descList.add(desc);
+	public PageModel<T> setDesc(String desc) {
+		if(!descList.contains(desc)){
+			descList.add(desc);
+		}
 		return this;
 	}
 

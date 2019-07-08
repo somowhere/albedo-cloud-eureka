@@ -19,16 +19,19 @@ package com.albedo.java.modules.sys.resource;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.vo.*;
 import com.albedo.java.modules.sys.domain.Menu;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -67,7 +70,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 *
 	 * @return 当前用户的树形菜单
 	 */
-	@GetMapping
+	@GetMapping("/user-menu")
 	public R getUserMenu() {
 		// 获取符合条件的菜单
 		Set<MenuVo> all = new HashSet<>();
@@ -118,7 +121,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 
 		// permission before comparing with database
 		if (!checkByProperty(ClassUtil.createObj(MenuDataVo.class,
-			Lists.newArrayList(UserDataVo.F_ID, DictDataVo.F_CODE),
+			Lists.newArrayList(MenuDataVo.F_ID, MenuDataVo.F_PERMISSION),
 			menuDataVo.getId(), menuDataVo.getPermission()))) {
 			throw new RuntimeMsgException("权限已存在");
 		}
@@ -141,6 +144,16 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 		return R.createSuccess("操作成功");
 	}
 
+	/**
+	 * 分页查询菜单信息
+	 *
+	 * @param pm 分页对象
+	 * @return 分页对象
+	 */
+	@GetMapping("/")
+	public R<IPage> getPage(PageModel pm) {
+		return new R<>(service.findPage(pm));
+	}
 
 
 	/**

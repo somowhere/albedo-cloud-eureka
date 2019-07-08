@@ -19,9 +19,11 @@ package com.albedo.java.modules.sys.resource;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.RoleMenuService;
@@ -89,7 +91,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 *
 	 * @return 角色列表
 	 */
-	@GetMapping("/comboData")
+	@GetMapping("/combo-data")
 	public R comboData() {
 		return R.createSuccessData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), Role.F_ID, Role.F_NAME));
 	}
@@ -97,14 +99,13 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	/**
 	 * 分页查询角色信息
 	 *
-	 * @param page 分页对象
+	 * @param pm 分页对象
 	 * @return 分页对象
 	 */
 	@GetMapping("/")
-	public R getRolePage(Page page) {
-		return new R<>(service.page(page, Wrappers.emptyWrapper()));
+	public R<IPage> getPage(PageModel pm) {
+		return new R<>(service.findPage(pm));
 	}
-
 	/**
 	 * 更新角色菜单
 	 *

@@ -19,6 +19,7 @@ package com.albedo.java.modules.sys.service.impl;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.vo.DeptTree;
 import com.albedo.java.modules.sys.domain.Dept;
@@ -53,19 +54,21 @@ public class DeptServiceImpl  extends
 	/**
 	 * 添加信息部门
 	 *
-	 * @param dept 部门
+	 * @param deptDataVo 部门
 	 * @return
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean saveDept(DeptDataVo dept) {
-		Dept saveDept = new Dept();
-		BeanUtils.copyProperties(dept, saveDept);
-		if(StringUtil.isEmpty(dept.getId())){
-			this.save(saveDept);
-			deptRelationService.saveDeptRelation(saveDept);
+	public Boolean saveDept(DeptDataVo deptDataVo) {
+		super.save(deptDataVo);
+		if(StringUtil.isEmpty(deptDataVo.getId())){
+			deptRelationService.saveDeptRelation(deptDataVo);
 		}else{
-			updateDept(saveDept);
+			//更新部门关系
+			DeptRelation relation = new DeptRelation();
+			relation.setAncestor(deptDataVo.getParentId());
+			relation.setDescendant(deptDataVo.getId());
+			deptRelationService.updateDeptRelation(relation);
 		}
 		return Boolean.TRUE;
 	}
@@ -108,13 +111,7 @@ public class DeptServiceImpl  extends
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateDept(Dept dept) {
-		//更新部门状态
-		this.updateById(dept);
-		//更新部门关系
-		DeptRelation relation = new DeptRelation();
-		relation.setAncestor(dept.getParentId());
-		relation.setDescendant(dept.getId());
-		deptRelationService.updateDeptRelation(relation);
+
 		return Boolean.TRUE;
 	}
 

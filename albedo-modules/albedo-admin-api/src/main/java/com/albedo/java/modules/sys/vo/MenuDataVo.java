@@ -36,6 +36,7 @@ public class MenuDataVo extends TreeEntityVo {
 
 	public static final String TYPE_MENU = "0";
 	public static final String TYPE_BUTTON = "1";
+	public static final String F_PERMISSION = "permission";
 	private static final long serialVersionUID = 1L;
 
 	/**

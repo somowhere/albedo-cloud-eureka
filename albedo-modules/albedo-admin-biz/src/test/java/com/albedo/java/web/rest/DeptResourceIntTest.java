@@ -131,23 +131,6 @@ public class DeptResourceIntTest {
 
     @Test
     @Transactional
-    public void getDeptPage() throws Exception {
-        // Initialize the database
-        deptService.save(dept);
-        // Get all the depts
-        restDeptMockMvc.perform(get(DEFAULT_API_URL)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.data.records.[*].name").value(hasItem(DEFAULT_NAME)))
-			.andExpect(jsonPath("$.data.records.[*].sort").value(hasItem(DEFAULT_SORT)))
-			.andExpect(jsonPath("$.data.records.[*].parentId").value(hasItem(anotherDept.getId())))
-			.andExpect(jsonPath("$.data.records.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-		;
-    }
-
-    @Test
-    @Transactional
     public void getDept() throws Exception {
         // Initialize the database
         deptService.save(dept);

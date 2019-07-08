@@ -4,8 +4,10 @@ import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
 import com.albedo.java.modules.sys.domain.Dept;
+import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.resource.DictResource;
@@ -189,6 +191,7 @@ public class DictResourceIntTest {
         dictService.save(dict);
         // Get all the dicts
         restDictMockMvc.perform(get(DEFAULT_API_URL)
+			.param(PageModel.F_DESC, Dict.F_SQL_CREATEDDATE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

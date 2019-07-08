@@ -2,6 +2,7 @@ package com.albedo.java.web.rest;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.resource.MenuResource;
@@ -58,10 +59,10 @@ public class MenuResourceIntTest {
 	private static final Integer UPDATED_SORT = 20;
 	private static final String DEFAULT_COMPONENT = "COMPONENT1";
 	private static final String UPDATED_COMPONENT = "COMPONENT2";
-	private static final String DEFAULT_TYPE = "TYPE1";
-	private static final String UPDATED_TYPE = "TYPE2";
-	private static final String DEFAULT_KEEPALIVE = "KEEPALIVE1";
-	private static final String UPDATED_KEEPALIVE = "KEEPALIVE2";
+	private static final String DEFAULT_TYPE = CommonConstants.STR_YES;
+	private static final String UPDATED_TYPE = CommonConstants.STR_NO;
+	private static final String DEFAULT_KEEPALIVE = CommonConstants.STR_YES;
+	private static final String UPDATED_KEEPALIVE = CommonConstants.STR_YES;
 	private static final String DEFAULT_PATH = "PATH1";
 	private static final String UPDATED_PATH = "PATH2";
 	private static final String DEFAULT_DESCRIPTION = "DESCRIPTION1";
@@ -197,16 +198,20 @@ public class MenuResourceIntTest {
         menuService.save(menu);
         // Get all the menus
         restMenuMockMvc.perform(get(DEFAULT_API_URL)
+			.param(PageModel.F_DESC, Menu.F_SQL_CREATEDDATE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.data.records.[*].name").value(hasItem(DEFAULT_NAME)))
-                .andExpect(jsonPath("$.data.records.[*].code").value(hasItem(DEFAULT_PERMISSION)))
-                .andExpect(jsonPath("$.data.records.[*].val").value(hasItem(DEFAULT_ICON)))
+                .andExpect(jsonPath("$.data.records.[*].permission").value(hasItem(DEFAULT_PERMISSION)))
+                .andExpect(jsonPath("$.data.records.[*].icon").value(hasItem(DEFAULT_ICON)))
                 .andExpect(jsonPath("$.data.records.[*].show").value(hasItem(DEFAULT_SHOW)))
 			.andExpect(jsonPath("$.data.records.[*].sort").value(hasItem(DEFAULT_SORT)))
 			.andExpect(jsonPath("$.data.records.[*].parentId").value(hasItem(anotherMenu.getId())))
-			.andExpect(jsonPath("$.data.records.[*].remark").value(hasItem(DEFAULT_COMPONENT)))
+			.andExpect(jsonPath("$.data.records.[*].component").value(hasItem(DEFAULT_COMPONENT)))
+			.andExpect(jsonPath("$.data.records.[*].type").value(hasItem(DEFAULT_TYPE)))
+			.andExpect(jsonPath("$.data.records.[*].keepAlive").value(hasItem(DEFAULT_KEEPALIVE)))
+			.andExpect(jsonPath("$.data.records.[*].path").value(hasItem(DEFAULT_PATH)))
 			.andExpect(jsonPath("$.data.records.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
 		;
     }
@@ -222,11 +227,14 @@ public class MenuResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(jsonPath("$.data.name").value(DEFAULT_NAME))
-			.andExpect(jsonPath("$.data.code").value(DEFAULT_PERMISSION))
-			.andExpect(jsonPath("$.data.val").value(DEFAULT_ICON))
+			.andExpect(jsonPath("$.data.permission").value(DEFAULT_PERMISSION))
+			.andExpect(jsonPath("$.data.icon").value(DEFAULT_ICON))
 			.andExpect(jsonPath("$.data.show").value(DEFAULT_SHOW))
 			.andExpect(jsonPath("$.data.parentId").value(anotherMenu.getId()))
-			.andExpect(jsonPath("$.data.remark").value(DEFAULT_COMPONENT))
+			.andExpect(jsonPath("$.data.component").value(DEFAULT_COMPONENT))
+			.andExpect(jsonPath("$.data.type").value(DEFAULT_TYPE))
+			.andExpect(jsonPath("$.data.keepAlive").value(DEFAULT_KEEPALIVE))
+			.andExpect(jsonPath("$.data.path").value(DEFAULT_PATH))
 			.andExpect(jsonPath("$.data.description").value(DEFAULT_DESCRIPTION));
     }
 

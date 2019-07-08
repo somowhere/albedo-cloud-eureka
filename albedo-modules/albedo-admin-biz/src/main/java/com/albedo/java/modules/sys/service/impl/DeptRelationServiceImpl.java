@@ -20,6 +20,7 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.domain.DeptRelation;
 import com.albedo.java.modules.sys.repository.DeptRelationRepository;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.sys.service.DeptRelationService;
@@ -46,19 +47,19 @@ public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository,
 	/**
 	 * 维护部门关系
 	 *
-	 * @param dept 部门
+	 * @param deptDataVo 部门
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void saveDeptRelation(Dept dept) {
+	public void saveDeptRelation(DeptDataVo deptDataVo) {
 		//增加部门关系表
 		DeptRelation condition = new DeptRelation();
-		condition.setDescendant(dept.getParentId());
+		condition.setDescendant(deptDataVo.getParentId());
 		List<DeptRelation> relationList = deptRelationRepository
 			.selectList(Wrappers.<DeptRelation>query().lambda()
-				.eq(DeptRelation::getDescendant, dept.getParentId()))
+				.eq(DeptRelation::getDescendant, deptDataVo.getParentId()))
 			.stream().map(relation -> {
-				relation.setDescendant(dept.getId());
+				relation.setDescendant(deptDataVo.getId());
 				return relation;
 			}).collect(Collectors.toList());
 		if (CollUtil.isNotEmpty(relationList)) {
@@ -67,8 +68,8 @@ public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository,
 
 		//自己也要维护到关系表中
 		DeptRelation own = new DeptRelation();
-		own.setDescendant(dept.getId());
-		own.setAncestor(dept.getId());
+		own.setDescendant(deptDataVo.getId());
+		own.setAncestor(deptDataVo.getId());
 		deptRelationRepository.insert(own);
 	}
 

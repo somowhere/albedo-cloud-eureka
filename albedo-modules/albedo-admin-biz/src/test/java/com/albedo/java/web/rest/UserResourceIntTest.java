@@ -1,18 +1,19 @@
 package com.albedo.java.web.rest;
 
-import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
-import com.albedo.java.modules.sys.resource.UserResource;
-import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.Dept;
+import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.User;
+import com.albedo.java.modules.sys.resource.UserResource;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.service.UserService;
+import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -187,6 +188,7 @@ public class UserResourceIntTest {
         userService.save(user);
         // Get all the users
         restUserMockMvc.perform(get(DEFAULT_API_URL)
+			.param(PageModel.F_DESC, User.F_SQL_CREATEDDATE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

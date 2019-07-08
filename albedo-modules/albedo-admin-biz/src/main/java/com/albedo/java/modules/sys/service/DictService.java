@@ -34,11 +34,8 @@ import java.util.Map;
  * @since 2019/2/1
  */
 public interface DictService  extends TreeVoService<DictRepository, Dict, DictDataVo> {
-	List<Dict> findAllByStatusOrderBySortAsc(Integer status);
 	Map<String, List<SelectResult>> findCodeStr(String codes);
 	Map<String, List<SelectResult>> findCodes(String... codes);
-
-	List<Dict> getAll();
 
 	void afterPropertiesSet();
 }

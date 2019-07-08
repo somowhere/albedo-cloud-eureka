@@ -18,6 +18,7 @@ package com.albedo.java.auth;
 
 
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;
+import com.albedo.java.common.security.annotation.EnablePigResourceServer;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

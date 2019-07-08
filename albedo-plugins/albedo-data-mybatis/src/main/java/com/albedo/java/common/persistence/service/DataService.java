@@ -15,8 +15,6 @@ public interface DataService<Repository extends BaseRepository<T>, T extends Dat
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findRelationOne(Serializable id);
 
-	void lockOrUnLock(List<PK> ids);
-
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	PageModel<T> findPage(PageModel<T> pm);

@@ -155,7 +155,7 @@
     },
     created() {
       this.getList()
-      this.deptManager_btn_add = this.permissions['sys_dept_add']
+      this.deptManager_btn_add = this.permissions['sys_dept_edit']
       this.deptManager_btn_edit = this.permissions['sys_dept_edit']
       this.deptManager_btn_del = this.permissions['sys_dept_del']
     },

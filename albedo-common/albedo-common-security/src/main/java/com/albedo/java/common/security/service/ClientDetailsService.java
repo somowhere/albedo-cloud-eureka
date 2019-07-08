@@ -30,9 +30,9 @@ import javax.sql.DataSource;
  * <p>
  * see JdbcClientDetailsService
  */
-public class PigClientDetailsService extends JdbcClientDetailsService {
+public class ClientDetailsService extends JdbcClientDetailsService {
 
-	public PigClientDetailsService(DataSource dataSource) {
+	public ClientDetailsService(DataSource dataSource) {
 		super(dataSource);
 	}
 

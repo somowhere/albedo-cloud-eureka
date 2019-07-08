@@ -22,28 +22,10 @@ public class DataVoResource<Service extends DataVoService, V extends DataEntityV
         this.service = service;
     }
 
-    /**
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id:" + CommonConstants.LOGIN_REGEX + "}")
-    @Timed
-    public ResponseEntity<V> get(@PathVariable String id) {
-        log.debug("REST request to get Entity : {}", id);
-        return (ResponseEntity<V>) ResponseBuilder.wrapOrNotFound(Optional.ofNullable(service.findOneVo(id)));
-    }
-
     @ResponseBody
     @GetMapping(value = "checkByProperty")
     public boolean checkByProperty(V entityForm) {
         return service.doCheckByProperty(entityForm);
     }
-
-    @ResponseBody
-    @GetMapping(value = "checkByPK")
-    public boolean checkByPK(V entityForm) {
-        return service.doCheckByPK(entityForm);
-    }
-
 
 }

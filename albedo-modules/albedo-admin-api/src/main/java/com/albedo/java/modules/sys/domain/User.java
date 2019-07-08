@@ -78,13 +78,13 @@ public class User extends IdEntity<User> {
 	private String deptId;
 
 	/**
-	 * 微信openid
+	 * 微信openId
 	 */
-	private String wxOpenid;
+	private String wxOpenId;
 
 	/**
-	 * QQ openid
+	 * QQ openId
 	 */
-	private String qqOpenid;
+	private String qqOpenId;
 
 }

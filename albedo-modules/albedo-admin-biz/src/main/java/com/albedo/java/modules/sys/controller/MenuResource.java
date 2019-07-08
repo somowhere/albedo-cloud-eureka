@@ -16,18 +16,21 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-import com.albedo.java.modules.sys.vo.MenuTree;
+import com.albedo.java.common.web.resource.DataVoResource;
+import com.albedo.java.common.web.resource.TreeVoResource;
+import com.albedo.java.modules.sys.service.RoleService;
+import com.albedo.java.modules.sys.vo.*;
 import com.albedo.java.modules.sys.domain.Menu;
-import com.albedo.java.modules.sys.vo.MenuVo;
-import com.albedo.java.modules.sys.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.codahale.metrics.annotation.Timed;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +47,22 @@ import java.util.stream.Collectors;
  * @date 2019/2/1
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/sys/menu")
-public class MenuResource {
-	private final MenuService menuService;
+public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 
+	public MenuResource(MenuService service) {
+		super(service);
+	}
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 返回当前用户的树形菜单集合
 	 *
@@ -59,7 +73,7 @@ public class MenuResource {
 		// 获取符合条件的菜单
 		Set<MenuVo> all = new HashSet<>();
 		SecurityUtils.getRoles()
-			.forEach(roleId -> all.addAll(menuService.getMenuByRoleId(roleId)));
+			.forEach(roleId -> all.addAll(service.getMenuByRoleId(roleId)));
 		List<MenuTree> menuTreeList = all.stream()
 			.filter(menuVo -> CommonConstants.MENU.equals(menuVo.getType()))
 			.map(MenuTree::new)
@@ -75,7 +89,7 @@ public class MenuResource {
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree() {
-		return new R<>(TreeUtil.buildTree(menuService.list(Wrappers.emptyWrapper()), Menu.ROOT));
+		return R.createSuccessData(TreeUtil.buildTree(service.list(Wrappers.emptyWrapper()), Menu.ROOT));
 	}
 
 	/**
@@ -86,21 +100,10 @@ public class MenuResource {
 	 */
 	@GetMapping("/tree/{roleId}")
 	public List getRoleTree(@PathVariable String roleId) {
-		return menuService.getMenuByRoleId(roleId)
+		return service.getMenuByRoleId(roleId)
 			.stream()
 			.map(MenuVo::getId)
 			.collect(Collectors.toList());
-	}
-
-	/**
-	 * 通过ID查询菜单的详细信息
-	 *
-	 * @param id 菜单ID
-	 * @return 菜单详细信息
-	 */
-	@GetMapping("/{id}")
-	public R getById(@PathVariable Integer id) {
-		return R.createSuccessData(menuService.getById(id));
 	}
 
 	/**
@@ -111,9 +114,9 @@ public class MenuResource {
 	 */
 	@SysLog("新增菜单")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
+	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
 	public R save(@Valid @RequestBody Menu menu) {
-		menuService.save(menu);
+		service.save(menu);
 		return R.createSuccess("操作成功");
 	}
 
@@ -127,36 +130,20 @@ public class MenuResource {
 	@Inner
 	@PostMapping("/gen")
 	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
-		menuService.saveByGenScheme(genSchemeDataVo);
+		service.saveByGenScheme(genSchemeDataVo);
 		return R.createSuccess("操作成功");
 	}
-
 
 	/**
 	 * 删除菜单
 	 *
-	 * @param id 菜单ID
+	 * @param ids 菜单ID
 	 * @return success/false
 	 */
 	@SysLog("删除菜单")
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
-	public R removeById(@PathVariable String id) {
-		return menuService.removeMenuById(id);
+	public R removeByIds(@PathVariable String ids) {
+		return service.removeMenuById(ids);
 	}
-
-	/**
-	 * 更新菜单
-	 *
-	 * @param menu
-	 * @return
-	 */
-	@SysLog("更新菜单")
-	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R update(@Valid @RequestBody Menu menu) {
-		menuService.updateMenuById(menu);
-		return R.createSuccess("更新菜单");
-	}
-
 }

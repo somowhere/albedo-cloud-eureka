@@ -18,8 +18,9 @@ package com.albedo.java.auth.config;
 
 import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.SecurityConstants;
-import com.albedo.java.common.security.component.PigWebResponseExceptionTranslator;
-import com.albedo.java.common.security.service.PigClientDetailsService;
+import com.albedo.java.common.security.component.UserAuthenticationExtendConverter;
+import com.albedo.java.common.security.component.WebResponseExceptionExtendTranslator;
+import com.albedo.java.common.security.service.ClientDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +35,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
@@ -60,7 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	@SneakyThrows
 	public void configure(ClientDetailsServiceConfigurer clients) {
-		PigClientDetailsService clientDetailsService = new PigClientDetailsService(dataSource);
+		ClientDetailsService clientDetailsService = new ClientDetailsService(dataSource);
 		clientDetailsService.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
 		clientDetailsService.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
 		clients.withClientDetails(clientDetailsService);
@@ -78,10 +78,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
 			.tokenStore(tokenStore())
 			.tokenEnhancer(tokenEnhancer())
+			.accessTokenConverter(accessTokenConverter())
 			.userDetailsService(userDetailsService)
 			.authenticationManager(authenticationManager)
 			.reuseRefreshTokens(false)
-			.exceptionTranslator(new PigWebResponseExceptionTranslator());
+			.exceptionTranslator(new WebResponseExceptionExtendTranslator());
 	}
 
 
@@ -101,4 +102,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			return accessToken;
 		};
 	}
+	@Bean
+	public AccessTokenConverter accessTokenConverter() {
+		DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
+		UserAuthenticationConverter userTokenConverter = new UserAuthenticationExtendConverter();
+		accessTokenConverter.setUserTokenConverter(userTokenConverter);
+		return accessTokenConverter;
+	}
+
 }

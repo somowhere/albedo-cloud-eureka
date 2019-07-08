@@ -40,7 +40,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
  * 异常处理,重写oauth 默认实现
  */
 @Slf4j
-public class PigWebResponseExceptionTranslator implements WebResponseExceptionTranslator {
+public class WebResponseExceptionExtendTranslator implements WebResponseExceptionTranslator {
 
 	private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
 

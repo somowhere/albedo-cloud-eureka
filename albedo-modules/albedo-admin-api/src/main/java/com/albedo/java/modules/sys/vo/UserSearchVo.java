@@ -63,12 +63,12 @@ public class UserSearchVo implements Serializable {
 	private String deptId;
 
 	/**
-	 * 微信openid
+	 * 微信openId
 	 */
-	private String wxOpenid;
+	private String wxOpenId;
 
 	/**
-	 * QQ openid
+	 * QQ openId
 	 */
-	private String qqOpenid;
+	private String qqOpenId;
 }

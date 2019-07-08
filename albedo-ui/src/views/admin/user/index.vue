@@ -47,7 +47,7 @@
                   slot-scope="scope">
               <span v-for="(role,index) in scope.row.roleList"
                     :key="index">
-                <el-tag>{{role.roleName}} </el-tag>&nbsp;&nbsp;
+                <el-tag>{{role.name}} </el-tag>&nbsp;&nbsp;
               </span>
         </template>
         <template slot="deptId"
@@ -113,7 +113,7 @@
         treeDeptData: [],
         checkedKeys: [],
         roleProps: {
-          label: "roleName",
+          label: "name",
           value: 'roleId'
         },
         defaultProps: {

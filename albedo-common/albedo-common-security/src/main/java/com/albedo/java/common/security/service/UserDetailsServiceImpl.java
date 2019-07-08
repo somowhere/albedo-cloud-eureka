@@ -49,7 +49,7 @@ import java.util.Set;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class PigUserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 	private final RemoteUserService remoteUserService;
 	private final CacheManager cacheManager;
 
@@ -66,7 +66,7 @@ public class PigUserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) {
 		Cache cache = cacheManager.getCache("user_details");
 //		if (cache != null && cache.get(username) != null) {
-//			return (PigUser) cache.get(username).get();
+//			return (UserDetail) cache.get(username).get();
 //		}
 
 		R<UserInfo> result = remoteUserService.info(username, SecurityConstants.FROM_IN);
@@ -100,7 +100,7 @@ public class PigUserDetailsServiceImpl implements UserDetailsService {
 		User user = info.getUser();
 
 		// 构造security用户
-		return new PigUser(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
-			StrUtil.equals(user.getLockFlag(), CommonConstants.STATUS_NORMAL), true, true, true, authorities);
+		return new UserDetail(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
+			StrUtil.equals(user.getLockFlag(), CommonConstants.STR_YES), true, true, true, authorities);
 	}
 }

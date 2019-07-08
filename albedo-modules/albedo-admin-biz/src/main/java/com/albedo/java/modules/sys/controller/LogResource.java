@@ -15,6 +15,7 @@
  */
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.domain.Log;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -59,7 +60,7 @@ public class LogResource {
 	 * @param id ID
 	 * @return success/false
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
 	public R removeById(@PathVariable Long id) {
 		return new R<>(logService.removeById(id));

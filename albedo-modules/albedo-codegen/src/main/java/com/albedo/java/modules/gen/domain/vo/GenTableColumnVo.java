@@ -313,14 +313,14 @@ public class GenTableColumnVo extends DataEntityVo<String> implements Comparable
      * @return
      */
     public Boolean getIsNotBaseField() {
-        return !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_ID) && !StringUtil.equalsIgnoreCase(getName(), "id_") &&
-                !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_DESCRIPTION) && !StringUtil.equalsIgnoreCase(getName(), "description_")
-                && !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_CREATEDBY) && !StringUtil.equalsIgnoreCase(getName(), "created_by") &&
-                !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_CREATEDDATE) && !StringUtil.equalsIgnoreCase(getName(), "created_date")
-                && !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_LASTMODIFIEDBY) && !StringUtil.equalsIgnoreCase(getName(), "last_modified_by") &&
-                !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_LASTMODIFIEDDATE) && !StringUtil.equalsIgnoreCase(getName(), "last_modified_date")
-                && !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_STATUS) && !StringUtil.equalsIgnoreCase(getName(), "status_") &&
-                !StringUtil.equals(getSimpleJavaField(), DataEntityVo.F_VERSION) && !StringUtil.equalsIgnoreCase(getName(), "version_");
+        return !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_ID) && !StringUtil.equalsIgnoreCase(getName(), "id_") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_DESCRIPTION) && !StringUtil.equalsIgnoreCase(getName(), "description_")
+                && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_CREATEDBY) && !StringUtil.equalsIgnoreCase(getName(), "created_by") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_CREATEDDATE) && !StringUtil.equalsIgnoreCase(getName(), "created_date")
+                && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_LASTMODIFIEDBY) && !StringUtil.equalsIgnoreCase(getName(), "last_modified_by") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_LASTMODIFIEDDATE) && !StringUtil.equalsIgnoreCase(getName(), "last_modified_date")
+                && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_DELFLAG) && !StringUtil.equalsIgnoreCase(getName(), "del_flag") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), DataEntityVo.F_VERSION) && !StringUtil.equalsIgnoreCase(getName(), "version");
     }
 
     /**
@@ -329,15 +329,15 @@ public class GenTableColumnVo extends DataEntityVo<String> implements Comparable
      * @return
      */
     public Boolean getIsNotBaseTreeField() {
-        return !StringUtil.equals(getSimpleJavaField(), TreeEntityVo.F_NAME) && !StringUtil.equals(getName(), "NAME_") &&
-                !StringUtil.equals(getSimpleJavaField(), TreeEntityVo.F_PARENTID) && !StringUtil.equals(getSimpleJavaField(), "parent")
-                && !StringUtil.equals(getName(), "parent_id") &&
-                !StringUtil.equals(getSimpleJavaField(), TreeEntityVo.F_PARENTIDS)
-                && !StringUtil.equals(getName(), "parent_ids")
-                && !StringUtil.equals(getSimpleJavaField(), TreeEntityVo.F_SORT)
-                && !StringUtil.equals(getName(), "SORT_")
-                && !StringUtil.equals(getSimpleJavaField(), TreeEntityVo.F_ISLEAF)
-                && !StringUtil.equals(getName(), "is_leaf");
+        return !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_NAME) && !StringUtil.equalsIgnoreCase(getName(), "name") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_PARENTID) && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), "parent")
+                && !StringUtil.equalsIgnoreCase(getName(), "parent_id") &&
+                !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_PARENTIDS)
+                && !StringUtil.equalsIgnoreCase(getName(), "parent_ids")
+                && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_SORT)
+                && !StringUtil.equalsIgnoreCase(getName(), "sort")
+                && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_ISLEAF)
+                && !StringUtil.equalsIgnoreCase(getName(), "is_leaf");
 
     }
 

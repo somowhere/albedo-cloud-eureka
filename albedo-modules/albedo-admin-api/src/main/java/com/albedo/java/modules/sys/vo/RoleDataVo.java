@@ -32,13 +32,13 @@ import javax.validation.constraints.NotBlank;
 public class RoleDataVo extends DataEntityVo<String> {
 
 	@NotBlank(message = "角色名称 不能为空")
-	private String roleName;
+	private String name;
 
 	@NotBlank(message = "角色标识 不能为空")
-	private String roleCode;
+	private String code;
 
 	@NotBlank(message = "角色描述 不能为空")
-	private String roleDesc;
+	private String remark;
 
 	/**
 	 * 角色部门Id

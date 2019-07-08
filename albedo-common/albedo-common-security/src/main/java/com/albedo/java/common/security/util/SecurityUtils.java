@@ -19,7 +19,7 @@ package com.albedo.java.common.security.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.common.core.constant.SecurityConstants;
-import com.albedo.java.common.security.service.PigUser;
+import com.albedo.java.common.security.service.UserDetail;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,10 +47,10 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public PigUser getUser(Authentication authentication) {
+	public UserDetail getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof PigUser) {
-			return (PigUser) principal;
+		if (principal instanceof UserDetail) {
+			return (UserDetail) principal;
 		}
 		return null;
 	}
@@ -58,7 +58,7 @@ public class SecurityUtils {
 	/**
 	 * 获取用户
 	 */
-	public PigUser getUser() {
+	public UserDetail getUser() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
 			return null;

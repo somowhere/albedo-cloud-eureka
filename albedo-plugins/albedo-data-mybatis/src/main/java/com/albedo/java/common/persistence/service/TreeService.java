@@ -18,25 +18,15 @@ public interface TreeService<Repository extends TreeRepository<T>, T extends Tre
 
 	Integer countByParentId(String parentId);
 
-	Integer countByParentIdAndStatusNot(String parentId, Integer status);
 
 	List<T> findAllByParentIdsLike(String parentIds);
+	List<T> findAllByParentId(String parentId);
 
-	List<T> findAllByParentIdAndStatusNot(String parentId, Integer status);
+	List<T> findTop1ByParentIdOrderBySortDesc(String parentId);
 
-	List<T> findAllByStatusNot(Integer status);
-
-	List<T> findTop1ByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer status);
-
-	List<T> findAllByStatusOrderBySort(Integer status);
-
-	List<T> findAllByStatusNotOrderBySort(Integer status);
+	List<T> findAllOrderBySort();
 
 	List<T> findAllByIdOrParentIdsLike(String id, String likeParentIds);
-
-	int deleteById(String id, String likeParentIds, String lastModifiedBy);
-
-	int operateStatusById(String id, String likeParentIds, Integer status, String lastModifiedBy);
 
 	@Override
 	boolean saveOrUpdate(T entity);
@@ -53,8 +43,4 @@ public interface TreeService<Repository extends TreeRepository<T>, T extends Tre
 	void deleteByParentIds(List<String> ids, String lastModifiedBy);
 
 	void deleteByParentIds(String id, String lastModifiedBy);
-
-	void lockOrUnLockByParentIds(String id, String lastModifiedBy);
-
-	void lockOrUnLockByParentIds(List<String> ids, String lastModifiedBy);
 }

@@ -15,11 +15,19 @@
  */
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.modules.sys.service.DictService;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
+import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.codahale.metrics.annotation.Timed;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,23 +44,23 @@ import java.time.LocalDateTime;
  * @since 2019/2/1
  */
 @RestController
-@AllArgsConstructor
 @RequestMapping("/sys/dept")
-public class DeptResource {
-	private final DeptService sysDeptService;
+public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 
-	/**
-	 * 通过ID查询
-	 *
-	 * @param id ID
-	 * @return Dept
-	 */
-	@GetMapping("/{id}")
-	public R getById(@PathVariable Integer id) {
-		return new R<>(sysDeptService.getById(id));
+	public DeptResource(DeptService service) {
+		super(service);
 	}
 
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
 	/**
 	 * 返回树形菜单集合
 	 *
@@ -60,7 +68,7 @@ public class DeptResource {
 	 */
 	@GetMapping(value = "/tree")
 	public R listDeptTrees() {
-		return new R<>(sysDeptService.listDeptTrees());
+		return new R<>(service.listDeptTrees());
 	}
 
 	/**
@@ -71,7 +79,7 @@ public class DeptResource {
 	@GetMapping(value = "/user-tree")
 	public R listCurrentUserDeptTrees() {
 		String deptId = SecurityUtils.getUser().getDeptId();
-		return new R<>(sysDeptService.listCurrentUserDeptTrees(deptId));
+		return new R<>(service.listCurrentUserDeptTrees(deptId));
 	}
 
 	/**
@@ -82,9 +90,9 @@ public class DeptResource {
 	 */
 	@SysLog("添加部门")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
+	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
 	public R save(@Valid @RequestBody Dept dept) {
-		return new R<>(sysDeptService.saveDept(dept));
+		return new R<>(service.saveDept(dept));
 	}
 
 	/**
@@ -94,23 +102,10 @@ public class DeptResource {
 	 * @return success/false
 	 */
 	@SysLog("删除部门")
-	@DeleteMapping("/{id}")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
 	public R removeById(@PathVariable Integer id) {
-		return new R<>(sysDeptService.removeDeptById(id));
+		return new R<>(service.removeDeptById(id));
 	}
 
-	/**
-	 * 编辑
-	 *
-	 * @param dept 实体
-	 * @return success/false
-	 */
-	@SysLog("编辑部门")
-	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public R update(@Valid @RequestBody Dept dept) {
-		dept.setLastModifiedDate(LocalDateTime.now());
-		return new R<>(sysDeptService.updateDeptById(dept));
-	}
 }

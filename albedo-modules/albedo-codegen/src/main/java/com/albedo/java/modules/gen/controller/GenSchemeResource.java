@@ -84,17 +84,7 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
         return ResponseBuilder.buildOk("保存", genSchemeVo.getName(), "成功");
     }
 
-    @PutMapping(value = "/{ids:" + CommonConstants.LOGIN_REGEX
-        + "}")
-    @Timed
-    public ResponseEntity lockOrUnLock(@PathVariable String ids) {
-        log.debug("REST request to lockOrUnLock genTable: {}", ids);
-        service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-        return ResponseBuilder.buildOk("操作成功");
-    }
-
-    @DeleteMapping(value = "/{ids:" + CommonConstants.LOGIN_REGEX
-        + "}")
+    @DeleteMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity delete(@PathVariable String ids) {
         log.debug("REST request to delete User: {}", ids);

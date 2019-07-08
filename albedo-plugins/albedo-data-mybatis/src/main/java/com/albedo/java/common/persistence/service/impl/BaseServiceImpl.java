@@ -120,8 +120,8 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 		Map<String, QueryCondition.Operator> maps = Maps.newHashMap();
 		try {
 			maps.put(BaseEntity.F_ID, QueryCondition.Operator.ne);
-			maps.put(BaseEntity.F_STATUS, QueryCondition.Operator.ne);
-			BeanUtil.setProperty(entity, BaseEntity.F_STATUS, GeneralEntity.FLAG_DELETE);
+			maps.put(BaseEntity.F_DELFLAG, QueryCondition.Operator.ne);
+			BeanUtil.setProperty(entity, BaseEntity.F_DELFLAG, GeneralEntity.FLAG_DELETE);
 		} catch (Exception e) {
 			log.error("{}", e);
 		}
@@ -133,8 +133,8 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	public boolean doCheckByPK(T entity) {
 		Map<String, QueryCondition.Operator> maps = Maps.newHashMap();
 		try {
-			maps.put(BaseEntity.F_STATUS, QueryCondition.Operator.ne);
-			BeanUtil.setProperty(entity, BaseEntity.F_STATUS, GeneralEntity.FLAG_DELETE);
+			maps.put(BaseEntity.F_DELFLAG, QueryCondition.Operator.ne);
+			BeanUtil.setProperty(entity, BaseEntity.F_DELFLAG, GeneralEntity.FLAG_DELETE);
 		} catch (Exception e) {
 			log.error("{}", e);
 		}

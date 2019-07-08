@@ -16,8 +16,10 @@
 
 package com.albedo.java.modules.sys.controller;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.ResponseBuilder;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
@@ -32,12 +34,15 @@ import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * @author somewhere
@@ -52,7 +57,16 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	public UserResource(UserService service) {
 		super(service);
 	}
-
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.getUserVoById(id));
+	}
 	/**
 	 * 获取当前用户全部信息
 	 *
@@ -86,17 +100,6 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	}
 
 	/**
-	 * 通过ID查询用户信息
-	 *
-	 * @param id ID
-	 * @return 用户信息
-	 */
-	@GetMapping("/{id}")
-	public R user(@PathVariable String id) {
-		return R.createSuccessData(service.getUserVoById(id));
-	}
-
-	/**
 	 * 根据用户名查询用户信息
 	 *
 	 * @param username 用户名
@@ -110,20 +113,17 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	}
 
 	/**
-	 * 删除用户信息
+	 * 删除用户
 	 *
-	 * @param id ID
-	 * @return R
+	 * @param ids
+	 * @return
 	 */
-	@SysLog("删除用户信息")
-	@DeleteMapping("/{id}")
-	@PreAuthorize("@pms.hasPermission('sys_user_del')")
-	public R userDel(@PathVariable String id) {
-		User user = service.getById(id);
-		service.removeUserById(user);
-		return R.createSuccess("删除用户信息");
+	@SysLog("删除用户")
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
+	public R removeByIds(@PathVariable String ids) {
+		service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
-
 	/**
 	 * 添加/更新用户信息
 	 *
@@ -131,13 +131,13 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 * @return R
 	 */
 	@SysLog("添加/更新用户信息")
-	@PostMapping
+	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R saveUser(@Valid @RequestBody UserDataVo userDataVo) {
 		log.debug("REST request to save userDataVo : {}", userDataVo);
 		// beanValidatorAjax(user);
 		if (StringUtil.isNotEmpty(userDataVo.getPassword()) &&
-			!userDataVo.getPassword().equals(userDataVo.getNewpassword1())) {
+			!userDataVo.getPassword().equals(userDataVo.getConfirmPassword())) {
 			throw new RuntimeMsgException("两次输入密码不一致");
 		}
 		// Lowercase the user login before comparing with database
@@ -161,21 +161,9 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 * @param pm    参数集
 	 * @return 用户集合
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R getUserPage(PageModel pm) {
 		return R.createSuccessData(service.getUserWithRolePage(pm));
-	}
-
-	/**
-	 * 修改个人信息
-	 *
-	 * @param userDataVo userDataVo
-	 * @return success/false
-	 */
-	@SysLog("修改个人信息")
-	@PutMapping("/edit")
-	public R updateUserInfo(@Valid @RequestBody UserDataVo userDataVo) {
-		return service.updateUserInfo(userDataVo);
 	}
 
 	/**
@@ -186,4 +174,18 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	public R listAncestorUsers(@PathVariable String username) {
 		return new R<>(service.listAncestorUsersByUsername(username));
 	}
+
+
+	/**
+	 * @param ids
+	 * @return
+	 */
+	@PutMapping(CommonConstants.URL_IDS_REGEX)
+	@SysLog("锁定/解锁用户")
+	@PreAuthorize("@pms.hasPermission('sys_user_lock')")
+	public R lockOrUnLock(@PathVariable String ids) {
+		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
+	}
+
 }

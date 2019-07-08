@@ -157,9 +157,9 @@ public class GenUtil {
                 column.setTitle("所有父级");
             }
             // 删除标记
-            else if (StringUtil.equalsIgnoreCase(column.getJavaField(), DataEntity.F_STATUS)) {
+            else if (StringUtil.equalsIgnoreCase(column.getJavaField(), DataEntity.F_DELFLAG)) {
                 column.setShowType("radio");
-                column.setDictType("sys_status");
+                column.setDictType("sys_yes_no");
             }
 
             if(StringUtil.isEmpty(column.getShowType())){

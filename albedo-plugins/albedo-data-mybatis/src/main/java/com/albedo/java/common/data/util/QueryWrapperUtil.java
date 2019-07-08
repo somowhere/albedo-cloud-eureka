@@ -161,7 +161,7 @@ public class QueryWrapperUtil {
 	}
 	public static Wrapper getWrapperByPage(PageModel pm, Class<?> clazz) {
 		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
-			QueryCondition.ne("a.status",  BaseEntity.FLAG_DELETE));
+			QueryCondition.eq("a.del_flag",  BaseEntity.FLAG_NORMAL));
 		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
 	}
 }

@@ -28,7 +28,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @date 2019/03/08
  */
 @Slf4j
-public class  PigSecurityBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
+public class SecurityBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 	/**
 	 * 根据注解值动态注入资源服务器的相关属性
 	 *
@@ -43,7 +43,7 @@ public class  PigSecurityBeanDefinitionRegistrar implements ImportBeanDefinition
 		}
 
 		GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-		beanDefinition.setBeanClass(PigResourceServerConfigurerAdapter.class);
+		beanDefinition.setBeanClass(ResourceServerConfigurerAdapter.class);
 		registry.registerBeanDefinition(SecurityConstants.RESOURCE_SERVER_CONFIGURER, beanDefinition);
 
 	}

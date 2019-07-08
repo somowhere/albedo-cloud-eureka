@@ -1,5 +1,6 @@
 package com.albedo.java.common.persistence.domain;
 
+import com.albedo.java.common.core.annotation.SearchField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -14,6 +15,7 @@ public class IdEntity<T extends BaseEntity> extends DataEntity<T> {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = GeneralEntity.F_SQL_ID, type = IdType.UUID)
+	@SearchField
     protected String id;
 
     public IdEntity() {

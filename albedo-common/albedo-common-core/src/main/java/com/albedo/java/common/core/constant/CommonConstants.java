@@ -21,19 +21,6 @@ package com.albedo.java.common.core.constant;
  * @date 2019/2/1
  */
 public interface CommonConstants {
-	/**
-	 * 删除
-	 */
-	String STATUS_DEL = "1";
-	/**
-	 * 正常
-	 */
-	String STATUS_NORMAL = "0";
-
-	/**
-	 * 锁定
-	 */
-	String STATUS_LOCK = "9";
 
 	/**
 	 * 菜单
@@ -140,8 +127,10 @@ public interface CommonConstants {
 	String SORT_ASC = "asc";
 	String SPACE = " ";
 
+	String ID_REGEX = "^[_',.@A-Za-z0-9-]*$";
 
-	String LOGIN_REGEX = "^[_',.@A-Za-z0-9-]*$";
+	String URL_IDS_REGEX = "/{ids:^[_',.@A-Za-z0-9-]*$}";
+	String URL_ID_REGEX = "/{id:^[_',.@A-Za-z0-9-]*$}";
 	String SYSTEM = "system";
 
 

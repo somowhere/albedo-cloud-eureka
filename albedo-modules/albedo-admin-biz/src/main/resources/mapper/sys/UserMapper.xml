@@ -163,7 +163,7 @@
 		LEFT JOIN sys_role AS r ON r.id = ur.role_id
 		LEFT JOIN sys_dept AS d ON d.id = a.dept_id
 		WHERE
-		a.id = #{id}
+		a.id = #{id} and a.del_flag='0'
 	</select>
 
 	<select id="getUserVosPage" resultMap="userVoPageResultMap">

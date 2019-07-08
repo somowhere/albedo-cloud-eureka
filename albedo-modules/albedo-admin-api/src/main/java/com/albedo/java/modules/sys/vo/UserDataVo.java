@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class UserDataVo extends DataEntityVo<String> {
 	/**
 	 * 用户名
 	 */
+	@NotEmpty
 	private String username;
 
 	private String password;
@@ -49,6 +51,7 @@ public class UserDataVo extends DataEntityVo<String> {
 	/**
 	 * 锁定标记
 	 */
+	@NotEmpty
 	private String lockFlag;
 
 	/**

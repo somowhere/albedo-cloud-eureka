@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.feign.RemoteTokenService;
@@ -51,12 +51,12 @@ public class TokenResource {
 	/**
 	 * 删除
 	 *
-	 * @param id ID
+	 * @param ids IDs
 	 * @return success/false
 	 */
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
-	public R<Boolean> delete(@PathVariable String id) {
-		return remoteTokenService.removeToken(id, SecurityConstants.FROM_IN);
+	public R<Boolean> delete(@PathVariable String ids) {
+		return remoteTokenService.removeToken(ids, SecurityConstants.FROM_IN);
 	}
 }

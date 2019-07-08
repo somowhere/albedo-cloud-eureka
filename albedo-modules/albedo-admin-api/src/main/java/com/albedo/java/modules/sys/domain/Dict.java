@@ -17,6 +17,7 @@
 package com.albedo.java.modules.sys.domain;
 
 import com.albedo.java.common.core.annotation.DictType;
+import com.albedo.java.common.core.annotation.SearchField;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.domain.TreeEntity;
@@ -58,6 +59,7 @@ public class Dict extends TreeEntity<Dict> {
 	 * 类型
 	 */
 	@NotBlank(message = "字典项数据类型不能为空")
+	@SearchField
 	private String code;
 	@NotNull
 	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
@@ -66,7 +68,7 @@ public class Dict extends TreeEntity<Dict> {
 	/**
 	 * 备注信息
 	 */
-	private String remarks;
+	private String remark;
 
 
 	@TableField(exist = false)

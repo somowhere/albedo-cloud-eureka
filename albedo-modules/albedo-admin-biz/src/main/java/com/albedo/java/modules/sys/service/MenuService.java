@@ -47,10 +47,10 @@ public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDat
 	/**
 	 * 级联删除菜单
 	 *
-	 * @param id 菜单ID
+	 * @param ids 菜单ID
 	 * @return 成功、失败
 	 */
-	R removeMenuById(String id);
+	void removeMenuById(List<String> ids);
 
 	/**
 	 * 更新菜单信息

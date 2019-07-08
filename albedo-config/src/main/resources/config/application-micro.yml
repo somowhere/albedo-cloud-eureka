@@ -76,4 +76,4 @@ security:
   oauth2:
     resource:
       loadBalanced: true
-      token-info-uri: http://albedo-auth/oauth/check_token
+      token-info-uri: http://albedo-auth:4000/oauth/check_token

@@ -21,7 +21,7 @@ security:
   oauth2:
     resource:
       loadBalanced: true
-      token-info-uri: http://albedo-auth/oauth/check_token
+      token-info-uri: http://albedo-auth:4000/oauth/check_token
     client:
       client-id: ENC(WJRDLZlPlWkmLu/d+gkeAw==)
       client-secret: ENC(gyOtaeY+fxP8/Rkd3PKm8Q==)
@@ -61,8 +61,14 @@ mybatis-plus:
 # ===================================================================
 
 application:
-  adminPath: /a
-  jedisKeyPrefix: albedoBootWebApp
-  className: com.albedo.java
   developMode: true
+  jedisKeyPrefix: albedoBootWebApp
+  logPath: target/.logs
+  cors: #By default CORS are not enabled. Uncomment to enable.
+    allowed-origins: "*"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "Authorization,Link,X-Total-Count"
+    allow-credentials: true
+    max-age: 1800
 

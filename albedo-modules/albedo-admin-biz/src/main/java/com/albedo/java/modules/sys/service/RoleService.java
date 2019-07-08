@@ -44,8 +44,8 @@ public interface RoleService extends DataVoService<RoleRepository, Role, String,
 	/**
 	 * 通过角色ID，删除角色
 	 *
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	Boolean removeRoleById(String id);
+	Boolean removeRoleByIds(List<String> ids);
 }

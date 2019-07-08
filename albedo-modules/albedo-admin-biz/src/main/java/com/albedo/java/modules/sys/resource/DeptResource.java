@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.StringUtil;
@@ -23,17 +23,13 @@ import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
-import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -85,27 +81,27 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	/**
 	 * 添加
 	 *
-	 * @param dept 实体
+	 * @param deptDataVo 实体
 	 * @return success/false
 	 */
-	@SysLog("添加部门")
-	@PostMapping
+	@SysLog("添加/更新部门")
+	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
-	public R save(@Valid @RequestBody Dept dept) {
-		return new R<>(service.saveDept(dept));
+	public R save(@Valid @RequestBody DeptDataVo deptDataVo) {
+		return new R<>(service.saveDept(deptDataVo));
 	}
 
 	/**
 	 * 删除
 	 *
-	 * @param id ID
+	 * @param ids ID
 	 * @return success/false
 	 */
 	@SysLog("删除部门")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
-	public R removeById(@PathVariable Integer id) {
-		return new R<>(service.removeDeptById(id));
+	public R removeById(@PathVariable String ids) {
+		return new R<>(service.removeDeptByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
 
 }

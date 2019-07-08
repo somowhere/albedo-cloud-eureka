@@ -54,15 +54,15 @@ public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDa
 	 * @param dept
 	 * @return
 	 */
-	Boolean saveDept(Dept dept);
+	Boolean saveDept(DeptDataVo deptDataVo);
 
 	/**
 	 * 删除部门
 	 *
-	 * @param id 部门 ID
+	 * @param ids 部门 ID
 	 * @return 成功、失败
 	 */
-	Boolean removeDeptById(Integer id);
+	Boolean removeDeptByIds(List<String> ids);
 
 
 }

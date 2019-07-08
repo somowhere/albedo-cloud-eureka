@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -44,6 +45,7 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
     @Version
     @XmlTransient
     @TableField(GeneralEntity.F_SQL_VERSION)
+	@JsonIgnore
     protected Integer version = 0;
 
     /*** 备注 */

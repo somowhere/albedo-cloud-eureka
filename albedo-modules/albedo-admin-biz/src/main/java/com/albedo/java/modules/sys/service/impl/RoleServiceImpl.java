@@ -17,6 +17,8 @@
 package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.domain.UserRole;
+import com.albedo.java.modules.sys.service.RoleMenuService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.RoleMenu;
@@ -25,11 +27,14 @@ import com.albedo.java.modules.sys.repository.RoleMenuRepository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.sys.service.RoleService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -43,7 +48,8 @@ import java.util.List;
 @AllArgsConstructor
 public class RoleServiceImpl extends
 	DataVoServiceImpl<RoleRepository, Role, String, RoleDataVo> implements RoleService {
-	private RoleMenuRepository roleMenuRepository;
+	private RoleMenuService roleMenuService;
+	private final CacheManager cacheManager;
 
 	/**
 	 * 通过用户ID，查询角色信息
@@ -52,6 +58,7 @@ public class RoleServiceImpl extends
 	 * @return
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List listRolesByUserId(String userId) {
 		return baseMapper.listRolesByUserId(userId);
 	}
@@ -59,16 +66,37 @@ public class RoleServiceImpl extends
 	/**
 	 * 通过角色ID，删除角色,并清空角色菜单缓存
 	 *
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean removeRoleById(String id) {
-		roleMenuRepository.delete(Wrappers
-			.<RoleMenu>update().lambda()
-			.eq(RoleMenu::getRoleId, id));
-		return this.removeById(id);
+	public Boolean removeRoleByIds(List<String> ids) {
+		ids.forEach(id->{
+			roleMenuService.remove(Wrappers
+				.<RoleMenu>update().lambda()
+				.eq(RoleMenu::getRoleId, id));
+			this.removeById(id);
+		});
+		return Boolean.TRUE;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void save(RoleDataVo roleDataVo) {
+		super.save(roleDataVo);
+		roleMenuService.remove(Wrappers.<RoleMenu>query().lambda()
+			.eq(RoleMenu::getRoleId, roleDataVo.getId()));
+		List<RoleMenu> roleMenuList = roleDataVo.getMenuIdList().stream().map(menuId -> {
+				RoleMenu roleMenu = new RoleMenu();
+				roleMenu.setRoleId(roleDataVo.getId());
+				roleMenu.setMenuId(menuId);
+				return roleMenu;
+			}).collect(Collectors.toList());
+
+		//清空userinfo
+		cacheManager.getCache("user_details").clear();
+		roleMenuService.saveBatch(roleMenuList);
 	}
 }

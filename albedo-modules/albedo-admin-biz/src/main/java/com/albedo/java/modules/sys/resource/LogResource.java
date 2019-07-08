@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.domain.Log;

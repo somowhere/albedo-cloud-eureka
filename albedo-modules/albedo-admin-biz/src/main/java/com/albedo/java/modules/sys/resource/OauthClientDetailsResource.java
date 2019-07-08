@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.modules.sys.domain.OauthClientDetails;

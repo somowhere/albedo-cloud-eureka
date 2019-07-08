@@ -33,6 +33,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -52,12 +53,14 @@ public class DictServiceImpl extends
 
 	@Autowired
 	private CacheManager cacheManager;
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Map<String, List<SelectResult>> findCodeStr(String codes) {
 		return findCodes(StringUtil.isNotEmpty(codes) ?
 			codes.split(StringUtil.SPLIT_DEFAULT) : null);
 	}
 
 	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+Dict.CACHE_DICT_RESULT_ALL+"'")
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Map<String,List<SelectResult>> findCodes(String... codes) {
 		return DictUtil.getSelectResultListByCodes(list(), codes);
 	}

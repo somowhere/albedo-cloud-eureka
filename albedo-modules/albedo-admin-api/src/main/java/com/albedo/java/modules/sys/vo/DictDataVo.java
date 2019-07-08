@@ -40,6 +40,7 @@ public class DictDataVo extends TreeEntityVo {
 	private static final long serialVersionUID = 1L;
 
 	public static final String F_VAL = "val";
+	public static final String F_CODE = "code";
 	public static final String F_SHOW = "show";
 	public static final String F_SQL_SHOW = "show";
 	public static final String CACHE_GET_DICT_ALL = "getDictAll";
@@ -61,7 +62,7 @@ public class DictDataVo extends TreeEntityVo {
 	/**
 	 * 备注信息
 	 */
-	private String remarks;
+	private String remark;
 
 
 

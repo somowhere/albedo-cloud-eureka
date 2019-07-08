@@ -59,7 +59,10 @@ public class MenuDataVo extends TreeEntityVo {
 	 * 路由缓冲
 	 */
 	private String keepAlive;
-
+	/**
+	 * 是否显示1 是0否
+	 */
+	private Integer show = 1;
 	/**
 	 * 前端URL
 	 */

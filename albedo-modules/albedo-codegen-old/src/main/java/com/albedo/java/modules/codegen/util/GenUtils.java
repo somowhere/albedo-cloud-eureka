@@ -263,7 +263,7 @@ public class GenUtils {
 		}
 
 		if (template.contains(CONTROLLER_JAVA_VM)) {
-			return packagePath + "controller" + File.separator + className + "Controller.java";
+			return packagePath + "resource" + File.separator + className + "Controller.java";
 		}
 
 		if (template.contains(MAPPER_XML_VM)) {

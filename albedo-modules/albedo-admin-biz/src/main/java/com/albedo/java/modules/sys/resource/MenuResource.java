@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
+import com.albedo.java.common.core.exception.RuntimeMsgException;
+import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.common.web.resource.TreeVoResource;
-import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.vo.*;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -31,7 +31,6 @@ import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
-import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -109,28 +108,22 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	/**
 	 * 新增菜单
 	 *
-	 * @param menu 菜单信息
+	 * @param menuDataVo 菜单信息
 	 * @return success/false
 	 */
-	@SysLog("新增菜单")
+	@SysLog("添加/更新菜单")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
-	public R save(@Valid @RequestBody Menu menu) {
-		service.save(menu);
-		return R.createSuccess("操作成功");
-	}
+	public R save(@Valid @RequestBody MenuDataVo menuDataVo) {
 
+		// permission before comparing with database
+		if (!checkByProperty(ClassUtil.createObj(MenuDataVo.class,
+			Lists.newArrayList(UserDataVo.F_ID, DictDataVo.F_CODE),
+			menuDataVo.getId(), menuDataVo.getPermission()))) {
+			throw new RuntimeMsgException("权限已存在");
+		}
 
-	/**
-	 * 新增菜单
-	 *
-	 * @param genSchemeDataVo 菜单信息
-	 * @return success/false
-	 */
-	@Inner
-	@PostMapping("/gen")
-	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
-		service.saveByGenScheme(genSchemeDataVo);
+		service.save(menuDataVo);
 		return R.createSuccess("操作成功");
 	}
 
@@ -144,6 +137,23 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
 	public R removeByIds(@PathVariable String ids) {
-		return service.removeMenuById(ids);
+		service.removeMenuById(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
+
+
+
+	/**
+	 * 新增代码生成菜单
+	 *
+	 * @param genSchemeDataVo 菜单信息
+	 * @return success/false
+	 */
+	@Inner
+	@PostMapping("/gen")
+	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
+		service.saveByGenScheme(genSchemeDataVo);
+		return R.createSuccess("操作成功");
+	}
+
 }

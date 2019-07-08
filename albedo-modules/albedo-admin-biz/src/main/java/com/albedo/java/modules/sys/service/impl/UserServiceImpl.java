@@ -106,6 +106,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public UserInfo getUserInfo(User user) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUser(user);
@@ -137,6 +138,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel getUserWithRolePage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
 		pm.addDesc(User.F_SQL_CREATEDDATE);
@@ -157,6 +159,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return 用户信息
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public UserVo getUserVoById(String id) {
 		UserVo userVo = baseMapper.getUserVoById(id);
 		return userVo;
@@ -182,6 +185,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return R
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<User> listAncestorUsersByUsername(String username) {
 		User user = this.getOne(Wrappers.<User>query().lambda()
 			.eq(User::getUsername, username));

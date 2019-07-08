@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
@@ -54,27 +55,29 @@ public class MenuServiceImpl extends
 
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<MenuVo> getMenuByRoleId(String roleId) {
 		return baseMapper.listMenusByRoleId(roleId);
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", allEntries = true)
-	public R removeMenuById(String id) {
-		// 查询父节点为当前节点的节点
-		List<Menu> menuList = this.list(Wrappers.<Menu>query()
-			.lambda().eq(Menu::getParentId, id));
-		if (CollUtil.isNotEmpty(menuList)) {
-			return R.createFail("菜单含有下级不能删除");
-		}
+	public void removeMenuById(List<String> ids) {
+		ids.forEach(id->{
+			// 查询父节点为当前节点的节点
+			List<Menu> menuList = this.list(Wrappers.<Menu>query()
+				.lambda().eq(Menu::getParentId, id));
+			if (CollUtil.isNotEmpty(menuList)) {
+				throw new RuntimeMsgException("菜单含有下级不能删除");
+			}
 
-		roleMenuRepository
-			.delete(Wrappers.<RoleMenu>query()
-				.lambda().eq(RoleMenu::getMenuId, id));
+			roleMenuRepository
+				.delete(Wrappers.<RoleMenu>query()
+					.lambda().eq(RoleMenu::getMenuId, id));
+			//删除当前菜单及其子菜单
+			this.removeById(id);
+		});
 
-		//删除当前菜单及其子菜单
-		return R.createSuccessData(this.removeById(id));
 	}
 
 	@Override

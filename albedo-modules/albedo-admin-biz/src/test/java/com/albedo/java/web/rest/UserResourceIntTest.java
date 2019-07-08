@@ -5,7 +5,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
-import com.albedo.java.modules.sys.controller.UserResource;
+import com.albedo.java.modules.sys.resource.UserResource;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.domain.Role;
@@ -36,9 +36,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the UserResource REST controller.
+ * Test class for the UserResource REST resource.
  *
- * @see com.albedo.java.modules.sys.controller.UserResource
+ * @see com.albedo.java.modules.sys.resource.UserResource
  */
 @SpringBootTest(classes = AlbedoAdminApplication.class)
 @Slf4j
@@ -64,6 +64,8 @@ public class UserResourceIntTest {
 
     private static final String DEFAULT_QQOPENID = "QQOPENID1";
     private static final String UPDATED_QQOPENID = "QQOPENID2";
+	private static final String DEFAULT_LOCKFLAG = CommonConstants.STR_YES;
+	private static final String UPDATED_LOCKFLAG = CommonConstants.STR_NO;
 
 
     @Autowired
@@ -72,8 +74,6 @@ public class UserResourceIntTest {
 	private RoleService roleService;
 	@Autowired
 	private DeptService deptService;
-    @Autowired
-    private ApplicationProperties applicationProperties;
 
     private MockMvc restUserMockMvc;
 	@Autowired
@@ -84,6 +84,7 @@ public class UserResourceIntTest {
     private UserDataVo user;
 	private List<Role> roleList;
 	private List<Dept> deptList;
+	UserDataVo anotherUser = new UserDataVo();
     @BeforeEach
     public void setup() {
 		DEFAULT_API_URL = "/sys/user/";
@@ -109,6 +110,7 @@ public class UserResourceIntTest {
         user.setConfirmPassword(DEFAULT_PASSWORD);
 		user.setEmail(DEFAULT_EMAIL);
         user.setPhone(DEFAULT_PHONE);
+        user.setLockFlag(DEFAULT_LOCKFLAG);
 		user.setQqOpenId(DEFAULT_QQOPENID);
         user.setDeptId(deptList.get(0).getId());
         user.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
@@ -122,11 +124,11 @@ public class UserResourceIntTest {
         user = createEntity();
         // Initialize the database
 
-		UserDataVo anotherUser = new UserDataVo();
 		anotherUser.setUsername(DEFAULT_ANOTHER_USERNAME);
 		anotherUser.setPassword(DEFAULT_PASSWORD);
 		anotherUser.setEmail(DEFAULT_ANOTHER_EMAIL);
 		anotherUser.setPhone(DEFAULT_PHONE);
+		anotherUser.setLockFlag(DEFAULT_LOCKFLAG);
 		anotherUser.setDeptId(deptList.get(0).getId());
 		anotherUser.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         userService.save(anotherUser);
@@ -180,7 +182,7 @@ public class UserResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllUsers() throws Exception {
+    public void getUserPage() throws Exception {
         // Initialize the database
         userService.save(user);
         // Get all the users
@@ -253,6 +255,7 @@ public class UserResourceIntTest {
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
+		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         
         managedUserVM.setId(updatedUser.getId());
@@ -268,6 +271,7 @@ public class UserResourceIntTest {
         User testUser = userService.findOneById(updatedUser.getId());
         assertThat(testUser.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+		assertThat(testUser.getLockFlag()).isEqualTo(UPDATED_LOCKFLAG);
         assertThat(testUser.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testUser.getQqOpenId()).isEqualTo(UPDATED_QQOPENID);
     }
@@ -288,6 +292,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
+		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
@@ -297,12 +302,14 @@ public class UserResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(CommonConstants.FAIL))
                 .andExpect(jsonPath("$.message").isNotEmpty());
+		User testUser = userService.findOneById(updatedUser.getId());
+		assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
 
     }
 
     @Test
     @Transactional
-    public void updateUserExistingLogin() throws Exception {
+    public void updateUserExistingUsername() throws Exception {
 
         userService.save(user);
         // Update the user
@@ -314,6 +321,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
+		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
@@ -323,6 +331,8 @@ public class UserResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(CommonConstants.FAIL))
                 .andExpect(jsonPath("$.message").isNotEmpty());
+		User testUser = userService.findOneById(updatedUser.getId());
+		assertThat(testUser.getUsername()).isEqualTo(DEFAULT_USERNAME);
     }
     @Test
     @Transactional
@@ -340,20 +350,42 @@ public class UserResourceIntTest {
         long databaseSizeAfterDelete = userService.findCount();
         assertThat(databaseSizeAfterDelete == databaseSizeBeforeDelete - 1);
     }
+	@Test
+	@Transactional
+	public void lockOrUnLockUser() throws Exception {
+		// Initialize the database
+		userService.save(user);
 
+		// lockOrUnLock the user
+		restUserMockMvc.perform(put(DEFAULT_API_URL+"{id}", user.getId())
+			.accept(TestUtil.APPLICATION_JSON_UTF8))
+			.andExpect(status().isOk());
+
+		// Validate the database is empty
+		User tempUser = userService.findOneById(user.getId());
+		assertThat(CommonConstants.STR_YES.equals(tempUser.getLockFlag()));
+		// lockOrUnLock the user
+		restUserMockMvc.perform(put(DEFAULT_API_URL+"{id}", user.getId())
+			.accept(TestUtil.APPLICATION_JSON_UTF8))
+			.andExpect(status().isOk());
+
+		// Validate the database is empty
+		User tempUser1 = userService.findOneById(user.getId());
+		assertThat(CommonConstants.STR_NO.equals(tempUser1.getLockFlag()));
+	}
     @Test
     @Transactional
     public void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
         User user1 = new User();
         user1.setId("1");
-        user1.setUsername("Login1");
+        user1.setUsername("User1");
         User user2 = new User();
         user2.setId(user1.getId());
         user2.setUsername(user1.getUsername());
         assertThat(user1).isEqualTo(user2);
         user2.setId("2");
-        user2.setUsername("Login2");
+        user2.setUsername("User2");
         assertThat(user1).isNotEqualTo(user2);
         user1.setId(null);
         assertThat(user1).isNotEqualTo(user2);

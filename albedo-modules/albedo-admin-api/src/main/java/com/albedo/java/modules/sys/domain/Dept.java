@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_Dept")
+@TableName("sys_dept")
 public class Dept extends TreeEntity<Dept> {
 
 

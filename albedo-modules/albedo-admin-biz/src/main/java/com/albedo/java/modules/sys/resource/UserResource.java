@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
-import com.albedo.java.common.core.util.ResponseBuilder;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.albedo.java.modules.sys.domain.User;
-import com.albedo.java.modules.sys.vo.UserSearchVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
@@ -37,12 +34,10 @@ import com.albedo.java.common.security.util.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 /**
  * @author somewhere
@@ -140,12 +135,13 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 			!userDataVo.getPassword().equals(userDataVo.getConfirmPassword())) {
 			throw new RuntimeMsgException("两次输入密码不一致");
 		}
-		// Lowercase the user login before comparing with database
+		// username before comparing with database
 		if (!checkByProperty(ClassUtil.createObj(UserDataVo.class,
 			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_USERNAME),
 			userDataVo.getId(), userDataVo.getUsername()))) {
 			throw new RuntimeMsgException("登录Id已存在");
 		}
+		// email before comparing with database
 		if (StringUtil.isNotEmpty(userDataVo.getEmail()) &&
 			!checkByProperty(ClassUtil.createObj(UserDataVo.class,
 			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {

@@ -90,7 +90,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
         }
 
         if (ObjectUtil.isNotEmpty(entity.getId())) {
-            Integer count = countByParentId((String) entity.getId());
+            Integer count = countByParentId(entity.getId());
             entity.setLeaf(count == null || count == 0 ? true : false);
         } else {
             entity.setLeaf(true);
@@ -98,7 +98,7 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
 //        checkSave(domain);
         boolean flag = super.saveOrUpdate(entity);
         // 更新子节点 parentIds
-        List<T> list = findAllByParentIdsLike((String) entity.getId());
+        List<T> list = findAllByParentIdsLike(entity.getId());
         for (T e : list) {
             if (StringUtil.isNotEmpty(e.getParentIds())) {
                 e.setParentIds(e.getParentIds().replace(oldParentIds, entity.getParentIds()));

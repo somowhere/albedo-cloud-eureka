@@ -18,10 +18,12 @@ package com.albedo.java.auth.endpoint;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.security.service.UserDetail;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.R;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.ConvertingCursor;
 import org.springframework.data.redis.core.Cursor;
@@ -88,15 +90,17 @@ public class AlbedoTokenEndpoint {
 	/**
 	 * 令牌管理调用
 	 *
-	 * @param token token
+	 * @param tokens tokens
 	 * @param from  内部调用标志
 	 */
-	@DeleteMapping("/{token}")
-	public R<Boolean> removeToken(@PathVariable("token") String token, @RequestHeader(required = false) String from) {
+	@DeleteMapping("/{tokens}")
+	public R<Boolean> removeToken(@PathVariable("tokens") String tokens, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
 			return null;
 		}
-		return new R<>(redisTemplate.delete(PROJECT_OAUTH_ACCESS + token));
+		Lists.newArrayList(tokens.split(StringUtil.SPLIT_DEFAULT)).forEach(
+			token -> redisTemplate.delete(PROJECT_OAUTH_ACCESS + token));
+		return R.createSuccess("操作成功");
 	}
 
 

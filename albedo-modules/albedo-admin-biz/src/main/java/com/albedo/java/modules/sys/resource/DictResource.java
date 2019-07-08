@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 
 import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.exception.RuntimeMsgException;
+import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dict;
-import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.vo.MenuDataVo;
+import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,9 +36,7 @@ import com.albedo.java.common.log.annotation.SysLog;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,12 +72,12 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	/**
 	 * 分页查询字典信息
 	 *
-	 * @param page 分页对象
+	 * @param pm 分页对象
 	 * @return 分页对象
 	 */
 	@GetMapping("/")
-	public R<IPage> getPage(Page page, Dict dict) {
-		return new R<>(service.page(page, Wrappers.query(dict)));
+	public R<IPage> getPage(PageModel pm) {
+		return new R<>(service.findPage(pm));
 	}
 
 	/**
@@ -97,15 +96,24 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	/**
 	 * 添加字典
 	 *
-	 * @param dict 字典信息
+	 * @param dictDataVo 字典信息
 	 * @return success、false
 	 */
-	@SysLog("添加字典")
-	@PostMapping
+	@SysLog("添加/更新字典")
+	@PostMapping("/")
 	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
-	public R save(@Valid @RequestBody Dict dict) {
-		return new R<>(service.save(dict));
+	public R save(@Valid @RequestBody DictDataVo dictDataVo) {
+
+		// code before comparing with database
+		if (!checkByProperty(ClassUtil.createObj(DictDataVo.class,
+			Lists.newArrayList(UserDataVo.F_ID, DictDataVo.F_CODE),
+			dictDataVo.getId(), dictDataVo.getCode()))) {
+			throw new RuntimeMsgException("编码已存在");
+		}
+
+
+		return new R<>(service.save(dictDataVo));
 	}
 
 	/**
@@ -119,7 +127,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	public R removeByIds(@PathVariable String ids) {
-		return new R<>(service.removeById(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
+		return new R<>(service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
 
 }

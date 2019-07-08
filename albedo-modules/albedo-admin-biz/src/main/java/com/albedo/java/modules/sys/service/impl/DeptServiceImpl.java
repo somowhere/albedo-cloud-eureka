@@ -58,14 +58,14 @@ public class DeptServiceImpl  extends
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean saveDept(Dept dept) {
+	public Boolean saveDept(DeptDataVo dept) {
+		Dept saveDept = new Dept();
+		BeanUtils.copyProperties(dept, saveDept);
 		if(StringUtil.isEmpty(dept.getId())){
-			Dept sysDept = new Dept();
-			BeanUtils.copyProperties(dept, sysDept);
-			this.save(sysDept);
-			deptRelationService.saveDeptRelation(sysDept);
+			this.save(saveDept);
+			deptRelationService.saveDeptRelation(saveDept);
 		}else{
-			updateDept(dept);
+			updateDept(saveDept);
 		}
 		return Boolean.TRUE;
 	}
@@ -74,26 +74,29 @@ public class DeptServiceImpl  extends
 	/**
 	 * 删除部门
 	 *
-	 * @param id 部门 ID
+	 * @param ids 部门 ID
 	 * @return 成功、失败
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean removeDeptById(Integer id) {
-		//级联删除部门
-		List<String> idList = deptRelationService
-			.list(Wrappers.<DeptRelation>query().lambda()
-				.eq(DeptRelation::getAncestor, id))
-			.stream()
-			.map(DeptRelation::getDescendant)
-			.collect(Collectors.toList());
+	public Boolean removeDeptByIds(List<String> ids) {
+		ids.forEach(id->{
+			//级联删除部门
+			List<String> idList = deptRelationService
+				.list(Wrappers.<DeptRelation>query().lambda()
+					.eq(DeptRelation::getAncestor, id))
+				.stream()
+				.map(DeptRelation::getDescendant)
+				.collect(Collectors.toList());
 
-		if (CollUtil.isNotEmpty(idList)) {
-			this.removeByIds(idList);
-		}
+			if (CollUtil.isNotEmpty(idList)) {
+				this.removeByIds(idList);
+			}
 
-		//删除部门级联关系
-		deptRelationService.removeDeptRelationById(id);
+			//删除部门级联关系
+			deptRelationService.removeDeptRelationById(id);
+		});
+
 		return Boolean.TRUE;
 	}
 
@@ -121,6 +124,7 @@ public class DeptServiceImpl  extends
 	 * @return 树
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<DeptTree> listDeptTrees() {
 		return getDeptTree(this.list(Wrappers.emptyWrapper()));
 	}
@@ -131,6 +135,7 @@ public class DeptServiceImpl  extends
 	 * @return
 	 */
 	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<DeptTree> listCurrentUserDeptTrees(String deptId) {
 		List<String> descendantIdList = deptRelationService
 			.list(Wrappers.<DeptRelation>query().lambda()

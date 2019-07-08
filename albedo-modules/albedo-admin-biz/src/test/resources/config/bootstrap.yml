@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: albedo-admin
+    name: albedo-admin-biz
   # 配置中心
   cloud:
     config:

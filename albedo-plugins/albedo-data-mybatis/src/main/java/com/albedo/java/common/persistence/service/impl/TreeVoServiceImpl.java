@@ -113,7 +113,7 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
             log.warn("{}", e);
         }
         saveOrUpdate(entity);
-        form.setId((String) entity.getId());
+        form.setId( entity.getId());
         return form;
     }
 

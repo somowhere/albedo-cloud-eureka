@@ -16,7 +16,11 @@
 
 package com.albedo.java.modules.sys.domain;
 
+import com.albedo.java.common.core.annotation.DictType;
+import com.albedo.java.common.core.annotation.SearchField;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.persistence.domain.TreeEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,11 +42,14 @@ public class Menu extends TreeEntity<Menu> {
 
 	public static final String TYPE_MENU = "0";
 	public static final String TYPE_BUTTON = "1";
+	public static final String F_SHOW = "show";
+	public static final String F_SQL_SHOW = "show";
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 菜单权限标识
 	 */
+	@SearchField
 	private String permission;
 	/**
 	 * 图标
@@ -61,6 +68,13 @@ public class Menu extends TreeEntity<Menu> {
 	 * 路由缓冲
 	 */
 	private String keepAlive;
+	/**
+	 * 是否显示1 是0否
+	 */
+	@NotNull
+	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
+	@DictType("sys_yes_no")
+	private Integer show = 1;
 
 	/**
 	 * 前端URL

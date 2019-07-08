@@ -42,7 +42,7 @@ public interface DeptRelationService extends IService<DeptRelation> {
 	 *
 	 * @param id
 	 */
-	void removeDeptRelationById(Integer id);
+	void removeDeptRelationById(String id);
 
 	/**
 	 * 更新部门关系

@@ -21,6 +21,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author somewhere
@@ -43,10 +45,15 @@ public class RoleDataVo extends DataEntityVo<String> {
 	/**
 	 * 角色部门Id
 	 */
-	private Integer roleDeptId;
+	private String roleDeptId;
 
 	/**
 	 * 部门名称
 	 */
 	private String deptName;
+	/**
+	 * 角色ID
+	 */
+	@NotNull
+	private List<String> menuIdList;
 }

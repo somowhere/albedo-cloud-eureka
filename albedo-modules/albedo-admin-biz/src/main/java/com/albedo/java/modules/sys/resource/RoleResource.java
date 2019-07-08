@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.controller;
+package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.domain.Role;
-import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
-import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.RoleMenuService;
@@ -32,7 +30,6 @@ import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,7 +80,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	@SysLog("删除角色")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	public R removeByIds(@PathVariable String ids) {
-		service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		service.removeRoleByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return R.createSuccess("操作成功");
 	}
 

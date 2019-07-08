@@ -36,11 +36,6 @@ public class GeneralResource {
      * 日志对象
      */
     protected Logger log = LoggerFactory.getLogger(getClass());
-    /**
-     * 1 管理基础路径
-     */
-    @Value("")
-    protected String adminPath;
 
     /**
      * 验证Bean实例对象

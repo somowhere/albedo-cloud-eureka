@@ -40,6 +40,19 @@ public class Role extends IdEntity<Role> {
 
 	public static final String F_NAME = "name";
 
+	/**
+	 * 锁定标记
+	 */
+	@NotBlank(message = "锁定标记 不能为空")
+	private String lockFlag;
+
+	/**
+	 * 数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置
+	 */
+	@NotBlank(message = "数据权限 不能为空")
+	private String dataScope;
+
+
 	@NotBlank(message = "角色名称 不能为空")
 	private String name;
 

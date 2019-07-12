@@ -191,7 +191,7 @@ public class DictResourceIntTest {
         dictService.save(dict);
         // Get all the dicts
         restDictMockMvc.perform(get(DEFAULT_API_URL)
-			.param(PageModel.F_DESC, Dict.F_SQL_CREATEDDATE)
+			.param(PageModel.F_DESC, "parent.created_date")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

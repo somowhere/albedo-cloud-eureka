@@ -18,9 +18,9 @@ package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.albedo.java.modules.sys.vo.DeptTree;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.repository.DeptRepository;
+import com.albedo.java.common.core.vo.TreeNode;
 
 import java.util.List;
 
@@ -34,24 +34,18 @@ import java.util.List;
  */
 public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
 
-	/**
-	 * 查询部门树菜单
-	 *
-	 * @return 树
-	 */
-	List<DeptTree> listDeptTrees();
 
 	/**
 	 * 查询用户部门树
 	 *
 	 * @return
 	 */
-	List<DeptTree> listCurrentUserDeptTrees(String deptId) ;
+	List<TreeNode> listCurrentUserDeptTrees(String deptId) ;
 
 	/**
 	 * 添加信息部门
 	 *
-	 * @param dept
+	 * @param deptDataVo
 	 * @return
 	 */
 	Boolean saveDept(DeptDataVo deptDataVo);

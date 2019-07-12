@@ -25,11 +25,12 @@ import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dict;
+import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
@@ -59,6 +60,16 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	public DictResource(DictService service) {
 		super(service);
 	}
+
+	/**
+	 * 返回树形菜单集合
+	 *
+	 * @return 树形菜单
+	 */
+	@GetMapping(value = "/tree")
+	public R getTree() {
+		return R.createSuccessData(service.listTrees());
+	}
 	/**
 	 * @param id
 	 * @return
@@ -77,7 +88,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return new R<>(service.findPage(pm));
+		return new R<>(service.findRelationPage(pm));
 	}
 
 	/**

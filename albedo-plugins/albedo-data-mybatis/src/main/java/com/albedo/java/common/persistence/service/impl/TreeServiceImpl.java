@@ -87,7 +87,9 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
                 super.updateById(parent);
                 entity.setParentIds(StringUtil.toAppendStr(parent.getParentIds(), parent.getId(), StringUtil.SPLIT_DEFAULT));
             }
-        }
+        }else{
+        	entity.setParentId(TreeEntity.ROOT);
+		}
 
         if (ObjectUtil.isNotEmpty(entity.getId())) {
             Integer count = countByParentId(entity.getId());

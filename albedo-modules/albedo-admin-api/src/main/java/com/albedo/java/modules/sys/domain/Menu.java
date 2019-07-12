@@ -73,7 +73,7 @@ public class Menu extends TreeEntity<Menu> {
 	 */
 	@NotNull
 	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
-	@DictType("sys_yes_no")
+	@DictType("sys_flag")
 	private Integer show = 1;
 
 	/**

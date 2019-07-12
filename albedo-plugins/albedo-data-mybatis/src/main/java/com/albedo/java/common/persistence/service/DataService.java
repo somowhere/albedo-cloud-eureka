@@ -20,14 +20,14 @@ public interface DataService<Repository extends BaseRepository<T>, T extends Dat
 	PageModel<T> findPage(PageModel<T> pm);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	PageModel<T> findBasicPage(PageModel<T> pm);
+	PageModel<T> findRelationPage(PageModel<T> pm);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	PageModel<T> findPage(PageModel<T> pm, List<QueryCondition> queryConditions);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	PageModel<T> findBasicPage(PageModel<T> pm, List<QueryCondition> queryConditions);
+	PageModel<T> findRelationPage(PageModel<T> pm, List<QueryCondition> queryConditions);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions);
+	PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions, boolean isRelation);
 }

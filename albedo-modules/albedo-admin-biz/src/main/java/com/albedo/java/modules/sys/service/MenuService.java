@@ -23,6 +23,7 @@ import com.albedo.java.modules.sys.vo.MenuDataVo;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.repository.MenuRepository;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.modules.sys.vo.MenuTree;
 import com.albedo.java.modules.sys.vo.MenuVo;
 
 import java.util.List;
@@ -61,4 +62,6 @@ public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDat
 	Boolean updateMenuById(Menu menu);
 
 	boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo);
+
+	List<MenuTree> listMenuTrees();
 }

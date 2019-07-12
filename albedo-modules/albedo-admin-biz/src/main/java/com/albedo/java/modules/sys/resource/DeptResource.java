@@ -64,7 +64,7 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 */
 	@GetMapping(value = "/tree")
 	public R listDeptTrees() {
-		return new R<>(service.listDeptTrees());
+		return R.createSuccessData(service.listTrees());
 	}
 
 	/**

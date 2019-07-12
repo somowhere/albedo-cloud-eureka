@@ -16,7 +16,9 @@
 
 package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.vo.DataEntityVo;
 import com.albedo.java.modules.sys.domain.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,6 +50,7 @@ public class UserVo  extends DataEntityVo<String> {
 	/**
 	 * 锁定标记
 	 */
+	@DictType("sys_flag")
 	private String lockFlag;
 
 	/**
@@ -82,9 +85,11 @@ public class UserVo  extends DataEntityVo<String> {
 	 */
 	private String qqOpenId;
 
+	private String roleNames;
 	/**
 	 * 角色ID
 	 */
+	@JsonIgnore
 	private List<Role> roleList;
 
 	private List<String> roleIdList;
@@ -95,5 +100,14 @@ public class UserVo  extends DataEntityVo<String> {
 		}
 		return roleIdList;
 	}
+
+	public String getRoleNames(){
+		if(ObjectUtil.isEmpty(roleNames) && CollUtil.isNotEmpty(roleList)){
+			roleNames = CollUtil.convertToString(roleList, Role.F_NAME, Role.F_ID);
+		}
+		return roleNames;
+	}
+
+
 
 }

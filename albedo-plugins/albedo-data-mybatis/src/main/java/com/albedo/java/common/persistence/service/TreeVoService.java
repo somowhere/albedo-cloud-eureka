@@ -1,6 +1,7 @@
 package com.albedo.java.common.persistence.service;
 
 import com.albedo.java.common.core.vo.TreeEntityVo;
+import com.albedo.java.common.core.vo.TreeNode;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -35,4 +36,13 @@ public interface TreeVoService<Repository extends TreeRepository<T>,
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	Optional<V> findOptionalTopByParentId(String parentId);
+
+
+
+	/**
+	 * 查询部门树菜单
+	 *
+	 * @return 树
+	 */
+	List<TreeNode> listTrees();
 }

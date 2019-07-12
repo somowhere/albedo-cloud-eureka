@@ -4,10 +4,13 @@ import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeEntityVo;
+import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.common.persistence.service.TreeVoService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -136,5 +139,36 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
         }
         return  Optional.empty();
     }
+
+	/**
+	 * 构建部门树
+	 *
+	 * @param dicts 部门
+	 * @return
+	 */
+	public List<TreeNode> getNodeTree(List<T> dicts) {
+		List<TreeNode> treeList = dicts.stream()
+			.filter(dict -> !dict.getId().equals(dict.getParentId()))
+			.map(dept -> {
+				TreeNode node = new TreeNode();
+				node.setId(dept.getId());
+				node.setParentId(dept.getParentId());
+				node.setLabel(dept.getName());
+				return node;
+			}).collect(Collectors.toList());
+		return TreeUtil.buildByLoop(treeList, TreeEntity.ROOT);
+	}
+
+
+	/**
+	 * 查询全部部门树
+	 *
+	 * @return 树
+	 */
+	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<TreeNode> listTrees() {
+		return getNodeTree(this.list(Wrappers.emptyWrapper()));
+	}
 
 }

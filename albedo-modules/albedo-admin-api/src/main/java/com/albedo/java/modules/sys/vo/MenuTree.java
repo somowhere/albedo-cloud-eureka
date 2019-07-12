@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.vo.TreeNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -36,7 +37,6 @@ public class MenuTree extends TreeNode {
 	private String keepAlive;
 	private String code;
 	private String type;
-	private String label;
 	private Integer sort;
 
 	public MenuTree() {
@@ -46,14 +46,14 @@ public class MenuTree extends TreeNode {
 		this.id = id;
 		this.parentId = parentId;
 		this.name = name;
-		this.label = name;
+		setLabel(name);
 	}
 
 	public MenuTree(String id, String name, MenuTree parent) {
 		this.id = id;
 		this.parentId = parent.getId();
 		this.name = name;
-		this.label = name;
+		setLabel(name);
 	}
 
 	public MenuTree(MenuVo menuVo) {
@@ -64,7 +64,7 @@ public class MenuTree extends TreeNode {
 		this.path = menuVo.getPath();
 		this.component = menuVo.getComponent();
 		this.type = menuVo.getType();
-		this.label = menuVo.getName();
+		setLabel(menuVo.getName());
 		this.sort = menuVo.getSort();
 		this.keepAlive = menuVo.getKeepAlive();
 	}

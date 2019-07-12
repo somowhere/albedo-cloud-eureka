@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.vo;
 
+import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.core.vo.DataEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,6 +34,20 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class RoleDataVo extends DataEntityVo<String> {
 
+
+	/**
+	 * 锁定标记
+	 */
+	@DictType("sys_flag")
+	@NotBlank(message = "锁定标记 不能为空")
+	private String lockFlag;
+
+	/**
+	 * 数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置
+	 */
+	@DictType("sys_data_scope")
+	@NotBlank(message = "数据权限 不能为空")
+	private String dataScope;
 	@NotBlank(message = "角色名称 不能为空")
 	private String name;
 

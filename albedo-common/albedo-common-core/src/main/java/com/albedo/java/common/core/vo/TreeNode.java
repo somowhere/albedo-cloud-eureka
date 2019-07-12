@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.common.core.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author somewhere
- * @date 2019/2/1
- * 部门树
+ * @date 2017年11月9日23:33:45
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DeptTree extends TreeNode {
+public class TreeNode {
+	protected String id;
+	protected String parentId;
 	private String label;
+	protected List<TreeNode> children = new ArrayList<TreeNode>();
+
+	public void add(TreeNode node) {
+		children.add(node);
+	}
 }

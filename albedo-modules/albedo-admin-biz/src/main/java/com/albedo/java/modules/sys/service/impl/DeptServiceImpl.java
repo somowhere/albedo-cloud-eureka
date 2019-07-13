@@ -18,6 +18,7 @@ package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.domain.Dept;
@@ -115,9 +116,8 @@ public class DeptServiceImpl  extends
 				.eq(DeptRelation::getAncestor, deptId))
 			.stream().map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
-
 		List<Dept> deptList = baseMapper.selectBatchIds(descendantIdList);
-		return getNodeTree(deptList);
+		return getNodeTree(new TreeQuery(), deptList);
 	}
 
 }

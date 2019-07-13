@@ -1,4 +1,4 @@
-package com.albedo.java.common.core;
+package com.albedo.java.common.runner;
 
 import com.albedo.java.common.core.annotation.BaseInit;
 import com.albedo.java.common.core.annotation.BaseInterface;
@@ -28,7 +28,8 @@ public class ContextInitRunner implements ApplicationRunner {
 			for (Object service : baseServices.values()) {
 				log.debug(">>>>> {}.afterPropertiesSet()", service.getClass().getName());
 				try {
-					Method initMapper = service.getClass().getMethod("afterPropertiesSet");
+					BaseInit annotation = service.getClass().getAnnotation(BaseInit.class);
+					Method initMapper = service.getClass().getMethod(annotation.method());
 					initMapper.invoke(service);
 				} catch (Exception e) {
 					log.error("初始化BaseInit的afterPropertiesSet方法异常{}", e);

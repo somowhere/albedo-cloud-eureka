@@ -14,28 +14,24 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.modules.sys.feign.factory;
 
-import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.persistence.service.TreeVoService;
-import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.domain.Dict;
-import com.albedo.java.modules.sys.repository.DictRepository;
-
-import java.util.List;
-import java.util.Map;
+import com.albedo.java.modules.sys.feign.RemoteDictService;
+import com.albedo.java.modules.sys.feign.fallback.RemoteDictServiceFallbackImpl;
+import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
- * <p>
- * 字典表 服务类
- * </p>
- *
  * @author somewhere
- * @since 2019/2/1
+ * @date 2019/2/1
  */
-public interface DictService extends TreeVoService<DictRepository, Dict, DictDataVo> {
-	Map<String, List<SelectResult>> findCodeStr(String codes);
-	Map<String, List<SelectResult>> findCodes(String... codes);
+@Component
+public class RemoteDictServiceFallbackFactory implements FallbackFactory<RemoteDictService> {
 
-	void refresh();
+	@Override
+	public RemoteDictService create(Throwable throwable) {
+		RemoteDictServiceFallbackImpl remoteDictServiceFallback = new RemoteDictServiceFallbackImpl();
+		remoteDictServiceFallback.setCause(throwable);
+		return remoteDictServiceFallback;
+	}
 }

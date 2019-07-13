@@ -22,10 +22,12 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.domain.Dict;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.DictRepository;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.util.DictUtil;
 import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -45,12 +47,19 @@ import java.util.Map;
  * @since 2019/2/1
  */
 @Service
-@BaseInit
+@BaseInit(method = "refresh")
 public class DictServiceImpl extends
 	TreeVoServiceImpl<DictRepository, Dict, DictDataVo> implements DictService {
 
 	@Autowired
 	private CacheManager cacheManager;
+
+	public List<Dict> findAllOrderBySort(){
+		return baseMapper.selectList(Wrappers.<Dict>query().lambda().orderByAsc(
+			Dict::getSort
+		));
+	}
+
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Map<String, List<SelectResult>> findCodeStr(String codes) {
 		return findCodes(StringUtil.isNotEmpty(codes) ?
@@ -60,14 +69,14 @@ public class DictServiceImpl extends
 	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+Dict.CACHE_DICT_RESULT_ALL+"'")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Map<String,List<SelectResult>> findCodes(String... codes) {
-		return DictUtil.getSelectResultListByCodes(list(), codes);
+		return DictUtil.getSelectResultListByCodes(findAllOrderBySort(), codes);
 	}
 
-	public void afterPropertiesSet() {
+	public void refresh() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
 		if (cache == null || cache.get(Dict.CACHE_DICT_ALL) == null ||
 			ObjectUtil.isEmpty(cache.get(Dict.CACHE_DICT_ALL))) {
-			List<Dict> dictList = list();
+			List<Dict> dictList = findAllOrderBySort();
 			cache.put(Dict.CACHE_DICT_ALL, dictList);
 		}
 	}

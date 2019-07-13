@@ -2,11 +2,12 @@ package com.albedo.java.common.persistence.service.impl;
 
 import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeEntityVo;
 import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.vo.TreeUtil;
-import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.common.persistence.service.TreeVoService;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -141,21 +144,28 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
     }
 
 	/**
-	 * 构建部门树
+	 * 构建树
 	 *
-	 * @param dicts 部门
+	 * @param trees
 	 * @return
 	 */
-	public List<TreeNode> getNodeTree(List<T> dicts) {
-		List<TreeNode> treeList = dicts.stream()
-			.filter(dict -> !dict.getId().equals(dict.getParentId()))
-			.map(dept -> {
+	public List<TreeNode> getNodeTree(TreeQuery treeQuery, List<T> trees) {
+		String extId = treeQuery.getExtId();
+		Collections.sort(trees, Comparator.comparing((T t) -> t.getSort()).reversed());
+		List<TreeNode> treeList = trees.stream()
+			.filter(dict ->
+				(ObjectUtil.isEmpty(extId)|| ObjectUtil.isEmpty(dict.getParentIds()) ||
+					(ObjectUtil.isNotEmpty(extId) && !extId.equals(dict.getId()) && dict.getParentIds() != null
+						&& dict.getParentIds().indexOf("," + extId + ",") == -1))
+			)
+			.map(tree -> {
 				TreeNode node = new TreeNode();
-				node.setId(dept.getId());
-				node.setParentId(dept.getParentId());
-				node.setLabel(dept.getName());
+				node.setId(tree.getId());
+				node.setParentId(tree.getParentId());
+				node.setLabel(tree.getName());
 				return node;
 			}).collect(Collectors.toList());
+
 		return TreeUtil.buildByLoop(treeList, TreeEntity.ROOT);
 	}
 
@@ -167,8 +177,9 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<TreeNode> listTrees() {
-		return getNodeTree(this.list(Wrappers.emptyWrapper()));
+	public List<TreeNode> listTrees(TreeQuery treeQuery) {
+
+		return getNodeTree(treeQuery, this.list(Wrappers.emptyWrapper()));
 	}
 
 }

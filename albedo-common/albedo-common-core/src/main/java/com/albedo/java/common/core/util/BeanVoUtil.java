@@ -56,7 +56,8 @@ public class BeanVoUtil extends BeanUtils {
                     PropertyDescriptor sourcePd = getPropertyDescriptor(source.getClass(), targetPd.getName());
                     if (sourcePd != null) {
                         Method readMethod = sourcePd.getReadMethod();
-                        if (readMethod != null && ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())) {
+                        if (readMethod != null ) {
+                        	//&& ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())
                             if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) {
                                 readMethod.setAccessible(true);
                             }

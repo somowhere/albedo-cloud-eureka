@@ -14,28 +14,35 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.modules.sys.feign.fallback;
 
-import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.persistence.service.TreeVoService;
-import com.albedo.java.modules.sys.vo.DictDataVo;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.sys.domain.Dict;
-import com.albedo.java.modules.sys.repository.DictRepository;
+import com.albedo.java.modules.sys.feign.RemoteDictService;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * <p>
- * 字典表 服务类
- * </p>
- *
- * @author somewhere
- * @since 2019/2/1
+ * @author lijie
+ * @date 2019/5/1
  */
-public interface DictService extends TreeVoService<DictRepository, Dict, DictDataVo> {
-	Map<String, List<SelectResult>> findCodeStr(String codes);
-	Map<String, List<SelectResult>> findCodes(String... codes);
+@Slf4j
+@Component
+public class RemoteDictServiceFallbackImpl implements RemoteDictService {
+	@Setter
+	private Throwable cause;
 
-	void refresh();
+	/**
+	 * 查询所有可用数据字典信息
+	 *
+	 * @return
+	 */
+	@Override
+	public R<String> getDictAll(String from) {
+		log.error("feign 查询所有可用数据字典信息失败:{}", cause);
+		return null;
+	}
 }

@@ -7,4 +7,5 @@ ignore:
     - /actuator/**
     - /sys/user/info/*
     - /sys/menu/gen
+    - /sys/dict/all
     - /sys/log/**

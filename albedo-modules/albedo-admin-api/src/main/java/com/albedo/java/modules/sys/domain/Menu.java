@@ -68,6 +68,7 @@ public class Menu extends TreeEntity<Menu> {
 	/**
 	 * 路由缓冲
 	 */
+	@DictType("sys_flag")
 	private String keepAlive;
 	/**
 	 * 是否显示1 是0否

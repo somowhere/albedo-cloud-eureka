@@ -63,6 +63,7 @@ public class Menu extends TreeEntity<Menu> {
 	 * 菜单类型 （0菜单 1按钮）
 	 */
 	@NotNull(message = "菜单类型不能为空")
+	@DictType("sys_menu_type")
 	private String type;
 	/**
 	 * 路由缓冲

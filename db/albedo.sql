@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 13/07/2019 12:18:44
+ Date: 14/07/2019 05:28:00
 */
 
 SET NAMES utf8mb4;
@@ -243,10 +243,13 @@ CREATE TABLE `sys_dict`  (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', '-1', NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-07-13 02:59:41', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('2', '是否', '', 'sys_flag', '1', '1', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-07-13 01:01:10', 0, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('3', '是', '1', 'sys_flag_yes', '2', NULL, 0, b'1', b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-07-13 01:01:35', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('4', '否', '0', 'sys_flag_no', '2', NULL, 0, b'1', b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-07-13 01:01:31', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', '-1', NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', '1', '2019-07-14 05:06:23', 7, '', '0');
+INSERT INTO `sys_dict` VALUES ('2', '是否标识', 'sys_flag', 'sys_flag', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', '1', '2019-07-14 05:07:35', 10, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('269ebbfff898cf1db0d243e3f7774d2c', '业务数据', 'biz', 'biz', '1', '1,', 30, b'1', b'1', NULL, '1', '2019-07-14 04:01:51', '1', '2019-07-14 05:06:23', 1, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('3', '是', '1', 'sys_flag_yes', '2', '1,cfd5f62f601817a3b0f38f5ccb1f5128,2,', 10, b'1', b'1', '', '1', '2018-07-09 06:15:40', '1', '2019-07-14 05:07:29', 1, '', '0');
+INSERT INTO `sys_dict` VALUES ('4', '否', '0', 'sys_flag_no', '2', '1,cfd5f62f601817a3b0f38f5ccb1f5128,2,', 5, b'1', b'1', NULL, '1', '2019-06-02 17:26:40', '1', '2019-07-14 05:07:35', 1, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('8c4589d0a32c9b84b6254507354a195b', 'test', 'test', 'test', '-1', NULL, 30, b'1', b'1', NULL, '1', '2019-07-14 03:59:38', '1', '2019-07-14 04:00:28', 0, NULL, '1');
+INSERT INTO `sys_dict` VALUES ('cfd5f62f601817a3b0f38f5ccb1f5128', '系统数据', 'sys', 'sys', '1', '1,', 30, b'1', b'0', NULL, '1', '2019-07-14 01:13:12', '1', '2019-07-14 03:40:01', 4, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -530,7 +533,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-13 01:13:20', NULL, 7, '0');
 INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '1', '1', '2019-07-07 14:32:17', '1', '2019-07-13 01:38:33', NULL, 19, '1');
-INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-13 01:39:23', NULL, 22, '0');
+INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-14 03:22:16', NULL, 23, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role

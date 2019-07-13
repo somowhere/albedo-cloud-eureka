@@ -152,7 +152,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return new R<>(service.findPage(pm));
+		return new R<>(service.findRelationPage(pm));
 	}
 
 

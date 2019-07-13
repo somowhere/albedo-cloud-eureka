@@ -120,7 +120,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public R save(@Valid @RequestBody MenuDataVo menuDataVo) {
 
 		// permission before comparing with database
-		if (!checkByProperty(ClassUtil.createObj(MenuDataVo.class,
+		if (StringUtil.isNotEmpty(menuDataVo.getPermission()) && !checkByProperty(ClassUtil.createObj(MenuDataVo.class,
 			Lists.newArrayList(MenuDataVo.F_ID, MenuDataVo.F_PERMISSION),
 			menuDataVo.getId(), menuDataVo.getPermission()))) {
 			throw new RuntimeMsgException("权限已存在");

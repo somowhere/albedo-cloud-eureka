@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50725
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : albedo
 
  Target Server Type    : MySQL
- Target Server Version : 50725
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/07/2019 16:24:56
+ Date: 13/07/2019 12:18:44
 */
 
 SET NAMES utf8mb4;
@@ -191,7 +191,7 @@ CREATE TABLE `sys_dept_relation`  (
 -- ----------------------------
 -- Records of sys_dept_relation
 -- ----------------------------
-INSERT INTO `sys_dept_relation` VALUES ('1', '0');
+INSERT INTO `sys_dept_relation` VALUES ('1', '1');
 INSERT INTO `sys_dept_relation` VALUES ('1', '3');
 INSERT INTO `sys_dept_relation` VALUES ('1', '4');
 INSERT INTO `sys_dept_relation` VALUES ('1', '5');
@@ -243,11 +243,10 @@ CREATE TABLE `sys_dict`  (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', NULL, NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-07-04 22:45:10', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('2', '数据状态', '', 'sys_status', '1', '1', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('3', '正常', '1', 'sys_status_normal', '2', NULL, 0, b'1', b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-07-04 22:45:07', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('4', '锁定', '0', 'sys_status_unable', '2', NULL, 0, b'0', b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-07-04 22:45:15', 0, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('5', '删除', '-1', 'sys_status_delete', '2', NULL, 0, b'1', b'1', NULL, '1', '2019-06-02 17:30:10', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', '-1', NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-07-13 02:59:41', 0, '', '0');
+INSERT INTO `sys_dict` VALUES ('2', '是否', '', 'sys_flag', '1', '1', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-07-13 01:01:10', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('3', '是', '1', 'sys_flag_yes', '2', NULL, 0, b'1', b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-07-13 01:01:35', 0, '', '0');
+INSERT INTO `sys_dict` VALUES ('4', '否', '0', 'sys_flag_no', '2', NULL, 0, b'1', b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-07-13 01:01:31', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -397,6 +396,8 @@ CREATE TABLE `sys_role`  (
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置',
+  `lock_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '1' COMMENT '1-正常，0-锁定',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -411,8 +412,8 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', NULL, 0, '0');
-INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', NULL, '1', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', NULL, '1', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -527,9 +528,9 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-07 20:58:44', NULL, 1, '0');
-INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:32:17', '1', '2019-07-07 20:59:40', NULL, 3, '0');
-INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-07 22:19:27', NULL, 9, '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-13 01:13:20', NULL, 7, '0');
+INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '1', '1', '2019-07-07 14:32:17', '1', '2019-07-13 01:38:33', NULL, 19, '1');
+INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-13 01:39:23', NULL, 22, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -544,10 +545,8 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '0');
-INSERT INTO `sys_user_role` VALUES ('2', '2');
-INSERT INTO `sys_user_role` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', '0');
-INSERT INTO `sys_user_role` VALUES ('90da0206c39867a1b36ac36ced80c1a9', '0');
+INSERT INTO `sys_user_role` VALUES ('1', '1');
+INSERT INTO `sys_user_role` VALUES ('90da0206c39867a1b36ac36ced80c1a9', '1');
 
 -- ----------------------------
 -- Table structure for zipkin_annotations

@@ -2,11 +2,13 @@ package com.albedo.java.common.runner;
 
 import com.albedo.java.common.core.annotation.BaseInit;
 import com.albedo.java.common.core.annotation.BaseInterface;
+import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -28,7 +30,7 @@ public class ContextInitRunner implements ApplicationRunner {
 			for (Object service : baseServices.values()) {
 				log.debug(">>>>> {}.afterPropertiesSet()", service.getClass().getName());
 				try {
-					BaseInit annotation = service.getClass().getAnnotation(BaseInit.class);
+					BaseInit annotation = AnnotationUtils.findAnnotation(service.getClass(), BaseInit.class);
 					Method initMapper = service.getClass().getMethod(annotation.method());
 					initMapper.invoke(service);
 				} catch (Exception e) {

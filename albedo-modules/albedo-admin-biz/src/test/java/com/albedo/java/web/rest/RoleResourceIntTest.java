@@ -49,6 +49,10 @@ public class RoleResourceIntTest {
 	private static final String DEFAULT_ANOTHER_CODE = "ANOTHER_CODE";
 	private static final String DEFAULT_CODE = "CODE1";
 	private static final String UPDATED_CODE = "CODE2";
+	private static final String DEFAULT_LOCKFLAG = CommonConstants.STR_YES;
+	private static final String UPDATED_LOCKFLAG = CommonConstants.STR_NO;
+	private static final String DEFAULT_DATASCOPE = CommonConstants.STR_YES;
+	private static final String UPDATED_DATASCOPE = CommonConstants.STR_NO;
 	private static final String DEFAULT_REMARK = "REMARK1";
 	private static final String UPDATED_REMARK = "REMARK2";
 	private static final String DEFAULT_DESCRIPTION = "DESCRIPTION1";
@@ -110,6 +114,8 @@ public class RoleResourceIntTest {
 		List<Dept> allDept = deptService.findAll();
 		anotherRole.setName(DEFAULT_ANOTHER_NAME);
 		anotherRole.setCode(DEFAULT_ANOTHER_CODE);
+		anotherRole.setLockFlag(DEFAULT_LOCKFLAG);
+		anotherRole.setDataScope(DEFAULT_DATASCOPE);
 		anotherRole.setRemark(DEFAULT_REMARK);
 		anotherRole.setDescription(DEFAULT_DESCRIPTION);
 		anotherRole.setMenuIdList(CollUtil.extractToList(allMenu, Menu.F_ID));
@@ -198,6 +204,8 @@ public class RoleResourceIntTest {
 		managedRoleVM.setName(UPDATED_NAME);
 		managedRoleVM.setCode(UPDATED_CODE);
 		managedRoleVM.setRemark(UPDATED_REMARK);
+		managedRoleVM.setLockFlag(UPDATED_LOCKFLAG);
+		managedRoleVM.setDataScope(UPDATED_DATASCOPE);
 		managedRoleVM.setDescription(UPDATED_DESCRIPTION);
 		managedRoleVM.setMenuIdList(Lists.newArrayList(anotherRole.getMenuIdList().get(0)));
 		managedRoleVM.setDeptIdList(Lists.newArrayList(anotherRole.getDeptIdList().get(0)));

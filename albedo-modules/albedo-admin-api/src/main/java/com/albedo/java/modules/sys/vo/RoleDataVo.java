@@ -58,15 +58,6 @@ public class RoleDataVo extends DataEntityVo<String> {
 	private String remark;
 
 	/**
-	 * 角色部门Id
-	 */
-	private String roleDeptId;
-
-	/**
-	 * 部门名称
-	 */
-	private String deptName;
-	/**
 	 * 角色ID
 	 */
 	@NotNull

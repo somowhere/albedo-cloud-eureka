@@ -59,8 +59,9 @@ public class DeptServiceImpl  extends
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean saveDept(DeptDataVo deptDataVo) {
+		boolean add = StringUtil.isEmpty(deptDataVo.getId());
 		super.save(deptDataVo);
-		if(StringUtil.isEmpty(deptDataVo.getId())){
+		if(add){
 			deptRelationService.saveDeptRelation(deptDataVo);
 		}else{
 			//更新部门关系

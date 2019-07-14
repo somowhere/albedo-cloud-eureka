@@ -101,6 +101,8 @@ public class RoleServiceImpl extends
 
 		roleMenuService.saveBatch(roleMenuList);
 		if(CollUtil.isNotEmpty(roleDataVo.getDeptIdList())){
+			roleDeptService.remove(Wrappers.<RoleDept>query().lambda()
+				.eq(RoleDept::getRoleId, roleDataVo.getId()));
 			List<RoleDept> roleDeptList = roleDataVo.getDeptIdList().stream().map(deptId -> {
 				RoleDept roleDept = new RoleDept();
 				roleDept.setRoleId(roleDataVo.getId());

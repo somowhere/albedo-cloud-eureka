@@ -101,6 +101,8 @@ public class RoleResourceIntTest {
 		RoleDataVo role = new RoleDataVo();
 		role.setName(DEFAULT_NAME);
 		role.setCode(DEFAULT_CODE);
+		role.setLockFlag(DEFAULT_LOCKFLAG);
+		role.setDataScope(DEFAULT_DATASCOPE);
 		role.setRemark(DEFAULT_REMARK);
 		role.setDescription(DEFAULT_DESCRIPTION);
 		return role;

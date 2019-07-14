@@ -5,13 +5,9 @@ import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.sys.AlbedoAdminApplication;
-import com.albedo.java.modules.sys.domain.Menu;
-import com.albedo.java.modules.sys.domain.Role;
-import com.albedo.java.modules.sys.domain.RoleMenu;
+import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.resource.RoleResource;
-import com.albedo.java.modules.sys.service.MenuService;
-import com.albedo.java.modules.sys.service.RoleMenuService;
-import com.albedo.java.modules.sys.service.RoleService;
+import com.albedo.java.modules.sys.service.*;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
@@ -64,7 +60,11 @@ public class RoleResourceIntTest {
 	@Autowired
 	private MenuService menuService;
 	@Autowired
+	private DeptService deptService;
+	@Autowired
 	private RoleMenuService roleMenuService;
+	@Autowired
+	private RoleDeptService roleDeptService;
 
 	private MockMvc restRoleMockMvc;
 	@Autowired
@@ -106,14 +106,17 @@ public class RoleResourceIntTest {
 	public void initTest() {
 		role = createEntity();
 		// Initialize the database
-		List<Menu> all = menuService.findAll();
+		List<Menu> allMenu = menuService.findAll();
+		List<Dept> allDept = deptService.findAll();
 		anotherRole.setName(DEFAULT_ANOTHER_NAME);
 		anotherRole.setCode(DEFAULT_ANOTHER_CODE);
 		anotherRole.setRemark(DEFAULT_REMARK);
 		anotherRole.setDescription(DEFAULT_DESCRIPTION);
-		anotherRole.setMenuIdList(CollUtil.extractToList(all, Menu.F_ID));
+		anotherRole.setMenuIdList(CollUtil.extractToList(allMenu, Menu.F_ID));
+		anotherRole.setDeptIdList(CollUtil.extractToList(allDept, Menu.F_ID));
 		roleService.save(anotherRole);
 		role.setMenuIdList(anotherRole.getMenuIdList());
+		role.setDeptIdList(anotherRole.getDeptIdList());
 	}
 
 	@Test
@@ -197,6 +200,7 @@ public class RoleResourceIntTest {
 		managedRoleVM.setRemark(UPDATED_REMARK);
 		managedRoleVM.setDescription(UPDATED_DESCRIPTION);
 		managedRoleVM.setMenuIdList(Lists.newArrayList(anotherRole.getMenuIdList().get(0)));
+		managedRoleVM.setDeptIdList(Lists.newArrayList(anotherRole.getDeptIdList().get(0)));
 		managedRoleVM.setId(updatedRole.getId());
 		restRoleMockMvc.perform(post(DEFAULT_API_URL)
 			.contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -208,10 +212,14 @@ public class RoleResourceIntTest {
 		List<Role> roleList = roleService.list();
 		assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
 		Role testRole = roleService.findOneById(updatedRole.getId());
-		List<RoleMenu> list = roleMenuService.list(Wrappers.<RoleMenu>query().lambda()
+		List<RoleMenu> listRoleMenu = roleMenuService.list(Wrappers.<RoleMenu>query().lambda()
 			.eq(RoleMenu::getRoleId, testRole.getId()));
-		assertThat(list.size()).isEqualTo(1);
-		assertThat(list.get(0).getMenuId()).isEqualTo(anotherRole.getMenuIdList().get(0));
+		assertThat(listRoleMenu.size()).isEqualTo(1);
+		assertThat(listRoleMenu.get(0).getMenuId()).isEqualTo(anotherRole.getMenuIdList().get(0));
+		List<RoleDept> listRoleDept = roleDeptService.list(Wrappers.<RoleDept>query().lambda()
+			.eq(RoleDept::getRoleId, testRole.getId()));
+		assertThat(listRoleDept.size()).isEqualTo(1);
+		assertThat(listRoleDept.get(0).getDeptId()).isEqualTo(anotherRole.getDeptIdList().get(0));
 		assertThat(testRole.getName()).isEqualTo(UPDATED_NAME);
 		assertThat(testRole.getCode()).isEqualTo(UPDATED_CODE);
 //		assertThat(testRole.getParentIds()).contains(UPDATED_PARENTID);

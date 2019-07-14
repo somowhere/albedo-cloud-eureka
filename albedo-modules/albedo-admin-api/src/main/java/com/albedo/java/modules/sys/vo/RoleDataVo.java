@@ -71,4 +71,8 @@ public class RoleDataVo extends DataEntityVo<String> {
 	 */
 	@NotNull
 	private List<String> menuIdList;
+	/**
+	 * 部门ID
+	 */
+	private List<String> deptIdList;
 }

@@ -19,6 +19,7 @@ package com.albedo.java.auth.endpoint;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.service.UserDetail;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.common.core.constant.SecurityConstants;
@@ -93,6 +94,7 @@ public class AlbedoTokenEndpoint {
 	 * @param tokens tokens
 	 * @param from  内部调用标志
 	 */
+	@Inner
 	@DeleteMapping("/{tokens}")
 	public R<Boolean> removeToken(@PathVariable("tokens") String tokens, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
@@ -110,6 +112,7 @@ public class AlbedoTokenEndpoint {
 	 * @param params 分页参数
 	 * @param from   标志
 	 */
+	@Inner
 	@PostMapping("/page")
 	public R getTokenPage(@RequestBody Map<String, Object> params, @RequestHeader(required = false) String from) {
 		if (StrUtil.isBlank(from)) {
@@ -122,13 +125,11 @@ public class AlbedoTokenEndpoint {
 			params.put(SIZE, 20);
 		}
 		//根据分页参数获取对应数据
-		List<String> pages = findKeysForPage(PROJECT_OAUTH_ACCESS + "*", MapUtil.getInt(params, CURRENT), MapUtil.getInt(params, SIZE));
+		List<String> tokenStrs = findKeysForPage(PROJECT_OAUTH_ACCESS + "*" , MapUtil.getStr(params, "username"), MapUtil.getInt(params, CURRENT), MapUtil.getInt(params, SIZE));
 
-		for (String page : pages) {
-			String accessToken = StrUtil.subAfter(page, PROJECT_OAUTH_ACCESS, true);
-			OAuth2AccessToken token = tokenStore.readAccessToken(accessToken);
+		for (String tokenStr : tokenStrs) {
+			OAuth2AccessToken token = tokenStore.readAccessToken(tokenStr);
 			Map<String, String> map = new HashMap<>(8);
-
 
 			map.put(OAuth2AccessToken.TOKEN_TYPE, token.getTokenType());
 			map.put(OAuth2AccessToken.ACCESS_TOKEN, token.getValue());
@@ -168,7 +169,7 @@ public class AlbedoTokenEndpoint {
 
 	}
 
-	private List<String> findKeysForPage(String patternKey, int pageNum, int pageSize) {
+	private List<String> findKeysForPage(String patternKey, String username, int pageNum, int pageSize) {
 		ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
 		RedisSerializer<String> redisSerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
 		Cursor cursor = (Cursor) redisTemplate.executeWithStickyConnection(redisConnection -> new ConvertingCursor<>(redisConnection.scan(options), redisSerializer::deserialize));
@@ -179,8 +180,17 @@ public class AlbedoTokenEndpoint {
 
 		assert cursor != null;
 		while (cursor.hasNext()) {
-			if (tmpIndex >= startIndex && tmpIndex < end) {
-				result.add(cursor.next().toString());
+			String token = cursor.next().toString(),targetName="";
+			String realToken = StrUtil.subAfter(token, PROJECT_OAUTH_ACCESS, true);
+			OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(realToken);
+			OAuth2Authentication oAuth2Auth = tokenStore.readAuthentication(oAuth2AccessToken);
+			Authentication authentication = oAuth2Auth.getUserAuthentication();
+			if (authentication.getPrincipal() instanceof UserDetail) {
+				UserDetail user = (UserDetail) authentication.getPrincipal();
+				targetName = user.getUsername();
+			}
+			if (tmpIndex >= startIndex && tmpIndex < end && (StringUtil.isEmpty(username) || targetName.indexOf(username)!=-1)) {
+				result.add(realToken);
 				tmpIndex++;
 				continue;
 			}

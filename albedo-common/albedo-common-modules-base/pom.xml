@@ -94,6 +94,7 @@
 			<artifactId>metrics-spring</artifactId>
 			<version>${metrics-spring.version}</version>
 		</dependency>
+
 	</dependencies>
 
 </project>

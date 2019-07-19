@@ -20,6 +20,7 @@ package com.albedo.java.modules.sys;
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;
 import com.albedo.java.common.security.annotation.EnablePigResourceServer;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -40,7 +41,6 @@ import java.net.InetAddress;
 public class AlbedoAdminApplication {
 	static String SERVER_PORT = "server.port";
 	static String SPRING_APPLICATION_NAME = "spring.application.name";
-
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication app = new SpringApplication(AlbedoAdminApplication.class);

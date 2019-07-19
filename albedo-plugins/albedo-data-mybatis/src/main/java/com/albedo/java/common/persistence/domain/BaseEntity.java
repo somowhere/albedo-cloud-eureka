@@ -3,7 +3,6 @@
  */
 package com.albedo.java.common.persistence.domain;
 
-import com.albedo.java.common.core.annotation.DictType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author lj
  * @version 2014-05-16
  */
-public abstract class BaseEntity<T extends GeneralEntity> extends GeneralEntity<T> {
+public abstract class BaseEntity<T extends GeneralEntity<T>> extends GeneralEntity<T> {
 
     private static final long serialVersionUID = 1L;
     @TableField(value = GeneralEntity.F_SQL_DELFLAG)

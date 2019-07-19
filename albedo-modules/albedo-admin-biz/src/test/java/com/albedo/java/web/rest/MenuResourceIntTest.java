@@ -198,7 +198,7 @@ public class MenuResourceIntTest {
         menuService.save(menu);
         // Get all the menus
         restMenuMockMvc.perform(get(DEFAULT_API_URL)
-			.param(PageModel.F_DESC, Menu.F_SQL_CREATEDDATE)
+			.param(PageModel.F_DESC, "menu."+Menu.F_SQL_CREATEDDATE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

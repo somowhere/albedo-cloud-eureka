@@ -29,22 +29,22 @@
 	<properties>
 		<project.release.version>2.2.1</project.release.version>
 		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
 		<spring-platform.version>Cairo-SR8</spring-platform.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<spring-boot-admin.version>2.1.5</spring-boot-admin.version>
-		<hutool.version>4.5.13</hutool.version>
-		<mybatis-plus.version>3.1.0</mybatis-plus.version>
+		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
+		<hutool.version>4.5.16</hutool.version>
+		<mybatis-plus.version>3.1.2</mybatis-plus.version>
 		<kaptcha.version>0.0.9</kaptcha.version>
 		<velocity.version>1.7</velocity.version>
 		<jasypt.version>2.1.0</jasypt.version>
 		<security.oauth.version>2.3.6.RELEASE</security.oauth.version>
-		<jackson.modules>2.9.8</jackson.modules>
+		<jackson.version>2.9.9</jackson.version>
 		<h2.version>1.4.199</h2.version>
 		<!--zipkin2.12.x需要此版本jooq-->
-		<jooq.version>3.11.9</jooq.version>
+		<jooq.version>3.11.11</jooq.version>
 		<zipkin.version>2.12.2</zipkin.version>
 		<springfox.version>2.9.2</springfox.version>
 		<zipkin-storage-mysql.version>2.8.4</zipkin-storage-mysql.version>
@@ -149,10 +149,19 @@
 				<version>${security.oauth.version}</version>
 			</dependency>
 			<!--jackson模块-->
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--jackson模块-->
 			<dependency>
 				<groupId>com.fasterxml.jackson.module</groupId>
 				<artifactId>jackson-modules-java8</artifactId>
-				<version>${jackson.modules}</version>
+				<version>${jackson.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

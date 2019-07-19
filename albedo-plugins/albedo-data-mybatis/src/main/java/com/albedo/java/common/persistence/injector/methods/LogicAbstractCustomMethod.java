@@ -1,13 +1,13 @@
 package com.albedo.java.common.persistence.injector.methods;
 
+import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.sql.SqlScriptUtils;
-import com.baomidou.mybatisplus.extension.injector.AbstractLogicMethod;
 
 import java.util.stream.Collectors;
 
-public abstract class LogicAbstractCustomMethod extends AbstractLogicMethod {
+public abstract class LogicAbstractCustomMethod extends AbstractMethod {
 
     public String getAllSqlWhere(TableInfo table, boolean ignoreLogicDelFiled, boolean withId, String prefix, String columnPrefix) {
         String newPrefix = prefix == null ? "" : prefix;

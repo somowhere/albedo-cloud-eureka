@@ -93,21 +93,7 @@
       <accept-context-path-in-get-real-path>false</accept-context-path-in-get-real-path>
     </web-server>
     <listen-address>172.24.52.23</listen-address>
-    <network-access-point>
-      <name>Channel-0</name>
-      <protocol>admin</protocol>
-      <listen-address>172.24.52.23</listen-address>
-      <listen-port>7011</listen-port>
-      <http-enabled-for-this-protocol>true</http-enabled-for-this-protocol>
-      <tunneling-enabled>false</tunneling-enabled>
-      <outbound-enabled>false</outbound-enabled>
-      <enabled>true</enabled>
-      <two-way-ssl-enabled>false</two-way-ssl-enabled>
-      <channel-identity-customized>false</channel-identity-customized>
-      <custom-private-key-alias xsi:nil="true"></custom-private-key-alias>
-      <custom-private-key-pass-phrase-encrypted xsi:nil="true"></custom-private-key-pass-phrase-encrypted>
-      <client-certificate-enforced>false</client-certificate-enforced>
-    </network-access-point>
+    <administration-port>9001</administration-port>
     <java-compiler>javac</java-compiler>
     <tunneling-enabled>true</tunneling-enabled>
     <tunneling-client-ping-secs>45</tunneling-client-ping-secs>
@@ -128,7 +114,7 @@
       <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
     </server-diagnostic-config>
     <data-source>
-      <rmi-jdbc-security xsi:nil="true"></rmi-jdbc-security>
+      <rmi-jdbc-security>Compatibility</rmi-jdbc-security>
     </data-source>
   </server>
   <server>
@@ -193,6 +179,7 @@
       <custom-private-key-pass-phrase-encrypted xsi:nil="true"></custom-private-key-pass-phrase-encrypted>
       <client-certificate-enforced>false</client-certificate-enforced>
     </network-access-point>
+    <administration-port>9003</administration-port>
     <java-compiler>javac</java-compiler>
     <tunneling-enabled>true</tunneling-enabled>
     <tunneling-client-ping-secs>45</tunneling-client-ping-secs>
@@ -225,7 +212,7 @@
       <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
     </server-diagnostic-config>
     <data-source>
-      <rmi-jdbc-security xsi:nil="true"></rmi-jdbc-security>
+      <rmi-jdbc-security>Compatibility</rmi-jdbc-security>
     </data-source>
   </server>
   <server>
@@ -289,6 +276,7 @@
       <custom-private-key-pass-phrase-encrypted xsi:nil="true"></custom-private-key-pass-phrase-encrypted>
       <client-certificate-enforced>false</client-certificate-enforced>
     </network-access-point>
+    <administration-port>9003</administration-port>
     <java-compiler>javac</java-compiler>
     <tunneling-enabled>true</tunneling-enabled>
     <tunneling-client-ping-secs>45</tunneling-client-ping-secs>
@@ -314,7 +302,7 @@
       <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
     </server-diagnostic-config>
     <data-source>
-      <rmi-jdbc-security xsi:nil="true"></rmi-jdbc-security>
+      <rmi-jdbc-security>Compatibility</rmi-jdbc-security>
     </data-source>
   </server>
   <server>
@@ -363,6 +351,7 @@
       <custom-private-key-pass-phrase-encrypted xsi:nil="true"></custom-private-key-pass-phrase-encrypted>
       <client-certificate-enforced>false</client-certificate-enforced>
     </network-access-point>
+    <administration-port>9004</administration-port>
     <java-compiler>javac</java-compiler>
     <tunneling-enabled>true</tunneling-enabled>
     <tunneling-client-ping-secs>45</tunneling-client-ping-secs>
@@ -394,7 +383,7 @@
       <wldf-diagnostic-volume>Low</wldf-diagnostic-volume>
     </server-diagnostic-config>
     <data-source>
-      <rmi-jdbc-security xsi:nil="true"></rmi-jdbc-security>
+      <rmi-jdbc-security>Compatibility</rmi-jdbc-security>
     </data-source>
   </server>
   <server>
@@ -598,7 +587,8 @@
     <timeout>0</timeout>
     <anonymous-bind-allowed>false</anonymous-bind-allowed>
   </embedded-ldap>
-  <administration-port-enabled>false</administration-port-enabled>
+  <administration-port-enabled>true</administration-port-enabled>
+  <administration-port>9002</administration-port>
   <exalogic-optimizations-enabled>false</exalogic-optimizations-enabled>
   <config-backup-enabled>false</config-backup-enabled>
   <configuration-version>10.3.6.0</configuration-version>
@@ -617,6 +607,22 @@
     <target>C2cluster</target>
     <module-type>war</module-type>
     <source-path>/export/home/wlsmgr/EnvSetup/R1720/ersserver-war</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>ers-war#1.7.2.1</name>
+    <target>C2cluster</target>
+    <module-type>war</module-type>
+    <source-path>/export/home/wlsmgr/EnvSetup/R1721/ers-war</source-path>
+    <security-dd-model>DDOnly</security-dd-model>
+    <cache-in-app-directory>false</cache-in-app-directory>
+  </app-deployment>
+  <app-deployment>
+    <name>ersserver-war#1.7.2.1</name>
+    <target>C2cluster</target>
+    <module-type>war</module-type>
+    <source-path>/export/home/wlsmgr/EnvSetup/R1721/ersserver-war</source-path>
     <security-dd-model>DDOnly</security-dd-model>
     <cache-in-app-directory>false</cache-in-app-directory>
   </app-deployment>
@@ -792,7 +798,7 @@
     <descriptor-file-name>jms/systemmodule-aq-jms.xml</descriptor-file-name>
   </jms-system-resource>
   <admin-server-name>AdminServer</admin-server-name>
-  <administration-protocol>t3s</administration-protocol>
+  <administration-protocol>t3</administration-protocol>
   <jdbc-system-resource>
     <name>JDBC GridLink Data Source-C2</name>
     <target>C2cluster</target>

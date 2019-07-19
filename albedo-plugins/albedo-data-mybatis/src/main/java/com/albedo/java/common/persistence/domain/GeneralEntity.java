@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 @Data
-public abstract class GeneralEntity<T extends Model> extends Model<T> implements Serializable {
+public abstract class GeneralEntity<T extends Model<T>> extends Model<T> implements Serializable {
 
 	/*** 状态 正常 */
 	public static final String FLAG_NORMAL = "0";

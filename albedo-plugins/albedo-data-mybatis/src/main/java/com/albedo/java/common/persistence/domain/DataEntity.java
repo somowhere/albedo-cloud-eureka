@@ -3,13 +3,6 @@ package com.albedo.java.common.persistence.domain;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.Version;
-import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -21,7 +14,7 @@ import java.time.LocalDateTime;
  * last modified by date.
  */
 @Data
-public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
+public abstract class DataEntity<T extends BaseEntity<T>> extends BaseEntity<T> {
 
     private static final long serialVersionUID = 1L;
     @TableField(value = GeneralEntity.F_SQL_CREATEDBY,
@@ -45,7 +38,6 @@ public abstract class DataEntity<T extends BaseEntity> extends BaseEntity<T> {
     @Version
     @XmlTransient
     @TableField(GeneralEntity.F_SQL_VERSION)
-	@JsonIgnore
     protected Integer version = 0;
 
     /*** 备注 */

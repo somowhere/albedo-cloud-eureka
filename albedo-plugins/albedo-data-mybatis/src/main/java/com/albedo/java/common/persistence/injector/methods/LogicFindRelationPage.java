@@ -13,6 +13,6 @@ public class LogicFindRelationPage extends LogicAbstractCustomMethod {
         String sql = SqlInjectorUtil.parseSql(configuration, builderAssistant, SqlCustomMethod.FIND_RELATION_PAGE, modelClass, tableInfo,
             sqlWhereEntityWrapper(tableInfo, tableNameAlias));
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sql, modelClass);
-        return this.addSelectMappedStatement(mapperClass, SqlCustomMethod.FIND_RELATION_PAGE.getMethod(), sqlSource, modelClass, tableInfo);
+        return this.addSelectMappedStatementForTable(mapperClass, SqlCustomMethod.FIND_RELATION_PAGE.getMethod(), sqlSource, tableInfo);
     }
 }

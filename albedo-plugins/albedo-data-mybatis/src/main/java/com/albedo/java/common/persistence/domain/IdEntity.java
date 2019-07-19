@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author somewhere
  */
-public class IdEntity<T extends BaseEntity> extends DataEntity<T> {
+public class IdEntity<T extends BaseEntity<T>> extends DataEntity<T> {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = GeneralEntity.F_SQL_ID, type = IdType.UUID)

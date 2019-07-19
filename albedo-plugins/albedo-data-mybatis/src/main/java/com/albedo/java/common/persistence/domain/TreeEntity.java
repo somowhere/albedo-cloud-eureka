@@ -5,6 +5,7 @@ import com.albedo.java.common.persistence.annotation.ManyToOne;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,8 @@ import javax.validation.constraints.NotNull;
  * @author somewhere version 2013-12-27 下午12:27:10
  */
 @Data
-public class TreeEntity<T extends TreeEntity> extends IdEntity<T> {
+@EqualsAndHashCode(callSuper = true)
+public class TreeEntity<T extends TreeEntity<T>> extends IdEntity<T> {
 
     public static final String ROOT = "-1";
     public static final String F_NAME = "name";

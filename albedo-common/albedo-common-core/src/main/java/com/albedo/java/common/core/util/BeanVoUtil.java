@@ -45,10 +45,6 @@ public class BeanVoUtil extends BeanUtils {
             PropertyDescriptor targetPd = var7[var9];
             Method writeMethod = targetPd.getWriteMethod();
             if (writeMethod != null && (ignoreList == null || !ignoreList.contains(targetPd.getName()))) {
-            	BeanField annotation = ClassUtil.findAnnotation(source.getClass(),targetPd.getName(),  BeanField.class);
-                if(annotation!=null && annotation.ingore()){
-                    continue;
-                }
                 BeanField writeAnnotation = ClassUtil.findAnnotation(target.getClass(),targetPd.getName(), BeanField.class);
                 if(writeAnnotation!=null && writeAnnotation.ingore()){
                     continue;
@@ -60,7 +56,8 @@ public class BeanVoUtil extends BeanUtils {
                     PropertyDescriptor sourcePd = getPropertyDescriptor(source.getClass(), targetPd.getName());
                     if (sourcePd != null) {
                         Method readMethod = sourcePd.getReadMethod();
-                        if (readMethod != null && ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())) {
+                        if (readMethod != null ) {
+                        	//&& ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())
                             if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) {
                                 readMethod.setAccessible(true);
                             }

@@ -16,8 +16,11 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.domain.RoleDept;
 import com.albedo.java.modules.sys.domain.UserRole;
+import com.albedo.java.modules.sys.service.RoleDeptService;
 import com.albedo.java.modules.sys.service.RoleMenuService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.albedo.java.modules.sys.domain.Role;
@@ -49,6 +52,7 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl extends
 	DataVoServiceImpl<RoleRepository, Role, String, RoleDataVo> implements RoleService {
 	private RoleMenuService roleMenuService;
+	private RoleDeptService roleDeptService;
 	private final CacheManager cacheManager;
 
 	/**
@@ -95,8 +99,19 @@ public class RoleServiceImpl extends
 				return roleMenu;
 			}).collect(Collectors.toList());
 
+		roleMenuService.saveBatch(roleMenuList);
+		if(CollUtil.isNotEmpty(roleDataVo.getDeptIdList())){
+			roleDeptService.remove(Wrappers.<RoleDept>query().lambda()
+				.eq(RoleDept::getRoleId, roleDataVo.getId()));
+			List<RoleDept> roleDeptList = roleDataVo.getDeptIdList().stream().map(deptId -> {
+				RoleDept roleDept = new RoleDept();
+				roleDept.setRoleId(roleDataVo.getId());
+				roleDept.setDeptId(deptId);
+				return roleDept;
+			}).collect(Collectors.toList());
+			roleDeptService.saveBatch(roleDeptList);
+		}
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();
-		roleMenuService.saveBatch(roleMenuList);
 	}
 }

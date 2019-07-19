@@ -20,6 +20,7 @@ import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.vo.*;
@@ -31,7 +32,6 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -91,7 +91,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree() {
-		return R.createSuccessData(TreeUtil.buildTree(service.list(Wrappers.emptyWrapper()), Menu.ROOT));
+		return R.createSuccessData(service.listMenuTrees());
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public R save(@Valid @RequestBody MenuDataVo menuDataVo) {
 
 		// permission before comparing with database
-		if (!checkByProperty(ClassUtil.createObj(MenuDataVo.class,
+		if (StringUtil.isNotEmpty(menuDataVo.getPermission()) && !checkByProperty(ClassUtil.createObj(MenuDataVo.class,
 			Lists.newArrayList(MenuDataVo.F_ID, MenuDataVo.F_PERMISSION),
 			menuDataVo.getId(), menuDataVo.getPermission()))) {
 			throw new RuntimeMsgException("权限已存在");
@@ -152,7 +152,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return new R<>(service.findPage(pm));
+		return new R<>(service.findRelationPage(pm));
 	}
 
 

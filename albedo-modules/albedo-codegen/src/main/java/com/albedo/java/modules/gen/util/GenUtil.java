@@ -106,7 +106,7 @@ public class GenUtil {
                 column.setQueryType("like");
             }
             if (StringUtil.startWithIgnoreCase(column.getName(), "is_") || StringUtil.startWithIgnoreCase(column.getName(), "has_")) {
-                column.setDictType("sys_yes_no");
+                column.setDictType("sys_flag");
                 column.setShowType("radio");
             }
             // 用户
@@ -159,7 +159,7 @@ public class GenUtil {
             // 删除标记
             else if (StringUtil.equalsIgnoreCase(column.getJavaField(), DataEntity.F_DELFLAG)) {
                 column.setShowType("radio");
-                column.setDictType("sys_yes_no");
+                column.setDictType("sys_flag");
             }
 
             if(StringUtil.isEmpty(column.getShowType())){

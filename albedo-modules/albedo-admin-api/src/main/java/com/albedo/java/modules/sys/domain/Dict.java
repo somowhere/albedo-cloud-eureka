@@ -63,7 +63,7 @@ public class Dict extends TreeEntity<Dict> {
 	private String code;
 	@NotNull
 	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
-	@DictType("sys_yes_no")
+	@DictType("sys_flag")
 	private Integer show = 1;
 	/**
 	 * 备注信息

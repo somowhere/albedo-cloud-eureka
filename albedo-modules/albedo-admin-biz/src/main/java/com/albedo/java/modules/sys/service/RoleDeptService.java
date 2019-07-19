@@ -16,47 +16,19 @@
 
 package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.common.persistence.service.TreeVoService;
-import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.albedo.java.modules.sys.domain.Dept;
-import com.albedo.java.modules.sys.repository.DeptRepository;
-import com.albedo.java.common.core.vo.TreeNode;
 
-import java.util.List;
+import com.albedo.java.modules.sys.domain.RoleDept;
+import com.albedo.java.modules.sys.domain.RoleMenu;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 部门管理 服务类
+ * 角色菜单表 服务类
  * </p>
  *
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
-
-
-	/**
-	 * 查询用户部门树
-	 *
-	 * @return
-	 */
-	List<TreeNode> listCurrentUserDeptTrees(String deptId) ;
-
-	/**
-	 * 添加信息部门
-	 *
-	 * @param deptDataVo
-	 * @return
-	 */
-	Boolean saveDept(DeptDataVo deptDataVo);
-
-	/**
-	 * 删除部门
-	 *
-	 * @param ids 部门 ID
-	 * @return 成功、失败
-	 */
-	Boolean removeDeptByIds(List<String> ids);
-
+public interface RoleDeptService extends IService<RoleDept> {
 
 }

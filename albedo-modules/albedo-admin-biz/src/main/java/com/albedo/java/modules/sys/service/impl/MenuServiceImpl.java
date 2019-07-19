@@ -19,17 +19,18 @@ package com.albedo.java.modules.sys.service.impl;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-import com.albedo.java.modules.sys.vo.MenuDataVo;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.domain.RoleMenu;
 import com.albedo.java.modules.sys.repository.MenuRepository;
 import com.albedo.java.modules.sys.repository.RoleMenuRepository;
+import com.albedo.java.modules.sys.service.MenuService;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.vo.MenuDataVo;
+import com.albedo.java.modules.sys.vo.MenuTree;
 import com.albedo.java.modules.sys.vo.MenuVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.albedo.java.modules.sys.service.MenuService;
-import com.albedo.java.common.core.util.R;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -162,5 +164,26 @@ public class MenuServiceImpl extends
 		moduleDelete.setPath(url);
 		save(moduleDelete);
 		return true;
+	}
+
+	@Override
+	public List<MenuTree> listMenuTrees() {
+		List<MenuTree> trees = new ArrayList<>();
+		MenuTree node;
+		List<Menu> menus = baseMapper.selectList(Wrappers.emptyWrapper());
+		for (Menu menu : menus) {
+			node = new MenuTree();
+			node.setId(menu.getId());
+			node.setParentId(menu.getParentId());
+			node.setName(menu.getName());
+			node.setPath(menu.getPath());
+			node.setCode(menu.getPermission());
+			node.setLabel(menu.getName());
+			node.setComponent(menu.getComponent());
+			node.setIcon(menu.getIcon());
+			node.setKeepAlive(menu.getKeepAlive());
+			trees.add(node);
+		}
+		return TreeUtil.buildByLoop(trees, Menu.ROOT);
 	}
 }

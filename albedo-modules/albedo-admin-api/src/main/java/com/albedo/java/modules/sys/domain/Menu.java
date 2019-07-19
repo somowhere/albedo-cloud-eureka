@@ -63,17 +63,19 @@ public class Menu extends TreeEntity<Menu> {
 	 * 菜单类型 （0菜单 1按钮）
 	 */
 	@NotNull(message = "菜单类型不能为空")
+	@DictType("sys_menu_type")
 	private String type;
 	/**
 	 * 路由缓冲
 	 */
+	@DictType("sys_flag")
 	private String keepAlive;
 	/**
 	 * 是否显示1 是0否
 	 */
 	@NotNull
 	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
-	@DictType("sys_yes_no")
+	@DictType("sys_flag")
 	private Integer show = 1;
 
 	/**

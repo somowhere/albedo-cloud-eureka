@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.common.core.vo;
 
 
-import com.albedo.java.modules.sys.domain.Menu;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -89,31 +88,5 @@ public class TreeUtil {
 			}
 		}
 		return treeNode;
-	}
-
-	/**
-	 * 通过sysMenu创建树形节点
-	 *
-	 * @param menus
-	 * @param root
-	 * @return
-	 */
-	public List<MenuTree> buildTree(List<Menu> menus, String root) {
-		List<MenuTree> trees = new ArrayList<>();
-		MenuTree node;
-		for (Menu menu : menus) {
-			node = new MenuTree();
-			node.setId(menu.getId());
-			node.setParentId(menu.getParentId());
-			node.setName(menu.getName());
-			node.setPath(menu.getPath());
-			node.setCode(menu.getPermission());
-			node.setLabel(menu.getName());
-			node.setComponent(menu.getComponent());
-			node.setIcon(menu.getIcon());
-			node.setKeepAlive(menu.getKeepAlive());
-			trees.add(node);
-		}
-		return TreeUtil.buildByLoop(trees, root);
 	}
 }

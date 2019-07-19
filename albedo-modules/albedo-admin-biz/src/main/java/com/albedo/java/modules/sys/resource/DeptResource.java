@@ -17,6 +17,7 @@ package com.albedo.java.modules.sys.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dept;
@@ -63,8 +64,8 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R listDeptTrees() {
-		return new R<>(service.listDeptTrees());
+	public R listDeptTrees(TreeQuery treeQuery) {
+		return R.createSuccessData(service.listTrees(treeQuery));
 	}
 
 	/**

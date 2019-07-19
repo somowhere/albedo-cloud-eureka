@@ -87,7 +87,9 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
                 super.updateById(parent);
                 entity.setParentIds(StringUtil.toAppendStr(parent.getParentIds(), parent.getId(), StringUtil.SPLIT_DEFAULT));
             }
-        }
+        }else{
+        	entity.setParentId(TreeEntity.ROOT);
+		}
 
         if (ObjectUtil.isNotEmpty(entity.getId())) {
             Integer count = countByParentId(entity.getId());
@@ -97,16 +99,18 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
         }
 //        checkSave(domain);
         boolean flag = super.saveOrUpdate(entity);
-        // 更新子节点 parentIds
-        List<T> list = findAllByParentIdsLike(entity.getId());
-        for (T e : list) {
-            if (StringUtil.isNotEmpty(e.getParentIds())) {
-                e.setParentIds(e.getParentIds().replace(oldParentIds, entity.getParentIds()));
-            }
-        }
-        if(ObjectUtil.isNotEmpty(list)){
-            super.updateBatchById(list);
-        }
+        if(ObjectUtil.isNotEmpty(oldParentIds)){
+			// 更新子节点 parentIds
+			List<T> list = findAllByParentIdsLike(entity.getId());
+			for (T e : list) {
+				if (StringUtil.isNotEmpty(e.getParentIds())) {
+					e.setParentIds(e.getParentIds().replace(oldParentIds, entity.getParentIds()));
+				}
+			}
+			if(ObjectUtil.isNotEmpty(list)){
+				super.updateBatchById(list);
+			}
+		}
         log.debug("Save Information for T: {}", entity);
         return flag;
     }

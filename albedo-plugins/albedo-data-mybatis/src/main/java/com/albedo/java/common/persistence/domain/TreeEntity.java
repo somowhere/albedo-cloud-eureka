@@ -1,7 +1,10 @@
 package com.albedo.java.common.persistence.domain;
 
+import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.annotation.ManyToOne;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,6 +14,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author somewhere version 2013-12-27 下午12:27:10
  */
+@Data
 public class TreeEntity<T extends TreeEntity> extends IdEntity<T> {
 
     public static final String ROOT = "-1";
@@ -40,10 +44,11 @@ public class TreeEntity<T extends TreeEntity> extends IdEntity<T> {
     /*** 上级组织 */
     @TableField(exist = false)
     @ManyToOne(name = TreeEntity.F_SQL_PARENTID)
+	@JsonIgnore
     protected T parent;
     /*** 序号 */
     @TableField(TreeEntity.F_SQL_SORT)
-    protected Integer sort = 30;
+    protected Integer sort;
     /*** 父模块名称 */
     @TableField(exist = false)
     protected String parentName;
@@ -60,59 +65,11 @@ public class TreeEntity<T extends TreeEntity> extends IdEntity<T> {
         this.id = id;
         this.sort = 30;
     }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getParentIds() {
-        return parentIds;
-    }
-
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
-    }
-
-    public T getParent() {
-        return parent;
-    }
-
-    public void setParent(T parent) {
-        this.parent = parent;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-	public boolean isLeaf() {
-		return leaf;
+	public String getParentName() {
+		if (StringUtil.isEmpty(parentName) && parent != null) {
+			parentName = parent.getName();
+		}
+		return parentName;
 	}
 
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
-	}
 }

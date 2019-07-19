@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.feign.factory;
 
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.albedo.java.modules.sys.feign.RemoteDictService;
+import com.albedo.java.modules.sys.feign.fallback.RemoteDictServiceFallbackImpl;
+import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author somewhere
- * @date 2017年11月9日23:33:45
+ * @date 2019/2/1
  */
-@Data
-public class TreeNode {
-	protected String id;
-	protected String parentId;
-	protected List<TreeNode> children = new ArrayList<TreeNode>();
+@Component
+public class RemoteDictServiceFallbackFactory implements FallbackFactory<RemoteDictService> {
 
-	public void add(TreeNode node) {
-		children.add(node);
+	@Override
+	public RemoteDictService create(Throwable throwable) {
+		RemoteDictServiceFallbackImpl remoteDictServiceFallback = new RemoteDictServiceFallbackImpl();
+		remoteDictServiceFallback.setCause(throwable);
+		return remoteDictServiceFallback;
 	}
 }

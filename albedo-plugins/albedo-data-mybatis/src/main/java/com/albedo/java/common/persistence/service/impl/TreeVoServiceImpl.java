@@ -2,17 +2,23 @@ package com.albedo.java.common.persistence.service.impl;
 
 import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeEntityVo;
-import com.albedo.java.common.persistence.domain.BaseEntity;
+import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.common.core.vo.TreeQuery;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.common.persistence.service.TreeVoService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -136,5 +142,44 @@ public class TreeVoServiceImpl<Repository extends TreeRepository<T>,
         }
         return  Optional.empty();
     }
+
+	/**
+	 * 构建树
+	 *
+	 * @param trees
+	 * @return
+	 */
+	public List<TreeNode> getNodeTree(TreeQuery treeQuery, List<T> trees) {
+		String extId = treeQuery.getExtId();
+		Collections.sort(trees, Comparator.comparing((T t) -> t.getSort()).reversed());
+		List<TreeNode> treeList = trees.stream()
+			.filter(dict ->
+				(ObjectUtil.isEmpty(extId)|| ObjectUtil.isEmpty(dict.getParentIds()) ||
+					(ObjectUtil.isNotEmpty(extId) && !extId.equals(dict.getId()) && dict.getParentIds() != null
+						&& dict.getParentIds().indexOf("," + extId + ",") == -1))
+			)
+			.map(tree -> {
+				TreeNode node = new TreeNode();
+				node.setId(tree.getId());
+				node.setParentId(tree.getParentId());
+				node.setLabel(tree.getName());
+				return node;
+			}).collect(Collectors.toList());
+
+		return TreeUtil.buildByLoop(treeList, TreeEntity.ROOT);
+	}
+
+
+	/**
+	 * 查询全部部门树
+	 *
+	 * @return 树
+	 */
+	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<TreeNode> listTrees(TreeQuery treeQuery) {
+
+		return getNodeTree(treeQuery, this.list(Wrappers.emptyWrapper()));
+	}
 
 }

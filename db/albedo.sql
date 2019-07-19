@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50725
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : albedo
 
  Target Server Type    : MySQL
- Target Server Version : 50725
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/07/2019 16:24:56
+ Date: 14/07/2019 12:45:10
 */
 
 SET NAMES utf8mb4;
@@ -157,7 +157,7 @@ CREATE TABLE `sys_dept`  (
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_modified_date` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `version` int(11) NOT NULL,
-  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '描述',
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门管理' ROW_FORMAT = Dynamic;
@@ -169,8 +169,9 @@ INSERT INTO `sys_dept` VALUES ('1', '-1', NULL, '山东农信', NULL, b'0', '', 
 INSERT INTO `sys_dept` VALUES ('10', '8', NULL, '院校沙县', NULL, b'0', '', '2018-12-10 21:19:26', NULL, '2019-06-15 10:56:41', 0, '', '0');
 INSERT INTO `sys_dept` VALUES ('2', '-1', NULL, '沙县国际', NULL, b'0', '', '2018-01-22 19:00:38', NULL, '2019-07-04 16:57:22', 0, '', '0');
 INSERT INTO `sys_dept` VALUES ('3', '1', NULL, '潍坊农信', NULL, b'0', '', '2018-01-22 19:00:44', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_dept` VALUES ('4', '3', NULL, '高新农信', NULL, b'0', '', '2018-01-22 19:00:52', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_dept` VALUES ('5', '4', NULL, '院校农信', NULL, b'0', '', '2018-01-22 19:00:57', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_dept` VALUES ('4', '3', NULL, '高新农信', 30, b'0', '', '2018-01-22 19:00:52', '1', '2019-07-14 09:02:57', 6, '', '0');
+INSERT INTO `sys_dept` VALUES ('5', '4', NULL, '院校农信', 30, b'0', '', '2018-01-22 19:00:57', '1', '2019-07-14 09:10:44', 1, '', '0');
+INSERT INTO `sys_dept` VALUES ('5f86e2a82b040b1f618aefc62f403024', '5', '5,', '11', 1, b'1', '1', '2019-07-14 09:10:45', '1', '2019-07-14 09:10:57', 0, NULL, '1');
 INSERT INTO `sys_dept` VALUES ('6', '5', NULL, '潍院农信', NULL, b'0', '', '2018-01-22 19:01:06', NULL, '2019-01-09 10:58:18', 0, '', '0');
 INSERT INTO `sys_dept` VALUES ('7', '2', NULL, '山东沙县', NULL, b'0', '', '2018-01-22 19:01:57', NULL, '2019-06-15 10:56:41', 0, '', '0');
 INSERT INTO `sys_dept` VALUES ('8', '7', NULL, '潍坊沙县', NULL, b'0', '', '2018-01-22 19:02:03', NULL, '2019-06-15 10:56:41', 0, '', '0');
@@ -191,7 +192,7 @@ CREATE TABLE `sys_dept_relation`  (
 -- ----------------------------
 -- Records of sys_dept_relation
 -- ----------------------------
-INSERT INTO `sys_dept_relation` VALUES ('1', '0');
+INSERT INTO `sys_dept_relation` VALUES ('1', '1');
 INSERT INTO `sys_dept_relation` VALUES ('1', '3');
 INSERT INTO `sys_dept_relation` VALUES ('1', '4');
 INSERT INTO `sys_dept_relation` VALUES ('1', '5');
@@ -243,11 +244,22 @@ CREATE TABLE `sys_dict`  (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', NULL, NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', NULL, '2019-07-04 22:45:10', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('2', '数据状态', '', 'sys_status', '1', '1', 0, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('3', '正常', '1', 'sys_status_normal', '2', NULL, 0, b'1', b'1', '', '1', '2018-07-09 06:15:40', NULL, '2019-07-04 22:45:07', 0, '', '0');
-INSERT INTO `sys_dict` VALUES ('4', '锁定', '0', 'sys_status_unable', '2', NULL, 0, b'0', b'1', NULL, '1', '2019-06-02 17:26:40', NULL, '2019-07-04 22:45:15', 0, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('5', '删除', '-1', 'sys_status_delete', '2', NULL, 0, b'1', b'1', NULL, '1', '2019-06-02 17:30:10', NULL, '2019-07-04 22:45:09', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('0da02abef85f0c0b4350eaeefb4ca78d', '仅本人数据', '4', 'sys_data_scope_4', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 40, b'1', b'1', NULL, '1', '2019-07-14 06:00:03', '1', '2019-07-14 06:01:55', 1, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('0fdd548394368b4969136f32c435fd98', '按钮', '1', 'sys_menu_type_1', 'e26ee931e276a099fb876541ca18756f', '1,cfd5f62f601817a3b0f38f5ccb1f5128,e26ee931e276a099fb876541ca18756f,', 20, b'1', b'1', NULL, '1', '2019-07-14 06:04:44', '1', '2019-07-14 06:04:44', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('1', '数据字典', '', 'base', '-1', NULL, 1, b'1', b'0', '', '1', '2018-07-09 06:16:14', '1', '2019-07-14 05:06:23', 7, '', '0');
+INSERT INTO `sys_dict` VALUES ('2', '是否标识', 'sys_flag', 'sys_flag', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 10, b'1', b'0', NULL, '1', '2019-06-02 17:17:44', '1', '2019-07-14 06:01:55', 13, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('269ebbfff898cf1db0d243e3f7774d2c', '业务数据', 'biz', 'biz', '1', '1,', 30, b'1', b'1', NULL, '1', '2019-07-14 04:01:51', '1', '2019-07-14 05:06:23', 1, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('3', '是', '1', 'sys_flag_yes', '2', '1,cfd5f62f601817a3b0f38f5ccb1f5128,2,', 10, b'1', b'1', '', '1', '2018-07-09 06:15:40', '1', '2019-07-14 06:01:55', 2, '', '0');
+INSERT INTO `sys_dict` VALUES ('4', '否', '0', 'sys_flag_no', '2', '1,cfd5f62f601817a3b0f38f5ccb1f5128,2,', 30, b'1', b'1', NULL, '1', '2019-06-02 17:26:40', '1', '2019-07-14 06:01:55', 3, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('4198b5e10fe052546ebb689b4103590e', '所在机构数据', '3', 'sys_data_scope_3', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 30, b'1', b'1', NULL, '1', '2019-07-14 05:59:13', '1', '2019-07-14 06:01:55', 3, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('5933a853cd0199b00424d66f4b92dda3', '所在机构及以下数据', '2', 'sys_data_scope_2', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 20, b'1', b'1', NULL, '1', '2019-07-14 05:53:55', '1', '2019-07-14 06:01:55', 3, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('6e4bba74f32df9149d69f8e9bb19cd9d', '菜单', '0', 'sys_menu_type_0', 'e26ee931e276a099fb876541ca18756f', '1,cfd5f62f601817a3b0f38f5ccb1f5128,e26ee931e276a099fb876541ca18756f,', 10, b'1', b'1', NULL, '1', '2019-07-14 06:04:10', '1', '2019-07-14 06:04:10', 0, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('8c4589d0a32c9b84b6254507354a195b', 'test', 'test', 'test', '-1', NULL, 30, b'1', b'1', NULL, '1', '2019-07-14 03:59:38', '1', '2019-07-14 04:00:28', 0, NULL, '1');
+INSERT INTO `sys_dict` VALUES ('a5dfce34bdb7aa99560e8c0d393a632f', '全部', '1', 'sys_data_scope_1', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 10, b'1', b'1', NULL, '1', '2019-07-14 05:52:44', '1', '2019-07-14 06:01:55', 3, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('aa294a48211a2deb5c7d76c5e90dc28e', '数据范围', 'sys_data_scope', 'sys_data_scope', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 30, b'1', b'0', NULL, '1', '2019-07-14 05:50:08', '1', '2019-07-14 06:01:55', 12, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('c46ec99af2c1f967bf10cf2c0d96a6c5', '按明细设置', '5', 'sys_data_scope_5', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 50, b'1', b'1', NULL, '1', '2019-07-14 06:01:11', '1', '2019-07-14 06:01:55', 1, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('cfd5f62f601817a3b0f38f5ccb1f5128', '系统数据', 'sys', 'sys', '1', '1,', 30, b'1', b'0', NULL, '1', '2019-07-14 01:13:12', '1', '2019-07-14 06:01:55', 7, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('e26ee931e276a099fb876541ca18756f', '菜单类型', 'sys_menu_type', 'sys_menu_type', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 30, b'1', b'0', NULL, '1', '2019-07-14 06:01:48', '1', '2019-07-14 06:04:44', 3, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -397,6 +409,8 @@ CREATE TABLE `sys_role`  (
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置',
+  `lock_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '1' COMMENT '1-正常，0-锁定',
   `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -411,8 +425,8 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', NULL, 0, '0');
-INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', NULL, '1', '', '2017-10-29 15:45:51', NULL, '2019-06-15 10:51:36', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', NULL, '1', '', '2018-11-11 19:42:26', NULL, '2019-06-15 10:51:37', NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -527,9 +541,9 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-07 20:58:44', NULL, 1, '0');
-INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:32:17', '1', '2019-07-07 20:59:40', NULL, 3, '0');
-INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-07 22:19:27', NULL, 9, '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18', '1', '2019-07-13 01:13:20', NULL, 7, '0');
+INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '1', '1', '2019-07-07 14:32:17', '1', '2019-07-13 01:38:33', NULL, 19, '1');
+INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13', '1', '2019-07-14 03:22:16', NULL, 23, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -544,10 +558,8 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '0');
-INSERT INTO `sys_user_role` VALUES ('2', '2');
-INSERT INTO `sys_user_role` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', '0');
-INSERT INTO `sys_user_role` VALUES ('90da0206c39867a1b36ac36ced80c1a9', '0');
+INSERT INTO `sys_user_role` VALUES ('1', '1');
+INSERT INTO `sys_user_role` VALUES ('90da0206c39867a1b36ac36ced80c1a9', '1');
 
 -- ----------------------------
 -- Table structure for zipkin_annotations

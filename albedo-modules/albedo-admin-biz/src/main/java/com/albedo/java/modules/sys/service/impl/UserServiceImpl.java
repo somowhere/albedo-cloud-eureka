@@ -173,7 +173,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 */
 	@CacheEvict(value = "user_details", key = "#user.username")
 	public Boolean removeUserById(User user) {
-		userRoleService.removeRoleByUserId(user.getId());
+//		userRoleService.removeRoleByUserId(user.getId());
 		this.removeById(user.getId());
 		return Boolean.TRUE;
 	}

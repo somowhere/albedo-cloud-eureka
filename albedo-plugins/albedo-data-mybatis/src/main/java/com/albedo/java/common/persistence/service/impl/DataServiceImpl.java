@@ -40,39 +40,38 @@ public abstract class DataServiceImpl<Repository extends BaseRepository<T>, T ex
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<T> findPage(PageModel<T> pm) {
-        return findPageQuery(pm, null);
+        return findPageQuery(pm, null, false);
     }
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findBasicPage(PageModel<T> pm) {
-        return findPageQuery(pm, null);
+    public PageModel<T> findRelationPage(PageModel<T> pm) {
+        return findPageQuery(pm, null, true);
     }
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<T> findPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
-        return findPageQuery(pm, queryConditions);
+        return findPageQuery(pm, queryConditions, false);
     }
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findBasicPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
-        return findPageQuery(pm, queryConditions);
+    public PageModel<T> findRelationPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
+        return findPageQuery(pm, queryConditions, true);
     }
 
     @Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions) {
+    public PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions, boolean isRelation) {
         SpecificationDetail<T> specificationDetail = DynamicSpecifications.buildSpecification(
             getPersistentClass(),
             pm.getQueryConditionJson()
-//          ,QueryCondition.ne(BaseEntity.F_STATUS, BaseEntity.FLAG_DELETE)
         );
         if (CollUtil.isNotEmpty(authQueryConditions)) {
             specificationDetail.orAll(authQueryConditions);
         }
-        return findPage(pm, specificationDetail);
+        return isRelation ? findRelationPage(pm, specificationDetail) : findPage(pm, specificationDetail);
     }
 
 }

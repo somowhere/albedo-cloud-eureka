@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.common.core.vo;
 
-import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.common.persistence.service.TreeVoService;
-import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.domain.Dict;
-import com.albedo.java.modules.sys.repository.DictRepository;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * <p>
- * 字典表 服务类
- * </p>
- *
  * @author somewhere
- * @since 2019/2/1
+ * @date 2017年11月9日23:33:45
  */
-public interface DictService extends TreeVoService<DictRepository, Dict, DictDataVo> {
-	Map<String, List<SelectResult>> findCodeStr(String codes);
-	Map<String, List<SelectResult>> findCodes(String... codes);
+@Data
+public class TreeNode {
+	protected String id;
+	protected String parentId;
+	private String label;
+	protected List<TreeNode> children = new ArrayList<TreeNode>();
 
-	void refresh();
+	public void add(TreeNode node) {
+		children.add(node);
+	}
 }

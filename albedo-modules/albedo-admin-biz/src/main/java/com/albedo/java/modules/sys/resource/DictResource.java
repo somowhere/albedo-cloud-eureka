@@ -20,19 +20,21 @@ package com.albedo.java.modules.sys.resource;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.Json;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.SelectResult;
+import com.albedo.java.common.core.vo.TreeQuery;
+import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dict;
+import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.DictService;
-import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.log.annotation.SysLog;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +61,16 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	public DictResource(DictService service) {
 		super(service);
 	}
+
+	/**
+	 * 返回树形菜单集合
+	 *
+	 * @return 树形菜单
+	 */
+	@GetMapping(value = "/tree")
+	public R getTree(TreeQuery treeQuery) {
+		return R.createSuccessData(service.listTrees(treeQuery));
+	}
 	/**
 	 * @param id
 	 * @return
@@ -77,7 +89,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return new R<>(service.findPage(pm));
+		return new R<>(service.findRelationPage(pm));
 	}
 
 	/**
@@ -128,6 +140,20 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	public R removeByIds(@PathVariable String ids) {
 		return new R<>(service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
+	}
+
+
+
+	/**
+	 * 所有类型字典
+	 *
+	 * @return 所有类型字典
+	 */
+	@Inner
+	@GetMapping("/all")
+	public R<String> getAll() {
+		List<Dict> list = service.list(Wrappers.emptyWrapper());
+		return new R<>(Json.toJsonString(list));
 	}
 
 }

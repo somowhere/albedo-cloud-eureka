@@ -48,7 +48,7 @@ public class DictDataVo extends TreeEntityVo {
 	/**
 	 * 数据值
 	 */
-	@NotBlank(message = "字典项数据值不能为空")
+//	@NotBlank(message = "字典项数据值不能为空")
 	private String val;
 	/**
 	 * 类型
@@ -57,7 +57,7 @@ public class DictDataVo extends TreeEntityVo {
 	private String code;
 	@NotNull
 	@TableField(F_SQL_SHOW)
-	@DictType("sys_yes_no")
+	@DictType("sys_flag")
 	private Integer show = 1;
 	/**
 	 * 备注信息

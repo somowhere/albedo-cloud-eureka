@@ -52,6 +52,7 @@ public class UserDataVo extends DataEntityVo<String> {
 	 * 锁定标记
 	 */
 	@NotEmpty
+
 	private String lockFlag;
 
 	/**

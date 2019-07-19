@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.repository;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import com.albedo.java.modules.sys.domain.RoleDept;
+import com.albedo.java.modules.sys.domain.RoleMenu;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
+ * <p>
+ * 角色部门表 Mapper 接口
+ * </p>
+ *
  * @author somewhere
- * @date 2019/2/1
- * 部门树
+ * @since 2019/2/1
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class DeptTree extends TreeNode {
-	private String label;
+public interface RoleDeptRepository extends BaseMapper<RoleDept> {
+
 }

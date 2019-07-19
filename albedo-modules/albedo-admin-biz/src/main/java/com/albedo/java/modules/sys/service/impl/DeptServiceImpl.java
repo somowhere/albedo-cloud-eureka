@@ -18,19 +18,18 @@ package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.albedo.java.modules.sys.vo.DeptTree;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.domain.DeptRelation;
 import com.albedo.java.modules.sys.repository.DeptRepository;
 import com.albedo.java.modules.sys.service.DeptRelationService;
 import com.albedo.java.modules.sys.service.DeptService;
-import com.albedo.java.modules.sys.vo.TreeUtil;
+import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.common.core.vo.TreeUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,8 +59,9 @@ public class DeptServiceImpl  extends
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean saveDept(DeptDataVo deptDataVo) {
+		boolean add = StringUtil.isEmpty(deptDataVo.getId());
 		super.save(deptDataVo);
-		if(StringUtil.isEmpty(deptDataVo.getId())){
+		if(add){
 			deptRelationService.saveDeptRelation(deptDataVo);
 		}else{
 			//更新部门关系
@@ -103,28 +103,6 @@ public class DeptServiceImpl  extends
 		return Boolean.TRUE;
 	}
 
-	/**
-	 * 更新部门
-	 *
-	 * @param dept 部门信息
-	 * @return 成功、失败
-	 */
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateDept(Dept dept) {
-
-		return Boolean.TRUE;
-	}
-
-	/**
-	 * 查询全部部门树
-	 *
-	 * @return 树
-	 */
-	@Override
-	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<DeptTree> listDeptTrees() {
-		return getDeptTree(this.list(Wrappers.emptyWrapper()));
-	}
 
 	/**
 	 * 查询用户部门树
@@ -133,33 +111,14 @@ public class DeptServiceImpl  extends
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<DeptTree> listCurrentUserDeptTrees(String deptId) {
+	public List<TreeNode> listCurrentUserDeptTrees(String deptId) {
 		List<String> descendantIdList = deptRelationService
 			.list(Wrappers.<DeptRelation>query().lambda()
 				.eq(DeptRelation::getAncestor, deptId))
 			.stream().map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
-
 		List<Dept> deptList = baseMapper.selectBatchIds(descendantIdList);
-		return getDeptTree(deptList);
+		return getNodeTree(new TreeQuery(), deptList);
 	}
 
-	/**
-	 * 构建部门树
-	 *
-	 * @param depts 部门
-	 * @return
-	 */
-	private List<DeptTree> getDeptTree(List<Dept> depts) {
-		List<DeptTree> treeList = depts.stream()
-			.filter(dept -> !dept.getId().equals(dept.getParentId()))
-			.map(dept -> {
-				DeptTree node = new DeptTree();
-				node.setId(dept.getId());
-				node.setParentId(dept.getParentId());
-				node.setLabel(dept.getName());
-				return node;
-			}).collect(Collectors.toList());
-		return TreeUtil.buildByLoop(treeList, Dept.ROOT);
-	}
 }

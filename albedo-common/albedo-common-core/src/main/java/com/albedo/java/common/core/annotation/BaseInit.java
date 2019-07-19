@@ -13,5 +13,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface BaseInit {
+
+	/**
+	 * 指定方法
+	 */
+	String method() default "init";
+
 }
 

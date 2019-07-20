@@ -32,6 +32,7 @@ import com.albedo.java.modules.sys.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,15 @@ public class RoleServiceImpl extends
 	private RoleMenuService roleMenuService;
 	private RoleDeptService roleDeptService;
 	private final CacheManager cacheManager;
+
+	@Override
+	public RoleDataVo findOneVo(String id) {
+		RoleDataVo oneVo = super.findOneVo(id);
+		oneVo.setMenuIdList(roleMenuService.list(Wrappers
+			.<RoleMenu>query().lambda()
+			.eq(RoleMenu::getRoleId, id)).stream().map(RoleMenu::getMenuId).collect(Collectors.toList()));
+		return oneVo;
+	}
 
 	/**
 	 * 通过用户ID，查询角色信息

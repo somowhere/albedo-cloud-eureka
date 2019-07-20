@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.domain;
 
+import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.persistence.domain.IdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -44,12 +45,14 @@ public class Role extends IdEntity<Role> {
 	 * 锁定标记
 	 */
 	@NotBlank(message = "锁定标记 不能为空")
+	@DictType("sys_flag")
 	private String lockFlag;
 
 	/**
 	 * 数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置
 	 */
 	@NotBlank(message = "数据权限 不能为空")
+	@DictType("sys_data_scope")
 	private String dataScope;
 
 

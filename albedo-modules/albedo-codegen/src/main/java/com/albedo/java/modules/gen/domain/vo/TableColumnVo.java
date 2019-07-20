@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenTableColumnVo extends DataEntityVo<String> implements Comparable {
+public class TableColumnVo extends DataEntityVo<String> implements Comparable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -36,7 +36,7 @@ public class GenTableColumnVo extends DataEntityVo<String> implements Comparable
      * 归属表
      */
     @JSONField(serialize = false)
-    private GenTableVo genTable;
+    private TableVo genTable;
     /**
      * 列名
      */
@@ -114,7 +114,7 @@ public class GenTableColumnVo extends DataEntityVo<String> implements Comparable
 
 
     private String nameAndTitle;
-    public GenTableColumnVo(String name, Integer isNull, Integer sort, String title, String jdbcType) {
+    public TableColumnVo(String name, Integer isNull, Integer sort, String title, String jdbcType) {
         this.name = name;
         this.isNull = isNull;
         this.sort = sort;
@@ -123,8 +123,8 @@ public class GenTableColumnVo extends DataEntityVo<String> implements Comparable
     }
     @Override
     public int compareTo(Object obj) {
-        if (obj instanceof GenTableColumnVo) {
-            GenTableColumnVo b = (GenTableColumnVo) obj;
+        if (obj instanceof TableColumnVo) {
+            TableColumnVo b = (TableColumnVo) obj;
             // 按id比较大小，用于默认排序
             return this.sort - b.sort;
         }

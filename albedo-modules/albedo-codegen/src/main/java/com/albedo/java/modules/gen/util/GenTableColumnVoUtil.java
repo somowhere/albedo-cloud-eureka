@@ -1,7 +1,7 @@
 package com.albedo.java.modules.gen.util;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.gen.domain.vo.GenTableColumnVo;
+import com.albedo.java.modules.gen.domain.vo.TableColumnVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ public class GenTableColumnVoUtil {
     private static Logger logger = LoggerFactory.getLogger(GenTableColumnVoUtil.class);
 
 
-    public static String getHibernateValidatorExpression(GenTableColumnVo c) {
+    public static String getHibernateValidatorExpression(TableColumnVo c) {
         if (!CommonConstants.YES.equals(c.getIsPk()) && !CommonConstants.YES.equals(c.getIsNull())) {
             if (c.getJavaType() != null && c.getJavaType().endsWith(CommonConstants.TYPE_STRING)) {
                 return (new StringBuilder()).append("@NotBlank ").append(getNotRequiredHibernateValidatorExpression(c)).toString();
@@ -28,7 +28,7 @@ public class GenTableColumnVoUtil {
         }
     }
 
-    public static String getNotRequiredHibernateValidatorExpression(GenTableColumnVo c) {
+    public static String getNotRequiredHibernateValidatorExpression(TableColumnVo c) {
         if (c == null) {
             return null;
         }

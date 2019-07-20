@@ -49,7 +49,7 @@ public class LogResource {
 	 * @param log 系统日志
 	 * @return
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R getLogPage(Page page, Log log) {
 		return new R<>(logService.page(page, Wrappers.query(log)));
 	}
@@ -73,7 +73,7 @@ public class LogResource {
 	 * @return success/false
 	 */
 	@Inner
-	@PostMapping
+	@PostMapping("/")
 	public R save(@Valid @RequestBody Log log) {
 		return new R<>(logService.save(log));
 	}

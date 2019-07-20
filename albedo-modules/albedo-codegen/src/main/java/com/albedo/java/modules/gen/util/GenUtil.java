@@ -6,8 +6,8 @@ import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.modules.gen.domain.vo.*;
-import com.albedo.java.modules.gen.domain.vo.GenTableColumnVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableVo;
+import com.albedo.java.modules.gen.domain.vo.TableColumnVo;
+import com.albedo.java.modules.gen.domain.vo.TableVo;
 import com.albedo.java.modules.gen.domain.xml.GenCategory;
 import com.albedo.java.modules.gen.domain.xml.GenConfig;
 import com.albedo.java.modules.sys.domain.Dept;
@@ -41,8 +41,8 @@ public class GenUtil {
      *
      * @param genTable
      */
-    public static void initColumnField(GenTableVo genTable) {
-        for (GenTableColumnVo column : genTable.getColumnList()) {
+    public static void initColumnField(TableVo genTable) {
+        for (TableColumnVo column : genTable.getColumnList()) {
 
             // 如果是不是新增列，则跳过。
             if (StringUtil.isNotBlank(column.getId())) {
@@ -238,8 +238,8 @@ public class GenUtil {
      * @param isChildTable 是否是子表
      * @return
      */
-    public static List<GenTemplateVo> getTemplateList(GenConfig config, String category, boolean isChildTable) {
-        List<GenTemplateVo> templateList = Lists.newArrayList();
+    public static List<TemplateVo> getTemplateList(GenConfig config, String category, boolean isChildTable) {
+        List<TemplateVo> templateList = Lists.newArrayList();
         if (config != null && config.getCategoryList() != null && category != null) {
             for (GenCategory e : config.getCategoryList()) {
                 if (category.equals(e.getVal())) {
@@ -254,7 +254,7 @@ public class GenUtil {
                             if (StringUtil.startWith(s, GenCategory.CATEGORY_REF)) {
                                 templateList.addAll(getTemplateList(config, StringUtil.replace(s, GenCategory.CATEGORY_REF, ""), false));
                             } else {
-                                GenTemplateVo template = fileToObject(s, GenTemplateVo.class);
+                                TemplateVo template = fileToObject(s, TemplateVo.class);
                                 if (template != null) {
                                     templateList.add(template);
                                 }
@@ -274,7 +274,7 @@ public class GenUtil {
      * @param genScheme
      * @return
      */
-    public static Map<String, Object> getDataModel(GenSchemeVo genScheme) {
+    public static Map<String, Object> getDataModel(SchemeVo genScheme) {
         Map<String, Object> model = Maps.newHashMap();
         String applicationId = SpringContextHolder.getApplicationContext().getId();
         if(StringUtil.isNotEmpty(applicationId)){
@@ -318,7 +318,7 @@ public class GenUtil {
      * @param isReplaceFile
      * @return
      */
-    public static String generateToFile(GenTemplateVo tpl, Map<String, Object> model, boolean isReplaceFile) {
+    public static String generateToFile(TemplateVo tpl, Map<String, Object> model, boolean isReplaceFile) {
         // 获取生成文件 "c:\\temp\\"//
         String realFileName = FreeMarkers.renderString(tpl.getFileName(), model),fileName = StringUtil.getProjectPath(realFileName, DictUtil.getCodeItemVal("sys_gen_code_ui_path")) + File.separator
                 + StringUtils.replaceEach(FreeMarkers.renderString(tpl.getFilePath() + "/", model), new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})
@@ -326,7 +326,7 @@ public class GenUtil {
 
         logger.debug(" fileName === " + fileName);
         if ("entityId".equals(tpl.getName())) {
-            GenTableVo table = (GenTableVo) model.get("table");
+            TableVo table = (TableVo) model.get("table");
             if (table.isNotCompositeId()) {
                 return "因不满足联合主键条件已忽略" + fileName + "<br/>";
             }

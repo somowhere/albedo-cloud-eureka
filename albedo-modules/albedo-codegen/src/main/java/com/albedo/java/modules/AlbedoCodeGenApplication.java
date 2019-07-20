@@ -36,13 +36,13 @@ import java.net.InetAddress;
 @EnablePigFeignClients
 @SpringCloudApplication
 @Slf4j
-public class AlbedoGenApplication {
+public class AlbedoCodeGenApplication {
 	static String SERVER_PORT = "server.port";
 	static String SPRING_APPLICATION_NAME = "spring.application.name";
 
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication app = new SpringApplication(AlbedoGenApplication.class);
+		SpringApplication app = new SpringApplication(AlbedoCodeGenApplication.class);
 		final ApplicationContext applicationContext = app.run(args);
 		Environment env = applicationContext.getEnvironment();
 

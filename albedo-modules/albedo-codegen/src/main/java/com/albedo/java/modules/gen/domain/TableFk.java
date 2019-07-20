@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenTableFk {
+public class TableFk {
 
     @TableField("name_")
     private String name; // 名称
@@ -23,8 +23,8 @@ public class GenTableFk {
     private String tableName; // 描述
     @TableField("table_fk")
     private String tableFk; // 外键列名
-    @TableField("genTable.id")
-    private GenTable genTable; // 归属表
+    @TableField("table.id")
+    private Table table; // 归属表
 
 
 }

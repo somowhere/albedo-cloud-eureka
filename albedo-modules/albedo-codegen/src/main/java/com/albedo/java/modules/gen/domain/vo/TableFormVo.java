@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @ToString
 @NoArgsConstructor
-public class GenTableFormVo  implements Serializable {
+public class TableFormVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /*** 编码 */

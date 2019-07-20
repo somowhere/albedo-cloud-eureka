@@ -6,11 +6,10 @@ import com.albedo.java.common.core.util.ResponseBuilder;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.gen.domain.GenTable;
-import com.albedo.java.modules.gen.domain.vo.GenTableVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableFormVo;
-import com.albedo.java.modules.gen.service.GenTableService;
-import com.alibaba.fastjson.JSON;
+import com.albedo.java.modules.gen.domain.Table;
+import com.albedo.java.modules.gen.domain.vo.TableVo;
+import com.albedo.java.modules.gen.domain.vo.TableFormVo;
+import com.albedo.java.modules.gen.service.TableService;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.MediaType;
@@ -27,22 +26,22 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "/gen/genTable")
-public class GenTableResource extends DataVoResource<GenTableService, GenTableVo> {
+@RequestMapping(value = "/gen/table")
+public class TableResource extends DataVoResource<TableService, TableVo> {
 
-    public GenTableResource(GenTableService service) {
+    public TableResource(TableService service) {
         super(service);
     }
 
     @GetMapping(value = "/tableList")
     @Timed
     public ResponseEntity tableList() {
-        return ResponseBuilder.buildOk(CollUtil.convertSelectDataList(service.findTableListFormDb(null), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
+        return ResponseBuilder.buildOk(CollUtil.convertSelectDataList(service.findTableListFormDb(null), Table.F_NAME, Table.F_NAMESANDTITLE));
     }
 
     @GetMapping(value = "/formData")
     @Timed
-    public ResponseEntity formData(GenTableFormVo genTableVo) {
+    public ResponseEntity formData(TableFormVo genTableVo) {
         Map<String, Object> map = service.findFormData(genTableVo);
         return ResponseBuilder.buildOk(map);
     }
@@ -54,25 +53,25 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
      */
     @GetMapping(value = "/")
     @Timed
-    public ResponseEntity getPage(PageModel<GenTable> pm) {
+    public ResponseEntity getPage(PageModel<Table> pm) {
         pm = service.findPage(pm);
         return ResponseBuilder.buildObject(pm);
     }
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity save(@Valid @RequestBody GenTableVo genTableVo) {
+    public ResponseEntity save(@Valid @RequestBody TableVo tableVo) {
         // 验证表是否已经存在
-        if (StringUtil.isBlank(genTableVo.getId()) && !service.checkTableName(genTableVo.getName())) {
-            return ResponseBuilder.buildFailed("保存失败！" + genTableVo.getName() + " 表已经存在！");
+        if (StringUtil.isBlank(tableVo.getId()) && !service.checkTableName(tableVo.getName())) {
+            return ResponseBuilder.buildFailed("保存失败！" + tableVo.getName() + " 表已经存在！");
         }
-        service.save(genTableVo);
-        return ResponseBuilder.buildOk(StringUtil.toAppendStr("保存", genTableVo.getName(), "成功"));
+        service.save(tableVo);
+        return ResponseBuilder.buildOk(StringUtil.toAppendStr("保存", tableVo.getName(), "成功"));
     }
 
     @DeleteMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity delete(@PathVariable String ids) {
-        log.debug("REST request to delete genTable: {}", ids);
+        log.debug("REST request to delete table: {}", ids);
 		service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return ResponseBuilder.buildOk("删除成功");
     }

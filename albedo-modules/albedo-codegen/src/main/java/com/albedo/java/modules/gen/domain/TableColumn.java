@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenTableColumn extends IdEntity<GenTableColumn> implements Comparable<GenTableColumn> {
+public class TableColumn extends IdEntity<TableColumn> implements Comparable<TableColumn> {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class GenTableColumn extends IdEntity<GenTableColumn> implements Comparab
     private String genTableId; // 列名
     @ManyToOne
     @TableField(exist = false)
-    private GenTable genTable; // 归属表
+    private Table table; // 归属表
     @Size(min = 1, max = 200)
     @TableField("name_")
     private String name; // 列名
@@ -78,12 +78,12 @@ public class GenTableColumn extends IdEntity<GenTableColumn> implements Comparab
     @TableField(exist = false)
     private String size;
 
-    public GenTableColumn(String id) {
+    public TableColumn(String id) {
         super();
         this.id = id;
     }
 
-    public GenTableColumn(String name, Integer isNull, Integer sort, String comments, String jdbcType) {
+    public TableColumn(String name, Integer isNull, Integer sort, String comments, String jdbcType) {
         this.name = name;
         this.isNull = isNull;
         this.sort = sort;
@@ -101,7 +101,7 @@ public class GenTableColumn extends IdEntity<GenTableColumn> implements Comparab
     }
 
     @Override
-    public int compareTo(GenTableColumn o) {
+    public int compareTo(TableColumn o) {
         return o.getSort()!=null ? this.sort!=null ? this.sort - o.getSort() : 0 : this.sort;
     }
 }

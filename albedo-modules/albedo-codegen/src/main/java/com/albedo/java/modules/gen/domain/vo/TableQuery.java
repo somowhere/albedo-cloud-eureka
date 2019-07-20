@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenTableQuery implements Serializable {
+public class TableQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

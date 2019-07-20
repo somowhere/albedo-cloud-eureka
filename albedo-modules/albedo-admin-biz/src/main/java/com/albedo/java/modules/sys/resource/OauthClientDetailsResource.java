@@ -68,16 +68,17 @@ public class OauthClientDetailsResource {
 	}
 
 	/**
-	 * 添加
+	 * 保存
 	 *
 	 * @param oauthClientDetails 实体
 	 * @return success/false
 	 */
-	@SysLog("添加终端")
+	@SysLog("保存终端")
 	@PostMapping
+	@GetMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R add(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
-		return new R<>(oauthClientDetailsService.save(oauthClientDetails));
+	public R save(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
+		return new R<>(oauthClientDetailsService.saveOrUpdate(oauthClientDetails));
 	}
 
 	/**
@@ -93,16 +94,4 @@ public class OauthClientDetailsResource {
 		return new R<>(oauthClientDetailsService.removeClientDetailsById(id));
 	}
 
-	/**
-	 * 编辑
-	 *
-	 * @param oauthClientDetails 实体
-	 * @return success/false
-	 */
-	@SysLog("编辑终端")
-	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R update(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
-		return new R<>(oauthClientDetailsService.updateClientDetailsById(oauthClientDetails));
-	}
 }

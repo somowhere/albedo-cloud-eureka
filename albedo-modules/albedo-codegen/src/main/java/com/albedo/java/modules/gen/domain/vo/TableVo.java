@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class GenTableVo extends DataEntityVo<String> {
+public class TableVo extends DataEntityVo<String> {
 
     public static final String F_NAME = "name";
     public static final String F_NAMESANDCOMMENTS = "nameAndTitle";
@@ -38,10 +38,10 @@ public class GenTableVo extends DataEntityVo<String> {
     private String parentTableFk;
     /*** 父表对象 */
     @JSONField(serialize = false)
-    private GenTableVo parent;
+    private TableVo parent;
     /*** 子表列表 */
     @JSONField(serialize = false)
-    private List<GenTableVo> childList;
+    private List<TableVo> childList;
     private String nameAndTitle;
     /*** 按名称模糊查询 */
     private String nameLike;
@@ -53,31 +53,31 @@ public class GenTableVo extends DataEntityVo<String> {
      * 当前表主键列表
      */
     @JSONField(serialize = false)
-    private List<GenTableColumnVo> pkColumnList;
+    private List<TableColumnVo> pkColumnList;
     /*** 列 - 列表 */
     @JSONField(serialize = false)
-    private List<GenTableColumnVo> columnList;
+    private List<TableColumnVo> columnList;
     /*** 表单提交列 - 列表 */
     @NotNull
-    private List<GenTableColumnVo> columnFormList;
-    public GenTableVo(String name, String comments) {
+    private List<TableColumnVo> columnFormList;
+    public TableVo(String name, String comments) {
         this.name = name;
         this.comments = comments;
     }
-    public GenTableVo() {
+    public TableVo() {
     }
-    public GenTableVo(GenTableFormVo genTableFormVo) {
-        this.setId(genTableFormVo.getId());
-        this.name=genTableFormVo.getName();
+    public TableVo(TableFormVo tableFormVo) {
+        this.setId(tableFormVo.getId());
+        this.name= tableFormVo.getName();
 
     }
 
-    public List<GenTableColumnVo> getPkColumnList() {
+    public List<TableColumnVo> getPkColumnList() {
         if (CollUtil.isEmpty(pkColumnList) && CollUtil.isNotEmpty(columnList)) {
             if (pkColumnList == null) {
                 pkColumnList = Lists.newArrayList();
             }
-            for (GenTableColumnVo column : getColumnList()) {
+            for (TableColumnVo column : getColumnList()) {
                 if (column.getPk()) {
                     pkColumnList.add(column);
                 }
@@ -86,7 +86,7 @@ public class GenTableVo extends DataEntityVo<String> {
         return pkColumnList;
     }
 
-    public void setPkColumnList(List<GenTableColumnVo> pkColumnList) {
+    public void setPkColumnList(List<TableColumnVo> pkColumnList) {
         this.pkColumnList = pkColumnList;
     }
 
@@ -121,14 +121,14 @@ public class GenTableVo extends DataEntityVo<String> {
         this.nameLike = nameLike;
     }
 
-    public List<GenTableColumnVo> getColumnList() {
+    public List<TableColumnVo> getColumnList() {
         if (columnList == null) {
             columnList = Lists.newArrayList();
         }
         return columnList;
     }
 
-    public void setColumnList(List<GenTableColumnVo> columnList) {
+    public void setColumnList(List<TableColumnVo> columnList) {
         this.columnList = columnList;
     }
 
@@ -148,14 +148,14 @@ public class GenTableVo extends DataEntityVo<String> {
         this.nameAndTitle = nameAndTitle;
     }
 
-    public List<GenTableColumnVo> getColumnFormList() {
+    public List<TableColumnVo> getColumnFormList() {
         if(CollUtil.isEmpty(columnFormList) && CollUtil.isNotEmpty(columnList)){
             columnFormList = columnList;
         }
         return columnFormList;
     }
 
-    public void setColumnFormList(List<GenTableColumnVo> columnFormList) {
+    public void setColumnFormList(List<TableColumnVo> columnFormList) {
         this.columnFormList = columnFormList;
     }
 
@@ -189,7 +189,7 @@ public class GenTableVo extends DataEntityVo<String> {
     }
 
     private void initImport(List<String> importList) {
-        for (GenTableColumnVo column : getColumnList()) {
+        for (TableColumnVo column : getColumnList()) {
             if (column.getIsNotBaseField() || ("1".equals(column.getIsQuery()) && "between".equals(column.getQueryType()) &&
                     (DataEntityVo.F_CREATEDDATE.equals(column.getSimpleJavaField()) ||
                             DataEntityVo.F_LASTMODIFIEDDATE.equals(column.getSimpleJavaField())))) {
@@ -241,7 +241,7 @@ public class GenTableVo extends DataEntityVo<String> {
         return parent != null && StringUtil.isNotBlank(parentTable) && StringUtil.isNotBlank(parentTableFk);
     }
     @JSONField(serialize = false)
-    public List<GenTableVo> getChildList() {
+    public List<TableVo> getChildList() {
         return childList!=null ? childList : Lists.newArrayList();
     }
 
@@ -265,7 +265,7 @@ public class GenTableVo extends DataEntityVo<String> {
      * @return
      */
     public Boolean getCreateTimeExists() {
-        for (GenTableColumnVo c : columnList) {
+        for (TableColumnVo c : columnList) {
             if ("created_time".equals(c.getName())) {
                 return true;
             }
@@ -279,7 +279,7 @@ public class GenTableVo extends DataEntityVo<String> {
      * @return
      */
     public Boolean getUpdateTimeExists() {
-        for (GenTableColumnVo c : columnList) {
+        for (TableColumnVo c : columnList) {
             if ("update_time".equals(c.getName())) {
                 return true;
             }
@@ -293,7 +293,7 @@ public class GenTableVo extends DataEntityVo<String> {
      * @return
      */
     public Boolean getStatusExists() {
-        for (GenTableColumnVo c : columnList) {
+        for (TableColumnVo c : columnList) {
             if ("status".equals(c.getName())) {
                 return true;
             }
@@ -311,7 +311,7 @@ public class GenTableVo extends DataEntityVo<String> {
         if (isCompositeId()) {
             type = StringUtil.toAppendStr(getClassName(), "Id");
         } else {
-            for (GenTableColumnVo column : getColumnList()) {
+            for (TableColumnVo column : getColumnList()) {
                 if (column.getPk()) {
                     type = column.getJavaType();
                     break;
@@ -329,7 +329,7 @@ public class GenTableVo extends DataEntityVo<String> {
     public String getPkSqlName() {
         String name = "";
         if (isNotCompositeId()) {
-            for (GenTableColumnVo column : getColumnList()) {
+            for (TableColumnVo column : getColumnList()) {
                 if (column.getPk()) {
                     name = column.getName();
                     break;
@@ -347,7 +347,7 @@ public class GenTableVo extends DataEntityVo<String> {
     public String getPkSize() {
         String name = "";
         if (isNotCompositeId()) {
-            for (GenTableColumnVo column : getColumnList()) {
+            for (TableColumnVo column : getColumnList()) {
                 if (column.getPk()) {
                     name = column.getSize();
                     break;
@@ -362,9 +362,9 @@ public class GenTableVo extends DataEntityVo<String> {
      *
      * @return
      */
-    public GenTableColumnVo getPkColumn() {
+    public TableColumnVo getPkColumn() {
         if (isNotCompositeId()) {
-            for (GenTableColumnVo column : getColumnList()) {
+            for (TableColumnVo column : getColumnList()) {
                 if (column.getPk()) {
                     return column;
                 }

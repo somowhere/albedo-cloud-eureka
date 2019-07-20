@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenSchemeVo extends DataEntityVo<String> {
+public class SchemeVo extends DataEntityVo<String> {
 
     /**
      * @Fields CATEGORY_CURD : 增删改查（单表）
@@ -83,7 +83,7 @@ public class GenSchemeVo extends DataEntityVo<String> {
     /**
      * 业务表名
      */
-    private GenTableVo genTable;
+    private TableVo genTable;
 
     @JSONField(serialize = false)
     /**

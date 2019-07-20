@@ -18,7 +18,6 @@ package com.albedo.java.modules.codegen;
 
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;
 import com.albedo.java.common.security.annotation.EnablePigResourceServer;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -36,14 +35,14 @@ import java.net.InetAddress;
 @EnablePigResourceServer
 @SpringCloudApplication
 @Slf4j
-public class AlbedoCodeGenApplication {
+public class AlbedoCodeGenApplicationOld {
 
 	static String SERVER_PORT = "server.port";
 	static String SPRING_APPLICATION_NAME = "spring.application.name";
 
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication app = new SpringApplication(AlbedoCodeGenApplication.class);
+		SpringApplication app = new SpringApplication(AlbedoCodeGenApplicationOld.class);
 		final ApplicationContext applicationContext = app.run(args);
 		Environment env = applicationContext.getEnvironment();
 

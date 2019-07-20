@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenTable extends IdEntity<GenTable> {
+public class Table extends IdEntity<Table> {
 
     public static final String F_NAME = "name";
     public static final String F_NAMESANDTITLE = "nameAndTitle";
@@ -45,15 +45,15 @@ public class GenTable extends IdEntity<GenTable> {
 
     @TableField(exist = false)
     @JSONField(serialize = false)
-    private List<GenTableColumn> columnList; // 表列
+    private List<TableColumn> columnList; // 表列
 
     @JSONField(serialize = false)
     @ManyToOne(name = "parent_table")
     @TableField(exist = false)
-    private GenTable parent; // 父表对象
+    private Table parent; // 父表对象
 
     @TableField(exist = false)
-    private List<GenTable> childList; // 子表列表
+    private List<Table> childList; // 子表列表
 
     @TableField(exist = false)
     private String nameAndTitle;
@@ -64,19 +64,19 @@ public class GenTable extends IdEntity<GenTable> {
     private List<String> pkList; // 当前表主键列表
     @TableField(exist = false)
     @JSONField(serialize = false)
-    private List<GenTableColumn> pkColumnList; // 当前表主键列表
+    private List<TableColumn> pkColumnList; // 当前表主键列表
     @TableField(exist = false)
     private String category; // 当前表的生成分类
     @TableField(exist = false)
     @JSONField(serialize = false)
-    private List<GenTableColumn> columnFormList;
+    private List<TableColumn> columnFormList;
 
-    public GenTable(String id) {
+    public Table(String id) {
         super();
         this.id = id;
     }
 
-    public GenTable(String name, String comments) {
+    public Table(String name, String comments) {
         this.name = name;
         this.comments = comments;
     }

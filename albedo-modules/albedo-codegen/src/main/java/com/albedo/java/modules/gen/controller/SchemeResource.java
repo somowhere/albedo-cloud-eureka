@@ -7,10 +7,10 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.gen.domain.vo.GenSchemeVo;
-import com.albedo.java.modules.gen.domain.vo.GenTableVo;
-import com.albedo.java.modules.gen.service.GenSchemeService;
-import com.albedo.java.modules.gen.service.GenTableService;
+import com.albedo.java.modules.gen.domain.vo.SchemeVo;
+import com.albedo.java.modules.gen.domain.vo.TableVo;
+import com.albedo.java.modules.gen.service.SchemeService;
+import com.albedo.java.modules.gen.service.TableService;
 import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.albedo.java.modules.sys.feign.RemoteMenuService;
 import com.codahale.metrics.annotation.Timed;
@@ -29,17 +29,17 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "/gen/genScheme")
-public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchemeVo> {
+@RequestMapping(value = "/gen/scheme")
+public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
 
-    private final GenTableService genTableService;
+    private final TableService tableService;
 
     private final RemoteMenuService remoteMenuService;
 
-    public GenSchemeResource(GenSchemeService genSchemeService, GenTableService genTableService,
-							 RemoteMenuService remoteMenuService) {
-        super(genSchemeService);
-        this.genTableService = genTableService;
+    public SchemeResource(SchemeService schemeService, TableService tableService,
+						  RemoteMenuService remoteMenuService) {
+        super(schemeService);
+        this.tableService = tableService;
         this.remoteMenuService = remoteMenuService;
     }
 
@@ -56,32 +56,32 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
     }
     @GetMapping(value = "/formData")
     @Timed
-    public ResponseEntity formData(GenSchemeVo genSchemeVo) {
+    public ResponseEntity formData(SchemeVo schemeVo) {
 
 		String username = SecurityUtils.getUser().getUsername();
-        Map<String, Object> formData = service.findFormData(genSchemeVo, username);
+        Map<String, Object> formData = service.findFormData(schemeVo, username);
         return ResponseBuilder.buildOk(formData);
     }
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Timed
-    public ResponseEntity save(@Valid @RequestBody GenSchemeVo genSchemeVo) {
-        service.save(genSchemeVo);
-        GenTableVo genTableVo = genSchemeVo.getGenTable();
-        if (genTableVo == null || StringUtil.isEmpty(genTableVo.getClassName())) {
-            genTableVo = genTableService.findOneVo(genSchemeVo.getGenTableId());
+    public ResponseEntity save(@Valid @RequestBody SchemeVo schemeVo) {
+        service.save(schemeVo);
+        TableVo tableVo = schemeVo.getGenTable();
+        if (tableVo == null || StringUtil.isEmpty(tableVo.getClassName())) {
+            tableVo = tableService.findOneVo(schemeVo.getGenTableId());
         }
-        if (genSchemeVo.getSyncModule()) {
-            String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(genSchemeVo.getModuleName()), (StringUtil.isNotBlank(genSchemeVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(genSchemeVo.getSubModuleName()) : ""), "/",
-                StringUtil.lowerFirst(genTableVo.getClassName()), "/");
+        if (schemeVo.getSyncModule()) {
+            String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(schemeVo.getModuleName()), (StringUtil.isNotBlank(schemeVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(schemeVo.getSubModuleName()) : ""), "/",
+                StringUtil.lowerFirst(tableVo.getClassName()), "/");
 			remoteMenuService.saveByGenScheme(
-				new GenSchemeDataVo(genSchemeVo.getName(), genSchemeVo.getParentModuleId(), url), SecurityConstants.FROM_IN);
+				new GenSchemeDataVo(schemeVo.getName(), schemeVo.getParentModuleId(), url), SecurityConstants.FROM_IN);
         }
         // 生成代码
-        if (genSchemeVo.getGenCode()) {
-            service.generateCode(genSchemeVo);
+        if (schemeVo.getGenCode()) {
+            service.generateCode(schemeVo);
         }
-        return ResponseBuilder.buildOk("保存", genSchemeVo.getName(), "成功");
+        return ResponseBuilder.buildOk("保存", schemeVo.getName(), "成功");
     }
 
     @DeleteMapping(CommonConstants.URL_IDS_REGEX)

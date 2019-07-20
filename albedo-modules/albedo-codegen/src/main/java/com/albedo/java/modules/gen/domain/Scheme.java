@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class GenScheme extends IdEntity<GenScheme> {
+public class Scheme extends IdEntity<Scheme> {
 
     /**
      * @Fields CATEGORY_CURD : 增删改查（单表）
@@ -66,7 +66,7 @@ public class GenScheme extends IdEntity<GenScheme> {
     private String functionAuthor; // 生成功能作者
     @ManyToOne(name = "gen_table_id")
     @TableField(exist = false)
-    private GenTable genTable; // 业务表名
+    private Table table; // 业务表名
     @TableField("gen_table_id")
     private String genTableId; // 业务表名
 
@@ -83,7 +83,7 @@ public class GenScheme extends IdEntity<GenScheme> {
     @TableField(exist = false)
     private String parentModuleId; // 上级模块 ID 仅当syncModule 为 true有效
 
-    public GenScheme(String id) {
+    public Scheme(String id) {
         super();
         this.id = id;
     }

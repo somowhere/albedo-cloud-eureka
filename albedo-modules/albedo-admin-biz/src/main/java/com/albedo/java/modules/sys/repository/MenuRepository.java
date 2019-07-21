@@ -19,6 +19,7 @@ package com.albedo.java.modules.sys.repository;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.vo.MenuVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface MenuRepository extends TreeRepository<Menu> {
 	 * @param roleId 角色ID
 	 * @return
 	 */
-	List<MenuVo> listMenusByRoleId(String roleId, Integer show);
+	List<MenuVo> listMenusByRoleId(@Param("roleId") String roleId,@Param("show")  Integer show);
 
 	/**
 	 * 通过角色ID查询权限

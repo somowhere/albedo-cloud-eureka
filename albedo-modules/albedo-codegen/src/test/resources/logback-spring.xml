@@ -16,7 +16,7 @@
   -->
 
 <configuration debug="false" scan="false">
-	<springProperty scope="context" name="application.logPath" source="application.logPath" defaultValue="target/.logEntity"/>
+	<springProperty scope="context" name="application.logPath" source="application.logPath" defaultValue="target/.log"/>
 	<springProperty scope="context" name="spring.application.name" source="spring.application.name" defaultValue=""/>
 	<property name="logEntity.path" value="${application.logPath}/${spring.application.name}"/>
 	<!-- 彩色日志格式 -->

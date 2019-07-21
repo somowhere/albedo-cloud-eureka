@@ -120,7 +120,7 @@
 			</activation>
 			<properties>
 				<!-- logEntity configuration -->
-				<logback.loglevel>${profile.dev.logEntity.level}</logback.loglevel>
+				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,swagger</spring.profiles.active>
 			</properties>

@@ -152,7 +152,7 @@
 			</activation>
 			<properties>
 				<!-- logEntity configuration -->
-				<logback.loglevel>${profile.dev.logEntity.level}</logback.loglevel>
+				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,micro,swagger</spring.profiles.active>
 			</properties>
@@ -161,7 +161,7 @@
 			<id>prod</id>
 			<properties>
 				<!-- logEntity configuration -->
-				<logback.loglevel>${profile.prod.logEntity.level}</logback.loglevel>
+				<logback.loglevel>${profile.prod.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>prod,micro</spring.profiles.active>
 			</properties>

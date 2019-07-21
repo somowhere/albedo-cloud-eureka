@@ -49,8 +49,8 @@
 		<springfox.version>2.9.2</springfox.version>
 		<zipkin-storage-mysql.version>2.8.4</zipkin-storage-mysql.version>
 
-		<profile.dev.logEntity.level>INFO</profile.dev.logEntity.level>
-		<profile.prod.logEntity.level>INFO</profile.prod.logEntity.level>
+		<profile.dev.log.level>INFO</profile.dev.log.level>
+		<profile.prod.log.level>INFO</profile.prod.log.level>
 	</properties>
 
 	<dependencies>
@@ -310,7 +310,7 @@
 			</activation>
 			<properties>
 				<!-- logEntity configuration -->
-				<logback.loglevel>${profile.dev.logEntity.level}</logback.loglevel>
+				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev</spring.profiles.active>
 			</properties>
@@ -319,7 +319,7 @@
 			<id>prod</id>
 			<properties>
 				<!-- logEntity configuration -->
-				<logback.loglevel>${profile.prod.logEntity.level}</logback.loglevel>
+				<logback.loglevel>${profile.prod.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>prod</spring.profiles.active>
 			</properties>

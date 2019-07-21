@@ -16,7 +16,7 @@
   -->
 
 <configuration debug="false" scan="false">
-	<springProperty scope="context" name="application.logPath" source="application.logPath" defaultValue="target/.logEntity"/>
+	<springProperty scope="context" name="application.logPath" source="application.logPath" defaultValue="target/.log"/>
 	<springProperty scope="context" name="spring.application.name" source="spring.application.name" defaultValue=""/>
 	<property name="logEntity.path" value="${application.logPath}/${spring.application.name}"/>
 	<!-- 彩色日志格式 -->
@@ -37,9 +37,9 @@
 
 	<!-- LogEntity file debug output -->
 	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logEntity.path}/debug.logEntity</file>
+		<file>${logEntity.path}/debug.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>${logEntity.path}/%d{yyyy-MM, aux}/debug.%d{yyyy-MM-dd}.%i.logEntity.gz</fileNamePattern>
+			<fileNamePattern>${logEntity.path}/%d{yyyy-MM, aux}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 			<maxFileSize>50MB</maxFileSize>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
@@ -50,9 +50,9 @@
 
 	<!-- LogEntity file error output -->
 	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logEntity.path}/error.logEntity</file>
+		<file>${logEntity.path}/error.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>${logEntity.path}/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.logEntity.gz</fileNamePattern>
+			<fileNamePattern>${logEntity.path}/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 			<maxFileSize>50MB</maxFileSize>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>

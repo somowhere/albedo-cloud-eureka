@@ -30,6 +30,7 @@ const user = {
   state: {
     userInfo: {},
     permissions: {},
+    dicts: [],
     roles: [],
     menu: getStore({
       name: 'menu'
@@ -54,10 +55,10 @@ const user = {
         param: ['password']
       })
       return new Promise((resolve, reject) => {
-        loginByUsername(user.username, user.password, user.code, user.randomStr).then(data => {
-          commit('SET_ACCESS_TOKEN', data.access_token)
-          commit('SET_REFRESH_TOKEN', data.refresh_token)
-          commit('SET_EXPIRES_IN', data.expires_in)
+        loginByUsername(user.username, user.password, user.code, user.randomStr).then(response => {
+          commit('SET_ACCESS_TOKEN', response.access_token)
+          commit('SET_REFRESH_TOKEN', response.refresh_token)
+          commit('SET_EXPIRES_IN', response.expires_in)
           commit('CLEAR_LOCK')
           resolve()
         }).catch(error => {
@@ -69,7 +70,9 @@ const user = {
       return new Promise((resolve, reject) => {
         getUserInfo().then((res) => {
           const data = res.data || {}
-          commit('SET_USERIFNO', data.sysUser)
+          console.log("getUserInfo")
+          console.log(data)
+          commit('SET_USERIFNO', data.user)
           commit('SET_ROLES', data.roles || [])
           commit('SET_PERMISSIONS', data.permissions || [])
           resolve(data)
@@ -77,7 +80,6 @@ const user = {
           reject()
         })
         getDicts().then((res) => {
-          console.log("dictCodes"+res)
           const data = res.data || {}
           commit('SET_DICTS', data)
           resolve(data)
@@ -106,6 +108,7 @@ const user = {
       return new Promise((resolve, reject) => {
         logout().then(() => {
           commit('SET_MENU', [])
+          commit('SET_DICTS', [])
           commit('SET_PERMISSIONS', [])
           commit('SET_USER_INFO', {})
           commit('SET_ACCESS_TOKEN', '')
@@ -124,6 +127,7 @@ const user = {
     FedLogOut({commit}) {
       return new Promise(resolve => {
         commit('SET_MENU', [])
+        commit('SET_DICTS', [])
         commit('SET_PERMISSIONS', [])
         commit('SET_USER_INFO', {})
         commit('SET_ACCESS_TOKEN', '')

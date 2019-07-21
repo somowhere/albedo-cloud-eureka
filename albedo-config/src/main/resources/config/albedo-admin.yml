@@ -5,7 +5,7 @@ ignore:
   urls:
     - /v2/**
     - /actuator/**
-    - /userEntity/info/*
+    - /user/info/*
     - /menu/codegen
     - /dict/all
     - /logEntity/**

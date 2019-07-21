@@ -58,6 +58,9 @@ public class RoleServiceImpl extends
 		oneVo.setMenuIdList(roleMenuService.list(Wrappers
 			.<RoleMenuEntity>query().lambda()
 			.eq(RoleMenuEntity::getRoleId, id)).stream().map(RoleMenuEntity::getMenuId).collect(Collectors.toList()));
+		oneVo.setDeptIdList(roleDeptService.list(Wrappers
+			.<RoleDeptEntity>query().lambda()
+			.eq(RoleDeptEntity::getRoleId, id)).stream().map(RoleDeptEntity::getDeptId).collect(Collectors.toList()));
 		return oneVo;
 	}
 

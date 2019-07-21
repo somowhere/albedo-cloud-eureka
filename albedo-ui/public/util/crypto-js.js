@@ -846,7 +846,7 @@
 	    var Hasher = C_lib.Hasher
 	    var C_algo = C.algo
 
-	    // Constants tableEntity
+	    // Constants table
 	    var T = [];
 
 	    // Compute constants
@@ -1604,7 +1604,7 @@
 	    var Hasher = C_lib.Hasher
 	    var C_algo = C.algo
 
-	    // Constants tableEntity
+	    // Constants table
 	    var _zl = WordArray.create([
 	        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 	        7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8,
@@ -4339,7 +4339,7 @@
 
 	    // Compute lookup tables
 	    (function () {
-	        // Compute double tableEntity
+	        // Compute double table
 	        var d = []
 	        for (var i = 0; i < 256; i++) {
 	            if (i < 128) {

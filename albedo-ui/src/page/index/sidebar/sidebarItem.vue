@@ -1,7 +1,7 @@
 <template>
-  <div class="menuEntity-wrapper">
-    <template v-for="item in menuEntity">
-      <el-menuEntity-item v-if="validatenull(item[childrenKey]) && vaildRoles(item)"
+  <div class="menu-wrapper">
+    <template v-for="item in menu">
+      <el-menu-item v-if="validateNull(item[childrenKey]) && vaildRoles(item)"
                     :index="item[pathKey]"
                     @click="open(item)"
                     :key="item[labelKey]"
@@ -9,26 +9,26 @@
         <i :class="item[iconKey]"></i>
         <span slot="title"
               :alt="item[pathKey]">{{item[labelKey]}}</span>
-      </el-menuEntity-item>
-      <el-submenu v-else-if="!validatenull(item[childrenKey])&&vaildRoles(item)"
+      </el-menu-item>
+      <el-submenu v-else-if="!validateNull(item[childrenKey])&&vaildRoles(item)"
                   :index="item[pathKey]"
                   :key="item[labelKey]">
         <template slot="title">
           <i :class="item[iconKey]"></i>
           <span slot="title"
-                :class="{'el-menuEntity--display':collapse && first}">{{item[labelKey]}}</span>
+                :class="{'el-menu--display':collapse && first}">{{item[labelKey]}}</span>
         </template>
         <template v-for="(child,cindex) in item[childrenKey]">
-          <el-menuEntity-item :index="child[pathKey],cindex"
+          <el-menu-item :index="child[pathKey],cindex"
                         @click="open(child)"
                         :class="{'is-active':vaildAvtive(child)}"
-                        v-if="validatenull(child[childrenKey])"
+                        v-if="validateNull(child[childrenKey])"
                         :key="child[labelKey]">
             <i :class="child[iconKey]"></i>
             <span slot="title">{{child[labelKey]}}</span>
-          </el-menuEntity-item>
+          </el-menu-item>
           <sidebar-item v-else
-                        :menuEntity="[child]"
+                        :menu="[child]"
                         :key="cindex"
                         :props="props"
                         :screen="screen"
@@ -40,7 +40,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { validatenull } from "@/util/validate";
+import { validateNull } from "@/util/validate";
 import config from "./config.js";
 export default {
   name: "sidebarItem",
@@ -50,7 +50,7 @@ export default {
     };
   },
   props: {
-    menuEntity: {
+    menu: {
       type: Array
     },
     screen: {
@@ -101,8 +101,8 @@ export default {
       item.meta = item.meta || {};
       return item.meta.roles ? item.meta.roles.includes(this.roles) : true;
     },
-    validatenull(val) {
-      return validatenull(val);
+    validateNull(val) {
+      return validateNull(val);
     },
     open(item) {
       if (this.screen <= 1) this.$store.commit("SET_COLLAPSE");

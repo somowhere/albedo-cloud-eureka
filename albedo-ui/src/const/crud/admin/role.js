@@ -27,7 +27,7 @@ export const tableOption = {
   viewBtn:true,
   column: [{
     label: '角色名称',
-    prop: 'name',
+    prop: 'roleName',
     span: 24,
     rules: [{
       required: true,
@@ -43,7 +43,7 @@ export const tableOption = {
   }, {
     width: 120,
     label: '角色标识',
-    prop: 'code',
+    prop: 'roleCode',
     span: 24,
     editDisabled: true,
     rules: [{
@@ -61,7 +61,7 @@ export const tableOption = {
   }, {
     width: 150,
     label: '角色描述',
-    prop: 'remark',
+    prop: 'roleDesc',
     overHidden: true,
     span: 24
   }, {

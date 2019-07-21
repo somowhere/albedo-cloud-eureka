@@ -1,26 +1,26 @@
 <template>
-  <div class="top-menuEntity">
-    <el-menuEntity :default-active="activeIndex"
+  <div class="top-menu">
+    <el-menu :default-active="activeIndex"
              mode="horizontal"
              text-color="#333">
       <template v-for="(item,index) in items">
-        <el-menuEntity-item :index="item.parentId+''"
+        <el-menu-item :index="item.parentId+''"
                       @click.native="openMenu(item)"
                       :key="index">
           <template slot="title">
             <i :class="item.icon"></i>
             <span>{{item.label}}</span>
           </template>
-        </el-menuEntity-item>
+        </el-menu-item>
       </template>
-    </el-menuEntity>
+    </el-menu>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "top-menuEntity",
+  name: "top-menu",
   data() {
     return {
       activeIndex: "0",
@@ -30,23 +30,23 @@ export default {
   created() {
   },
   computed: {
-    ...mapGetters(["tagCurrent", "menuEntity"])
+    ...mapGetters(["tagCurrent", "menu"])
   },
   methods: {
     openMenu(item) {
-      this.$store.dispatch("GetMenu", item.parentId).then(data => {
-        if (data.length !== 0) {
-          this.$router.$avueRouter.formatRoutes(data, true);
+      this.$store.dispatch("GetMenu", item.parentId).then(response => {
+        if (response.length !== 0) {
+          this.$router.$avueRouter.formatRoutes(response, true);
         }
         let itemActive,
           childItemActive = 0;
         if (item.path) {
           itemActive = item;
         } else {
-          if (this.menuEntity[childItemActive].length == 0) {
-            itemActive = this.menuEntity[childItemActive];
+          if (this.menu[childItemActive].length == 0) {
+            itemActive = this.menu[childItemActive];
           } else {
-            itemActive = this.menuEntity[childItemActive].children[childItemActive];
+            itemActive = this.menu[childItemActive].children[childItemActive];
           }
         }
         this.$router.push({

@@ -87,7 +87,7 @@ public class UserEntityResourceIntTest {
 	UserDataVo anotherUser = new UserDataVo();
     @BeforeEach
     public void setup() {
-		DEFAULT_API_URL = "/userEntity/";
+		DEFAULT_API_URL = "/user/";
 		MockitoAnnotations.initMocks(this);
 		final UserResource userResource = new UserResource(userService);
 		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
@@ -234,7 +234,7 @@ public class UserEntityResourceIntTest {
     @Test
     @Transactional
     public void getNonExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/admin/userEntity/ddd/unknown"))
+        restUserMockMvc.perform(get("/admin/user/ddd/unknown"))
                 .andExpect(status().isNotFound());
     }
 

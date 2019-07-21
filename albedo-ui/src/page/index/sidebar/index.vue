@@ -2,19 +2,19 @@
   <div class="avue-sidebar">
     <logo></logo>
     <el-scrollbar style="height:100%">
-      <div v-if="validatenull(menuEntity)"
+      <div v-if="validateNull(menu)"
            class="avue-sidebar--tip">没有发现菜单</div>
-      <el-menuEntity unique-opened
+      <el-menu unique-opened
                :default-active="nowTagValue"
                mode="vertical"
                :show-timeout="200"
                :collapse="keyCollapse">
-        <sidebar-item :menuEntity="menuEntity"
+        <sidebar-item :menu="menu"
                       :screen="screen"
                       first
-                      :props="website.menuEntity.props"
+                      :props="website.menu.props"
                       :collapse="keyCollapse"></sidebar-item>
-      </el-menuEntity>
+      </el-menu>
     </el-scrollbar>
   </div>
 </template>
@@ -30,13 +30,13 @@ export default {
     return {};
   },
   created() {
-    this.$store.dispatch("GetMenu").then(data => {
-      if (data.length === 0) return;
-      this.$router.$avueRouter.formatRoutes(data, true);
+    this.$store.dispatch("GetMenu").then(response => {
+      if (response.length === 0) return;
+      this.$router.$avueRouter.formatRoutes(response, true);
     });
   },
   computed: {
-    ...mapGetters(["website", "menuEntity", "tag", "keyCollapse", "screen"]),
+    ...mapGetters(["website", "menu", "tag", "keyCollapse", "screen"]),
     nowTagValue: function() {
       return this.$router.$avueRouter.getValue(this.$route);
     }

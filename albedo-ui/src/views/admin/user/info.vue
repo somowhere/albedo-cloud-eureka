@@ -89,7 +89,6 @@
 
 
 <script>
-  import {handleDown} from "@/api/admin/userEntity";
   import {mapState} from 'vuex'
   import store from "@/store";
   import request from '@/router/axios'
@@ -136,7 +135,7 @@
     },
     computed: {
       ...mapState({
-        userInfo: state => state.userEntity.userInfo
+        userInfo: state => state.user.userInfo
       }),
     },
     methods: {
@@ -147,7 +146,7 @@
         this.$refs[formName].validate(valid => {
           if (valid) {
             request({
-              url: '/admin/userEntity/edit',
+              url: '/admin/user/edit',
               method: 'put',
               data: this.ruleForm2
             }).then(response => {

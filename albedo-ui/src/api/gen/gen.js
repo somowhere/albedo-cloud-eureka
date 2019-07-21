@@ -19,7 +19,7 @@ import request from '@/router/axios'
 
 export function fetchList (query) {
   return request({
-    url: '/gen/generator/page',
+    url: '/codegen/generator/page',
     method: 'get',
     params: query
   })
@@ -27,7 +27,7 @@ export function fetchList (query) {
 
 export function handleDown (table) {
   return request({
-    url: '/gen/generator/code',
+    url: '/codegen/generator/code',
     method: 'post',
     data: table,
     responseType: 'arraybuffer'

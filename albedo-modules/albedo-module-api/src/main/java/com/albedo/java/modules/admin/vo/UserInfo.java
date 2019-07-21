@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.vo;
 
-import com.albedo.java.modules.admin.domain.User;
+import com.albedo.java.modules.admin.domain.UserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息
 	 */
-	private User user;
+	private UserEntity userEntity;
 	/**
 	 * 权限标识集合
 	 */

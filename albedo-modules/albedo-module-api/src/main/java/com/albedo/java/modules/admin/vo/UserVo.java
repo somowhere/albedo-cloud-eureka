@@ -20,7 +20,7 @@ import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.vo.DataEntityVo;
-import com.albedo.java.modules.admin.domain.Role;
+import com.albedo.java.modules.admin.domain.RoleEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -90,20 +90,20 @@ public class UserVo  extends DataEntityVo<String> {
 	 * 角色ID
 	 */
 	@JsonIgnore
-	private List<Role> roleList;
+	private List<RoleEntity> roleEntityList;
 
 	private List<String> roleIdList;
 
 	public List<String> getRoleIdList(){
-		if(CollUtil.isEmpty(roleIdList) && CollUtil.isNotEmpty(roleList)){
-			roleIdList = CollUtil.extractToList(roleList, Role.F_ID);
+		if(CollUtil.isEmpty(roleIdList) && CollUtil.isNotEmpty(roleEntityList)){
+			roleIdList = CollUtil.extractToList(roleEntityList, RoleEntity.F_ID);
 		}
 		return roleIdList;
 	}
 
 	public String getRoleNames(){
-		if(ObjectUtil.isEmpty(roleNames) && CollUtil.isNotEmpty(roleList)){
-			roleNames = CollUtil.convertToString(roleList, Role.F_NAME, Role.F_ID);
+		if(ObjectUtil.isEmpty(roleNames) && CollUtil.isNotEmpty(roleEntityList)){
+			roleNames = CollUtil.convertToString(roleEntityList, RoleEntity.F_NAME, RoleEntity.F_ID);
 		}
 		return roleNames;
 	}

@@ -21,7 +21,7 @@
       <avue-crud ref="crud"
                  :page="page"
                  :data="tableData"
-                 :table-loading="tableLoading"
+                 :tableEntity-loading="tableLoading"
                  :option="tableOption"
                  @on-load="getList"
                  @row-update="handleUpdate"
@@ -29,7 +29,7 @@
                  @search-change="searchChange"
                  @row-del="rowDel">
         <template slot-scope="scope"
-                  slot="menu">
+                  slot="menuEntity">
           <el-button type="text"
                      v-if="permissions.sys_dict_edit"
                      icon="el-icon-check"
@@ -51,12 +51,12 @@
 </template>
 
 <script>
-  import {addObj, delObj, fetchList, putObj} from '@/api/admin/dict'
-  import {tableOption} from '@/const/crud/admin/dict'
+  import {addObj, delObj, fetchList, putObj} from '@/api/admin/dictEntity'
+  import {tableOption} from '@/const/crud/admin/dictEntity'
   import {mapGetters} from 'vuex'
 
   export default {
-    name: 'dict',
+    name: 'dictEntity',
     data() {
       return {
         tableData: [],

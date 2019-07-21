@@ -29,7 +29,7 @@ import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
-import com.albedo.java.modules.admin.domain.Dict;
+import com.albedo.java.modules.admin.domain.DictEntity;
 import com.albedo.java.modules.admin.service.DictService;
 import com.albedo.java.modules.admin.vo.DictDataVo;
 import com.albedo.java.modules.admin.vo.UserDataVo;
@@ -113,7 +113,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 */
 	@SysLog("添加/更新字典")
 	@PostMapping("/")
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
+	@CacheEvict(value = DictEntity.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
 	public R save(@Valid @RequestBody DictDataVo dictDataVo) {
 
@@ -136,7 +136,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 */
 	@SysLog("删除字典")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
-	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
+	@CacheEvict(value = DictEntity.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
 	public R removeByIds(@PathVariable String ids) {
 		return new R<>(service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
@@ -152,7 +152,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	@Inner
 	@GetMapping("/all")
 	public R<String> getAll() {
-		List<Dict> list = service.list(Wrappers.emptyWrapper());
+		List<DictEntity> list = service.list(Wrappers.emptyWrapper());
 		return new R<>(Json.toJsonString(list));
 	}
 

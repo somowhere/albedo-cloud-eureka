@@ -393,7 +393,7 @@ public class StringUtil extends StrUtil {
     /**
      * 转换为JS获取对象值，生成三目运算返回结果
      *
-     * @param objectString 对象串 例如：row.user.id 返回：!row?'':!row.user?'':!row.user.id?'':row.user.id
+     * @param objectString 对象串 例如：row.userEntity.id 返回：!row?'':!row.userEntity?'':!row.userEntity.id?'':row.userEntity.id
      */
     public static String jsGetVal(String objectString) {
         StringBuilder result = new StringBuilder();

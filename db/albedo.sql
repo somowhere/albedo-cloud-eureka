@@ -258,7 +258,7 @@ INSERT INTO `sys_dict` VALUES ('8c4589d0a32c9b84b6254507354a195b', 'test', 'test
 INSERT INTO `sys_dict` VALUES ('a5dfce34bdb7aa99560e8c0d393a632f', '全部', '1', 'sys_data_scope_1', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 10, b'1', b'1', NULL, '1', '2019-07-14 05:52:44', '1', '2019-07-14 06:01:55', 3, NULL, '0');
 INSERT INTO `sys_dict` VALUES ('aa294a48211a2deb5c7d76c5e90dc28e', '数据范围', 'sys_data_scope', 'sys_data_scope', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 30, b'1', b'0', NULL, '1', '2019-07-14 05:50:08', '1', '2019-07-14 06:01:55', 12, NULL, '0');
 INSERT INTO `sys_dict` VALUES ('c46ec99af2c1f967bf10cf2c0d96a6c5', '按明细设置', '5', 'sys_data_scope_5', 'aa294a48211a2deb5c7d76c5e90dc28e', '1,cfd5f62f601817a3b0f38f5ccb1f5128,aa294a48211a2deb5c7d76c5e90dc28e,', 50, b'1', b'1', NULL, '1', '2019-07-14 06:01:11', '1', '2019-07-14 06:01:55', 1, NULL, '0');
-INSERT INTO `sys_dict` VALUES ('cfd5f62f601817a3b0f38f5ccb1f5128', '系统数据', 'sys', 'sys', '1', '1,', 30, b'1', b'0', NULL, '1', '2019-07-14 01:13:12', '1', '2019-07-14 06:01:55', 7, NULL, '0');
+INSERT INTO `sys_dict` VALUES ('cfd5f62f601817a3b0f38f5ccb1f5128', '系统数据', 'admin', 'admin', '1', '1,', 30, b'1', b'0', NULL, '1', '2019-07-14 01:13:12', '1', '2019-07-14 06:01:55', 7, NULL, '0');
 INSERT INTO `sys_dict` VALUES ('e26ee931e276a099fb876541ca18756f', '菜单类型', 'sys_menu_type', 'sys_menu_type', 'cfd5f62f601817a3b0f38f5ccb1f5128', '1,cfd5f62f601817a3b0f38f5ccb1f5128,', 30, b'1', b'0', NULL, '1', '2019-07-14 06:01:48', '1', '2019-07-14 06:04:44', 3, NULL, '0');
 
 -- ----------------------------
@@ -294,12 +294,12 @@ CREATE TABLE `sys_log`  (
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, 'admin', '2019-01-24 20:56:43', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, 'admin', '2019-04-27 14:55:07', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, 'admin', '2019-04-27 14:55:19', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, 'admin', '2019-04-27 15:45:30', NULL, '2019-06-15 10:56:41', 0, '', '0');
-INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, 'system', '2019-07-07 22:16:43', 'system', '2019-07-07 22:16:43', 0, NULL, '0');
-INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, 'system', '2019-07-07 22:19:27', 'system', '2019-07-07 22:19:27', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/roleEntity', 'POST', 'Authorization=%5B%5D', '65', NULL, 'admin', '2019-01-24 20:56:43', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menuEntity', 'PUT', '', '40', NULL, 'admin', '2019-04-27 14:55:07', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menuEntity', 'PUT', '', '31', NULL, 'admin', '2019-04-27 14:55:19', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menuEntity/9999', 'DELETE', '', '195', NULL, 'admin', '2019-04-27 15:45:30', NULL, '2019-06-15 10:56:41', 0, '', '0');
+INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/admin/userEntity/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, 'system', '2019-07-07 22:16:43', 'system', '2019-07-07 22:16:43', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/admin/userEntity/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, 'system', '2019-07-07 22:19:27', 'system', '2019-07-07 22:19:27', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -333,31 +333,31 @@ CREATE TABLE `sys_menu`  (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1000', '权限管理', NULL, '/upms', '-1', NULL, 'icon-quanxianguanli', 'Layout', '0', '1', '0', b'0', 0, '', '2018-09-28 08:29:53', '1', '2019-07-20 12:03:09', NULL, 1, '0');
-INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', '1000,', 'icon-yonghuguanli', 'views/admin/user/index', '0', '1', '0', b'0', 1, '', '2017-11-02 22:24:37', '1', '2019-07-20 12:02:29', NULL, 1, '0');
+INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'userEntity', '1000', '1000,', 'icon-yonghuguanli', 'views/admin/userEntity/index', '0', '1', '0', b'0', 1, '', '2017-11-02 22:24:37', '1', '2019-07-20 12:02:29', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('1101', '用户编辑', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:52:09', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1102', '用户锁定', 'sys_user_lock', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:52:48', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1103', '用户删除', 'sys_user_del', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:54:01', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/admin/menu/index', '0', '1', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menuEntity', '1000', NULL, 'icon-caidanguanli', 'views/admin/menuEntity/index', '0', '1', '0', b'0', 2, '', '2017-11-08 09:57:27', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1201', '菜单编辑', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:15:53', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1202', '菜单锁定', 'sys_menu_lock', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:23', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:43', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/admin/role/index', '0', '1', '0', b'0', 3, '', '2017-11-08 10:13:37', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'roleEntity', '1000', NULL, 'icon-jiaoseguanli', 'views/admin/roleEntity/index', '0', '1', '0', b'0', 3, '', '2017-11-08 10:13:37', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1301', '角色编辑', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:18', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1302', '角色锁定', 'sys_role_lock', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:41', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1303', '角色删除', 'sys_role_del', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:59', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1304', '分配权限', 'sys_role_perm', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-04-20 07:22:55', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NULL, 'icon-web-icon-', 'views/admin/dept/index', '0', '1', '0', b'0', 4, '', '2018-01-20 13:17:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'deptEntity', '1000', NULL, 'icon-web-icon-', 'views/admin/deptEntity/index', '0', '1', '0', b'0', 4, '', '2018-01-20 13:17:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1401', '部门编辑', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:16', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1402', '部门锁定', 'sys_dept_lock', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:59', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1403', '部门删除', 'sys_dept_del', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:57:28', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/admin', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '1', '0', b'0', 1, '', '2017-11-07 20:56:00', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/admin/log/index', '0', '1', '0', b'0', 5, '', '2017-11-20 14:06:22', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'logEntity', '2000', NULL, 'icon-rizhiguanli', 'views/admin/logEntity/index', '0', '1', '0', b'0', 5, '', '2017-11-20 14:06:22', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2101', '日志删除', 'sys_log_del', NULL, '2100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-20 20:37:37', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/admin/dict/index', '0', '1', '0', b'0', 6, '', '2017-11-29 11:30:52', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dictEntity', '2000', NULL, 'icon-navicon-zdgl', 'views/admin/dictEntity/index', '0', '1', '0', b'0', 6, '', '2017-11-29 11:30:52', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2201', '字典删除', 'sys_dict_del', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-29 11:30:11', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2202', '字典编辑', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-11 22:34:55', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2203', '字典锁定', 'sys_dict_lock', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-11 22:36:03', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'gen', '2000', NULL, 'icon-weibiaoti46', 'views/gen/index', '0', '1', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-07-21 09:59:21', NULL, 0, '1');
+INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'codegen', '2000', NULL, 'icon-weibiaoti46', 'views/codegen/index', '0', '1', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-07-21 09:59:21', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/admin/client/index', '0', '1', '0', b'0', 9, '', '2018-01-20 13:17:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_add', NULL, '2400', NULL, '1', NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:35:18', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:37:06', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
@@ -365,7 +365,7 @@ INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL
 INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '1', '0', b'0', 10, '', '2018-06-26 10:50:32', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/admin/token/index', '0', '1', '0', b'0', 11, '', '2018-09-04 05:58:41', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', '1', b'0', 1, '', '2018-09-04 05:59:50', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/gen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-21 10:27:21', NULL, 12, '0');
+INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/codegen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-21 10:27:21', NULL, 12, '0');
 INSERT INTO `sys_menu` VALUES ('41a79e5c109e51b1a71ca8c7357c190c', '代码生成', NULL, NULL, '-1', NULL, NULL, NULL, '0', '1', '0', b'1', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-20 12:01:04', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('5000', '一级菜单', NULL, '/crud', '-1', NULL, 'icon-caidanguanli', '', '0', '1', '0', b'0', 4, '', '2018-08-28 01:50:22', '1', '2019-07-20 11:59:50', NULL, 2, '0');
 INSERT INTO `sys_menu` VALUES ('5001', '一级菜单', NULL, 'index', '5000', '5000,', 'icon-caidanguanli', 'views/crud/index', '0', '1', '0', b'0', 1, '', '2018-08-28 01:50:48', '1', '2019-07-20 11:59:50', NULL, 1, '0');
@@ -373,7 +373,7 @@ INSERT INTO `sys_menu` VALUES ('5002', '二级菜单', NULL, 'crud', '5001', NUL
 INSERT INTO `sys_menu` VALUES ('5003', '二级菜单', NULL, '', '5000', NULL, 'icon-caidanguanli', '', '0', '1', '0', b'0', 1, '', '2018-11-21 17:49:18', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('5004', '二级菜单', NULL, 'index', '5003', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '1', '0', b'0', 1, '', '2018-11-21 17:53:51', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('9999', '系统官网', NULL, 'https://pig4cloud.com/#/', '-1', NULL, 'icon-guanwangfangwen', NULL, '0', '1', '0', b'0', 9, '', '2019-01-17 17:05:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表配置', 'gen_table', 'table', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-table', 'views/gen/table/index', '0', '1', '0', b'1', 30, '1', '2019-07-20 12:02:02', '1', '2019-07-21 10:25:52', NULL, 8, '0');
+INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表配置', 'gen_table', 'tableEntity', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-tableEntity', 'views/codegen/tableEntity/index', '0', '1', '0', b'1', 30, '1', '2019-07-20 12:02:02', '1', '2019-07-21 10:25:52', NULL, 8, '0');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
@@ -400,7 +400,7 @@ CREATE TABLE `sys_oauth_client_details`  (
 INSERT INTO `sys_oauth_client_details` VALUES ('albedo', NULL, 'albedo', 'server', 'password,refresh_token,authorization_code,client_credentials', 'http://localhost:4040/sso1/login,http://localhost:4041/sso1/login', NULL, NULL, NULL, NULL, 'true');
 INSERT INTO `sys_oauth_client_details` VALUES ('app', NULL, 'app', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 INSERT INTO `sys_oauth_client_details` VALUES ('daemon', NULL, 'daemon', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('gen', NULL, 'gen', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_details` VALUES ('codegen', NULL, 'codegen', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 INSERT INTO `sys_oauth_client_details` VALUES ('swagger', NULL, 'swagger', 'all', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 
 -- ----------------------------

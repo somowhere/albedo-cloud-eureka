@@ -33,6 +33,6 @@
 		<module>albedo-common-core</module>
 		<module>albedo-common-log</module>
 		<module>albedo-common-security</module>
-		<module>albedo-common-modules-base</module>
+		<module>albedo-common-module-base</module>
 	</modules>
 </project>

@@ -21,7 +21,7 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.admin.domain.Role;
+import com.albedo.java.modules.admin.domain.RoleEntity;
 import com.albedo.java.modules.admin.vo.RoleDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -92,7 +92,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 */
 	@GetMapping("/combo-data")
 	public R comboData() {
-		return R.createSuccessData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), Role.F_ID, Role.F_NAME));
+		return R.createSuccessData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), RoleEntity.F_ID, RoleEntity.F_NAME));
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R saveRoleMenus(String roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
-		Role role = service.getById(roleId);
-		return new R<>(roleMenuService.saveRoleMenus(role.getCode(), roleId, menuIds));
+		RoleEntity roleEntity = service.getById(roleId);
+		return new R<>(roleMenuService.saveRoleMenus(roleEntity.getCode(), roleId, menuIds));
 	}
 }

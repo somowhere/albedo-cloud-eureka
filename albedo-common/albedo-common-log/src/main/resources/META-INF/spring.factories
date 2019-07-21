@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.albedo.java.common.log.config.LogAutoConfiguration
+    com.albedo.java.common.logEntity.config.LogAutoConfiguration
 org.springframework.context.ApplicationContextInitializer=\
-    com.albedo.java.common.log.init.ApplicationLoggerInitializer
+    com.albedo.java.common.logEntity.init.ApplicationLoggerInitializer

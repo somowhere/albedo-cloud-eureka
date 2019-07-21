@@ -16,14 +16,14 @@
   -->
 
 <template>
-  <div class="user">
+  <div class="userEntity">
     <basic-container>
       <avue-crud :option="option"
                  ref="crud"
                  v-model="form"
                  :page="page"
                  @on-load="getList"
-                 :table-loading="listLoading"
+                 :tableEntity-loading="listLoading"
                  @search-change="handleFilter"
                  @refresh-change="handleRefreshChange"
                  @row-update="update"
@@ -43,11 +43,11 @@
                   slot-scope="scope">
           <span>{{scope.row.username}}</span>
         </template>
-        <template slot="role"
+        <template slot="roleEntity"
                   slot-scope="scope">
-              <span v-for="(role,index) in scope.row.roleList"
+              <span v-for="(roleEntity,index) in scope.row.roleEntityList"
                     :key="index">
-                <el-tag>{{role.name}} </el-tag>&nbsp;&nbsp;
+                <el-tag>{{roleEntity.name}} </el-tag>&nbsp;&nbsp;
               </span>
         </template>
         <template slot="deptId"
@@ -58,7 +58,7 @@
                   slot-scope="scope">
           <el-tag>{{scope.label}}</el-tag>
         </template>
-        <template slot="menu"
+        <template slot="menuEntity"
                   slot-scope="scope">
           <el-button v-if="sys_user_edit"
                      size="small"
@@ -84,7 +84,7 @@
         </template>
         <template slot="roleForm"
                   slot-scope="scope">
-          <avue-crud-select v-model="role"
+          <avue-crud-select v-model="roleEntity"
                             multiple
                             placeholder="请选择角色"
                             :dic="rolesOptions"
@@ -97,10 +97,10 @@
 </template>
 
 <script>
-  import {addObj, delObj, fetchList, getObj, putObj} from "@/api/admin/user";
-  import {deptRoleList} from "@/api/admin/role";
-  import {fetchTree} from "@/api/admin/dept";
-  import {tableOption} from '@/const/crud/admin/user';
+  import {addObj, delObj, fetchList, getObj, putObj} from "@/api/admin/userEntity";
+  import {deptRoleList} from "@/api/admin/roleEntity";
+  import {fetchTree} from "@/api/admin/deptEntity";
+  import {tableOption} from '@/const/crud/admin/userEntity';
   import {mapGetters} from "vuex";
   import {constants} from 'fs';
   import {connect} from 'tls';
@@ -128,7 +128,7 @@
         },
         list: [],
         listLoading: true,
-        role: [],
+        roleEntity: [],
         form: {},
         rolesOptions: [],
       };
@@ -137,8 +137,8 @@
       ...mapGetters(["permissions"])
     },
     watch: {
-      role() {
-        this.form.role = this.role
+      roleEntity() {
+        this.form.roleEntity = this.roleEntity
       }
     },
     created() {
@@ -183,15 +183,15 @@
         window.boxType = type;
         this.handleDept();
         if (['edit', 'views'].includes(type)) {
-          this.role = [];
-          for (var i = 0; i < this.form.roleList.length; i++) {
-            this.role[i] = this.form.roleList[i].roleId;
+          this.roleEntity = [];
+          for (var i = 0; i < this.form.roleEntityList.length; i++) {
+            this.roleEntity[i] = this.form.roleEntityList[i].roleId;
           }
           deptRoleList().then(response => {
             this.rolesOptions = response.data;
           });
         } else if (type === 'add') {
-          this.role = [];
+          this.roleEntity = [];
         }
         show();
       },
@@ -261,7 +261,7 @@
   };
 </script>
 <style lang="scss">
-  .user {
+  .userEntity {
     height: 100%;
 
     &__tree {

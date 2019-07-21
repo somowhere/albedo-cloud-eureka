@@ -1,26 +1,26 @@
 <template>
-  <div class="top-menu">
-    <el-menu :default-active="activeIndex"
+  <div class="top-menuEntity">
+    <el-menuEntity :default-active="activeIndex"
              mode="horizontal"
              text-color="#333">
       <template v-for="(item,index) in items">
-        <el-menu-item :index="item.parentId+''"
+        <el-menuEntity-item :index="item.parentId+''"
                       @click.native="openMenu(item)"
                       :key="index">
           <template slot="title">
             <i :class="item.icon"></i>
             <span>{{item.label}}</span>
           </template>
-        </el-menu-item>
+        </el-menuEntity-item>
       </template>
-    </el-menu>
+    </el-menuEntity>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "top-menu",
+  name: "top-menuEntity",
   data() {
     return {
       activeIndex: "0",
@@ -30,7 +30,7 @@ export default {
   created() {
   },
   computed: {
-    ...mapGetters(["tagCurrent", "menu"])
+    ...mapGetters(["tagCurrent", "menuEntity"])
   },
   methods: {
     openMenu(item) {
@@ -43,10 +43,10 @@ export default {
         if (item.path) {
           itemActive = item;
         } else {
-          if (this.menu[childItemActive].length == 0) {
-            itemActive = this.menu[childItemActive];
+          if (this.menuEntity[childItemActive].length == 0) {
+            itemActive = this.menuEntity[childItemActive];
           } else {
-            itemActive = this.menu[childItemActive].children[childItemActive];
+            itemActive = this.menuEntity[childItemActive].children[childItemActive];
           }
         }
         this.$router.push({

@@ -1,7 +1,7 @@
 <template>
-  <div class="menu-wrapper">
-    <template v-for="item in menu">
-      <el-menu-item v-if="validatenull(item[childrenKey]) && vaildRoles(item)"
+  <div class="menuEntity-wrapper">
+    <template v-for="item in menuEntity">
+      <el-menuEntity-item v-if="validatenull(item[childrenKey]) && vaildRoles(item)"
                     :index="item[pathKey]"
                     @click="open(item)"
                     :key="item[labelKey]"
@@ -9,26 +9,26 @@
         <i :class="item[iconKey]"></i>
         <span slot="title"
               :alt="item[pathKey]">{{item[labelKey]}}</span>
-      </el-menu-item>
+      </el-menuEntity-item>
       <el-submenu v-else-if="!validatenull(item[childrenKey])&&vaildRoles(item)"
                   :index="item[pathKey]"
                   :key="item[labelKey]">
         <template slot="title">
           <i :class="item[iconKey]"></i>
           <span slot="title"
-                :class="{'el-menu--display':collapse && first}">{{item[labelKey]}}</span>
+                :class="{'el-menuEntity--display':collapse && first}">{{item[labelKey]}}</span>
         </template>
         <template v-for="(child,cindex) in item[childrenKey]">
-          <el-menu-item :index="child[pathKey],cindex"
+          <el-menuEntity-item :index="child[pathKey],cindex"
                         @click="open(child)"
                         :class="{'is-active':vaildAvtive(child)}"
                         v-if="validatenull(child[childrenKey])"
                         :key="child[labelKey]">
             <i :class="child[iconKey]"></i>
             <span slot="title">{{child[labelKey]}}</span>
-          </el-menu-item>
+          </el-menuEntity-item>
           <sidebar-item v-else
-                        :menu="[child]"
+                        :menuEntity="[child]"
                         :key="cindex"
                         :props="props"
                         :screen="screen"
@@ -50,7 +50,7 @@ export default {
     };
   },
   props: {
-    menu: {
+    menuEntity: {
       type: Array
     },
     screen: {

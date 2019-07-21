@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.service;
 
 import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.admin.vo.RoleDataVo;
-import com.albedo.java.modules.admin.domain.Role;
+import com.albedo.java.modules.admin.domain.RoleEntity;
 import com.albedo.java.modules.admin.repository.RoleRepository;
 
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface RoleService extends DataVoService<RoleRepository, Role, String, RoleDataVo> {
+public interface RoleService extends DataVoService<RoleRepository, RoleEntity, String, RoleDataVo> {
 
 	/**
 	 * 通过用户ID，查询角色信息
@@ -39,7 +39,7 @@ public interface RoleService extends DataVoService<RoleRepository, Role, String,
 	 * @param userId
 	 * @return
 	 */
-	List<Role> listRolesByUserId(String userId);
+	List<RoleEntity> listRolesByUserId(String userId);
 
 	/**
 	 * 通过角色ID，删除角色

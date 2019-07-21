@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.repository;
 
-import com.albedo.java.modules.admin.domain.DeptRelation;
+import com.albedo.java.modules.admin.domain.DeptRelationEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -27,7 +27,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DeptRelationRepository extends BaseMapper<DeptRelation> {
+public interface DeptRelationRepository extends BaseMapper<DeptRelationEntity> {
 	/**
 	 * 删除部门关系表数据
 	 *
@@ -38,8 +38,8 @@ public interface DeptRelationRepository extends BaseMapper<DeptRelation> {
 	/**
 	 * 更改部分关系表数据
 	 *
-	 * @param deptRelation
+	 * @param deptRelationEntity
 	 */
-	void updateDeptRelations(DeptRelation deptRelation);
+	void updateDeptRelations(DeptRelationEntity deptRelationEntity);
 
 }

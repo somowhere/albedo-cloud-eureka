@@ -18,12 +18,12 @@ package com.albedo.java.modules.admin.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.admin.domain.RoleDept;
+import com.albedo.java.modules.admin.domain.RoleDeptEntity;
 import com.albedo.java.modules.admin.service.RoleDeptService;
 import com.albedo.java.modules.admin.service.RoleMenuService;
 import com.albedo.java.modules.admin.vo.RoleDataVo;
-import com.albedo.java.modules.admin.domain.Role;
-import com.albedo.java.modules.admin.domain.RoleMenu;
+import com.albedo.java.modules.admin.domain.RoleEntity;
+import com.albedo.java.modules.admin.domain.RoleMenuEntity;
 import com.albedo.java.modules.admin.repository.RoleRepository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.admin.service.RoleService;
@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class RoleServiceImpl extends
-	DataVoServiceImpl<RoleRepository, Role, String, RoleDataVo> implements RoleService {
+	DataVoServiceImpl<RoleRepository, RoleEntity, String, RoleDataVo> implements RoleService {
 	private RoleMenuService roleMenuService;
 	private RoleDeptService roleDeptService;
 	private final CacheManager cacheManager;
@@ -56,8 +56,8 @@ public class RoleServiceImpl extends
 	public RoleDataVo findOneVo(String id) {
 		RoleDataVo oneVo = super.findOneVo(id);
 		oneVo.setMenuIdList(roleMenuService.list(Wrappers
-			.<RoleMenu>query().lambda()
-			.eq(RoleMenu::getRoleId, id)).stream().map(RoleMenu::getMenuId).collect(Collectors.toList()));
+			.<RoleMenuEntity>query().lambda()
+			.eq(RoleMenuEntity::getRoleId, id)).stream().map(RoleMenuEntity::getMenuId).collect(Collectors.toList()));
 		return oneVo;
 	}
 
@@ -85,8 +85,8 @@ public class RoleServiceImpl extends
 	public Boolean removeRoleByIds(List<String> ids) {
 		ids.forEach(id->{
 			roleMenuService.remove(Wrappers
-				.<RoleMenu>update().lambda()
-				.eq(RoleMenu::getRoleId, id));
+				.<RoleMenuEntity>update().lambda()
+				.eq(RoleMenuEntity::getRoleId, id));
 			this.removeById(id);
 		});
 		return Boolean.TRUE;
@@ -97,26 +97,26 @@ public class RoleServiceImpl extends
 	@CacheEvict(value = "menu_details", key = "#roleDataVo.id  + '_menu'")
 	public void save(RoleDataVo roleDataVo) {
 		super.save(roleDataVo);
-		roleMenuService.remove(Wrappers.<RoleMenu>query().lambda()
-			.eq(RoleMenu::getRoleId, roleDataVo.getId()));
-		List<RoleMenu> roleMenuList = roleDataVo.getMenuIdList().stream().map(menuId -> {
-				RoleMenu roleMenu = new RoleMenu();
-				roleMenu.setRoleId(roleDataVo.getId());
-				roleMenu.setMenuId(menuId);
-				return roleMenu;
+		roleMenuService.remove(Wrappers.<RoleMenuEntity>query().lambda()
+			.eq(RoleMenuEntity::getRoleId, roleDataVo.getId()));
+		List<RoleMenuEntity> roleMenuEntityList = roleDataVo.getMenuIdList().stream().map(menuId -> {
+				RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
+				roleMenuEntity.setRoleId(roleDataVo.getId());
+				roleMenuEntity.setMenuId(menuId);
+				return roleMenuEntity;
 			}).collect(Collectors.toList());
 
-		roleMenuService.saveBatch(roleMenuList);
+		roleMenuService.saveBatch(roleMenuEntityList);
 		if(CollUtil.isNotEmpty(roleDataVo.getDeptIdList())){
-			roleDeptService.remove(Wrappers.<RoleDept>query().lambda()
-				.eq(RoleDept::getRoleId, roleDataVo.getId()));
-			List<RoleDept> roleDeptList = roleDataVo.getDeptIdList().stream().map(deptId -> {
-				RoleDept roleDept = new RoleDept();
-				roleDept.setRoleId(roleDataVo.getId());
-				roleDept.setDeptId(deptId);
-				return roleDept;
+			roleDeptService.remove(Wrappers.<RoleDeptEntity>query().lambda()
+				.eq(RoleDeptEntity::getRoleId, roleDataVo.getId()));
+			List<RoleDeptEntity> roleDeptEntityList = roleDataVo.getDeptIdList().stream().map(deptId -> {
+				RoleDeptEntity roleDeptEntity = new RoleDeptEntity();
+				roleDeptEntity.setRoleId(roleDataVo.getId());
+				roleDeptEntity.setDeptId(deptId);
+				return roleDeptEntity;
 			}).collect(Collectors.toList());
-			roleDeptService.saveBatch(roleDeptList);
+			roleDeptService.saveBatch(roleDeptEntityList);
 		}
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();

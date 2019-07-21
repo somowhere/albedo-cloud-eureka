@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.repository;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.albedo.java.modules.admin.domain.UserRole;
+import com.albedo.java.modules.admin.domain.UserRoleEntity;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -29,7 +29,7 @@ import org.apache.ibatis.annotations.Param;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface UserRoleRepository extends BaseMapper<UserRole> {
+public interface UserRoleRepository extends BaseMapper<UserRoleEntity> {
 	/**
 	 * 根据用户Id删除该用户的角色关系
 	 *

@@ -19,11 +19,12 @@ package com.albedo.java.modules.admin.service.impl;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.admin.domain.Menu;
-import com.albedo.java.modules.admin.domain.RoleMenu;
+import com.albedo.java.modules.admin.domain.MenuEntity;
+import com.albedo.java.modules.admin.domain.RoleMenuEntity;
 import com.albedo.java.modules.admin.repository.MenuRepository;
 import com.albedo.java.modules.admin.repository.RoleMenuRepository;
 import com.albedo.java.modules.admin.service.MenuService;
@@ -32,6 +33,7 @@ import com.albedo.java.modules.admin.vo.MenuDataVo;
 import com.albedo.java.modules.admin.vo.MenuTree;
 import com.albedo.java.modules.admin.vo.MenuVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -53,30 +55,76 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MenuServiceImpl extends
-	TreeVoServiceImpl<MenuRepository, Menu, MenuDataVo> implements MenuService {
+	TreeVoServiceImpl<MenuRepository, MenuEntity, MenuDataVo> implements MenuService {
 	private final RoleMenuRepository roleMenuRepository;
 
 	@Override
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<MenuVo> getMenuByRoleId(String roleId) {
-		return baseMapper.listMenusByRoleId(roleId, CommonConstants.YES);
+		List<MenuVo> menuAllList = baseMapper.listMenuVos(CommonConstants.YES);
+		List<MenuVo> menuVoList = baseMapper.listMenuVosByRoleId(roleId, CommonConstants.YES);
+		List<String> parentIdList = Lists.newArrayList();
+		for(MenuVo menuVo : menuVoList){
+			if(menuVo.getParentId()!=null){
+				if(!parentIdList.contains(menuVo.getParentId())){
+					parentIdList.add(menuVo.getParentId());
+				}
+			}
+			if(menuVo.getParentIds()!=null){
+				String[] parentIds = menuVo.getParentIds().split(",");
+				for(String parentId : parentIds){
+					if(!parentIdList.contains(parentId)){
+						parentIdList.add(parentId);
+					}
+				}
+			}
+		}
+		if(ObjectUtil.isNotEmpty(parentIdList)){
+			for(String parenId: parentIdList){
+				if(!contain(parenId, menuVoList)){
+					MenuVo menuVo = get(parenId, menuAllList);
+					if(menuVo!=null){
+						menuVoList.add(menuVo);
+					}
+				}
+			}
+		}
+		return menuVoList;
+
+	}
+	private MenuVo get(String id, List<MenuVo> resourceList){
+		for(MenuVo resource : resourceList){
+			if(resource.getId().equals(id)){
+				return resource;
+			}
+		}
+		return null;
 	}
 
+
+	private boolean contain(String id, List<MenuVo> resourceList){
+		for(MenuVo resource : resourceList){
+			if(resource.getId().equals(id)){
+				return true;
+			}
+		}
+		return false;
+	}
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
 	public void removeMenuById(List<String> ids) {
 		ids.forEach(id->{
 			// 查询父节点为当前节点的节点
-			List<Menu> menuList = this.list(Wrappers.<Menu>query()
-				.lambda().eq(Menu::getParentId, id));
-			if (CollUtil.isNotEmpty(menuList)) {
+			List<MenuEntity> menuEntityList = this.list(Wrappers.<MenuEntity>query()
+				.lambda().eq(MenuEntity::getParentId, id));
+			if (CollUtil.isNotEmpty(menuEntityList)) {
 				throw new RuntimeMsgException("菜单含有下级不能删除");
 			}
 
 			roleMenuRepository
-				.delete(Wrappers.<RoleMenu>query()
-					.lambda().eq(RoleMenu::getMenuId, id));
+				.delete(Wrappers.<RoleMenuEntity>query()
+					.lambda().eq(RoleMenuEntity::getMenuId, id));
 			//删除当前菜单及其子菜单
 			this.removeById(id);
 		});
@@ -91,77 +139,77 @@ public class MenuServiceImpl extends
 
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
-	public boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo) {
+	public boolean saveByGenScheme(GenSchemeDataVo schemeDataVo) {
 
-		String moduleName= genSchemeDataVo.getSchemeName(),
-			parentMenuId= genSchemeDataVo.getParentMenuId(),
-			url= genSchemeDataVo.getUrl();
+		String moduleName= schemeDataVo.getSchemeName(),
+			parentMenuId= schemeDataVo.getParentMenuId(),
+			url= schemeDataVo.getUrl();
 		String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0,permission.length()-1)+"%";
-		List<Menu> currentMenuList = baseMapper.selectList(Wrappers.<Menu>query()
-				.lambda().eq(Menu::getName, moduleName)
-				.like(Menu::getPermission, permissionLike)
+		List<MenuEntity> currentMenuEntityList = baseMapper.selectList(Wrappers.<MenuEntity>query()
+				.lambda().eq(MenuEntity::getName, moduleName)
+				.like(MenuEntity::getPermission, permissionLike)
 		);
-		for(Menu currentMenu : currentMenuList){
-			if (currentMenu != null) {
-				baseMapper.delete(Wrappers.<Menu>query()
+		for(MenuEntity currentMenuEntity : currentMenuEntityList){
+			if (currentMenuEntity != null) {
+				baseMapper.delete(Wrappers.<MenuEntity>query()
 					.lambda()
-					.like(Menu::getPermission, permissionLike)
-					.and(i->i.eq(Menu::getId, currentMenu.getId())
-						.or().eq(Menu::getParentId, currentMenu.getId()))
+					.like(MenuEntity::getPermission, permissionLike)
+					.and(i->i.eq(MenuEntity::getId, currentMenuEntity.getId())
+						.or().eq(MenuEntity::getParentId, currentMenuEntity.getId()))
 				);
 			}
 		}
-		Menu parentMenu = baseMapper.selectById(parentMenuId);
-		Assert.isTrue(parentMenu != null, StringUtil.toAppendStr("根据模块id[", parentMenuId, "无法查询到模块信息]"));
+		MenuEntity parentMenuEntity = baseMapper.selectById(parentMenuId);
+		Assert.isTrue(parentMenuEntity != null, StringUtil.toAppendStr("根据模块id[", parentMenuId, "无法查询到模块信息]"));
 
 
-		Menu module = new Menu();
+		MenuEntity module = new MenuEntity();
 		module.setPermission(permission.substring(0, permission.length() - 1));
 		module.setName(moduleName);
-		module.setParentId(parentMenu.getId());
-		module.setType(Menu.TYPE_MENU);
+		module.setParentId(parentMenuEntity.getId());
+		module.setType(MenuEntity.TYPE_MENU);
 		module.setIcon("icon-right-square");
 		module.setPath(url + "list");
 		module.setComponent("views/modules"+url+"index");
 		save(module);
 
-		Menu moduleView = new Menu();
+		MenuEntity moduleView = new MenuEntity();
 		moduleView.setParent(module);
 		moduleView.setName("查看");
 		moduleView.setIcon("fa-info-circle");
 		moduleView.setPermission(permission + "view");
 		moduleView.setParentId(module.getId());
-		moduleView.setType(Menu.TYPE_BUTTON);
+		moduleView.setType(MenuEntity.TYPE_BUTTON);
 		moduleView.setSort(20);
 		moduleView.setPath(url);
 		save(moduleView);
-		Menu moduleEdit = new Menu();
+		MenuEntity moduleEdit = new MenuEntity();
 		moduleEdit.setParent(module);
 		moduleEdit.setName("编辑");
 //        moduleEdit.setIconCls("icon-edit-fill");
 		moduleEdit.setPermission(permission + "edit");
 		moduleEdit.setParentId(module.getId());
-		moduleEdit.setType(Menu.TYPE_BUTTON);
+		moduleEdit.setType(MenuEntity.TYPE_BUTTON);
 		moduleEdit.setSort(40);
 		moduleEdit.setPath(url);
 		save(moduleEdit);
-		Menu moduleLock = new Menu();
+		MenuEntity moduleLock = new MenuEntity();
 		moduleLock.setParent(module);
 		moduleLock.setName("锁定");
 //        moduleLock.setIconCls("fa-lock");
 		moduleLock.setPermission(permission + "lock");
 		moduleLock.setParentId(module.getId());
-		moduleLock.setType(Menu.TYPE_BUTTON);
+		moduleLock.setType(MenuEntity.TYPE_BUTTON);
 		moduleLock.setSort(60);
 		moduleLock.setPath(url);
 		save(moduleLock);
-		Menu moduleDelete = new Menu();
+		MenuEntity moduleDelete = new MenuEntity();
 		moduleDelete.setParent(module);
 		moduleDelete.setName("删除");
 //        moduleDelete.setIconCls("fa-trash-o");
 		moduleDelete.setPermission(permission + "delete");
 		moduleDelete.setParentId(module.getId());
-		moduleDelete.setType(Menu.TYPE_BUTTON);
+		moduleDelete.setType(MenuEntity.TYPE_BUTTON);
 		moduleDelete.setSort(80);
 		moduleDelete.setPath(url);
 		save(moduleDelete);
@@ -172,20 +220,20 @@ public class MenuServiceImpl extends
 	public List<MenuTree> listMenuTrees() {
 		List<MenuTree> trees = new ArrayList<>();
 		MenuTree node;
-		List<Menu> menus = baseMapper.selectList(Wrappers.emptyWrapper());
-		for (Menu menu : menus) {
+		List<MenuEntity> menuEntities = baseMapper.selectList(Wrappers.emptyWrapper());
+		for (MenuEntity menuEntity : menuEntities) {
 			node = new MenuTree();
-			node.setId(menu.getId());
-			node.setParentId(menu.getParentId());
-			node.setName(menu.getName());
-			node.setPath(menu.getPath());
-			node.setCode(menu.getPermission());
-			node.setLabel(menu.getName());
-			node.setComponent(menu.getComponent());
-			node.setIcon(menu.getIcon());
-			node.setKeepAlive(menu.getKeepAlive());
+			node.setId(menuEntity.getId());
+			node.setParentId(menuEntity.getParentId());
+			node.setName(menuEntity.getName());
+			node.setPath(menuEntity.getPath());
+			node.setCode(menuEntity.getPermission());
+			node.setLabel(menuEntity.getName());
+			node.setComponent(menuEntity.getComponent());
+			node.setIcon(menuEntity.getIcon());
+			node.setKeepAlive(menuEntity.getKeepAlive());
 			trees.add(node);
 		}
-		return TreeUtil.buildByLoop(trees, Menu.ROOT);
+		return TreeUtil.buildByLoop(trees, MenuEntity.ROOT);
 	}
 }

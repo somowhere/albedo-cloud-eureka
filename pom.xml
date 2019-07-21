@@ -49,8 +49,8 @@
 		<springfox.version>2.9.2</springfox.version>
 		<zipkin-storage-mysql.version>2.8.4</zipkin-storage-mysql.version>
 
-		<profile.dev.log.level>INFO</profile.dev.log.level>
-		<profile.prod.log.level>INFO</profile.prod.log.level>
+		<profile.dev.logEntity.level>INFO</profile.dev.logEntity.level>
+		<profile.prod.logEntity.level>INFO</profile.prod.logEntity.level>
 	</properties>
 
 	<dependencies>
@@ -117,6 +117,7 @@
 		<module>albedo-modules</module>
 		<module>albedo-common</module>
 		<module>albedo-plugins</module>
+		<module>albedo-ui</module>
 	</modules>
 
 	<dependencyManagement>
@@ -308,8 +309,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- log configuration -->
-				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
+				<!-- logEntity configuration -->
+				<logback.loglevel>${profile.dev.logEntity.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev</spring.profiles.active>
 			</properties>
@@ -317,8 +318,8 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<!-- log configuration -->
-				<logback.loglevel>${profile.prod.log.level}</logback.loglevel>
+				<!-- logEntity configuration -->
+				<logback.loglevel>${profile.prod.logEntity.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>prod</spring.profiles.active>
 			</properties>

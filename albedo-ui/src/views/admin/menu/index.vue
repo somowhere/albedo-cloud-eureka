@@ -153,11 +153,11 @@
 </template>
 
 <script>
-  import {addObj, delObj, fetchMenuTree, getObj, putObj} from '@/api/admin/menu'
+  import {addObj, delObj, fetchMenuTree, getObj, putObj} from '@/api/admin/menuEntity'
   import {mapGetters} from 'vuex'
 
   export default {
-    name: 'menu',
+    name: 'menuEntity',
     data() {
       return {
         list: null,

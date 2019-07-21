@@ -24,7 +24,7 @@ import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.admin.vo.*;
-import com.albedo.java.modules.admin.domain.Menu;
+import com.albedo.java.modules.admin.domain.MenuEntity;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.albedo.java.modules.admin.service.MenuService;
 import com.albedo.java.common.core.constant.CommonConstants;
@@ -80,7 +80,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 			.map(MenuTree::new)
 			.sorted(Comparator.comparingInt(MenuTree::getSort))
 			.collect(Collectors.toList());
-		return new R<>(TreeUtil.buildByLoop(menuTreeList, Menu.ROOT));
+		return new R<>(TreeUtil.buildByLoop(menuTreeList, MenuEntity.ROOT));
 	}
 
 	/**
@@ -158,13 +158,13 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	/**
 	 * 新增代码生成菜单
 	 *
-	 * @param genSchemeDataVo 菜单信息
+	 * @param schemeDataVo 菜单信息
 	 * @return success/false
 	 */
 	@Inner
 	@PostMapping("/gen")
-	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo genSchemeDataVo) {
-		service.saveByGenScheme(genSchemeDataVo);
+	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo schemeDataVo) {
+		service.saveByGenScheme(schemeDataVo);
 		return R.createSuccess("操作成功");
 	}
 

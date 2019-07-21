@@ -106,11 +106,11 @@
 </template>
 
 <script>
-  import {addObj, delObj, fetchTree, getObj, putObj} from '@/api/admin/dept'
+  import {addObj, delObj, fetchTree, getObj, putObj} from '@/api/admin/deptEntity'
   import {mapGetters} from 'vuex'
 
   export default {
-    name: 'dept',
+    name: 'deptEntity',
     data() {
       return {
         list: null,

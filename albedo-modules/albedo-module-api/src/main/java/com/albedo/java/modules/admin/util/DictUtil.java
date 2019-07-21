@@ -4,7 +4,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.core.vo.SelectResult;
-import com.albedo.java.modules.admin.domain.Dict;
+import com.albedo.java.modules.admin.domain.DictEntity;
 import com.albedo.java.modules.admin.feign.RemoteDictService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -23,17 +23,17 @@ import java.util.Map;
 public class DictUtil {
 	public static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
 	public static RemoteDictService remoteDictService = SpringContextHolder.getBean(RemoteDictService.class);
-    public static List<Dict> getDictList() {
-		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
-		if (cache != null && cache.get(Dict.CACHE_DICT_ALL) != null) {
-			return (List<Dict>) cache.get(Dict.CACHE_DICT_ALL).get();
+    public static List<DictEntity> getDictList() {
+		Cache cache = cacheManager.getCache(DictEntity.CACHE_DICT_DETAILS);
+		if (cache != null && cache.get(DictEntity.CACHE_DICT_ALL) != null) {
+			return (List<DictEntity>) cache.get(DictEntity.CACHE_DICT_ALL).get();
 		}
 		try{
 			String dictListStr = remoteDictService.getDictAll(SecurityConstants.FROM_IN).getData();
 			if(ObjectUtil.isNotEmpty(dictListStr)){
-				List<Dict> dictList = Json.parseArray(dictListStr, Dict.class);
-				cache.put(Dict.CACHE_DICT_ALL, dictList);
-				return dictList;
+				List<DictEntity> dictEntityList = Json.parseArray(dictListStr, DictEntity.class);
+				cache.put(DictEntity.CACHE_DICT_ALL, dictEntityList);
+				return dictEntityList;
 			}
 		}catch (Exception e){
 			log.warn("{}",e);
@@ -47,16 +47,16 @@ public class DictUtil {
      * @param code
      * @return
      */
-    public static Dict getCodeItem(String code) {
-        Dict dict = null;
-        List<Dict> list = DictUtil.getDictList();
-        for (Dict item : list) {
+    public static DictEntity getCodeItem(String code) {
+        DictEntity dictEntity = null;
+        List<DictEntity> list = DictUtil.getDictList();
+        for (DictEntity item : list) {
             if (item.getCode().equals(code)) {
-                dict = item;
+                dictEntity = item;
 
             }
         }
-        return dict == null ? null : dict;
+        return dictEntity == null ? null : dictEntity;
     }
 
     /**
@@ -66,25 +66,25 @@ public class DictUtil {
      * @return
      */
     public static String getCodeItemVal(String code) {
-        Dict dict = getCodeItem(code);
-        return dict == null ? null : dict.getVal();
+        DictEntity dictEntity = getCodeItem(code);
+        return dictEntity == null ? null : dictEntity.getVal();
     }
 
 	public static Map<String,List<SelectResult>> getSelectResultListByCodes(String... codes) {
     	return getSelectResultListByCodes(DictUtil.getDictList(), codes);
 	}
-    public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
+    public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<DictEntity> dictEntityList, String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
-		if(ObjectUtil.isEmpty(dictList)){
+		if(ObjectUtil.isEmpty(dictEntityList)){
 			return map;
 		}
-		List<Dict> dictCodes = Lists.newArrayList();
+		List<DictEntity> dictEntityCodes = Lists.newArrayList();
 		if(ObjectUtil.isNotEmpty(codes)){
 			for(String codeItem : codes){
-				for(Dict dict : dictList){
+				for(DictEntity dictEntity : dictEntityList){
 					//命中的数据字段
-					if(codeItem.equals(dict.getCode())){
-						dictCodes.add(dict);
+					if(codeItem.equals(dictEntity.getCode())){
+						dictEntityCodes.add(dictEntity);
 						break;
 					}
 				}
@@ -93,10 +93,10 @@ public class DictUtil {
 //                }
 			}
 		}else{
-			dictCodes = dictList;
+			dictEntityCodes = dictEntityList;
 		}
-		dictCodes.forEach(dict ->{
-			List<SelectResult> dictTempList = getDictList(dictList, dict);
+		dictEntityCodes.forEach(dict ->{
+			List<SelectResult> dictTempList = getDictList(dictEntityList, dict);
 			if(CollUtil.isNotEmpty(dictTempList)){
 				map.put(dict.getCode(), dictTempList);
 			}
@@ -108,11 +108,11 @@ public class DictUtil {
 		return map;
     }
 
-	private static List<SelectResult> getDictList(List<Dict> dictList, Dict dict) {
+	private static List<SelectResult> getDictList(List<DictEntity> dictEntityList, DictEntity dictEntity) {
 		List<SelectResult> list = Lists.newLinkedList();
-		if(CollUtil.isNotEmpty(dictList)){
-			for(Dict item : dictList){
-				if(CommonConstants.YES.equals(item.getShow()) && StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dict.getId())){
+		if(CollUtil.isNotEmpty(dictEntityList)){
+			for(DictEntity item : dictEntityList){
+				if(CommonConstants.YES.equals(item.getShow()) && StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dictEntity.getId())){
 					list.add(new SelectResult(item.getVal(), item.getName(), item.getVersion()));
 				}
 			}

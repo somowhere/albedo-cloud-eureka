@@ -19,7 +19,7 @@ package com.albedo.java.common.log.aspect;
 import com.albedo.java.common.core.util.SpringContextHolder;
 import com.albedo.java.common.log.event.SysLogEvent;
 import com.albedo.java.common.log.util.SysLogUtils;
-import com.albedo.java.modules.admin.domain.Log;
+import com.albedo.java.modules.admin.domain.LogEntity;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -42,14 +42,14 @@ public class SysLogAspect {
 		String strMethodName = point.getSignature().getName();
 		log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);
 
-		Log logVo = SysLogUtils.getSysLog();
-		logVo.setTitle(sysLog.value());
+		LogEntity logEntityVo = SysLogUtils.getSysLog();
+		logEntityVo.setTitle(sysLog.value());
 		// 发送异步日志事件
 		Long startTime = System.currentTimeMillis();
 		Object obj = point.proceed();
 		Long endTime = System.currentTimeMillis();
-		logVo.setTime(endTime - startTime);
-		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
+		logEntityVo.setTime(endTime - startTime);
+		SpringContextHolder.publishEvent(new SysLogEvent(logEntityVo));
 		return obj;
 	}
 

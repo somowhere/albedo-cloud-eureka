@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.service.impl;
 
-import com.albedo.java.modules.admin.domain.OauthClientDetails;
+import com.albedo.java.modules.admin.domain.OauthClientDetailsEntity;
 import com.albedo.java.modules.admin.repository.OauthClientDetailsRepository;
 import com.albedo.java.modules.admin.service.OauthClientDetailsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
  * @since 2019/2/1
  */
 @Service
-public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsRepository, OauthClientDetails> implements OauthClientDetailsService {
+public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsRepository, OauthClientDetailsEntity> implements OauthClientDetailsService {
 
 	/**
 	 * 通过ID删除客户端
@@ -55,7 +55,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
 	 */
 	@Override
 	@CacheEvict(value = SecurityConstants.CLIENT_DETAILS_KEY, key = "#clientDetails.clientId")
-	public Boolean updateClientDetailsById(OauthClientDetails clientDetails) {
+	public Boolean updateClientDetailsById(OauthClientDetailsEntity clientDetails) {
 		return this.updateById(clientDetails);
 	}
 }

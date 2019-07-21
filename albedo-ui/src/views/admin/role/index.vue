@@ -23,7 +23,7 @@
                  ref="crud"
                  :page="page"
                  v-model="form"
-                 :table-loading="listLoading"
+                 :tableEntity-loading="listLoading"
                  :before-open="handleOpenBefore"
                  @on-load="getList"
                  @search-change="handleFilter"
@@ -41,7 +41,7 @@
           </el-button>
         </template>
 
-        <template slot="menu"
+        <template slot="menuEntity"
                   slot-scope="scope">
           <el-button size="mini"
                      type="text"
@@ -90,9 +90,9 @@
 </template>
 
 <script>
-  import {addObj, delObj, fetchList, fetchRoleTree, getObj, permissionUpd, putObj} from '@/api/admin/role'
-  import {tableOption} from '@/const/crud/admin/role'
-  import {fetchMenuTree} from '@/api/admin/menu'
+  import {addObj, delObj, fetchList, fetchRoleTree, getObj, permissionUpd, putObj} from '@/api/admin/roleEntity'
+  import {tableOption} from '@/const/crud/admin/roleEntity'
+  import {fetchMenuTree} from '@/api/admin/menuEntity'
   import {mapGetters} from 'vuex'
 
   export default {

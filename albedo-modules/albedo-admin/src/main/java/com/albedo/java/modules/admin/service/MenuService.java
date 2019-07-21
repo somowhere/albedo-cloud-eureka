@@ -18,9 +18,9 @@ package com.albedo.java.modules.admin.service;
 
 
 import com.albedo.java.common.persistence.service.TreeVoService;
+import com.albedo.java.modules.admin.domain.MenuEntity;
 import com.albedo.java.modules.admin.vo.GenSchemeDataVo;
 import com.albedo.java.modules.admin.vo.MenuDataVo;
-import com.albedo.java.modules.admin.domain.Menu;
 import com.albedo.java.modules.admin.repository.MenuRepository;
 import com.albedo.java.modules.admin.vo.MenuTree;
 import com.albedo.java.modules.admin.vo.MenuVo;
@@ -35,7 +35,7 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDataVo> {
+public interface MenuService extends TreeVoService<MenuRepository, MenuEntity, MenuDataVo> {
 	/**
 	 * 通过角色编号查询URL 权限
 	 *
@@ -53,7 +53,7 @@ public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDat
 	void removeMenuById(List<String> ids);
 
 
-	boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo);
+	boolean saveByGenScheme(GenSchemeDataVo schemeDataVo);
 
 	List<MenuTree> listMenuTrees();
 }

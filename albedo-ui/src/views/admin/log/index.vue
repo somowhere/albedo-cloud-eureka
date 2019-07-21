@@ -16,19 +16,19 @@
   -->
 
 <template>
-  <div class="log">
+  <div class="logEntity">
     <basic-container>
       <avue-crud ref="crud"
                  :page="page"
                  :data="tableData"
-                 :table-loading="tableLoading"
+                 :tableEntity-loading="tableLoading"
                  :option="tableOption"
                  @on-load="getList"
                  @search-change="searchChange"
                  @refresh-change="refreshChange"
                  @row-del="rowDel">
         <template slot-scope="scope"
-                  slot="menu">
+                  slot="menuEntity">
           <el-button type="text"
                      v-if="permissions.sys_log_del"
                      icon="el-icon-delete"
@@ -42,12 +42,12 @@
 </template>
 
 <script>
-  import {delObj, fetchList} from '@/api/admin/log'
-  import {tableOption} from '@/const/crud/admin/log'
+  import {delObj, fetchList} from '@/api/admin/logEntity'
+  import {tableOption} from '@/const/crud/admin/logEntity'
   import {mapGetters} from 'vuex'
 
   export default {
-    name: 'log',
+    name: 'logEntity',
     data() {
       return {
         tableData: [],

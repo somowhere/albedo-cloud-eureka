@@ -16,7 +16,7 @@
 package com.albedo.java.modules.admin.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.admin.domain.Log;
+import com.albedo.java.modules.admin.domain.LogEntity;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.admin.service.LogService;
@@ -46,12 +46,12 @@ public class LogResource {
 	 * 简单分页查询
 	 *
 	 * @param page   分页对象
-	 * @param log 系统日志
+	 * @param logEntity 系统日志
 	 * @return
 	 */
 	@GetMapping("/")
-	public R getLogPage(Page page, Log log) {
-		return new R<>(logService.page(page, Wrappers.query(log)));
+	public R getLogPage(Page page, LogEntity logEntity) {
+		return new R<>(logService.page(page, Wrappers.query(logEntity)));
 	}
 
 	/**
@@ -69,13 +69,13 @@ public class LogResource {
 	/**
 	 * 插入日志
 	 *
-	 * @param log 日志实体
+	 * @param logEntity 日志实体
 	 * @return success/false
 	 */
 	@Inner
 	@PostMapping("/")
-	public R save(@Valid @RequestBody Log log) {
-		return new R<>(logService.save(log));
+	public R save(@Valid @RequestBody LogEntity logEntity) {
+		return new R<>(logService.save(logEntity));
 	}
 
 }

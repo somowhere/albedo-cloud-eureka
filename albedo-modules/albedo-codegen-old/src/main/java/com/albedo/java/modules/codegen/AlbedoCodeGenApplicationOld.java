@@ -46,7 +46,7 @@
 //		final ApplicationContext applicationContext = app.run(args);
 //		Environment env = applicationContext.getEnvironment();
 //
-//		log.info("\n----------------------------------------------------------\n\t" +
+//		logEntity.info("\n----------------------------------------------------------\n\t" +
 //				"Application '{}' is running! Access URLs:\n\t" +
 //				"Local: \t\thttp://localhost:{}\n\t" +
 //				"External: \thttp://{}:{}\n----------------------------------------------------------",

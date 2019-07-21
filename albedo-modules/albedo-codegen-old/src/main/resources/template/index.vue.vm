@@ -4,7 +4,7 @@
       <avue-crud ref="crud"
                  :page="page"
                  :data="tableData"
-                 :table-loading="tableLoading"
+                 :tableEntity-loading="tableLoading"
                  :option="tableOption"
                  @current-change="currentChange"
                  @refresh-change="refreshChange"
@@ -20,7 +20,7 @@
           <br /><br />
         </template>
         <template slot-scope="scope"
-                  slot="menu">
+                  slot="menuEntity">
           <el-button type="primary"
                      v-if="permissions.${moduleName}_${pathName}_edit"
                      icon="el-icon-check"

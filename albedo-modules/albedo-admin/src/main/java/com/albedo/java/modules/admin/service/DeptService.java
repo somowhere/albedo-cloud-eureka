@@ -17,8 +17,8 @@
 package com.albedo.java.modules.admin.service;
 
 import com.albedo.java.common.persistence.service.TreeVoService;
+import com.albedo.java.modules.admin.domain.DeptEntity;
 import com.albedo.java.modules.admin.vo.DeptDataVo;
-import com.albedo.java.modules.admin.domain.Dept;
 import com.albedo.java.modules.admin.repository.DeptRepository;
 import com.albedo.java.common.core.vo.TreeNode;
 
@@ -32,7 +32,7 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
+public interface DeptService  extends TreeVoService<DeptRepository, DeptEntity, DeptDataVo> {
 
 
 	/**

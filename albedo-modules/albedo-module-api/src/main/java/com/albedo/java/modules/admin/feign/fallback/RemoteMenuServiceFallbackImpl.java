@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.feign.fallback;
 
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.admin.vo.GenSchemeDataVo;
-import com.albedo.java.modules.admin.domain.Dict;
+import com.albedo.java.modules.admin.domain.DictEntity;
 import com.albedo.java.modules.admin.feign.RemoteMenuService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +39,11 @@ public class RemoteMenuServiceFallbackImpl implements RemoteMenuService {
 	/**
 	 * 生成菜单
 	 *
-	 * @param genSchemeDataVo
+	 * @param schemeDataVo
 	 */
 	@Override
-	public R<List<Dict>> saveByGenScheme(GenSchemeDataVo genSchemeDataVo, String from) {
-		log.error("feign 查询数据字典信息失败:{}", genSchemeDataVo, cause);
+	public R<List<DictEntity>> saveByGenScheme(GenSchemeDataVo schemeDataVo, String from) {
+		log.error("feign 查询数据字典信息失败:{}", schemeDataVo, cause);
 		return null;
 	}
 

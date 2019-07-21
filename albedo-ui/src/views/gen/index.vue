@@ -21,13 +21,13 @@
       <avue-crud ref="crud"
                  :page="page"
                  :data="tableData"
-                 :table-loading="tableLoading"
+                 :tableEntity-loading="tableLoading"
                  :option="tableOption"
                  @on-load="getList"
                  @refresh-change="refreshChange"
                  @search-change="searchChange">
         <template slot-scope="scope"
-                  slot="menu">
+                  slot="menuEntity">
           <el-button type="text"
                      icon="el-icon-check"
                      size="mini"
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-  import {fetchList, handleDown} from '@/api/gen/gen'
-  import {formOption, tableOption} from '@/const/crud/gen/gen'
+  import {fetchList, handleDown} from '@/api/codegen/codegen'
+  import {formOption, tableOption} from '@/const/crud/codegen/codegen'
   import {mapGetters} from 'vuex'
 
   export default {

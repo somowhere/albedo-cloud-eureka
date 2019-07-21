@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.admin.domain.Dict;
+import com.albedo.java.modules.admin.domain.DictEntity;
 
 /**
  * <p>
@@ -27,6 +27,6 @@ import com.albedo.java.modules.admin.domain.Dict;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DictRepository extends TreeRepository<Dict> {
+public interface DictRepository extends TreeRepository<DictEntity> {
 
 }

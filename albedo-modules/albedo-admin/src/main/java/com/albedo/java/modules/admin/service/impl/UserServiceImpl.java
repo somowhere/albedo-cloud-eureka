@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, String, UserDataVo> implements UserService {
+public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntity, String, UserDataVo> implements UserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final MenuService menuService;
 	private final RoleService roleService;
@@ -70,42 +70,42 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
 	public void save(UserDataVo userDataVo) {
-		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
+		UserEntity userEntity = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new UserEntity();
 		if(StringUtil.isEmpty(userDataVo.getPassword())){
 			userDataVo.setPassword(null);
 		}
-		BeanVoUtil.copyProperties(userDataVo, user, true);
+		BeanVoUtil.copyProperties(userDataVo, userEntity, true);
 		if(StringUtil.isNotEmpty(userDataVo.getPassword())){
-			user.setPassword(ENCODER.encode(userDataVo.getPassword()));
+			userEntity.setPassword(ENCODER.encode(userDataVo.getPassword()));
 		}
-		super.saveOrUpdate(user);
-		userDataVo.setId(user.getId());
-		List<UserRole> userRoleList = userDataVo.getRoleIdList()
+		super.saveOrUpdate(userEntity);
+		userDataVo.setId(userEntity.getId());
+		List<UserRoleEntity> userRoleEntityList = userDataVo.getRoleIdList()
 			.stream().map(roleId -> {
-				UserRole userRole = new UserRole();
-				userRole.setUserId(user.getId());
-				userRole.setRoleId(roleId);
-				return userRole;
+				UserRoleEntity userRoleEntity = new UserRoleEntity();
+				userRoleEntity.setUserId(userEntity.getId());
+				userRoleEntity.setRoleId(roleId);
+				return userRoleEntity;
 			}).collect(Collectors.toList());
-		userRoleService.removeRoleByUserId(user.getId());
-		userRoleService.saveBatch(userRoleList);
+		userRoleService.removeRoleByUserId(userEntity.getId());
+		userRoleService.saveBatch(userRoleEntityList);
 	}
 
 	/**
 	 * 通过查用户的全部信息
 	 *
-	 * @param user 用户
+	 * @param userEntity 用户
 	 * @return
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UserInfo getUserInfo(User user) {
+	public UserInfo getUserInfo(UserEntity userEntity) {
 		UserInfo userInfo = new UserInfo();
-		userInfo.setUser(user);
+		userInfo.setUserEntity(userEntity);
 		//设置角色列表  （ID）
-		List<String> roleIds = roleService.listRolesByUserId(user.getId())
+		List<String> roleIds = roleService.listRolesByUserId(userEntity.getId())
 			.stream()
-			.map(Role::getId)
+			.map(RoleEntity::getId)
 			.collect(Collectors.toList());
 		userInfo.setRoles(ArrayUtil.toArray(roleIds, String.class));
 
@@ -133,7 +133,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel getUserWithRolePage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
-		pm.setDesc(User.F_SQL_CREATEDDATE);
+		pm.setDesc(UserEntity.F_SQL_CREATEDDATE);
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
 		return (PageModel) userVosPage;
 	}
@@ -160,13 +160,13 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	/**
 	 * 删除用户
 	 *
-	 * @param user 用户
+	 * @param userEntity 用户
 	 * @return Boolean
 	 */
-	@CacheEvict(value = "user_details", key = "#user.username")
-	public Boolean removeUserById(User user) {
-//		userRoleService.removeRoleByUserId(user.getId());
-		this.removeById(user.getId());
+	@CacheEvict(value = "user_details", key = "#userEntity.username")
+	public Boolean removeUserById(UserEntity userEntity) {
+//		userRoleService.removeRoleByUserId(userEntity.getId());
+		this.removeById(userEntity.getId());
 		return Boolean.TRUE;
 	}
 
@@ -178,26 +178,26 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<User> listAncestorUsersByUsername(String username) {
-		User user = this.getOne(Wrappers.<User>query().lambda()
-			.eq(User::getUsername, username));
+	public List<UserEntity> listAncestorUsersByUsername(String username) {
+		UserEntity userEntity = this.getOne(Wrappers.<UserEntity>query().lambda()
+			.eq(UserEntity::getUsername, username));
 
-		Dept dept = sysDeptService.getById(user.getDeptId());
-		if (dept == null) {
+		DeptEntity deptEntity = sysDeptService.getById(userEntity.getDeptId());
+		if (deptEntity == null) {
 			return null;
 		}
 
-		String parentId = dept.getParentId();
-		return this.list(Wrappers.<User>query().lambda()
-			.eq(User::getDeptId, parentId));
+		String parentId = deptEntity.getParentId();
+		return this.list(Wrappers.<UserEntity>query().lambda()
+			.eq(UserEntity::getDeptId, parentId));
 	}
 
 	@Override
 	public void lockOrUnLock(ArrayList<String> idList) {
 		idList.forEach(id -> {
-			User user = baseMapper.selectById(id);
-			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
-			baseMapper.updateById(user);
+			UserEntity userEntity = baseMapper.selectById(id);
+			userEntity.setLockFlag(CommonConstants.STR_YES.equals(userEntity.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			baseMapper.updateById(userEntity);
 		});
 	}
 
@@ -210,10 +210,10 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 		String deptId = SecurityUtils.getUser().getDeptId();
 		//获取当前部门的子部门
 		return deptRelationService
-			.list(Wrappers.<DeptRelation>query().lambda()
-				.eq(DeptRelation::getAncestor, deptId))
+			.list(Wrappers.<DeptRelationEntity>query().lambda()
+				.eq(DeptRelationEntity::getAncestor, deptId))
 			.stream()
-			.map(DeptRelation::getDescendant)
+			.map(DeptRelationEntity::getDescendant)
 			.collect(Collectors.toList());
 	}
 }

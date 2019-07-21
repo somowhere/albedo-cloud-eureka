@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
-import com.albedo.java.modules.admin.domain.DeptRelation;
+import com.albedo.java.modules.admin.domain.DeptRelationEntity;
 import com.albedo.java.modules.admin.repository.DeptRelationRepository;
 import com.albedo.java.modules.admin.vo.DeptDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository, DeptRelation> implements DeptRelationService {
+public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository, DeptRelationEntity> implements DeptRelationService {
 	private final DeptRelationRepository deptRelationRepository;
 
 	/**
@@ -52,11 +52,11 @@ public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository,
 	@Transactional(rollbackFor = Exception.class)
 	public void saveDeptRelation(DeptDataVo deptDataVo) {
 		//增加部门关系表
-		DeptRelation condition = new DeptRelation();
+		DeptRelationEntity condition = new DeptRelationEntity();
 		condition.setDescendant(deptDataVo.getParentId());
-		List<DeptRelation> relationList = deptRelationRepository
-			.selectList(Wrappers.<DeptRelation>query().lambda()
-				.eq(DeptRelation::getDescendant, deptDataVo.getParentId()))
+		List<DeptRelationEntity> relationList = deptRelationRepository
+			.selectList(Wrappers.<DeptRelationEntity>query().lambda()
+				.eq(DeptRelationEntity::getDescendant, deptDataVo.getParentId()))
 			.stream().map(relation -> {
 				relation.setDescendant(deptDataVo.getId());
 				return relation;
@@ -66,7 +66,7 @@ public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository,
 		}
 
 		//自己也要维护到关系表中
-		DeptRelation own = new DeptRelation();
+		DeptRelationEntity own = new DeptRelationEntity();
 		own.setDescendant(deptDataVo.getId());
 		own.setAncestor(deptDataVo.getId());
 		deptRelationRepository.insert(own);
@@ -88,7 +88,7 @@ public class DeptRelationServiceImpl extends ServiceImpl<DeptRelationRepository,
 	 * @param relation
 	 */
 	@Override
-	public void updateDeptRelation(DeptRelation relation) {
+	public void updateDeptRelation(DeptRelationEntity relation) {
 		baseMapper.updateDeptRelations(relation);
 	}
 

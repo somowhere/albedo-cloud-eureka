@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.admin.domain.Menu;
+import com.albedo.java.modules.admin.domain.MenuEntity;
 import com.albedo.java.modules.admin.vo.MenuVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,16 +31,24 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface MenuRepository extends TreeRepository<Menu> {
+public interface MenuRepository extends TreeRepository<MenuEntity> {
+
+	/**
+	 * 通过角色编号查询菜单
+	 *
+	 * @param show 是否显示
+	 * @return
+	 */
+	List<MenuVo> listMenuVos(@Param("show") Integer show);
 
 	/**
 	 * 通过角色编号查询菜单
 	 *
 	 * @param roleId 角色ID
+	 * @param show 是否显示
 	 * @return
 	 */
-	List<MenuVo> listMenusByRoleId(@Param("roleId") String roleId,@Param("show")  Integer show);
-
+	List<MenuVo> listMenuVosByRoleId(@Param("roleId") String roleId,@Param("show")  Integer show);
 	/**
 	 * 通过角色ID查询权限
 	 *

@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.service;
 
-import com.albedo.java.modules.admin.domain.OauthClientDetails;
+import com.albedo.java.modules.admin.domain.OauthClientDetailsEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -27,7 +27,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface OauthClientDetailsService extends IService<OauthClientDetails> {
+public interface OauthClientDetailsService extends IService<OauthClientDetailsEntity> {
 	/**
 	 * 通过ID删除客户端
 	 *
@@ -39,8 +39,8 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
 	/**
 	 * 根据客户端信息
 	 *
-	 * @param oauthClientDetails
+	 * @param oauthClientDetailsEntity
 	 * @return
 	 */
-	Boolean updateClientDetailsById(OauthClientDetails oauthClientDetails);
+	Boolean updateClientDetailsById(OauthClientDetailsEntity oauthClientDetailsEntity);
 }

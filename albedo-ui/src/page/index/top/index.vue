@@ -11,7 +11,7 @@
     <div class="top-bar__title">
       <div class="top-bar__item top-bar__item--show"
            v-if="showMenu">
-        <top-menu></top-menu>
+        <top-menuEntity></top-menuEntity>
       </div>
     </div>
     <div class="top-bar__right">
@@ -34,7 +34,7 @@
           {{userInfo.username}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menuEntity slot="dropdown">
           <el-dropdown-item>
             <router-link to="/">首页</router-link>
           </el-dropdown-item>
@@ -44,7 +44,7 @@
           <el-dropdown-item @click.native="logout"
                             divided>退出系统
           </el-dropdown-item>
-        </el-dropdown-menu>
+        </el-dropdown-menuEntity>
       </el-dropdown>
     </div>
   </div>
@@ -52,7 +52,7 @@
 <script>
   import {mapGetters, mapState} from "vuex";
   import {fullscreenToggel, listenfullscreen} from "@/util/util";
-  import topMenu from "./top-menu";
+  import topMenu from "./top-menuEntity";
 
   export default {
     components: {

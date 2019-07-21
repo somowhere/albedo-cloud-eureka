@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.albedo.java.modules.admin.domain.RoleMenu;
+import com.albedo.java.modules.admin.domain.RoleMenuEntity;
 import com.albedo.java.modules.admin.repository.RoleMenuRepository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuRepository, RoleMenu>
+public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuRepository, RoleMenuEntity>
 	implements RoleMenuService {
 	private final CacheManager cacheManager;
 
@@ -56,23 +56,23 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuRepository, RoleMen
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "menu_details", key = "#roleId + '_menu'")
 	public Boolean saveRoleMenus(String role, String roleId, String menuIds) {
-		this.remove(Wrappers.<RoleMenu>query().lambda()
-			.eq(RoleMenu::getRoleId, roleId));
+		this.remove(Wrappers.<RoleMenuEntity>query().lambda()
+			.eq(RoleMenuEntity::getRoleId, roleId));
 
 		if (StrUtil.isBlank(menuIds)) {
 			return Boolean.TRUE;
 		}
-		List<RoleMenu> roleMenuList = Arrays
+		List<RoleMenuEntity> roleMenuEntityList = Arrays
 			.stream(menuIds.split(","))
 			.map(menuId -> {
-				RoleMenu roleMenu = new RoleMenu();
-				roleMenu.setRoleId(roleId);
-				roleMenu.setMenuId(menuId);
-				return roleMenu;
+				RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
+				roleMenuEntity.setRoleId(roleId);
+				roleMenuEntity.setMenuId(menuId);
+				return roleMenuEntity;
 			}).collect(Collectors.toList());
 
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();
-		return this.saveBatch(roleMenuList);
+		return this.saveBatch(roleMenuEntityList);
 	}
 }

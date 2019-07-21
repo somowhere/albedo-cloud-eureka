@@ -54,7 +54,7 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
 //	 */
 //	@Override
 //	public R<UserInfo> social(String inStr) {
-//		log.error("feign 查询用户信息失败:{}", inStr, cause);
+//		logEntity.error("feign 查询用户信息失败:{}", inStr, cause);
 //		return null;
 //	}
 }

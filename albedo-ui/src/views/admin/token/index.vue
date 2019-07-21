@@ -21,13 +21,13 @@
       <avue-crud ref="crud"
                  :page="page"
                  :data="tableData"
-                 :table-loading="tableLoading"
+                 :tableEntity-loading="tableLoading"
                  :option="tableOption"
                  @on-load="getList"
                  @refresh-change="refreshChange"
                  @row-del="rowDel">
         <template slot-scope="scope"
-                  slot="menu">
+                  slot="menuEntity">
           <el-button type="text"
                      v-if="permissions.sys_token_del"
                      icon="el-icon-delete"

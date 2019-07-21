@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.repository;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.albedo.java.modules.admin.domain.RoleMenu;
+import com.albedo.java.modules.admin.domain.RoleMenuEntity;
 
 /**
  * <p>
@@ -28,6 +28,6 @@ import com.albedo.java.modules.admin.domain.RoleMenu;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface RoleMenuRepository extends BaseMapper<RoleMenu> {
+public interface RoleMenuRepository extends BaseMapper<RoleMenuEntity> {
 
 }

@@ -22,8 +22,8 @@ import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
+import com.albedo.java.modules.admin.domain.UserEntity;
 import com.albedo.java.modules.admin.vo.UserDataVo;
-import com.albedo.java.modules.admin.domain.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.modules.admin.service.UserService;
@@ -70,12 +70,12 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@GetMapping(value = {"/info"})
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
-		User user = service.getOne(Wrappers.<User>query()
-			.lambda().eq(User::getUsername, username));
-		if (user == null) {
+		UserEntity userEntity = service.getOne(Wrappers.<UserEntity>query()
+			.lambda().eq(UserEntity::getUsername, username));
+		if (userEntity == null) {
 			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
-		return new R<>(service.getUserInfo(user));
+		return new R<>(service.getUserInfo(userEntity));
 	}
 
 	/**
@@ -86,12 +86,12 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@Inner
 	@GetMapping("/info/{username}")
 	public R info(@PathVariable String username) {
-		User user = service.getOne(Wrappers.<User>query()
-			.lambda().eq(User::getUsername, username));
-		if (user == null) {
+		UserEntity userEntity = service.getOne(Wrappers.<UserEntity>query()
+			.lambda().eq(UserEntity::getUsername, username));
+		if (userEntity == null) {
 			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
 		}
-		return new R<>(service.getUserInfo(user));
+		return new R<>(service.getUserInfo(userEntity));
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 */
 	@GetMapping("/details/{username}")
 	public R detailsUser(@PathVariable String username) {
-		User condition = new User();
+		UserEntity condition = new UserEntity();
 		condition.setUsername(username);
 		return new R<>(service.getOne(new QueryWrapper<>(condition)));
 	}
@@ -130,7 +130,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R saveUser(@Valid @RequestBody UserDataVo userDataVo) {
 		log.debug("REST request to save userDataVo : {}", userDataVo);
-		// beanValidatorAjax(user);
+		// beanValidatorAjax(userEntity);
 		if (StringUtil.isNotEmpty(userDataVo.getPassword()) &&
 			!userDataVo.getPassword().equals(userDataVo.getConfirmPassword())) {
 			throw new RuntimeMsgException("两次输入密码不一致");

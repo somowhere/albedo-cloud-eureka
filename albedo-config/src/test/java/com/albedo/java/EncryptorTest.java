@@ -21,7 +21,7 @@ public class EncryptorTest {
 	/**
 	 * albedo:ToJTk3p6JF+h0gsHeHVRoQ==
 	 * albedo1:sGfB6KY7Zq0BTfwbWYxnWw==
-	 * gen:FGKBtFgGcI+XAg5c+7EAJg==
+	 * codegen:FGKBtFgGcI+XAg5c+7EAJg==
 	 * gen1:PE5+ODGIk7rfbiaZXHVhow==
 	 * app:auouy8Jb/Fat5gUe6ZPObA==
 	 * app1:rx3fzaHBQSaXX0UptjhKUA==
@@ -31,7 +31,7 @@ public class EncryptorTest {
 	 * albedo:M2gAZVKvwbr9d1HgCbReTQ==
 	 * albedo1:S/hBlHtEOYoFRQCP5xpAPQ==
 	 * albedo2:1m19Q5MbW3J2hrQLqF14aw==
-	 * gen:1+3hsdGbOFUBqF9lVoDmEg==
+	 * codegen:1+3hsdGbOFUBqF9lVoDmEg==
 	 * gen1:JlGBNtWzqS5KbBaliOrClA==
 	 * app:eOOG5rR4wx4SSKCf1KOK8A==
 	 * app1:lYn3A64z4DuY9lh/wXltaw==
@@ -49,9 +49,9 @@ public class EncryptorTest {
 		System.out.println("albedo2:"+albedo2);
 
 
-		String gen = encryptor.encrypt("gen");
-		String gen1 = encryptor.encrypt("gen");
-		System.out.println("gen:"+gen);
+		String gen = encryptor.encrypt("codegen");
+		String gen1 = encryptor.encrypt("codegen");
+		System.out.println("codegen:"+gen);
 		System.out.println("gen1:"+gen1);
 
 

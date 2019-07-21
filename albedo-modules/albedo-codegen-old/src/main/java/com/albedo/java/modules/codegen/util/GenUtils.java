@@ -251,7 +251,7 @@ public class GenUtils {
 		}
 
 		if (template.contains(MAPPER_JAVA_VM)) {
-			return packagePath + "mapper" + File.separator + className + "Mapper.java";
+			return packagePath + "mapper.codegen" + File.separator + className + "Mapper.java";
 		}
 
 		if (template.contains(SERVICE_JAVA_VM)) {
@@ -267,7 +267,7 @@ public class GenUtils {
 		}
 
 		if (template.contains(MAPPER_XML_VM)) {
-			return CommonConstants.BACK_END_PROJECT + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Mapper.xml";
+			return CommonConstants.BACK_END_PROJECT + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper.codegen" + File.separator + className + "Mapper.xml";
 		}
 
 		if (template.contains(MENU_SQL_VM)) {

@@ -19,7 +19,7 @@ package com.albedo.java.common.security.service;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.albedo.java.modules.admin.vo.UserInfo;
-import com.albedo.java.modules.admin.domain.User;
+import com.albedo.java.modules.admin.domain.UserEntity;
 import com.albedo.java.modules.admin.feign.RemoteUserService;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
@@ -97,10 +97,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		Collection<? extends GrantedAuthority> authorities
 			= AuthorityUtils.createAuthorityList(dbAuthsSet.toArray(new String[0]));
-		User user = info.getUser();
+		UserEntity userEntity = info.getUserEntity();
 
 		// 构造security用户
-		return new UserDetail(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
-			StrUtil.equals(user.getLockFlag(), CommonConstants.STR_NO), true, true, true, authorities);
+		return new UserDetail(userEntity.getId(), userEntity.getDeptId(), userEntity.getUsername(), SecurityConstants.BCRYPT + userEntity.getPassword(),
+			StrUtil.equals(userEntity.getLockFlag(), CommonConstants.STR_NO), true, true, true, authorities);
 	}
 }

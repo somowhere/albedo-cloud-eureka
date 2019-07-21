@@ -42,7 +42,7 @@ public class UserDetail extends User {
 	private String deptId;
 
 	/**
-	 * Construct the <code>User</code> with the details required by
+	 * Construct the <code>UserEntity</code> with the details required by
 	 * {@link DaoAuthenticationProvider}.
 	 *
 	 * @param id                    用户ID
@@ -51,13 +51,13 @@ public class UserDetail extends User {
 	 *                              <code>DaoAuthenticationProvider</code>
 	 * @param password              the password that should be presented to the
 	 *                              <code>DaoAuthenticationProvider</code>
-	 * @param enabled               set to <code>true</code> if the user is enabled
+	 * @param enabled               set to <code>true</code> if the userEntity is enabled
 	 * @param accountNonExpired     set to <code>true</code> if the account has not expired
 	 * @param credentialsNonExpired set to <code>true</code> if the credentials have not
 	 *                              expired
 	 * @param accountNonLocked      set to <code>true</code> if the account is not locked
 	 * @param authorities           the authorities that should be granted to the caller if they
-	 *                              presented the correct username and password and the user is enabled. Not null.
+	 *                              presented the correct username and password and the userEntity is enabled. Not null.
 	 * @throws IllegalArgumentException if a <code>null</code> value was passed either as
 	 *                                  a parameter or as an element in the <code>GrantedAuthority</code> collection
 	 */

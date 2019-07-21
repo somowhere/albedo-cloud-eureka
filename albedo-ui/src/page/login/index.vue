@@ -11,7 +11,7 @@
       </div>
       <div class="login-border">
         <div class="login-main">
-          <userLogin v-if="activeName==='user'"></userLogin>
+          <userLogin v-if="activeName==='userEntity'"></userLogin>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
     },
     data() {
       return {
-        activeName: "user"
+        activeName: "userEntity"
       };
     },
     watch: {},

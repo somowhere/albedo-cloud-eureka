@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.admin.domain.OauthClientDetails;
+import com.albedo.java.modules.admin.domain.OauthClientDetailsEntity;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.admin.service.OauthClientDetailsService;
@@ -47,7 +47,7 @@ public class OauthClientDetailsResource {
 	 * 通过ID查询
 	 *
 	 * @param id ID
-	 * @return OauthClientDetails
+	 * @return OauthClientDetailsEntity
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
 	public R getById(@PathVariable Integer id) {
@@ -59,26 +59,26 @@ public class OauthClientDetailsResource {
 	 * 简单分页查询
 	 *
 	 * @param page                  分页对象
-	 * @param oauthClientDetails 系统终端
+	 * @param oauthClientDetailsEntity 系统终端
 	 * @return
 	 */
 	@GetMapping("/page")
-	public R getOauthClientDetailsPage(Page page, OauthClientDetails oauthClientDetails) {
-		return new R<>(oauthClientDetailsService.page(page, Wrappers.query(oauthClientDetails)));
+	public R getOauthClientDetailsPage(Page page, OauthClientDetailsEntity oauthClientDetailsEntity) {
+		return new R<>(oauthClientDetailsService.page(page, Wrappers.query(oauthClientDetailsEntity)));
 	}
 
 	/**
 	 * 保存
 	 *
-	 * @param oauthClientDetails 实体
+	 * @param oauthClientDetailsEntity 实体
 	 * @return success/false
 	 */
 	@SysLog("保存终端")
 	@PostMapping
 	@GetMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R save(@Valid @RequestBody OauthClientDetails oauthClientDetails) {
-		return new R<>(oauthClientDetailsService.saveOrUpdate(oauthClientDetails));
+	public R save(@Valid @RequestBody OauthClientDetailsEntity oauthClientDetailsEntity) {
+		return new R<>(oauthClientDetailsService.saveOrUpdate(oauthClientDetailsEntity));
 	}
 
 	/**

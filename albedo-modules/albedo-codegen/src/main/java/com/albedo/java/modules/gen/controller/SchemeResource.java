@@ -11,8 +11,8 @@ import com.albedo.java.modules.gen.domain.vo.SchemeVo;
 import com.albedo.java.modules.gen.domain.vo.TableVo;
 import com.albedo.java.modules.gen.service.SchemeService;
 import com.albedo.java.modules.gen.service.TableService;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-import com.albedo.java.modules.sys.feign.RemoteMenuService;
+import com.albedo.java.modules.admin.vo.GenSchemeDataVo;
+import com.albedo.java.modules.admin.feign.RemoteMenuService;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "/gen/scheme")
+@RequestMapping(value = "/scheme")
 public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
 
     private final TableService tableService;

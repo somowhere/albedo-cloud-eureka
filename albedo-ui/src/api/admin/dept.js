@@ -19,7 +19,7 @@ import request from '@/router/axios'
 
 export function fetchDeptTree (query) {
   return request({
-    url: '/admin/sys/dept/user-tree',
+    url: '/admin/admin/dept/user-tree',
     method: 'get',
     params: query
   })
@@ -27,7 +27,7 @@ export function fetchDeptTree (query) {
 
 export function fetchTree (query) {
   return request({
-    url: '/admin/sys/dept/tree',
+    url: '/admin/admin/dept/tree',
     method: 'get',
     params: query
   })
@@ -35,7 +35,7 @@ export function fetchTree (query) {
 
 export function addObj (obj) {
   return request({
-    url: '/admin/sys/dept',
+    url: '/admin/admin/dept',
     method: 'post',
     data: obj
   })
@@ -43,21 +43,21 @@ export function addObj (obj) {
 
 export function getObj (id) {
   return request({
-    url: '/admin/sys/dept/' + id,
+    url: '/admin/admin/dept/' + id,
     method: 'get'
   })
 }
 
 export function delObj (id) {
   return request({
-    url: '/admin/sys/dept/' + id,
+    url: '/admin/admin/dept/' + id,
     method: 'delete'
   })
 }
 
 export function putObj (obj) {
   return request({
-    url: '/admin/sys/dept',
+    url: '/admin/admin/dept',
     method: 'put',
     data: obj
   })

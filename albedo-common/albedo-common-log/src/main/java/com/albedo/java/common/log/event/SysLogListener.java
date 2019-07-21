@@ -16,8 +16,8 @@
 
 package com.albedo.java.common.log.event;
 
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.feign.RemoteLogService;
+import com.albedo.java.modules.admin.domain.Log;
+import com.albedo.java.modules.admin.feign.RemoteLogService;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

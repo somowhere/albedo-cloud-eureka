@@ -29,10 +29,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>albedo-admin-api</module>
-		<module>albedo-admin-biz</module>
+		<module>albedo-module-api</module>
+		<module>albedo-admin</module>
 		<module>albedo-codegen</module>
-<!--		<module>albedo-codegen-old</module>-->
 		<module>albedo-monitor</module>
 		<module>albedo-zipkin</module>
 	</modules>

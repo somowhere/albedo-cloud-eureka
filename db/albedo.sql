@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 20/07/2019 20:39:31
+ Date: 21/07/2019 11:52:44
 */
 
 SET NAMES utf8mb4;
@@ -357,7 +357,7 @@ INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NUL
 INSERT INTO `sys_menu` VALUES ('2201', '字典删除', 'sys_dict_del', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-29 11:30:11', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2202', '字典编辑', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-11 22:34:55', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2203', '字典锁定', 'sys_dict_lock', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-11 22:36:03', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'gen', '2000', NULL, 'icon-weibiaoti46', 'views/gen/index', '0', '1', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2300', '代码生成', '', 'gen', '2000', NULL, 'icon-weibiaoti46', 'views/gen/index', '0', '1', '0', b'0', 8, '', '2018-01-20 13:17:19', NULL, '2019-07-21 09:59:21', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/admin/client/index', '0', '1', '0', b'0', 9, '', '2018-01-20 13:17:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_add', NULL, '2400', NULL, '1', NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:35:18', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:37:06', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
@@ -365,7 +365,7 @@ INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL
 INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '1', '0', b'0', 10, '', '2018-06-26 10:50:32', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/admin/token/index', '0', '1', '0', b'0', 11, '', '2018-09-04 05:58:41', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', '1', b'0', 1, '', '2018-09-04 05:59:50', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, 'gen', '-1', NULL, NULL, 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-20 12:05:00', NULL, 4, '0');
+INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/gen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-21 10:27:21', NULL, 12, '0');
 INSERT INTO `sys_menu` VALUES ('41a79e5c109e51b1a71ca8c7357c190c', '代码生成', NULL, NULL, '-1', NULL, NULL, NULL, '0', '1', '0', b'1', 30, '1', '2019-07-20 12:00:48', '1', '2019-07-20 12:01:04', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('5000', '一级菜单', NULL, '/crud', '-1', NULL, 'icon-caidanguanli', '', '0', '1', '0', b'0', 4, '', '2018-08-28 01:50:22', '1', '2019-07-20 11:59:50', NULL, 2, '0');
 INSERT INTO `sys_menu` VALUES ('5001', '一级菜单', NULL, 'index', '5000', '5000,', 'icon-caidanguanli', 'views/crud/index', '0', '1', '0', b'0', 1, '', '2018-08-28 01:50:48', '1', '2019-07-20 11:59:50', NULL, 1, '0');
@@ -373,7 +373,7 @@ INSERT INTO `sys_menu` VALUES ('5002', '二级菜单', NULL, 'crud', '5001', NUL
 INSERT INTO `sys_menu` VALUES ('5003', '二级菜单', NULL, '', '5000', NULL, 'icon-caidanguanli', '', '0', '1', '0', b'0', 1, '', '2018-11-21 17:49:18', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('5004', '二级菜单', NULL, 'index', '5003', NULL, 'icon-caidanguanli', 'views/crud/index', '0', '1', '0', b'0', 1, '', '2018-11-21 17:53:51', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('9999', '系统官网', NULL, 'https://pig4cloud.com/#/', '-1', NULL, 'icon-guanwangfangwen', NULL, '0', '1', '0', b'0', 9, '', '2019-01-17 17:05:19', NULL, '2019-07-20 12:03:09', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表配置', 'gen_table', 'gen', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', NULL, 'views/gen/genTable/index', '0', '1', '0', b'1', 30, '1', '2019-07-20 12:02:02', '1', '2019-07-20 12:04:07', NULL, 2, '0');
+INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表配置', 'gen_table', 'table', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-table', 'views/gen/table/index', '0', '1', '0', b'1', 30, '1', '2019-07-20 12:02:02', '1', '2019-07-21 10:25:52', NULL, 8, '0');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
@@ -428,7 +428,7 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51', NULL, '2019-07-20 20:38:31', NULL, 0, '0');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51', '1', '2019-07-21 09:51:47', NULL, 3, '0');
 INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '1', '1', '', '2018-11-11 19:42:26', NULL, '2019-07-20 20:38:34', NULL, 0, '0');
 
 -- ----------------------------
@@ -485,7 +485,6 @@ INSERT INTO `sys_role_menu` VALUES ('1', '2200');
 INSERT INTO `sys_role_menu` VALUES ('1', '2201');
 INSERT INTO `sys_role_menu` VALUES ('1', '2202');
 INSERT INTO `sys_role_menu` VALUES ('1', '2203');
-INSERT INTO `sys_role_menu` VALUES ('1', '2300');
 INSERT INTO `sys_role_menu` VALUES ('1', '2400');
 INSERT INTO `sys_role_menu` VALUES ('1', '2401');
 INSERT INTO `sys_role_menu` VALUES ('1', '2402');
@@ -493,6 +492,8 @@ INSERT INTO `sys_role_menu` VALUES ('1', '2403');
 INSERT INTO `sys_role_menu` VALUES ('1', '2500');
 INSERT INTO `sys_role_menu` VALUES ('1', '2600');
 INSERT INTO `sys_role_menu` VALUES ('1', '2601');
+INSERT INTO `sys_role_menu` VALUES ('1', '413892fe8d52c1163d6659f51299dc96');
+INSERT INTO `sys_role_menu` VALUES ('1', 'a18b33e15bde209a3c9115517c56d9ec');
 INSERT INTO `sys_role_menu` VALUES ('2', '1000');
 INSERT INTO `sys_role_menu` VALUES ('2', '1100');
 INSERT INTO `sys_role_menu` VALUES ('2', '1101');

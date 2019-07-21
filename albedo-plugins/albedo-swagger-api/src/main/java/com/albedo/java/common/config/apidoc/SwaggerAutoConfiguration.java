@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.DispatcherServlet;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.service.ApiInfo;
@@ -41,7 +40,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass({ApiInfo.class, BeanValidatorPluginsConfiguration.class,
-	Servlet.class, DispatcherServlet.class})
+	Servlet.class})
 @Profile({"swagger"})
 @AutoConfigureAfter({ApplicationSwaggerProperties.class})
 @EnableSwagger2

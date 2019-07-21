@@ -26,7 +26,7 @@ import java.util.Map;
  * @author somewhere
  */
 @Controller
-@RequestMapping(value = "/gen/table")
+@RequestMapping(value = "/table")
 public class TableResource extends DataVoResource<TableService, TableVo> {
 
     public TableResource(TableService service) {
@@ -53,7 +53,7 @@ public class TableResource extends DataVoResource<TableService, TableVo> {
      */
     @GetMapping(value = "/")
     @Timed
-    public ResponseEntity getPage(PageModel<Table> pm) {
+    public ResponseEntity getPage(PageModel pm) {
         pm = service.findPage(pm);
         return ResponseBuilder.buildObject(pm);
     }

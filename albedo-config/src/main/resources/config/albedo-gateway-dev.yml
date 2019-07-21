@@ -14,7 +14,7 @@ spring:
             - ValidateCodeGatewayFilter
             # 前端密码解密
             - PasswordDecoderFilter
-        #UPMS 模块
+        #系统管理 模块
         - id: albedo-admin
           uri: lb://albedo-admin
           predicates:

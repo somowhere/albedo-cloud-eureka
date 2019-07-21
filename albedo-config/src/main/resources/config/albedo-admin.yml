@@ -5,7 +5,7 @@ ignore:
   urls:
     - /v2/**
     - /actuator/**
-    - /sys/user/info/*
-    - /sys/menu/gen
-    - /sys/dict/all
-    - /sys/log/**
+    - /user/info/*
+    - /menu/gen
+    - /dict/all
+    - /log/**

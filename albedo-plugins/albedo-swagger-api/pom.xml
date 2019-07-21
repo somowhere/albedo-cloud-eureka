@@ -11,14 +11,11 @@
 
     <artifactId>albedo-swagger-api</artifactId>
     <dependencies>
-        <dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-			<scope>provided</scope>
-        </dependency>
+
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-extension</artifactId>
+			<version>${mybatis-plus.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

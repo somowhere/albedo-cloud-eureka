@@ -16,7 +16,7 @@ import com.albedo.java.modules.gen.domain.xml.GenConfig;
 import com.albedo.java.modules.gen.repository.SchemeRepository;
 import com.albedo.java.modules.gen.repository.TableRepository;
 import com.albedo.java.modules.gen.util.GenUtil;
-import com.albedo.java.modules.sys.domain.Dict;
+import com.albedo.java.modules.admin.domain.Dict;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

@@ -1,11 +1,10 @@
 package com.albedo.java.common.config.apidoc;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
-import org.springframework.data.domain.Pageable;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.schema.ModelReference;
 import springfox.documentation.schema.TypeNameExtractor;
@@ -14,7 +13,6 @@ import springfox.documentation.service.ResolvedMethodParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.schema.contexts.ModelContext;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
-import springfox.documentation.spi.service.ParameterBuilderPlugin;
 import springfox.documentation.spi.service.contexts.OperationContext;
 import springfox.documentation.spi.service.contexts.ParameterContext;
 
@@ -34,7 +32,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
     public PageableParameterBuilderPlugin(TypeNameExtractor nameExtractor, TypeResolver resolver) {
         this.nameExtractor = nameExtractor;
         this.resolver = resolver;
-        this.pageableType = resolver.resolve(Pageable.class);
+        this.pageableType = resolver.resolve(Page.class);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
 
                 List<Parameter> parameters = Lists.newArrayList(
                     new ParameterBuilder()
-                        .parameterType("query").name("page").modelRef(intModel)
+                        .parameterType("query").name("current").modelRef(intModel)
                         .description("Page number of the requested page")
                         .build(),
                     new ParameterBuilder()
@@ -86,9 +84,13 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
                         .description("Size of a page")
                         .build(),
                     new ParameterBuilder()
-                        .parameterType("query").name("sort").modelRef(stringModel).allowMultiple(true)
+                        .parameterType("query").name("descs").modelRef(stringModel).allowMultiple(true)
                         .description("Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")
                         .build(),
+					new ParameterBuilder()
+						.parameterType("query").name("ascs").modelRef(stringModel).allowMultiple(true)
+						.description("Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")
+						.build(),
                     new ParameterBuilder()
                         .parameterType("query").name("queryConditionJson").modelRef(stringModel).allowMultiple(true)
                         .description("search json [{\"fieldName\":\"name\",\"attrType\":\"String\",\"fieldNode\":\"\",\"operate\":\"like\",\"weight\":0,\"value\":\"g\"},{\"fieldName\":\"status\",\"attrType\":\"Integer\",\"fieldNode\":\"\",\"operate\":\"in\",\"weight\":0,\"value\":\"-1\"}]}")

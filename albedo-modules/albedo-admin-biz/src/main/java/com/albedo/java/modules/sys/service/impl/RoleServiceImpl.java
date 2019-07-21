@@ -98,6 +98,7 @@ public class RoleServiceImpl extends
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@CacheEvict(value = "menu_details", key = "#roleDataVo.id  + '_menu'")
 	public void save(RoleDataVo roleDataVo) {
 		super.save(roleDataVo);
 		roleMenuService.remove(Wrappers.<RoleMenu>query().lambda()

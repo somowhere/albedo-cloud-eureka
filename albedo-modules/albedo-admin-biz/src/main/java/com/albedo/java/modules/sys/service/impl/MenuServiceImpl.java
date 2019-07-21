@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
@@ -59,7 +60,7 @@ public class MenuServiceImpl extends
 	@Cacheable(value = "menu_details", key = "#roleId  + '_menu'")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<MenuVo> getMenuByRoleId(String roleId) {
-		return baseMapper.listMenusByRoleId(roleId);
+		return baseMapper.listMenusByRoleId(roleId, CommonConstants.YES);
 	}
 
 	@Override
@@ -84,11 +85,12 @@ public class MenuServiceImpl extends
 
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
-	public Boolean updateMenuById(Menu menu) {
-		return this.updateById(menu);
+	public MenuDataVo save(MenuDataVo form) {
+		return super.save(form);
 	}
 
 	@Override
+	@CacheEvict(value = "menu_details", allEntries = true)
 	public boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo) {
 
 		String moduleName= genSchemeDataVo.getSchemeName(),

@@ -53,13 +53,6 @@ public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDat
 	 */
 	void removeMenuById(List<String> ids);
 
-	/**
-	 * 更新菜单信息
-	 *
-	 * @param menu 菜单信息
-	 * @return 成功、失败
-	 */
-	Boolean updateMenuById(Menu menu);
 
 	boolean saveByGenScheme(GenSchemeDataVo genSchemeDataVo);
 

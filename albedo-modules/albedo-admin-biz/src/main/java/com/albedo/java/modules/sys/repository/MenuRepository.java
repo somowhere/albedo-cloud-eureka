@@ -38,7 +38,7 @@ public interface MenuRepository extends TreeRepository<Menu> {
 	 * @param roleId 角色ID
 	 * @return
 	 */
-	List<MenuVo> listMenusByRoleId(String roleId);
+	List<MenuVo> listMenusByRoleId(String roleId, Integer show);
 
 	/**
 	 * 通过角色ID查询权限

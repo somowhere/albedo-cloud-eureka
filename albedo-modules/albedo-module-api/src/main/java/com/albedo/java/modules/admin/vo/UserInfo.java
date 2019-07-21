@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息
 	 */
-	private UserEntity userEntity;
+	private UserEntity user;
 	/**
 	 * 权限标识集合
 	 */

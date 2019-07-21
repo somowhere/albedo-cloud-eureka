@@ -101,7 +101,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public UserInfo getUserInfo(UserEntity userEntity) {
 		UserInfo userInfo = new UserInfo();
-		userInfo.setUserEntity(userEntity);
+		userInfo.setUser(userEntity);
 		//设置角色列表  （ID）
 		List<String> roleIds = roleService.listRolesByUserId(userEntity.getId())
 			.stream()

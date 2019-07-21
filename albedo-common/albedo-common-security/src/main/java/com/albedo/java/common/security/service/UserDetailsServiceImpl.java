@@ -97,10 +97,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		Collection<? extends GrantedAuthority> authorities
 			= AuthorityUtils.createAuthorityList(dbAuthsSet.toArray(new String[0]));
-		UserEntity userEntity = info.getUserEntity();
+		UserEntity user = info.getUser();
 
 		// 构造security用户
-		return new UserDetail(userEntity.getId(), userEntity.getDeptId(), userEntity.getUsername(), SecurityConstants.BCRYPT + userEntity.getPassword(),
-			StrUtil.equals(userEntity.getLockFlag(), CommonConstants.STR_NO), true, true, true, authorities);
+		return new UserDetail(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
+			StrUtil.equals(user.getLockFlag(), CommonConstants.STR_NO), true, true, true, authorities);
 	}
 }

@@ -62,7 +62,7 @@ public class OauthClientDetailsResource {
 	 * @param oauthClientDetailsEntity 系统终端
 	 * @return
 	 */
-	@GetMapping("/page")
+	@GetMapping("/")
 	public R getOauthClientDetailsPage(Page page, OauthClientDetailsEntity oauthClientDetailsEntity) {
 		return new R<>(oauthClientDetailsService.page(page, Wrappers.query(oauthClientDetailsEntity)));
 	}
@@ -74,8 +74,7 @@ public class OauthClientDetailsResource {
 	 * @return success/false
 	 */
 	@SysLog("保存终端")
-	@PostMapping
-	@GetMapping("/")
+	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R save(@Valid @RequestBody OauthClientDetailsEntity oauthClientDetailsEntity) {
 		return new R<>(oauthClientDetailsService.saveOrUpdate(oauthClientDetailsEntity));

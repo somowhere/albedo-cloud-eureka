@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.service;
 
 
-import com.albedo.java.modules.admin.domain.RoleDeptEntity;
+import com.albedo.java.modules.admin.domain.RoleDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -28,6 +28,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface RoleDeptService extends IService<RoleDeptEntity> {
+public interface RoleDeptService extends IService<RoleDept> {
 
 }

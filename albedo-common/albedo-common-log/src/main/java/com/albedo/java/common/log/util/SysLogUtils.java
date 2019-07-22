@@ -19,7 +19,7 @@ package com.albedo.java.common.log.util;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,12 +37,12 @@ import java.util.Objects;
  */
 @UtilityClass
 public class SysLogUtils {
-	public LogEntity getSysLog() {
+	public Log getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-		LogEntity logEntity = new LogEntity();
+		Log logEntity = new Log();
 		logEntity.setCreatedBy(Objects.requireNonNull(getUsername()));
-//		logEntity.setType(CommonConstants);
+//		log.setType(CommonConstants);
 		logEntity.setRemoteAddr(ServletUtil.getClientIP(request));
 		logEntity.setRequestUri(URLUtil.getPath(request.getRequestURI()));
 		logEntity.setMethod(request.getMethod());

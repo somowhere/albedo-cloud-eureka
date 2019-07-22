@@ -20,9 +20,9 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.admin.domain.DeptEntity;
+import com.albedo.java.modules.admin.domain.Dept;
 import com.albedo.java.modules.admin.vo.DeptDataVo;
-import com.albedo.java.modules.admin.domain.DeptRelationEntity;
+import com.albedo.java.modules.admin.domain.DeptRelation;
 import com.albedo.java.modules.admin.repository.DeptRepository;
 import com.albedo.java.modules.admin.service.DeptRelationService;
 import com.albedo.java.modules.admin.service.DeptService;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class DeptServiceImpl  extends
-	TreeVoServiceImpl<DeptRepository, DeptEntity, DeptDataVo> implements DeptService {
+	TreeVoServiceImpl<DeptRepository, Dept, DeptDataVo> implements DeptService {
 	private final DeptRelationService deptRelationService;
 
 	/**
@@ -64,7 +64,7 @@ public class DeptServiceImpl  extends
 			deptRelationService.saveDeptRelation(deptDataVo);
 		}else{
 			//更新部门关系
-			DeptRelationEntity relation = new DeptRelationEntity();
+			DeptRelation relation = new DeptRelation();
 			relation.setAncestor(deptDataVo.getParentId());
 			relation.setDescendant(deptDataVo.getId());
 			deptRelationService.updateDeptRelation(relation);
@@ -85,10 +85,10 @@ public class DeptServiceImpl  extends
 		ids.forEach(id->{
 			//级联删除部门
 			List<String> idList = deptRelationService
-				.list(Wrappers.<DeptRelationEntity>query().lambda()
-					.eq(DeptRelationEntity::getAncestor, id))
+				.list(Wrappers.<DeptRelation>query().lambda()
+					.eq(DeptRelation::getAncestor, id))
 				.stream()
-				.map(DeptRelationEntity::getDescendant)
+				.map(DeptRelation::getDescendant)
 				.collect(Collectors.toList());
 
 			if (CollUtil.isNotEmpty(idList)) {
@@ -112,11 +112,11 @@ public class DeptServiceImpl  extends
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<TreeNode> listCurrentUserDeptTrees(String deptId) {
 		List<String> descendantIdList = deptRelationService
-			.list(Wrappers.<DeptRelationEntity>query().lambda()
-				.eq(DeptRelationEntity::getAncestor, deptId))
-			.stream().map(DeptRelationEntity::getDescendant)
+			.list(Wrappers.<DeptRelation>query().lambda()
+				.eq(DeptRelation::getAncestor, deptId))
+			.stream().map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
-		List<DeptEntity> deptEntityList = baseMapper.selectBatchIds(descendantIdList);
+		List<Dept> deptEntityList = baseMapper.selectBatchIds(descendantIdList);
 		return getNodeTree(new TreeQuery(), deptEntityList);
 	}
 

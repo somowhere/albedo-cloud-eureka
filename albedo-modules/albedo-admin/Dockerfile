@@ -10,6 +10,6 @@ WORKDIR /albedo-admin
 
 EXPOSE 4000
 
-ADD ./albedo-modules/albedo-admin-biz/target/albedo-admin-biz.jar ./
+ADD ./albedo-module/albedo-admin-biz/target/albedo-admin-biz.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar albedo-admin-biz.jar

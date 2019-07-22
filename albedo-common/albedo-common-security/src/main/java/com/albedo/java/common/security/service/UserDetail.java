@@ -42,7 +42,7 @@ public class UserDetail extends User {
 	private String deptId;
 
 	/**
-	 * Construct the <code>UserEntity</code> with the details required by
+	 * Construct the <code>User</code> with the details required by
 	 * {@link DaoAuthenticationProvider}.
 	 *
 	 * @param id                    用户ID

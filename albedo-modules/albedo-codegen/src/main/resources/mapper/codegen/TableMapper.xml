@@ -3,7 +3,7 @@
 <mapper namespace="com.albedo.java.modules.codegen.repository.TableRepository">
 
 
-<select id="findTableList" resultType="com.albedo.java.modules.codegen.domain.TableEntity">
+<select id="findTableList" resultType="com.albedo.java.modules.codegen.domain.Table">
     <if test="_databaseId == 'oracle'">
         SELECT
         t.TABLE_NAME AS name,

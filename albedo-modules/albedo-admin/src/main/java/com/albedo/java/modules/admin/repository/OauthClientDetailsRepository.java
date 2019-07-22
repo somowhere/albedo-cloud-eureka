@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 
-import com.albedo.java.modules.admin.domain.OauthClientDetailsEntity;
+import com.albedo.java.modules.admin.domain.OauthClientDetails;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -28,6 +28,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface OauthClientDetailsRepository extends BaseMapper<OauthClientDetailsEntity> {
+public interface OauthClientDetailsRepository extends BaseMapper<OauthClientDetails> {
 
 }

@@ -9,7 +9,7 @@
  */
 package ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>;
 
-<#list tableEntity.importList as i>
+<#list table.importList as i>
 import ${i};
 </#list>
 
@@ -24,7 +24,7 @@ import java.io.Serializable;
 public class ${ClassName}Id implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-<#list tableEntity.columnList as column>
+<#list table.columnList as column>
 	<#if column.pk>
 	@Column(name = "${column.name}"<#if column.javaType = 'String'>, length = ${column.size}</#if>)
 	private ${column.javaType} ${column.simpleJavaField};
@@ -33,7 +33,7 @@ public class ${ClassName}Id implements Serializable {
 	public ${ClassName}Id(){
 	}
 
-<#list tableEntity.columnList as column>
+<#list table.columnList as column>
 	<#if column.pk>
 	public void set${column.simpleJavaField?cap_first}(${column.javaType} value) {
 		this.${column.simpleJavaField} = value;

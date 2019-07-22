@@ -34,7 +34,7 @@
       <el-col :span="19">
         <div class="filter-container">
             <el-form :inline="true">
-            <#list tableEntity.columnList as c>
+            <#list table.columnList as c>
             <#if c.isQuery?? && c.isQuery == 1>
               <el-form-item label="${c.title}">
                 <#if c.showType == "input" || c.showType == "textarea">
@@ -61,10 +61,10 @@
               </el-form-item>
             </el-form>
         </div>
-        <el-tableEntity :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
-          <#list tableEntity.columnList as column>
+        <el-table :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
+          <#list table.columnList as column>
           <#if column.isList?? && column.isList == 1 && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
-          <el-tableEntity-column align="center" label="${column.title}">
+          <el-table-column align="center" label="${column.title}">
             <template slot-scope="scope">
             <#if column.simpleJavaField = 'status'>
               <el-tag>{{scope.row.${column.simpleJavaField}}}</el-tag>
@@ -72,10 +72,10 @@
               <span>{{scope.row.${column.simpleJavaField}}}</span>
              </#if>
             </template>
-          </el-tableEntity-column>
+          </el-table-column>
           </#if>
           </#list>
-          <el-tableEntity-column align="center" fixed="right" label="操作" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
+          <el-table-column align="center" fixed="right" label="操作" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
             <template slot-scope="scope">
             <el-button v-if="${permissionPrefix}_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
             </el-button>
@@ -84,9 +84,9 @@
             <el-button v-if="${permissionPrefix}_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
             </el-button>
             </template>
-          </el-tableEntity-column>
+          </el-table-column>
 
-        </el-tableEntity>
+        </el-table>
         <div v-show="!listLoading" class="pagination-container">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.size" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
@@ -104,7 +104,7 @@
     </el-dialog>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :label-position="labelPosition" label-width="80px" :model="form" ref="form">
-      <#list tableEntity.columnList as c>
+      <#list table.columnList as c>
         <#if c.simpleJavaField == 'parentId'>
         <el-form-item label="上级${functionNameSimple}" prop="parentName">
           <el-input v-model="form.parentName" placeholder="选择${functionNameSimple}" @focus="handle${ClassName}()" readonly></el-input>
@@ -142,7 +142,7 @@
   import {fetch${ClassName}Tree, find${ClassName}, save${ClassName}, remove${ClassName}, page${ClassName}} from "./service";
   import { mapGetters } from 'vuex'
   import {parseJsonItemForm, parseTreeData} from "@/util/util";
-  import {dictEntityCodes} from "@/api/dataSystem";
+  import {dictCodes} from "@/api/dataSystem";
   import {isValidateUnique, isValidateNumber, isValidateDigits, objectToString, toStr, validateNotNull} from "@/util/validate";
   import {MSG_TYPE_SUCCESS} from "@/const/common";
   export default {
@@ -170,7 +170,7 @@
         treeData: [],
         labelPosition: 'right',
         form: {
-          <#list tableEntity.columnList as c>
+          <#list table.columnList as c>
         <#if c.isEdit?? && c.isEdit == 1 && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: undefined,
         </#if>
@@ -208,8 +208,8 @@
       this.${permissionPrefix}_lock = this.authorities.indexOf("${permissionPrefix}_lock") !== -1;
       this.${permissionPrefix}_delete = this.authorities.indexOf("${permissionPrefix}_delete") !== -1;
 
-      dictEntityCodes({codes:'<#list tableEntity.columnList as c><#if c.dictType?? && c.dictType != ''>${c.dictType},</#if></#list>'}).then(response => {
-      <#assign index = 0 /><#list tableEntity.columnList as c><#if c.dictType?? && c.dictType != ''>
+      dictCodes({codes:'<#list table.columnList as c><#if c.dictType?? && c.dictType != ''>${c.dictType},</#if></#list>'}).then(response => {
+      <#assign index = 0 /><#list table.columnList as c><#if c.dictType?? && c.dictType != ''>
       this.${c.javaFieldId}Options = response.data[${index}];
       <#assign index = index+1 />
       </#if></#list>
@@ -225,7 +225,7 @@
         this.listLoading = true;
         this.listQuery.isAsc = false;
         this.listQuery.queryConditionJson = parseJsonItemForm([
-        <#list tableEntity.columnList as c><#if c.isQuery?? && c.isQuery == 1>
+        <#list table.columnList as c><#if c.isQuery?? && c.isQuery == 1>
         {fieldName: '${c.javaFieldId}',value:this.listQuery.${c.javaFieldId},operate:'${c.queryType}',attrType:'${c.javaType}'},
         </#if></#list>
         {fieldName: 'parentId',value:this.listQuery.parentId, attrType:'eq'},
@@ -328,7 +328,7 @@
       },
       resetForm() {
         this.form = {
-          <#list tableEntity.columnList as c>
+          <#list table.columnList as c>
         <#if c.isEdit?? && c.isEdit == 1 && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: "",
         </#if>

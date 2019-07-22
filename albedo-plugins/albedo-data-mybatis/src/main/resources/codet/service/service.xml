@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.albedo.java.common.persistence.service.DataVoService;
 import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${ClassName};
 import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Vo;
-<#if (tableEntity.compositeId)!>
+<#if (table.compositeId)!>
 import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Id;
 </#if>
 import ${packageName}.${moduleName}.repository.${ClassName}Repository;

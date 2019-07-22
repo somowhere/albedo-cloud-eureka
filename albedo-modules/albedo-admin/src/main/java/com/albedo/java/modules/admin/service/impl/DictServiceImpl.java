@@ -21,7 +21,7 @@ import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
-import com.albedo.java.modules.admin.domain.DictEntity;
+import com.albedo.java.modules.admin.domain.Dict;
 import com.albedo.java.modules.admin.repository.DictRepository;
 import com.albedo.java.modules.admin.service.DictService;
 import com.albedo.java.modules.admin.util.DictUtil;
@@ -48,14 +48,14 @@ import java.util.Map;
 @Service
 @BaseInit(method = "refresh")
 public class DictServiceImpl extends
-	TreeVoServiceImpl<DictRepository, DictEntity, DictDataVo> implements DictService {
+	TreeVoServiceImpl<DictRepository, Dict, DictDataVo> implements DictService {
 
 	@Autowired
 	private CacheManager cacheManager;
 
-	public List<DictEntity> findAllOrderBySort(){
-		return baseMapper.selectList(Wrappers.<DictEntity>query().lambda().orderByAsc(
-			DictEntity::getSort
+	public List<Dict> findAllOrderBySort(){
+		return baseMapper.selectList(Wrappers.<Dict>query().lambda().orderByAsc(
+			Dict::getSort
 		));
 	}
 
@@ -65,18 +65,18 @@ public class DictServiceImpl extends
 			codes.split(StringUtil.SPLIT_DEFAULT) : null);
 	}
 
-	@Cacheable(value = DictEntity.CACHE_DICT_DETAILS,key="'"+ DictEntity.CACHE_DICT_RESULT_ALL+"'")
+	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+ Dict.CACHE_DICT_RESULT_ALL+"'")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Map<String,List<SelectResult>> findCodes(String... codes) {
 		return DictUtil.getSelectResultListByCodes(findAllOrderBySort(), codes);
 	}
 
 	public void refresh() {
-		Cache cache = cacheManager.getCache(DictEntity.CACHE_DICT_DETAILS);
-		if (cache == null || cache.get(DictEntity.CACHE_DICT_ALL) == null ||
-			ObjectUtil.isEmpty(cache.get(DictEntity.CACHE_DICT_ALL))) {
-			List<DictEntity> dictEntityList = findAllOrderBySort();
-			cache.put(DictEntity.CACHE_DICT_ALL, dictEntityList);
+		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
+		if (cache == null || cache.get(Dict.CACHE_DICT_ALL) == null ||
+			ObjectUtil.isEmpty(cache.get(Dict.CACHE_DICT_ALL))) {
+			List<Dict> dictEntityList = findAllOrderBySort();
+			cache.put(Dict.CACHE_DICT_ALL, dictEntityList);
 		}
 	}
 

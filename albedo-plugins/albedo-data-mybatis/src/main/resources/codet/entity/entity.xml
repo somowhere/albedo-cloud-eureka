@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-<#list tableEntity.importList as i>
+<#list table.importList as i>
 import ${i};
 </#list>
 
@@ -25,12 +25,12 @@ import javax.validation.constraints.*;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@TableName(value = "${tableEntity.name}")
+@TableName(value = "${table.name}")
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
-public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaType}> {
+public class ${ClassName} extends IdEntity<${ClassName}, ${table.pkJavaType}> {
 
 	private static final long serialVersionUID = 1L;
-	<#list tableEntity.columnList as column>
+	<#list table.columnList as column>
 		<#if !column.pk && column.isNotBaseField>
 	/** F_${column.constantJavaField} ${column.nameAndTitle} */
 	public static final String F_${column.constantJavaField} = "${column.simpleJavaField}";
@@ -52,12 +52,12 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 }
 <#macro generateFields>
 	//columns START
-	<#list tableEntity.columnList as column>
+	<#list table.columnList as column>
 		<#if !column.pk && column.isNotBaseField>
-	/** ${column.simpleJavaField} ${column.title} */<#if tableEntity.parentExists && tableEntity.parentTableFk == column.name>
-	@ManyToOne(name = "${tableEntity.parentTableFk}")
+	/** ${column.simpleJavaField} ${column.title} */<#if table.parentExists && table.parentTableFk == column.name>
+	@ManyToOne(name = "${table.parentTableFk}")
 	@TableField(exist = false)
-	private ${tableEntity.parent.className} ${column.simpleJavaField};
+	private ${table.parent.className} ${column.simpleJavaField};
 	<#elseif column.showType == "userselect" || column.showType == "orgselect" || column.showType == "areaselect">
 	@TableField(${ClassName}.F_SQL_${column.constantJavaField})
 	private String ${column.simpleJavaField}Id;
@@ -69,7 +69,7 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 			</#if>
 		</#if>
 	</#list>
-	<#list tableEntity.childList as c>
+	<#list table.childList as c>
 	@TableField(exist = false)
 	private List<${c.className}> ${c.className?uncap_first}List = Lists.newArrayList();
 	</#list>
@@ -77,18 +77,18 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 </#macro>
 <#macro generateCompositeIdConstructorIfis>
 
-	<#if tableEntity.compositeId>
+	<#if table.compositeId>
 	public ${ClassName}(${ClassName}Id id) {
 		this.id = id;
 	}
 	<#else>
-	public ${ClassName}(${tableEntity.pkJavaType} id) {
+	public ${ClassName}(${table.pkJavaType} id) {
 		this.id = id;
 	}
 	</#if>
 </#macro>
 <#macro generatePkProperties>
-	<#if tableEntity.compositeId>
+	<#if table.compositeId>
 	public ${ClassName}Id getId() {
 		return this.id;
 	}
@@ -97,12 +97,12 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 		if (PublicUtil.isNotEmpty(id))this.id = id;
 	}
 	<#else>
-	/** ${tableEntity.pkColumn.simpleJavaField} ${tableEntity.pkColumn.comments} */
-	public void setId(${tableEntity.pkColumn.javaType} id) {
+	/** ${table.pkColumn.simpleJavaField} ${table.pkColumn.comments} */
+	public void setId(${table.pkColumn.javaType} id) {
 		if (PublicUtil.isNotEmpty(id)){this.id = id;}
 	}
-	/** ${tableEntity.pkColumn.simpleJavaField} ${tableEntity.pkColumn.comments} */
-	public ${tableEntity.pkColumn.javaType} getId() {
+	/** ${table.pkColumn.simpleJavaField} ${table.pkColumn.comments} */
+	public ${table.pkColumn.javaType} getId() {
 		return this.id;
 	}
 	</#if>
@@ -110,15 +110,15 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 </#macro>
 
 <#macro generateNotPkProperties>
-	<#list tableEntity.columnList as column>
+	<#list table.columnList as column>
 		<#if !column.pk && column.isNotBaseField>
-			<#if tableEntity.parentExists && tableEntity.parentTableFk == column.name>
+			<#if table.parentExists && table.parentTableFk == column.name>
 	/** ${column.simpleJavaField} ${column.title} */
-	public ${tableEntity.parent.className} get${column.simpleJavaField?cap_first}() {
+	public ${table.parent.className} get${column.simpleJavaField?cap_first}() {
 		return ${column.simpleJavaField};
 	}
 	/** ${column.simpleJavaField} ${column.title} */
-	public void set${column.simpleJavaField?cap_first}(${tableEntity.parent.className} ${column.simpleJavaField}) {
+	public void set${column.simpleJavaField?cap_first}(${table.parent.className} ${column.simpleJavaField}) {
 		this.${column.simpleJavaField} = ${column.simpleJavaField};
 	}
 			<#else>
@@ -143,13 +143,13 @@ public class ${ClassName} extends IdEntity<${ClassName}, ${tableEntity.pkJavaTyp
 			</#if>
 		</#if>
 	</#list>
-	<#list tableEntity.childList as tableEntity>
-	public List<${tableEntity.className}> get${tableEntity.className}List() {
-		return ${tableEntity.className?uncap_first}List;
+	<#list table.childList as table>
+	public List<${table.className}> get${table.className}List() {
+		return ${table.className?uncap_first}List;
 	}
 
-	public void set${tableEntity.className}List(List<${tableEntity.className}> ${tableEntity.className?uncap_first}List) {
-		this.${tableEntity.className?uncap_first}List = ${tableEntity.className?uncap_first}List;
+	public void set${table.className}List(List<${table.className}> ${table.className?uncap_first}List) {
+		this.${table.className?uncap_first}List = ${table.className?uncap_first}List;
 	}
 	</#list>
 </#macro>

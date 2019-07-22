@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntity, String, UserDataVo> implements UserService {
+public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, String, UserDataVo> implements UserService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final MenuService menuService;
 	private final RoleService roleService;
@@ -70,7 +70,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
 	public void save(UserDataVo userDataVo) {
-		UserEntity userEntity = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new UserEntity();
+		User userEntity = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
 		if(StringUtil.isEmpty(userDataVo.getPassword())){
 			userDataVo.setPassword(null);
 		}
@@ -80,15 +80,15 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 		}
 		super.saveOrUpdate(userEntity);
 		userDataVo.setId(userEntity.getId());
-		List<UserRoleEntity> userRoleEntityList = userDataVo.getRoleIdList()
+		List<UserRole> userRoleList = userDataVo.getRoleIdList()
 			.stream().map(roleId -> {
-				UserRoleEntity userRoleEntity = new UserRoleEntity();
-				userRoleEntity.setUserId(userEntity.getId());
-				userRoleEntity.setRoleId(roleId);
-				return userRoleEntity;
+				UserRole userRole = new UserRole();
+				userRole.setUserId(userEntity.getId());
+				userRole.setRoleId(roleId);
+				return userRole;
 			}).collect(Collectors.toList());
 		userRoleService.removeRoleByUserId(userEntity.getId());
-		userRoleService.saveBatch(userRoleEntityList);
+		userRoleService.saveBatch(userRoleList);
 	}
 
 	/**
@@ -99,13 +99,13 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UserInfo getUserInfo(UserEntity userEntity) {
+	public UserInfo getUserInfo(User userEntity) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUser(userEntity);
 		//设置角色列表  （ID）
 		List<String> roleIds = roleService.listRolesByUserId(userEntity.getId())
 			.stream()
-			.map(RoleEntity::getId)
+			.map(Role::getId)
 			.collect(Collectors.toList());
 		userInfo.setRoles(ArrayUtil.toArray(roleIds, String.class));
 
@@ -133,7 +133,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel getUserWithRolePage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
-		pm.setDesc(UserEntity.F_SQL_CREATEDDATE);
+		pm.setDesc(User.F_SQL_CREATEDDATE);
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
 		return (PageModel) userVosPage;
 	}
@@ -164,7 +164,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	 * @return Boolean
 	 */
 	@CacheEvict(value = "user_details", key = "#userEntity.username")
-	public Boolean removeUserById(UserEntity userEntity) {
+	public Boolean removeUserById(User userEntity) {
 //		userRoleService.removeRoleByUserId(userEntity.getId());
 		this.removeById(userEntity.getId());
 		return Boolean.TRUE;
@@ -178,24 +178,24 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<UserEntity> listAncestorUsersByUsername(String username) {
-		UserEntity userEntity = this.getOne(Wrappers.<UserEntity>query().lambda()
-			.eq(UserEntity::getUsername, username));
+	public List<User> listAncestorUsersByUsername(String username) {
+		User userEntity = this.getOne(Wrappers.<User>query().lambda()
+			.eq(User::getUsername, username));
 
-		DeptEntity deptEntity = sysDeptService.getById(userEntity.getDeptId());
+		Dept deptEntity = sysDeptService.getById(userEntity.getDeptId());
 		if (deptEntity == null) {
 			return null;
 		}
 
 		String parentId = deptEntity.getParentId();
-		return this.list(Wrappers.<UserEntity>query().lambda()
-			.eq(UserEntity::getDeptId, parentId));
+		return this.list(Wrappers.<User>query().lambda()
+			.eq(User::getDeptId, parentId));
 	}
 
 	@Override
 	public void lockOrUnLock(ArrayList<String> idList) {
 		idList.forEach(id -> {
-			UserEntity userEntity = baseMapper.selectById(id);
+			User userEntity = baseMapper.selectById(id);
 			userEntity.setLockFlag(CommonConstants.STR_YES.equals(userEntity.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
 			baseMapper.updateById(userEntity);
 		});
@@ -210,10 +210,10 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, UserEntit
 		String deptId = SecurityUtils.getUser().getDeptId();
 		//获取当前部门的子部门
 		return deptRelationService
-			.list(Wrappers.<DeptRelationEntity>query().lambda()
-				.eq(DeptRelationEntity::getAncestor, deptId))
+			.list(Wrappers.<DeptRelation>query().lambda()
+				.eq(DeptRelation::getAncestor, deptId))
 			.stream()
-			.map(DeptRelationEntity::getDescendant)
+			.map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
 	}
 }

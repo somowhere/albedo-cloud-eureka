@@ -8,4 +8,4 @@ ignore:
     - /user/info/*
     - /menu/codegen
     - /dict/all
-    - /logEntity/**
+    - /log/**

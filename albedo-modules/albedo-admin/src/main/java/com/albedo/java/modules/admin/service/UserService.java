@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.service;
 
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.persistence.service.DataVoService;
-import com.albedo.java.modules.admin.domain.UserEntity;
+import com.albedo.java.modules.admin.domain.User;
 import com.albedo.java.modules.admin.vo.UserDataVo;
 import com.albedo.java.modules.admin.vo.UserInfo;
 import com.albedo.java.modules.admin.repository.UserRepository;
@@ -31,14 +31,14 @@ import java.util.List;
  * @author somewhere
  * @date 2019/2/1
  */
-public interface UserService extends DataVoService<UserRepository, UserEntity, String, UserDataVo> {
+public interface UserService extends DataVoService<UserRepository, User, String, UserDataVo> {
 	/**
 	 * 查询用户信息
 	 *
 	 * @param userEntity 用户
 	 * @return userInfo
 	 */
-	UserInfo getUserInfo(UserEntity userEntity);
+	UserInfo getUserInfo(User userEntity);
 
 	/**
 	 * 分页查询用户信息（含有角色信息）
@@ -70,7 +70,7 @@ public interface UserService extends DataVoService<UserRepository, UserEntity, S
 	 * @param username 用户名
 	 * @return R
 	 */
-	List<UserEntity> listAncestorUsersByUsername(String username);
+	List<User> listAncestorUsersByUsername(String username);
 
 	void lockOrUnLock(ArrayList<String> newArrayList);
 }

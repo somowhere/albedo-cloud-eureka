@@ -6,10 +6,10 @@ import com.albedo.java.common.core.vo.QueryCondition;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.admin.domain.DictEntity;
-import com.albedo.java.modules.codegen.domain.SchemeEntity;
-import com.albedo.java.modules.codegen.domain.TableEntity;
-import com.albedo.java.modules.codegen.domain.TableColumnEntity;
+import com.albedo.java.modules.admin.domain.Dict;
+import com.albedo.java.modules.codegen.domain.Scheme;
+import com.albedo.java.modules.codegen.domain.Table;
+import com.albedo.java.modules.codegen.domain.TableColumn;
 import com.albedo.java.modules.codegen.domain.vo.SchemeVo;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
 import com.albedo.java.modules.codegen.domain.vo.TemplateVo;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @author somewhere
  */
 @Service
-public class SchemeService extends DataVoServiceImpl<SchemeRepository, SchemeEntity, String, SchemeVo> {
+public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, String, SchemeVo> {
 
     private final TableRepository tableRepository;
     private final TableService tableService;
@@ -45,9 +45,9 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, SchemeEnt
         this.tableColumnService = tableColumnService;
     }
 
-    public List<SchemeEntity> findAll(String id) {
+    public List<Scheme> findAll(String id) {
         SpecificationDetail specificationDetail = DynamicSpecifications.bySearchQueryCondition(
-                QueryCondition.ne(TableEntity.F_ID, id == null ? "-1" : id));
+                QueryCondition.ne(Table.F_ID, id == null ? "-1" : id));
         return findAll(specificationDetail);
 //		return repository.findAllByStatusAndId(TableDataVo.FLAG_NORMAL, id == null ? "-1" : id);
     }
@@ -58,7 +58,7 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, SchemeEnt
 
         // 查询主表及字段列
 		TableDataVo tableDataVo = tableService.findOneVo(schemeVo.getTableId());
-		tableDataVo.setColumnList(tableColumnService.findAll(new QueryWrapper<TableColumnEntity>().eq(TableColumnEntity.F_SQL_GENTABLEID,
+		tableDataVo.setColumnList(tableColumnService.findAll(new QueryWrapper<TableColumn>().eq(TableColumn.F_SQL_GENTABLEID,
                 tableDataVo.getId()))
                 .stream().map(item-> tableColumnService.copyBeanToVo( item)).collect(Collectors.toList())
         );
@@ -114,19 +114,19 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, SchemeEnt
         GenConfig config = GenUtil.getConfig();
         map.put("config", config);
 
-        map.put("categoryList", CollUtil.convertComboDataList(config.getCategoryList(), DictEntity.F_VAL, DictEntity.F_NAME));
-        map.put("viewTypeList", CollUtil.convertComboDataList(config.getViewTypeList(), DictEntity.F_VAL, DictEntity.F_NAME));
+        map.put("categoryList", CollUtil.convertComboDataList(config.getCategoryList(), Dict.F_VAL, Dict.F_NAME));
+        map.put("viewTypeList", CollUtil.convertComboDataList(config.getViewTypeList(), Dict.F_VAL, Dict.F_NAME));
 
-        List<TableEntity> tableEntityList = tableService.findAll(), list = Lists.newArrayList();
-        List<SchemeEntity> schemeEntityList = findAll(schemeVo.getId());
+        List<Table> tableList = tableService.findAll(), list = Lists.newArrayList();
+        List<Scheme> schemeList = findAll(schemeVo.getId());
         @SuppressWarnings("unchecked")
-        List<String> tableIds = CollUtil.extractToList(schemeEntityList, "tableId");
-        for (TableEntity tableEntity : tableEntityList) {
-            if (!tableIds.contains(tableEntity.getId())) {
-                list.add(tableEntity);
+        List<String> tableIds = CollUtil.extractToList(schemeList, "tableId");
+        for (Table table : tableList) {
+            if (!tableIds.contains(table.getId())) {
+                list.add(table);
             }
         }
-        map.put("tableList", CollUtil.convertComboDataList(list, TableEntity.F_ID, TableEntity.F_NAMESANDTITLE));
+        map.put("tableList", CollUtil.convertComboDataList(list, Table.F_ID, Table.F_NAMESANDTITLE));
         return map;
     }
 }

@@ -1,7 +1,7 @@
 package com.albedo.java.modules.codegen.service;
 
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.codegen.domain.TableColumnEntity;
+import com.albedo.java.modules.codegen.domain.TableColumn;
 import com.albedo.java.modules.codegen.domain.vo.TableColumnVo;
 import com.albedo.java.modules.codegen.repository.TableColumnRepository;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,18 +18,18 @@ import java.util.stream.Collectors;
  */
 @Service
 public class TableColumnService extends
-	DataVoServiceImpl<TableColumnRepository, TableColumnEntity, String, TableColumnVo> {
+	DataVoServiceImpl<TableColumnRepository, TableColumn, String, TableColumnVo> {
 
-    List<TableColumnEntity> findAllByGenTableIdOrderBySort(String id){
-        return findAll(new QueryWrapper<TableColumnEntity>().eq(TableColumnEntity.F_GENTABLEID,id)
-            .orderByAsc(TableColumnEntity.F_SORT));
+    List<TableColumn> findAllByGenTableIdOrderBySort(String id){
+        return findAll(new QueryWrapper<TableColumn>().eq(TableColumn.F_GENTABLEID,id)
+            .orderByAsc(TableColumn.F_SORT));
     }
 
 
     public void deleteByTableId(String id, String currentAuditor) {
-        List<TableColumnEntity> tableColumnEntityList = findAllByGenTableIdOrderBySort(id);
-        Assert.notNull(tableColumnEntityList, "id " + id + " tableColumn 不能为空");
-        super.deleteBatchIds(tableColumnEntityList.stream().map(item->item.getId()).collect(Collectors.toList()));
+        List<TableColumn> tableColumnList = findAllByGenTableIdOrderBySort(id);
+        Assert.notNull(tableColumnList, "id " + id + " tableColumn 不能为空");
+        super.deleteBatchIds(tableColumnList.stream().map(item->item.getId()).collect(Collectors.toList()));
 
     }
 

@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.log.event;
 
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.context.ApplicationEvent;
  */
 public class SysLogEvent extends ApplicationEvent {
 
-	public SysLogEvent(LogEntity source) {
+	public SysLogEvent(Log source) {
 		super(source);
 	}
 }

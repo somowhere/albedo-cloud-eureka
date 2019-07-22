@@ -99,7 +99,7 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
     @DeleteMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity delete(@PathVariable String ids) {
-        log.debug("REST request to delete UserEntity: {}", ids);
+        log.debug("REST request to delete User: {}", ids);
         service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
         return ResponseBuilder.buildOk("删除成功");
     }

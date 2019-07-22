@@ -25,11 +25,11 @@ import com.albedo.java.common.repository.service.BaseService;
 import com.albedo.java.common.security.SecurityUtil;
 import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${ClassName};
 import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Vo;
-<#if tableEntity.compositeId>
+<#if table.compositeId>
 import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Id;
 </#if>
-<#list tableEntity.childList as tableEntity>
-import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${tableEntity.className};
+<#list table.childList as table>
+import ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>.${table.className};
 </#list>
 import ${packageName}.${moduleName}.repository.${ClassName}Repository;
 import com.google.common.collect.Lists;
@@ -43,7 +43,7 @@ import com.google.common.collect.Lists;
 @Transactional(rollbackFor = Exception.class)
 public class ${ClassName}Service extends DataService<${ClassName}Repository, ${ClassName}, String, ${ClassName}Vo>{
 
-	<#list tableEntity.childList as c>
+	<#list table.childList as c>
 	@Resource
 	private ${c.className}Repository ${c.className}Repository;
 	</#list>
@@ -56,24 +56,24 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 	 * @param ${className} 实体${functionNameSimple}
 	 * @return */
     public ${ClassName} save(${ClassName} ${className}) {
-    	<#list tableEntity.childList as tableEntity>
-		List<${tableEntity.className}> ${tableEntity.className?uncap_first}List = ${className}.get${tableEntity.className}List();
-		${className}.set${tableEntity.className}List(null);
+    	<#list table.childList as table>
+		List<${table.className}> ${table.className?uncap_first}List = ${className}.get${table.className}List();
+		${className}.set${table.className}List(null);
 		</#list>
         ${className} = ${className}Repository.save(${className});
-        logEntity.debug("Save Information for ${ClassName}: {}", ${className});
-        <#list tableEntity.childList as tableEntity>
-		if (PublicUtil.isNotEmpty(${tableEntity.className?uncap_first}List)) {
-			for (${tableEntity.className} ${tableEntity.className} : ${tableEntity.className?uncap_first}List) {
-				<#if tableEntity.parentExists>
-					<#list tableEntity.columnList as cc>
-						<#if tableEntity.parentTableFk == cc.name>
-				${tableEntity.className}.set${cc.simpleJavaField?cap_first}(${className});
+        log.debug("Save Information for ${ClassName}: {}", ${className});
+        <#list table.childList as table>
+		if (PublicUtil.isNotEmpty(${table.className?uncap_first}List)) {
+			for (${table.className} ${table.className} : ${table.className?uncap_first}List) {
+				<#if table.parentExists>
+					<#list table.columnList as cc>
+						<#if table.parentTableFk == cc.name>
+				${table.className}.set${cc.simpleJavaField?cap_first}(${className});
 						</#if>
 					</#list>
 				</#if>
 			}
-			${tableEntity.className}Service.save(${tableEntity.className?uncap_first}List);
+			${table.className}Service.save(${table.className?uncap_first}List);
 		}
 		</#list>
         return ${className};
@@ -83,9 +83,9 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
     public void delete(String ids) {
     	Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)).forEach(id ->{
     		${className}Repository.findOneById(id).map(u -> {
-    		<#if tableEntity.childeExists>
+    		<#if table.childeExists>
 			${ClassName} ${className} = find(${className}Id);
-			<#list tableEntity.childList as c>
+			<#list table.childList as c>
 				List<${c.className}> ${c.className?uncap_first}List = ${className}.get${c.className}List();
 				for (${c.className} ${c.className} : ${c.className?uncap_first}List) {
 				${c.className}Service.deleteById(${c.className}.getId());
@@ -93,7 +93,7 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 			</#list>
 			</#if>
     			deleteById(id, SecurityUtil.getCurrentAuditor());
-                logEntity.debug("Deleted ${ClassName}: {}", u);
+                log.debug("Deleted ${ClassName}: {}", u);
 				return u;
 			}).orElseThrow(() -> new RuntimeMsgException("${functionNameSimple} " + id + " 信息为空，删除失败"));
     	});
@@ -104,7 +104,7 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 		Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)).forEach(id ->{
 			${className}Repository.findOneById(id).map(u -> {
     			operateStatusById(id, BaseEntity.FLAG_NORMAL.equals(u.getStatus()) ? BaseEntity.FLAG_UNABLE : BaseEntity.FLAG_NORMAL, SecurityUtil.getCurrentAuditor());
-                logEntity.debug("LockOrUnLock User: {}", u);
+                log.debug("LockOrUnLock User: {}", u);
 				return u;
 			}).orElseThrow(() -> new RuntimeMsgException("${functionNameSimple} " + id + " 信息为空，操作失败"));
     	});

@@ -16,7 +16,7 @@
 package com.albedo.java.modules.admin.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.admin.service.LogService;
@@ -50,7 +50,7 @@ public class LogResource {
 	 * @return
 	 */
 	@GetMapping("/")
-	public R getLogPage(Page page, LogEntity logEntity) {
+	public R getLogPage(Page page, Log logEntity) {
 		return new R<>(logService.page(page, Wrappers.query(logEntity)));
 	}
 
@@ -74,7 +74,7 @@ public class LogResource {
 	 */
 	@Inner
 	@PostMapping("/")
-	public R save(@Valid @RequestBody LogEntity logEntity) {
+	public R save(@Valid @RequestBody Log logEntity) {
 		return new R<>(logService.save(logEntity));
 	}
 

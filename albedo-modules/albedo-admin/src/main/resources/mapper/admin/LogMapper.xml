@@ -20,7 +20,7 @@
 
 <mapper namespace="com.albedo.java.modules.admin.repository.LogRepository">
 
-	<resultMap id="sysLogMap" type="com.albedo.java.modules.admin.domain.LogEntity">
+	<resultMap id="sysLogMap" type="com.albedo.java.modules.admin.domain.Log">
 		<id property="id" column="id"/>
 		<result property="type" column="type"/>
 		<result property="title" column="title"/>

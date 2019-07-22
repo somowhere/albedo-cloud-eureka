@@ -65,46 +65,46 @@
     </category>
     <!-- java类型 -->
     <javaType>
-        <dictEntity val="String" name="String"/>
-        <dictEntity val="Long" name="Long"/>
-        <dictEntity val="Integer" name="Integer"/>
-        <dictEntity val="Double" name="Double"/>
-        <dictEntity val="java.util.Date" name="Date"/>
-        <dictEntity val="com.albedo.java.modules.sys.domain.User" name="User"/>
-        <dictEntity val="com.albedo.java.modules.sys.domain.Org" name="Org"/>
-        <dictEntity val="com.albedo.java.modules.sys.domain.Area" name="Area"/>
-        <dictEntity val="This" name="ThisObj" description="生成当前对象"/>
-        <dictEntity val="Custom" name="Custom" description="自定义对象，生成后手动设置"/>
+        <dict val="String" name="String"/>
+        <dict val="Long" name="Long"/>
+        <dict val="Integer" name="Integer"/>
+        <dict val="Double" name="Double"/>
+        <dict val="java.util.Date" name="Date"/>
+        <dict val="com.albedo.java.modules.sys.domain.User" name="User"/>
+        <dict val="com.albedo.java.modules.sys.domain.Org" name="Org"/>
+        <dict val="com.albedo.java.modules.sys.domain.Area" name="Area"/>
+        <dict val="This" name="ThisObj" description="生成当前对象"/>
+        <dict val="Custom" name="Custom" description="自定义对象，生成后手动设置"/>
     </javaType>
     <!-- 查询类型 -->
     <queryType>
-        <dictEntity val="eq" name="="/>
-        <dictEntity val="ne" name="!="/>
-        <dictEntity val="gt" name="&gt;"/>
-        <dictEntity val="ge" name="&gt;="/>
-        <dictEntity val="lt" name="&lt;"/>
-        <dictEntity val="le" name="&lt;="/>
-        <dictEntity val="like" name="like"/>
-        <dictEntity val="in" name="in"/>
-        <dictEntity val="between" name="between"/>
+        <dict val="eq" name="="/>
+        <dict val="ne" name="!="/>
+        <dict val="gt" name="&gt;"/>
+        <dict val="ge" name="&gt;="/>
+        <dict val="lt" name="&lt;"/>
+        <dict val="le" name="&lt;="/>
+        <dict val="like" name="like"/>
+        <dict val="in" name="in"/>
+        <dict val="between" name="between"/>
     </queryType>
     <!-- 字段显示类型 -->
     <showType>
-        <dictEntity val="input" name="单行文本"/>
-        <dictEntity val="textarea" name="多行文本"/>
-        <dictEntity val="select" name="下拉选项"/>
-        <dictEntity val="radio" name="单选按钮"/>
-        <dictEntity val="checkbox" name="复选框"/>
-        <dictEntity val="dateselect" name="日期选择"/>
-        <dictEntity val="userselect" name="人员选择"/>
-        <dictEntity val="orgselect" name="部门选择"/>
-        <dictEntity val="areaselect" name="区域选择"/>
-        <dictEntity val="treeselect" name="树选择控件"/>
-        <dictEntity val="fileselect" name="文件上传选择"/>
+        <dict val="input" name="单行文本"/>
+        <dict val="textarea" name="多行文本"/>
+        <dict val="select" name="下拉选项"/>
+        <dict val="radio" name="单选按钮"/>
+        <dict val="checkbox" name="复选框"/>
+        <dict val="dateselect" name="日期选择"/>
+        <dict val="userselect" name="人员选择"/>
+        <dict val="orgselect" name="部门选择"/>
+        <dict val="areaselect" name="区域选择"/>
+        <dict val="treeselect" name="树选择控件"/>
+        <dict val="fileselect" name="文件上传选择"/>
     </showType>
 
     <viewType>
-        <dictEntity val="0" name="普通视图"/>
-        <dictEntity val="1" name="弹窗视图"/>
+        <dict val="0" name="普通视图"/>
+        <dict val="1" name="弹窗视图"/>
     </viewType>
 </config>

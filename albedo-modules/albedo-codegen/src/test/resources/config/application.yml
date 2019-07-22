@@ -32,7 +32,7 @@ ignore:
   urls:
     - /actuator/**
     - /userEntity/info/*
-    - /logEntity/**
+    - /log/**
 
 
 # mybaits-plus配置

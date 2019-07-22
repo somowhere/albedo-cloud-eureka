@@ -17,6 +17,7 @@
 package com.albedo.java.common.core.util;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.albedo.java.common.core.config.ApplicationConfig;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 类工具类
@@ -44,6 +46,14 @@ import java.util.List;
 @UtilityClass
 @Slf4j
 public class ClassUtil extends org.springframework.util.ClassUtils {
+
+
+
+	private static final String SETTER_PREFIX = "set";
+
+	private static final String GETTER_PREFIX = "get";
+
+
 	private final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();
 	public static String classPackge = ApplicationConfig.get("system.base.class.path");
 
@@ -242,6 +252,36 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		return (T) obj;
 	}
 
+	/**
+	 * 调用Getter方法. 支持多级，如：对象名.对象名.方法
+	 */
+	public static Object invokeGetter(Object obj, String propertyName) {
+		if (obj instanceof Map) {
+			return ((Map) obj).get(propertyName);
+		}
+		Object object = obj;
+		for (String name : StringUtil.split(propertyName, ".")) {
+			object = ReflectUtil.invoke(object, GETTER_PREFIX + StringUtil.upperFirst(name));
+		}
+		return object;
+	}
+
+	/**
+	 * 调用Setter方法, 仅匹配方法名。 支持多级，如：对象名.对象名.方法
+	 */
+	public static void invokeSetter(Object obj, String propertyName, Object value) {
+		Object object = obj;
+		String[] names = StringUtil.split(propertyName, ".");
+		for (int i = 0; i < names.length; i++) {
+			if (i < names.length - 1) {
+				object = ReflectUtil.invoke(object, GETTER_PREFIX + StringUtil.upperFirst(names[i]),
+					value);
+			} else {
+				ReflectUtil.invoke(object, SETTER_PREFIX+ StringUtil.upperFirst(names[i]),
+					value);
+			}
+		}
+	}
 
 
 }

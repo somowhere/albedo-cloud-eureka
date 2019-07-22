@@ -5,13 +5,13 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.common.persistence.domain.TreeEntity;
-import com.albedo.java.modules.admin.domain.UserEntity;
+import com.albedo.java.modules.admin.domain.User;
 import com.albedo.java.modules.codegen.domain.vo.*;
 import com.albedo.java.modules.codegen.domain.vo.TableColumnVo;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
 import com.albedo.java.modules.codegen.domain.xml.GenCategory;
 import com.albedo.java.modules.codegen.domain.xml.GenConfig;
-import com.albedo.java.modules.admin.domain.DeptEntity;
+import com.albedo.java.modules.admin.domain.Dept;
 import com.albedo.java.modules.admin.util.DictUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -112,14 +112,14 @@ public class GenUtil {
             }
             // 用户
             if (StringUtil.startWithIgnoreCase(column.getName(), "user_id")) {
-                column.setJavaType(UserEntity.class.getName());
+                column.setJavaType(User.class.getName());
                 column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
                 column.setTitle("用户");
                 column.setShowType("userselect");
             }
             // 部门
             else if (StringUtil.startWithIgnoreCase(column.getName(), "dept_id")) {
-                column.setJavaType(DeptEntity.class.getName());
+                column.setJavaType(Dept.class.getName());
                 column.setJavaField(column.getJavaField().replaceAll("Id", ".id|name"));
                 column.setTitle("机构");
                 column.setShowType("orgselect");
@@ -133,7 +133,7 @@ public class GenUtil {
 //            }
             // 创建者、更新者
             else if (StringUtil.startWithIgnoreCase(column.getName(), DataEntity.F_CREATEDBY) || StringUtil.startWithIgnoreCase(column.getName(), DataEntity.F_LASTMODIFIEDBY)) {
-                column.setJavaType(UserEntity.class.getName());
+                column.setJavaType(User.class.getName());
                 column.setJavaField(column.getJavaField());
             }
             // 创建时间、更新时间
@@ -327,7 +327,7 @@ public class GenUtil {
 
         logger.debug(" fileName === " + fileName);
         if ("entityId".equals(tpl.getName())) {
-            TableDataVo table = (TableDataVo) model.get("tableEntity");
+            TableDataVo table = (TableDataVo) model.get("table");
             if (table.isNotCompositeId()) {
                 return "因不满足联合主键条件已忽略" + fileName + "<br/>";
             }

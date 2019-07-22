@@ -10,6 +10,6 @@ WORKDIR /albedo-zipkin
 
 EXPOSE 5002
 
-ADD ./albedo-modules/albedo-zipkin/target/albedo-zipkin.jar ./
+ADD ./albedo-module/albedo-zipkin/target/albedo-zipkin.jar ./
 
 CMD java -Djava.security.egd=file:/dev/./urandom -jar albedo-zipkin.jar

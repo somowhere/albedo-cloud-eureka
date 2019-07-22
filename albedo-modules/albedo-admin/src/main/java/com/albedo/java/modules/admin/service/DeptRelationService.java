@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.service;
 
-import com.albedo.java.modules.admin.domain.DeptRelationEntity;
+import com.albedo.java.modules.admin.domain.DeptRelation;
 import com.albedo.java.modules.admin.vo.DeptDataVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -28,7 +28,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DeptRelationService extends IService<DeptRelationEntity> {
+public interface DeptRelationService extends IService<DeptRelation> {
 
 	/**
 	 * 新建部门关系
@@ -49,5 +49,5 @@ public interface DeptRelationService extends IService<DeptRelationEntity> {
 	 *
 	 * @param relation
 	 */
-	void updateDeptRelation(DeptRelationEntity relation);
+	void updateDeptRelation(DeptRelation relation);
 }

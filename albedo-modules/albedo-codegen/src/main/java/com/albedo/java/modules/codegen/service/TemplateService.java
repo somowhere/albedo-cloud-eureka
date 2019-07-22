@@ -1,7 +1,7 @@
 package com.albedo.java.modules.codegen.service;
 
 import com.albedo.java.common.persistence.service.impl.DataServiceImpl;
-import com.albedo.java.modules.codegen.domain.TemplateEntity;
+import com.albedo.java.modules.codegen.domain.Template;
 import com.albedo.java.modules.codegen.repository.TemplateRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
  * @author somewhere
  */
 @Service
-public class TemplateService extends DataServiceImpl<TemplateRepository, TemplateEntity, String> {
+public class TemplateService extends DataServiceImpl<TemplateRepository, Template, String> {
 
 }

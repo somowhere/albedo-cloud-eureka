@@ -19,7 +19,7 @@
 <mapper namespace="com.albedo.java.modules.admin.repository.DeptRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.admin.domain.DeptEntity">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.admin.domain.Dept">
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 		<result column="parent_id" property="parentId"/>
@@ -36,7 +36,7 @@
 
 
 	<!--关联查询部门列表-->
-	<select id="listDepts" resultType="com.albedo.java.modules.admin.domain.DeptEntity">
+	<select id="listDepts" resultType="com.albedo.java.modules.admin.domain.Dept">
 		SELECT
 			t.*
 		FROM

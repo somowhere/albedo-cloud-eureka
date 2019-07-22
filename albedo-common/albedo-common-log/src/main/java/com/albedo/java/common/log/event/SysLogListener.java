@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.log.event;
 
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 import com.albedo.java.modules.admin.feign.RemoteLogService;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public class SysLogListener {
 	@Order
 	@EventListener(SysLogEvent.class)
 	public void saveSysLog(SysLogEvent event) {
-		LogEntity logEntity = (LogEntity) event.getSource();
+		Log logEntity = (Log) event.getSource();
 		remoteLogService.saveLog(logEntity, SecurityConstants.FROM_IN);
 	}
 }

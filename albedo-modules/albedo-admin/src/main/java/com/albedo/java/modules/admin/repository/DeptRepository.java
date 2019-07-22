@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.admin.domain.DeptEntity;
+import com.albedo.java.modules.admin.domain.Dept;
 
 import java.util.List;
 
@@ -29,12 +29,12 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DeptRepository  extends TreeRepository<DeptEntity> {
+public interface DeptRepository  extends TreeRepository<Dept> {
 
 	/**
 	 * 关联dept——relation
 	 *
 	 * @return 数据列表
 	 */
-	List<DeptEntity> listDepts();
+	List<Dept> listDepts();
 }

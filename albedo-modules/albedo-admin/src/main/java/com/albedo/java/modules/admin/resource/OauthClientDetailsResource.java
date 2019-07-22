@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.resource;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.admin.domain.OauthClientDetailsEntity;
+import com.albedo.java.modules.admin.domain.OauthClientDetails;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.albedo.java.modules.admin.service.OauthClientDetailsService;
@@ -47,7 +47,7 @@ public class OauthClientDetailsResource {
 	 * 通过ID查询
 	 *
 	 * @param id ID
-	 * @return OauthClientDetailsEntity
+	 * @return OauthClientDetails
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
 	public R getById(@PathVariable Integer id) {
@@ -63,7 +63,7 @@ public class OauthClientDetailsResource {
 	 * @return
 	 */
 	@GetMapping("/")
-	public R getOauthClientDetailsPage(Page page, OauthClientDetailsEntity oauthClientDetailsEntity) {
+	public R getOauthClientDetailsPage(Page page, OauthClientDetails oauthClientDetailsEntity) {
 		return new R<>(oauthClientDetailsService.page(page, Wrappers.query(oauthClientDetailsEntity)));
 	}
 
@@ -76,7 +76,7 @@ public class OauthClientDetailsResource {
 	@SysLog("保存终端")
 	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
-	public R save(@Valid @RequestBody OauthClientDetailsEntity oauthClientDetailsEntity) {
+	public R save(@Valid @RequestBody OauthClientDetails oauthClientDetailsEntity) {
 		return new R<>(oauthClientDetailsService.saveOrUpdate(oauthClientDetailsEntity));
 	}
 

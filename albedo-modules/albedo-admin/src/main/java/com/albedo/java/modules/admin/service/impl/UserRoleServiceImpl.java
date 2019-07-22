@@ -16,7 +16,7 @@
 
 package com.albedo.java.modules.admin.service.impl;
 
-import com.albedo.java.modules.admin.domain.UserRoleEntity;
+import com.albedo.java.modules.admin.domain.UserRole;
 import com.albedo.java.modules.admin.repository.UserRoleRepository;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.albedo.java.modules.admin.service.UserRoleService;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
  * @since 2019/2/1
  */
 @Service
-public class UserRoleServiceImpl extends ServiceImpl<UserRoleRepository, UserRoleEntity> implements UserRoleService {
+public class UserRoleServiceImpl extends ServiceImpl<UserRoleRepository, UserRole> implements UserRoleService {
 
 	/**
 	 * 根据用户Id删除该用户的角色关系

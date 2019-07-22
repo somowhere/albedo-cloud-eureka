@@ -19,7 +19,7 @@ package com.albedo.java.modules.admin.service;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.admin.vo.DictDataVo;
-import com.albedo.java.modules.admin.domain.DictEntity;
+import com.albedo.java.modules.admin.domain.Dict;
 import com.albedo.java.modules.admin.repository.DictRepository;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.Map;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface DictService extends TreeVoService<DictRepository, DictEntity, DictDataVo> {
+public interface DictService extends TreeVoService<DictRepository, Dict, DictDataVo> {
 	Map<String, List<SelectResult>> findCodeStr(String codes);
 	Map<String, List<SelectResult>> findCodes(String... codes);
 

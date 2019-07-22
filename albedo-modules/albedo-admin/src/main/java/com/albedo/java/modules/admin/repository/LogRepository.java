@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 
 /**
  * <p>
@@ -27,5 +27,5 @@ import com.albedo.java.modules.admin.domain.LogEntity;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface LogRepository extends BaseRepository<LogEntity> {
+public interface LogRepository extends BaseRepository<Log> {
 }

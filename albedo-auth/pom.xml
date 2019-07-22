@@ -38,7 +38,7 @@
 		<!--upms api、model 模块-->
 		<dependency>
 			<groupId>com.albedo.java</groupId>
-			<artifactId>albedo-admin-api</artifactId>
+			<artifactId>albedo-common-api</artifactId>
 			<version>${project.release.version}</version>
 		</dependency>
 		<!--security-->
@@ -119,7 +119,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- logEntity configuration -->
+				<!-- log configuration -->
 				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,swagger</spring.profiles.active>

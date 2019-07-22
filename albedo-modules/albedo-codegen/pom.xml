@@ -48,12 +48,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.albedo.java</groupId>
-			<artifactId>albedo-admin-api</artifactId>
+			<artifactId>albedo-common-api</artifactId>
 			<version>${project.release.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.albedo.java</groupId>
-			<artifactId>albedo-common-modules-base</artifactId>
+			<artifactId>albedo-common-module</artifactId>
 			<version>${project.release.version}</version>
 		</dependency>
 		<dependency>
@@ -151,7 +151,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- logEntity configuration -->
+				<!-- log configuration -->
 				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,micro,swagger</spring.profiles.active>
@@ -160,7 +160,7 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<!-- logEntity configuration -->
+				<!-- log configuration -->
 				<logback.loglevel>${profile.prod.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>prod,micro</spring.profiles.active>

@@ -22,7 +22,7 @@ import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.admin.domain.UserEntity;
+import com.albedo.java.modules.admin.domain.User;
 import com.albedo.java.modules.admin.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -70,8 +70,8 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@GetMapping(value = {"/info"})
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
-		UserEntity userEntity = service.getOne(Wrappers.<UserEntity>query()
-			.lambda().eq(UserEntity::getUsername, username));
+		User userEntity = service.getOne(Wrappers.<User>query()
+			.lambda().eq(User::getUsername, username));
 		if (userEntity == null) {
 			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
@@ -86,8 +86,8 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@Inner
 	@GetMapping("/info/{username}")
 	public R info(@PathVariable String username) {
-		UserEntity userEntity = service.getOne(Wrappers.<UserEntity>query()
-			.lambda().eq(UserEntity::getUsername, username));
+		User userEntity = service.getOne(Wrappers.<User>query()
+			.lambda().eq(User::getUsername, username));
 		if (userEntity == null) {
 			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
 		}
@@ -102,7 +102,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 */
 	@GetMapping("/details/{username}")
 	public R detailsUser(@PathVariable String username) {
-		UserEntity condition = new UserEntity();
+		User condition = new User();
 		condition.setUsername(username);
 		return new R<>(service.getOne(new QueryWrapper<>(condition)));
 	}

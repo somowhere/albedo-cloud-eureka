@@ -38,18 +38,18 @@ albedo
 └── albedo-common -- 系统公共模块 
      ├── albedo-common-core -- 公共工具类核心包
      ├── albedo-common-log -- 日志服务
-     ├── albedo-common-modules-base -- 模块基础包
+     ├── albedo-common-module -- 模块基础包
      └── albedo-common-security -- 安全工具类
 ├── albedo-config -- 配置中心[8888]
 ├── albedo-eureka -- 服务注册与发现[8761]
 ├── albedo-gateway -- Spring Cloud Gateway网关[9999]
-└── albedo-modules -- 功能模块
+└── albedo-module -- 功能模块
      ├── albedo-admin-api -- 通用用户权限管理系统公共api模块
      ├── albedo-admin-biz -- 通用用户权限管理系统业务处理模块[4000]
      ├── albedo-codegen -- 图形化代码生成[5003]
      ├── albedo-monitor -- Spring Boot Admin监控 [5001]
      └── albedo-zipkin -- 链路调用监控 [5002]
-└── albedo-plugins  -- 插件模块 
+└── albedo-plugin  -- 插件模块 
      ├── albedo-data-mybatis -- mybatis 基础模块
      └── albedo-swagger-api -- swagger api
 	 

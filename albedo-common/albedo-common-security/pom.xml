@@ -49,7 +49,7 @@
 		<!--UPMS API-->
 		<dependency>
 			<groupId>com.albedo.java</groupId>
-			<artifactId>albedo-admin-api</artifactId>
+			<artifactId>albedo-common-api</artifactId>
 			<version>${project.release.version}</version>
 		</dependency>
 	</dependencies>

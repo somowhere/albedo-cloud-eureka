@@ -309,7 +309,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- logEntity configuration -->
+				<!-- log configuration -->
 				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev</spring.profiles.active>
@@ -318,7 +318,7 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<!-- logEntity configuration -->
+				<!-- log configuration -->
 				<logback.loglevel>${profile.prod.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>prod</spring.profiles.active>

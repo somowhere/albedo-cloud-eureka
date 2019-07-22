@@ -1,6 +1,7 @@
 package com.albedo.java.common.core.util;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.albedo.java.common.core.vo.ComboData;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.google.common.collect.Lists;
@@ -63,14 +64,14 @@ public class CollUtil extends cn.hutool.core.collection.CollUtil {
 		List<ComboData> comboDataList = Lists.newArrayList();
 		dataList.forEach(item -> comboDataList.add(
 			new ComboData(StringUtil.toStrString(BeanUtil.getFieldValue(item, idFieldName)),
-				StringUtil.toStrString(BeanUtil.getFieldValue(item, nameFieldName)))));
+				StringUtil.toStrString(ClassUtil.invokeGetter(item, nameFieldName)))));
 		return comboDataList;
 	}
 
 	public static List<SelectResult> convertSelectDataList(List<?> dataList, String idFieldName, String nameFieldName) {
 		List<SelectResult> selectResultList = Lists.newArrayList();
 		dataList.forEach(item -> selectResultList.add(new SelectResult(StringUtil.toStrString(BeanUtil.getFieldValue(item, idFieldName)),
-			StringUtil.toStrString(BeanUtil.getFieldValue(item, nameFieldName)))));
+			StringUtil.toStrString(ClassUtil.invokeGetter(item, nameFieldName)))));
 		return selectResultList;
 	}
 }

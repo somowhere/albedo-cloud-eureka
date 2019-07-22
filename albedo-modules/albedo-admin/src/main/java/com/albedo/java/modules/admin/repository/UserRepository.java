@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
-import com.albedo.java.modules.admin.domain.UserEntity;
+import com.albedo.java.modules.admin.domain.User;
 import com.albedo.java.modules.admin.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -33,7 +33,7 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface UserRepository extends BaseRepository<UserEntity> {
+public interface UserRepository extends BaseRepository<User> {
 	/**
 	 * 通过用户名查询用户信息（含有角色信息）
 	 *

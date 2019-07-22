@@ -17,7 +17,7 @@
 package com.albedo.java.modules.admin.repository;
 
 import com.albedo.java.common.persistence.repository.TreeRepository;
-import com.albedo.java.modules.admin.domain.MenuEntity;
+import com.albedo.java.modules.admin.domain.Menu;
 import com.albedo.java.modules.admin.vo.MenuVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,7 +31,7 @@ import java.util.List;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface MenuRepository extends TreeRepository<MenuEntity> {
+public interface MenuRepository extends TreeRepository<Menu> {
 
 	/**
 	 * 通过角色编号查询菜单

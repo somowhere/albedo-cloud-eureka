@@ -19,7 +19,7 @@
 <mapper namespace="com.albedo.java.modules.admin.repository.MenuRepository">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.albedo.java.modules.admin.domain.MenuEntity">
+	<resultMap id="BaseResultMap" type="com.albedo.java.modules.admin.domain.Menu">
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 		<result column="permission" property="permission"/>

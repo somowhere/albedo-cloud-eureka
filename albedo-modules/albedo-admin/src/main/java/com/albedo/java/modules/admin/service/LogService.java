@@ -18,7 +18,7 @@ package com.albedo.java.modules.admin.service;
 
 import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.admin.vo.LogDataVo;
-import com.albedo.java.modules.admin.domain.LogEntity;
+import com.albedo.java.modules.admin.domain.Log;
 import com.albedo.java.modules.admin.repository.LogRepository;
 
 /**
@@ -29,6 +29,6 @@ import com.albedo.java.modules.admin.repository.LogRepository;
  * @author somewhere
  * @since 2019/2/1
  */
-public interface LogService extends DataVoService<LogRepository, LogEntity, Long, LogDataVo> {
+public interface LogService extends DataVoService<LogRepository, Log, Long, LogDataVo> {
 
 }

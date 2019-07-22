@@ -6,7 +6,7 @@ import com.albedo.java.common.core.util.ResponseBuilder;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.codegen.domain.TableEntity;
+import com.albedo.java.modules.codegen.domain.Table;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
 import com.albedo.java.modules.codegen.domain.vo.TableFormVo;
 import com.albedo.java.modules.codegen.service.TableService;
@@ -36,7 +36,7 @@ public class TableResource extends DataVoResource<TableService, TableDataVo> {
     @GetMapping(value = "/tableList")
     @Timed
     public ResponseEntity tableList() {
-        return ResponseBuilder.buildOk(CollUtil.convertSelectDataList(service.findTableListFormDb(null), TableEntity.F_NAME, TableEntity.F_NAMESANDTITLE));
+        return ResponseBuilder.buildOk(CollUtil.convertSelectDataList(service.findTableListFormDb(null), Table.F_NAME, Table.F_NAMESANDTITLE));
     }
 
     @GetMapping(value = "/formData")
@@ -71,7 +71,7 @@ public class TableResource extends DataVoResource<TableService, TableDataVo> {
     @DeleteMapping(CommonConstants.URL_IDS_REGEX)
     @Timed
     public ResponseEntity delete(@PathVariable String ids) {
-        log.debug("REST request to delete tableEntity: {}", ids);
+        log.debug("REST request to delete table: {}", ids);
 		service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return ResponseBuilder.buildOk("删除成功");
     }

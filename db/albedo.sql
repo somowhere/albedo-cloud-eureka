@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 21/07/2019 20:14:40
+ Date: 22/07/2019 21:30:35
 */
 
 SET NAMES utf8mb4;
@@ -27,8 +27,8 @@ CREATE TABLE `gen_scheme`  (
   `category` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类',
   `view_type` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '视图类型 0  普通表格 1  表格采用ajax刷新',
   `package_name` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成包路径',
-  `module_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
-  `sub_module_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成子模块名',
+  `menu_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
+  `sub_menu_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成子模块名',
   `function_name` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能名',
   `function_name_simple` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能名（简写）',
   `function_author` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能作者',
@@ -42,6 +42,11 @@ CREATE TABLE `gen_scheme`  (
   `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生成方案' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of gen_scheme
+-- ----------------------------
+INSERT INTO `gen_scheme` VALUES ('362bf45dff219f95d092d767dac4f5fb', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', NULL, '测试书籍管理', '测试书籍管理', 'admin', '6aed6fe18521d641a443171fa9e92893', 2, NULL, '1', '2019-07-22 20:55:18', '1', '2019-07-22 21:26:55', '0');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -69,7 +74,7 @@ CREATE TABLE `gen_table`  (
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
-INSERT INTO `gen_table` VALUES ('6aed6fe18521d641a443171fa9e92893', 'test_book', '测试书籍', 'TestBook', NULL, NULL, 3, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 17:52:13', '0');
+INSERT INTO `gen_table` VALUES ('6aed6fe18521d641a443171fa9e92893', 'test_book', '测试书籍', 'TestBook', NULL, NULL, 5, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -112,24 +117,24 @@ CREATE TABLE `gen_table_column`  (
 -- ----------------------------
 -- Records of gen_table_column
 -- ----------------------------
-INSERT INTO `gen_table_column` VALUES ('0877c9b6356cb28709c518b774145f5e', '6aed6fe18521d641a443171fa9e92893', 'number_', 'key', NULL, 'int(11)', 'Long', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('13ade9ca23ead1d93e6b34b35e790605', '6aed6fe18521d641a443171fa9e92893', 'version_', 'version_', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 180, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('3caf8556b0edd037e47d3fcf9b1cb06c', '6aed6fe18521d641a443171fa9e92893', 'created_date', 'created_date', NULL, 'timestamp', 'java.util.Date', 'createdDate', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 130, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('3e75a10aa0cb5eee1c45cdad10d1bd3a', '6aed6fe18521d641a443171fa9e92893', 'id_', 'id_', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('677b52a641d567bc68fd5e9964cfcbd1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_date', 'last_modified_date', NULL, 'timestamp', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('7644a064412105de9eec01bdc2ac3de2', '6aed6fe18521d641a443171fa9e92893', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('7a818e013b9dddc9d59d3e03549f496c', '6aed6fe18521d641a443171fa9e92893', 'description_', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 170, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('99994d3d43b891b812b9db40e53a771b', '6aed6fe18521d641a443171fa9e92893', 'status_', 'status_', NULL, 'int(11)', 'Long', 'status', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 160, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('9bfd8282cd36b26c5e53715a1a40293b', '6aed6fe18521d641a443171fa9e92893', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('9f620d41a276ede01cf4be9301f37a2d', '6aed6fe18521d641a443171fa9e92893', 'name_', '名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('a76d66fe331b2e564a830fcf457a7377', '6aed6fe18521d641a443171fa9e92893', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('b8a151c7c7aac1309493648b8666e7c5', '6aed6fe18521d641a443171fa9e92893', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('c9782de5e492e62b8872e6c9fe63f83f', '6aed6fe18521d641a443171fa9e92893', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('d39e2a5d74ca674d1a59666b1005d258', '6aed6fe18521d641a443171fa9e92893', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('e04faad4cee1eec6ee3cdc7636276c1b', '6aed6fe18521d641a443171fa9e92893', 'reset_date', 'reset_date', NULL, 'timestamp', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 110, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('e572dd69b916c5db2ad3b0ab5a593572', '6aed6fe18521d641a443171fa9e92893', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('e706aed2cd00c7b2df701c707a2c3650', '6aed6fe18521d641a443171fa9e92893', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
-INSERT INTO `gen_table_column` VALUES ('fb5e5e7f6f8f63073ec7db1c83db54e1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 140, 0, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-21 16:41:33', '0');
+INSERT INTO `gen_table_column` VALUES ('0877c9b6356cb28709c518b774145f5e', '6aed6fe18521d641a443171fa9e92893', 'number_', 'key', NULL, 'int(11)', 'Long', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('13ade9ca23ead1d93e6b34b35e790605', '6aed6fe18521d641a443171fa9e92893', 'version_', 'version_', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 180, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('3caf8556b0edd037e47d3fcf9b1cb06c', '6aed6fe18521d641a443171fa9e92893', 'created_date', 'created_date', NULL, 'timestamp', 'java.util.Date', 'createdDate', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 130, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('3e75a10aa0cb5eee1c45cdad10d1bd3a', '6aed6fe18521d641a443171fa9e92893', 'id_', 'id_', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('677b52a641d567bc68fd5e9964cfcbd1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_date', 'last_modified_date', NULL, 'timestamp', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('7644a064412105de9eec01bdc2ac3de2', '6aed6fe18521d641a443171fa9e92893', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('7a818e013b9dddc9d59d3e03549f496c', '6aed6fe18521d641a443171fa9e92893', 'description_', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 170, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('99994d3d43b891b812b9db40e53a771b', '6aed6fe18521d641a443171fa9e92893', 'status_', 'status_', NULL, 'int(11)', 'Long', 'status', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 160, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('9bfd8282cd36b26c5e53715a1a40293b', '6aed6fe18521d641a443171fa9e92893', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('9f620d41a276ede01cf4be9301f37a2d', '6aed6fe18521d641a443171fa9e92893', 'name_', '名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('a76d66fe331b2e564a830fcf457a7377', '6aed6fe18521d641a443171fa9e92893', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('b8a151c7c7aac1309493648b8666e7c5', '6aed6fe18521d641a443171fa9e92893', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('c9782de5e492e62b8872e6c9fe63f83f', '6aed6fe18521d641a443171fa9e92893', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('d39e2a5d74ca674d1a59666b1005d258', '6aed6fe18521d641a443171fa9e92893', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('e04faad4cee1eec6ee3cdc7636276c1b', '6aed6fe18521d641a443171fa9e92893', 'reset_date', 'reset_date', NULL, 'timestamp', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 110, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('e572dd69b916c5db2ad3b0ab5a593572', '6aed6fe18521d641a443171fa9e92893', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('e706aed2cd00c7b2df701c707a2c3650', '6aed6fe18521d641a443171fa9e92893', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
+INSERT INTO `gen_table_column` VALUES ('fb5e5e7f6f8f63073ec7db1c83db54e1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 140, 2, NULL, '1', '2019-07-21 16:41:33', '1', '2019-07-22 20:51:21', '0');
 
 -- ----------------------------
 -- Table structure for gen_table_fk
@@ -460,7 +465,7 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51', '1', '2019-07-21 14:17:33', NULL, 13, '0');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51', '1', '2019-07-21 20:46:20', NULL, 14, '0');
 INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '5', '1', '', '2018-11-11 19:42:26', '1', '2019-07-21 20:14:23', NULL, 2, '0');
 
 -- ----------------------------
@@ -477,10 +482,10 @@ CREATE TABLE `sys_role_dept`  (
 -- ----------------------------
 -- Records of sys_role_dept
 -- ----------------------------
-INSERT INTO `sys_role_dept` VALUES ('1', '1', '8');
 INSERT INTO `sys_role_dept` VALUES ('35009744a17aaed6eab25e62fa57310c', '2', '4');
 INSERT INTO `sys_role_dept` VALUES ('63d766603159c6c1fd74dfe66484d66f', '2', '1');
 INSERT INTO `sys_role_dept` VALUES ('6c91212c33fee3ada8a9807e865dcbb6', '2', '5');
+INSERT INTO `sys_role_dept` VALUES ('75ab43e6815f605b5936805fdb3d811f', '1', '8');
 INSERT INTO `sys_role_dept` VALUES ('bc0f4d5257382bdc5975105e9fa4e3cc', '2', '3');
 
 -- ----------------------------
@@ -514,15 +519,21 @@ INSERT INTO `sys_role_menu` VALUES ('1', '1400');
 INSERT INTO `sys_role_menu` VALUES ('1', '1401');
 INSERT INTO `sys_role_menu` VALUES ('1', '1402');
 INSERT INTO `sys_role_menu` VALUES ('1', '1403');
+INSERT INTO `sys_role_menu` VALUES ('1', '2000');
 INSERT INTO `sys_role_menu` VALUES ('1', '2100');
 INSERT INTO `sys_role_menu` VALUES ('1', '2101');
 INSERT INTO `sys_role_menu` VALUES ('1', '2200');
 INSERT INTO `sys_role_menu` VALUES ('1', '2201');
 INSERT INTO `sys_role_menu` VALUES ('1', '2202');
 INSERT INTO `sys_role_menu` VALUES ('1', '2203');
+INSERT INTO `sys_role_menu` VALUES ('1', '2400');
 INSERT INTO `sys_role_menu` VALUES ('1', '2401');
 INSERT INTO `sys_role_menu` VALUES ('1', '2402');
+INSERT INTO `sys_role_menu` VALUES ('1', '2403');
 INSERT INTO `sys_role_menu` VALUES ('1', '247071d42ff40267c8d8c44eac92da67');
+INSERT INTO `sys_role_menu` VALUES ('1', '2500');
+INSERT INTO `sys_role_menu` VALUES ('1', '2600');
+INSERT INTO `sys_role_menu` VALUES ('1', '2601');
 INSERT INTO `sys_role_menu` VALUES ('1', '413892fe8d52c1163d6659f51299dc96');
 INSERT INTO `sys_role_menu` VALUES ('1', '97722c6d56c8b9990cc3c1a6eea3d6bb');
 INSERT INTO `sys_role_menu` VALUES ('1', 'a18b33e15bde209a3c9115517c56d9ec');

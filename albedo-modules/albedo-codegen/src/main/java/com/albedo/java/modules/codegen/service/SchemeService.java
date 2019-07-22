@@ -113,7 +113,7 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, S
             schemeVo.setFunctionAuthor(loginId);
         }
         //同步模块数据
-        schemeVo.setSyncModule(true);
+        schemeVo.setSyncMenu(false);
         map.put("schemeVo", schemeVo);
         GenConfig config = GenUtil.getConfig();
         map.put("config", config);

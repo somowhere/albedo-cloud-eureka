@@ -8,6 +8,7 @@ import com.albedo.java.modules.admin.domain.Dict;
 import com.albedo.java.modules.admin.feign.factory.RemoteUserServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -17,7 +18,7 @@ import java.util.List;
 	fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteMenuService {
 
-	@GetMapping("/menu/gen")
+	@PostMapping("/menu/gen")
 	R<List<Dict>> saveByGenScheme(@RequestBody GenSchemeDataVo schemeDataVo
 		, @RequestHeader(SecurityConstants.FROM) String from);
 

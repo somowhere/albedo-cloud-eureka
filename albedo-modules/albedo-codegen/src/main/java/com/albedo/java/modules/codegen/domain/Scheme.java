@@ -80,10 +80,10 @@ public class Scheme extends IdEntity<Scheme> {
     private Boolean replaceFile = false; // 是否替换现有文件 true：替换文件 ；false：不替换；
     @JSONField(serialize = false)
     @TableField(exist = false)
-    private Boolean syncModule = false; // 是否同步模块数据 true：同步；false：不同步
+    private Boolean syncMenu = false; // 是否同步菜单数据 true：同步；false：不同步
     @JSONField(serialize = false)
     @TableField(exist = false)
-    private String parentModuleId; // 上级模块 ID 仅当syncModule 为 true有效
+    private String parentMenuId; // 上级模块 ID 仅当syncMenu 为 true有效
 
     public Scheme(String id) {
         super();

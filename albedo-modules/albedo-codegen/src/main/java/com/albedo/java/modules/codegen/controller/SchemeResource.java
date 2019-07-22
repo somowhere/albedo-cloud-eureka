@@ -58,7 +58,6 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
     @GetMapping(value = "/formData")
     @Timed
     public ResponseEntity formData(SchemeVo schemeVo) {
-
 		String username = SecurityUtils.getUser().getUsername();
         Map<String, Object> formData = service.findFormData(schemeVo, username);
         return ResponseBuilder.buildOk(formData);
@@ -83,11 +82,12 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
         if (tableDataVo == null || StringUtil.isEmpty(tableDataVo.getClassName())) {
             tableDataVo = tableService.findOneVo(schemeVo.getTableId());
         }
-        if (schemeVo.getSyncModule()) {
+        if (schemeVo.getSyncMenu()) {
+        	Assert.isTrue(StringUtil.isNotEmpty(schemeVo.getParentMenuId()), "请选择同步菜单");
             String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(schemeVo.getModuleName()), (StringUtil.isNotBlank(schemeVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(schemeVo.getSubModuleName()) : ""), "/",
                 StringUtil.lowerFirst(tableDataVo.getClassName()), "/");
 			remoteMenuService.saveByGenScheme(
-				new GenSchemeDataVo(schemeVo.getName(), schemeVo.getParentModuleId(), url), SecurityConstants.FROM_IN);
+				new GenSchemeDataVo(schemeVo.getName(), schemeVo.getParentMenuId(), url), SecurityConstants.FROM_IN);
         }
         // 生成代码
         if (schemeVo.getGenCode()) {

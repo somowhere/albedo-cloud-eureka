@@ -102,12 +102,12 @@ public class SchemeVo extends DataEntityVo<String> {
     /**
      * 是否同步模块数据 true：同步；false：不同步
      */
-    private Boolean syncModule = false;
+    private Boolean syncMenu = false;
     @JSONField(serialize = false)
     /**
-     * 上级模块 ID 仅当syncModule 为 true有效
+     * 上级模块 ID 仅当syncMenu 为 true有效
      */
-    private String parentModuleId;
+    private String parentMenuId;
 
     /**
      * true 使用弹窗视图

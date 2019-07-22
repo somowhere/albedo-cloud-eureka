@@ -24,7 +24,7 @@
 		<version>2.2.1</version>
 	</parent>
 
-	<artifactId>albedo-admin-biz</artifactId>
+	<artifactId>albedo-admin</artifactId>
 	<packaging>jar</packaging>
 
 	<description>pig 通用用户权限管理系统业务处理模块</description>

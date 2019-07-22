@@ -24,7 +24,7 @@
 		<version>2.2.1</version>
 	</parent>
 
-	<artifactId>albedo-admin-api</artifactId>
+	<artifactId>albedo-module-api</artifactId>
 	<packaging>jar</packaging>
 
 	<description>pig 通用管理系统公共api模块</description>

@@ -82,13 +82,6 @@ public class SqlInjectorUtil {
     }
 
     public static String sqlSelectColumns(Configuration configuration, TableInfo table, boolean entityWrapper, String columnPrefix, String selectProfix) {
-
-		if(columnPrefix!=null){
-			columnPrefix = "`"+columnPrefix+"`";
-		}
-		if(selectProfix!=null){
-			selectProfix = "`"+selectProfix+"`";
-		}
     	StringBuilder columns = new StringBuilder();
         if (null != table.getResultMap()) {
             if (entityWrapper) {
@@ -112,7 +105,7 @@ public class SqlInjectorUtil {
 
             if (StringUtils.isNotEmpty(table.getKeyProperty())) {
                 if(StringUtil.isNotEmpty(columnPrefix)){
-                    columns.append(columnPrefix).append(".");
+                    columns.append('`').append(columnPrefix).append("`.");
                 }
                 String keyProperty = table.getKeyProperty();
                 if(StringUtil.isNotEmpty(selectProfix)){

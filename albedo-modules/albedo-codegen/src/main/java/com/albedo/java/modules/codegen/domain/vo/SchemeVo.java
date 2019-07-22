@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * 生成方案Entity
  *
@@ -79,11 +81,12 @@ public class SchemeVo extends DataEntityVo<String> {
     /**
      * 业务表名
      */
+    @NotEmpty
     private String tableId;
     /**
      * 业务表名
      */
-    private TableDataVo table;
+    private TableDataVo tableDataVo;
 
     @JSONField(serialize = false)
     /**

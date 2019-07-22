@@ -291,8 +291,8 @@ public class GenUtil {
         model.put("lastPackageName", StringUtil.subAfter((String) model.get("packageName"), ".",true));
         model.put("moduleName", StringUtil.lowerCase(scheme.getModuleName()));
         model.put("subModuleName", StringUtil.lowerCase(scheme.getSubModuleName()));
-        model.put("className", StringUtil.upperFirst(scheme.getTable().getClassName()));
-        model.put("ClassName", StringUtil.lowerFirst(scheme.getTable().getClassName()));
+        model.put("className", StringUtil.upperFirst(scheme.getTableDataVo().getClassName()));
+        model.put("ClassName", StringUtil.lowerFirst(scheme.getTableDataVo().getClassName()));
 
         model.put("functionName", scheme.getFunctionName());
         model.put("functionNameSimple", scheme.getFunctionNameSimple());
@@ -306,7 +306,7 @@ public class GenUtil {
 
 //        model.put("dbType", CommonConstants.get("jdbc.type"));
 
-        model.put("table", scheme.getTable());
+        model.put("table", scheme.getTableDataVo());
         model.put("scheme", scheme);
         return model;
     }

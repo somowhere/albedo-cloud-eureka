@@ -129,7 +129,7 @@ public class SqlInjectorUtil {
                     }
                     String wordConvert = sqlWordConvert(configuration, property);
                     if(StringUtil.isNotEmpty(columnPrefix)){
-                        columns.append(columnPrefix).append(".");
+                        columns.append('`').append(columnPrefix).append("`.");
                     }
                     columns.append(fieldInfo.getColumn());
                     columns.append(" AS ").append(wordConvert);
@@ -154,7 +154,7 @@ public class SqlInjectorUtil {
         TableInfo tableAlias;
         PropertyDescriptor[] ps = BeanVoUtil.getPropertyDescriptors(modelClass);
         StringBuffer sbSelectCoumns = new StringBuffer(SqlInjectorUtil.sqlSelectColumns(configuration, tableInfo, false, tableNameAlias, null)),
-            sbLeftJoin = new StringBuffer(tableInfo.getTableName()).append(" ").append(tableNameAlias);
+            sbLeftJoin = new StringBuffer(tableInfo.getTableName()).append(" `").append(tableNameAlias).append("`");
         for (PropertyDescriptor p : ps) {
 
 			ManyToOne annotation  = ClassUtil.findAnnotation(modelClass, p.getName(), ManyToOne.class);
@@ -162,9 +162,9 @@ public class SqlInjectorUtil {
                 tableAlias = TableInfoHelper.initTableInfo(builderAssistant, p.getPropertyType());
                 sbSelectCoumns.append(",")
                     .append(SqlInjectorUtil.sqlSelectColumns(configuration, tableAlias, false, p.getName(), p.getName()));
-                sbLeftJoin.append(" LEFT JOIN ").append(tableAlias.getTableName()).append(" ").append(p.getName())
-                    .append(" ON ").append(tableNameAlias).append(".").append(annotation.name())
-                    .append(" = ").append(p.getName()).append(".").append(TreeEntity.F_SQL_ID);
+                sbLeftJoin.append(" LEFT JOIN ").append(tableAlias.getTableName()).append(" `").append(p.getName())
+                    .append("` ON `").append(tableNameAlias).append("`.").append(annotation.name())
+                    .append(" = `").append(p.getName()).append("`.").append(TreeEntity.F_SQL_ID);
             }
         }
 

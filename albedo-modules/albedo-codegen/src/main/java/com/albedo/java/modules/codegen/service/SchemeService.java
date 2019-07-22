@@ -84,7 +84,7 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, S
         for (TableDataVo childTable : tableDataVo.getChildList()) {
             Collections.sort(childTable.getColumnList());
             childTable.setCategory(schemeVo.getCategory());
-            schemeVo.setTable(childTable);
+            schemeVo.setTableDataVo(childTable);
             Map<String, Object> childTableModel = GenUtil.getDataModel(schemeVo);
             for (TemplateVo tpl : childTableTemplateList) {
                 result.append(GenUtil.generateToFile(tpl, childTableModel, schemeVo.getReplaceFile()));
@@ -92,7 +92,7 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, S
         }
         tableDataVo.setCategory(schemeVo.getCategory());
         // 生成主表模板代码
-        schemeVo.setTable(tableDataVo);
+        schemeVo.setTableDataVo(tableDataVo);
         Map<String, Object> model = GenUtil.getDataModel(schemeVo);
         for (TemplateVo tpl : templateList) {
             result.append(GenUtil.generateToFile(tpl, model, schemeVo.getReplaceFile()));
@@ -102,6 +102,10 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, S
 
     public Map<String,Object> findFormData(SchemeVo schemeVo, String loginId) {
         Map<String, Object> map = Maps.newHashMap();
+
+		if(StringUtil.isNotEmpty(schemeVo.getId())){
+			schemeVo = super.findOneVo(schemeVo.getId());
+		}
         if (StringUtil.isBlank(schemeVo.getPackageName())) {
             schemeVo.setPackageName("com.albedo.java.modules");
         }
@@ -118,9 +122,11 @@ public class SchemeService extends DataVoServiceImpl<SchemeRepository, Scheme, S
         map.put("viewTypeList", CollUtil.convertComboDataList(config.getViewTypeList(), Dict.F_VAL, Dict.F_NAME));
 
         List<Table> tableList = tableService.findAll(), list = Lists.newArrayList();
-        List<Scheme> schemeList = findAll(schemeVo.getId());
-        @SuppressWarnings("unchecked")
-        List<String> tableIds = CollUtil.extractToList(schemeList, "tableId");
+		List<String> tableIds =Lists.newArrayList();
+        if(StringUtil.isNotEmpty(schemeVo.getId())){
+			List<Scheme> schemeList = findAll(schemeVo.getId());
+			tableIds = CollUtil.extractToList(schemeList, "tableId");
+		}
         for (Table table : tableList) {
             if (!tableIds.contains(table.getId())) {
                 list.add(table);

@@ -79,7 +79,7 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
     @Timed
     public ResponseEntity save(@Valid @RequestBody SchemeVo schemeVo) {
         service.save(schemeVo);
-        TableDataVo tableDataVo = schemeVo.getTable();
+        TableDataVo tableDataVo = schemeVo.getTableDataVo();
         if (tableDataVo == null || StringUtil.isEmpty(tableDataVo.getClassName())) {
             tableDataVo = tableService.findOneVo(schemeVo.getTableId());
         }

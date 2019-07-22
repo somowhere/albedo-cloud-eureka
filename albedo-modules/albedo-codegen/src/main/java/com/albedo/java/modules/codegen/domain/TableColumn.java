@@ -32,9 +32,6 @@ public class TableColumn extends IdEntity<TableColumn> implements Comparable<Tab
     public static final String F_SQL_GENTABLEID = "gen_table_id";
     @TableField(F_SQL_GENTABLEID)
     private String tableId; // 列名
-    @ManyToOne
-    @TableField(exist = false)
-    private Table table; // 归属表
     @Size(min = 1, max = 200)
     @TableField("name")
     private String name; // 列名

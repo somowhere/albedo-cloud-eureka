@@ -1,5 +1,6 @@
 package com.albedo.java.modules.codegen.domain;
 
+import com.albedo.java.common.core.annotation.BeanField;
 import com.albedo.java.common.persistence.annotation.ManyToOne;
 import com.albedo.java.common.persistence.domain.IdEntity;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -66,6 +67,7 @@ public class Scheme extends IdEntity<Scheme> {
     private String functionAuthor; // 生成功能作者
     @ManyToOne(name = "gen_table_id")
     @TableField(exist = false)
+	@BeanField(ingore = true)
     private Table table; // 业务表名
     @TableField("gen_table_id")
     private String tableId; // 业务表名

@@ -160,8 +160,12 @@ public class QueryWrapperUtil {
 		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
 	}
 	public static Wrapper getWrapperByPage(PageModel pm, Class<?> clazz) {
+		return getWrapperByPage(pm, clazz, "a.del_flag");
+	}
+
+	public static Wrapper getWrapperByPage(PageModel pm, Class<?> clazz, String delFlagFieldName) {
 		SpecificationDetail spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
-			QueryCondition.eq("a.del_flag",  BaseEntity.FLAG_NORMAL));
+			QueryCondition.eq(delFlagFieldName,  BaseEntity.FLAG_NORMAL));
 		return QueryWrapperUtil.fillWrapper(pm, spec.toEntityWrapper(clazz));
 	}
 }

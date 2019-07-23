@@ -46,7 +46,7 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 * @param pm    分页对象
 	 * @return
 	 */
-	IPage getUserWithRolePage(PageModel pm);
+	IPage getUserPage(PageModel pm);
 
 	/**
 	 * 删除用户

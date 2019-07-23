@@ -9,10 +9,10 @@ import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.codegen.domain.vo.GenCodeVo;
-import com.albedo.java.modules.codegen.domain.vo.SchemeVo;
+import com.albedo.java.modules.codegen.domain.vo.SchemeDataVo;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
-import com.albedo.java.modules.codegen.service.SchemeService;
-import com.albedo.java.modules.codegen.service.TableService;
+import com.albedo.java.modules.codegen.service.impl.SchemeServiceImpl;
+import com.albedo.java.modules.codegen.service.impl.TableServiceImpl;
 import com.albedo.java.modules.admin.vo.GenSchemeDataVo;
 import com.albedo.java.modules.admin.feign.RemoteMenuService;
 import com.codahale.metrics.annotation.Timed;
@@ -32,16 +32,16 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/scheme")
-public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
+public class SchemeResource extends DataVoResource<SchemeServiceImpl, SchemeDataVo> {
 
-    private final TableService tableService;
+    private final TableServiceImpl tableServiceImpl;
 
     private final RemoteMenuService remoteMenuService;
 
-    public SchemeResource(SchemeService schemeService, TableService tableService,
+    public SchemeResource(SchemeServiceImpl schemeServiceImpl, TableServiceImpl tableServiceImpl,
 						  RemoteMenuService remoteMenuService) {
-        super(schemeService);
-        this.tableService = tableService;
+        super(schemeServiceImpl);
+        this.tableServiceImpl = tableServiceImpl;
         this.remoteMenuService = remoteMenuService;
     }
 
@@ -52,14 +52,13 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
     @GetMapping(value = "/")
     @Timed
     public ResponseEntity getPage(PageModel pm) {
-        service.findPage(pm);
-        return ResponseBuilder.buildOk(pm);
+        return ResponseBuilder.buildOk(service.getSchemeVoPage(pm));
     }
     @GetMapping(value = "/formData")
     @Timed
-    public ResponseEntity formData(SchemeVo schemeVo) {
+    public ResponseEntity formData(SchemeDataVo schemeDataVo) {
 		String username = SecurityUtils.getUser().getUsername();
-        Map<String, Object> formData = service.findFormData(schemeVo, username);
+        Map<String, Object> formData = service.findFormData(schemeDataVo, username);
         return ResponseBuilder.buildOk(formData);
     }
 
@@ -67,33 +66,33 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeVo> {
 	@PutMapping(value = "/genCode")
 	@Timed
 	public ResponseEntity genCode(@Valid @RequestBody GenCodeVo genCodeVo) {
-		SchemeVo genSchemeVo = service.findOneVo(genCodeVo.getId());
-		Assert.isTrue(genSchemeVo!=null, "无法获取代码生成方案信息");
-		genSchemeVo.setReplaceFile(genCodeVo.getReplaceFile());
-		service.generateCode(genSchemeVo);
+		SchemeDataVo genSchemeDataVo = service.findOneVo(genCodeVo.getId());
+		Assert.isTrue(genSchemeDataVo !=null, "无法获取代码生成方案信息");
+		genSchemeDataVo.setReplaceFile(genCodeVo.getReplaceFile());
+		service.generateCode(genSchemeDataVo);
 		return ResponseBuilder.buildOk("操作成功");
 	}
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Timed
-    public ResponseEntity save(@Valid @RequestBody SchemeVo schemeVo) {
-        service.save(schemeVo);
-        TableDataVo tableDataVo = schemeVo.getTableDataVo();
+    public ResponseEntity save(@Valid @RequestBody SchemeDataVo schemeDataVo) {
+        service.save(schemeDataVo);
+        TableDataVo tableDataVo = schemeDataVo.getTableDataVo();
         if (tableDataVo == null || StringUtil.isEmpty(tableDataVo.getClassName())) {
-            tableDataVo = tableService.findOneVo(schemeVo.getTableId());
+            tableDataVo = tableServiceImpl.findOneVo(schemeDataVo.getTableId());
         }
-        if (schemeVo.getSyncMenu()) {
-        	Assert.isTrue(StringUtil.isNotEmpty(schemeVo.getParentMenuId()), "请选择同步菜单");
-            String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(schemeVo.getModuleName()), (StringUtil.isNotBlank(schemeVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(schemeVo.getSubModuleName()) : ""), "/",
+        if (schemeDataVo.getSyncMenu()) {
+        	Assert.isTrue(StringUtil.isNotEmpty(schemeDataVo.getParentMenuId()), "请选择同步菜单");
+            String url = StringUtil.toAppendStr("/", StringUtil.lowerCase(schemeDataVo.getModuleName()), (StringUtil.isNotBlank(schemeDataVo.getSubModuleName()) ? "/" + StringUtil.lowerCase(schemeDataVo.getSubModuleName()) : ""), "/",
                 StringUtil.lowerFirst(tableDataVo.getClassName()), "/");
 			remoteMenuService.saveByGenScheme(
-				new GenSchemeDataVo(schemeVo.getName(), schemeVo.getParentMenuId(), url), SecurityConstants.FROM_IN);
+				new GenSchemeDataVo(schemeDataVo.getName(), schemeDataVo.getParentMenuId(), url), SecurityConstants.FROM_IN);
         }
         // 生成代码
-        if (schemeVo.getGenCode()) {
-            service.generateCode(schemeVo);
+        if (schemeDataVo.getGenCode()) {
+            service.generateCode(schemeDataVo);
         }
-        return ResponseBuilder.buildOk("保存", schemeVo.getName(), "成功");
+        return ResponseBuilder.buildOk("保存", schemeDataVo.getName(), "成功");
     }
 
     @DeleteMapping(CommonConstants.URL_IDS_REGEX)

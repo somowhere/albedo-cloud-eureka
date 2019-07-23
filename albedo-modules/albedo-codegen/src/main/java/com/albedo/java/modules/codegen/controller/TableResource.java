@@ -10,6 +10,7 @@ import com.albedo.java.modules.codegen.domain.Table;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
 import com.albedo.java.modules.codegen.domain.vo.TableFormVo;
 import com.albedo.java.modules.codegen.service.TableService;
+import com.albedo.java.modules.codegen.service.impl.TableServiceImpl;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.MediaType;
@@ -29,7 +30,7 @@ import java.util.Map;
 @RequestMapping(value = "/table")
 public class TableResource extends DataVoResource<TableService, TableDataVo> {
 
-    public TableResource(TableService service) {
+    public TableResource(TableServiceImpl service) {
         super(service);
     }
 

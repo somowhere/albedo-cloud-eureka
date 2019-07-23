@@ -29,6 +29,7 @@ import com.albedo.java.modules.admin.repository.UserRepository;
 import com.albedo.java.modules.admin.service.*;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.albedo.java.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -131,11 +132,11 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public PageModel getUserWithRolePage(PageModel pm) {
+	public IPage getUserPage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
-		pm.setDesc(User.F_SQL_CREATEDDATE);
-		IPage<List<UserVo>> userVosPage = baseMapper.getUserVosPage(pm, wrapper);
-		return (PageModel) userVosPage;
+		pm.addOrder(OrderItem.desc("a."+User.F_SQL_CREATEDDATE));
+		IPage<List<UserVo>> userVosPage = baseMapper.getUserVoPage(pm, wrapper);
+		return userVosPage;
 	}
 
 	@Override

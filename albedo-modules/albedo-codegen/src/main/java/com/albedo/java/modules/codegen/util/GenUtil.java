@@ -275,7 +275,7 @@ public class GenUtil {
      * @param scheme
      * @return
      */
-    public static Map<String, Object> getDataModel(SchemeVo scheme) {
+    public static Map<String, Object> getDataModel(SchemeDataVo scheme) {
         Map<String, Object> model = Maps.newHashMap();
         String applicationId = SpringContextHolder.getApplicationContext().getId();
         if(StringUtil.isNotEmpty(applicationId)){

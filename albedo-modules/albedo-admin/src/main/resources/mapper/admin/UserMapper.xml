@@ -166,7 +166,7 @@
 		a.id = #{id} and a.del_flag='0'
 	</select>
 
-	<select id="getUserVosPage" resultMap="userVoPageResultMap">
+	<select id="getUserVoPage" resultMap="userVoPageResultMap">
 		SELECT
 		a.id,
 		a.username,

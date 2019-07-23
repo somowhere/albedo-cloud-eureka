@@ -159,7 +159,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	 */
 	@GetMapping("/")
 	public R getUserPage(PageModel pm) {
-		return R.createSuccessData(service.getUserWithRolePage(pm));
+		return R.createSuccessData(service.getUserPage(pm));
 	}
 
 	/**

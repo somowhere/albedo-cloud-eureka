@@ -21,26 +21,6 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class SchemeVo extends DataEntityVo<String> {
 
-    /**
-     * @Fields CATEGORY_CURD : 增删改查（单表）
-     */
-    public static final String CATEGORY_CURD = "curd";
-    /**
-     * @Fields CATEGORY_CURD_MANY : 增删改查（一对多）
-     */
-    public static final String CATEGORY_CURD_MANY = "curd_many";
-    /**
-     * @Fields CATEGORY_SERVICE : 仅持久层（common/domain）
-     */
-    public static final String CATEGORY_SERVICE = "common";
-    /**
-     * @Fields CATEGORY_CURD : 数据层（domain）
-     */
-    public static final String CATEGORY_ENITY = "domain";
-    /**
-     * @Fields CATEGORY_CURD : 树结构表（一体）
-     */
-    public static final String CATEGORY_TREETABLE = "treeTable";
     private static final long serialVersionUID = 1L;
     /**
      * 名称
@@ -86,35 +66,5 @@ public class SchemeVo extends DataEntityVo<String> {
     /**
      * 业务表名
      */
-    private TableDataVo tableDataVo;
-
-    @JSONField(serialize = false)
-    /**
-     * flase：保存方案； ture：保存方案并生成代码
-     */
-    private Boolean genCode = false;
-    @JSONField(serialize = false)
-    /**
-     * 是否替换现有文件 true：替换文件 ；false：不替换；
-     */
-    private Boolean replaceFile = false;
-    @JSONField(serialize = false)
-    /**
-     * 是否同步模块数据 true：同步；false：不同步
-     */
-    private Boolean syncMenu = false;
-    @JSONField(serialize = false)
-    /**
-     * 上级模块 ID 仅当syncMenu 为 true有效
-     */
-    private String parentMenuId;
-
-    /**
-     * true 使用弹窗视图
-     *
-     * @return
-     */
-    public boolean getModalView() {
-        return CommonConstants.YES.equals(viewType);
-    }
+    private String tableName;
 }

@@ -49,7 +49,7 @@ public interface UserRepository extends BaseRepository<User> {
 	 * @param wrapper 查询参数
 	 * @return list
 	 */
-	IPage<List<UserVo>> getUserVosPage(IPage page, @Param("ew") Wrapper wrapper);
+	IPage<List<UserVo>> getUserVoPage(IPage page, @Param("ew") Wrapper wrapper);
 
 	/**
 	 * 通过ID查询用户信息

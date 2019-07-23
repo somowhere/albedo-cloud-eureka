@@ -7,7 +7,7 @@ import com.albedo.java.modules.codegen.AlbedoCodeGenApplication;
 import com.albedo.java.modules.codegen.controller.TableResource;
 import com.albedo.java.modules.codegen.domain.Table;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
-import com.albedo.java.modules.codegen.service.TableService;
+import com.albedo.java.modules.codegen.service.impl.TableServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class TableResourceIntTest {
 
 
     @Autowired
-    private TableService tableService;
+    private TableServiceImpl tableServiceImpl;
 
     private MockMvc restTableMockMvc;
 	@Autowired
@@ -74,7 +74,7 @@ public class TableResourceIntTest {
     public void setup() {
 		DEFAULT_API_URL = "/table/";
 		MockitoAnnotations.initMocks(this);
-		final TableResource tableResource = new TableResource(tableService);
+		final TableResource tableResource = new TableResource(tableServiceImpl);
 		this.restTableMockMvc = MockMvcBuilders.standaloneSetup(tableResource)
 			.setControllerAdvice(globalExceptionHandler)
 			.setConversionService(createFormattingConversionService())

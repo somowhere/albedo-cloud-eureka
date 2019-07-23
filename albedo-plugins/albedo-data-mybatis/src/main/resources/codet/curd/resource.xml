@@ -94,21 +94,6 @@ public class ${ClassName}Resource extends DataVoResource<${ClassName}Service, ${
 		service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return ResultBuilder.buildOk("删除${functionNameSimple}成功");
 	}
-	/**
-	 * lock //:id : lockOrUnLock the "id" ${ClassName}.
-	 *
-	 * @param ids the id of the ${className} to lock
-	 * @return the ResponseEntity with status 200 (OK)
-	 */
-	@PutMapping(value = "/{ids:" + Globals.LOGIN_REGEX
-			+ "}")
-	@Timed
-	public ResponseEntity lockOrUnLock(@PathVariable String ids) {
-		log.debug("REST request to lockOrUnLock ${ClassName}: {}", ids);
-		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return ResultBuilder.buildOk("操作${functionNameSimple}成功");
-	}
-
 }]]>
     </content>
 </template>

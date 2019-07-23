@@ -18,7 +18,6 @@
             </el-form>
           </div>
           <!-- 表格功能列 -->
-
           <div class="table-menu">
             <div class="table-menu-left">
               <el-button size="small" v-if="sys_role_edit" class="filter-item" @click="handleEdit" type="primary" icon="edit">添加</el-button>

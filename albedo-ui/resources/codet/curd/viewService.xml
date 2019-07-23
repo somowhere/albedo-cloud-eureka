@@ -36,12 +36,6 @@ export function remove${ClassName}(id) {
     method: 'delete'
   })
 }
-export function lock${ClassName}(id) {
-  return request({
-    url: '/${urlPrefix}/' + id,
-    method: 'put'
-  })
-}
 
 ]]>
     </content>

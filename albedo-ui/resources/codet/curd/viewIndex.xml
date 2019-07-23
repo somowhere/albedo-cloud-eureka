@@ -6,19 +6,20 @@
     <content><![CDATA[
 <template>
   <div class="app-container calendar-list-container">
+    <basic-container>
     <div class="filter-container">
-      <el-form :inline="true">
+      <el-form :inline="true"  :model="listQuery" ref="search${ClassName}Form" v-show="searchFilterVisible">
       <#list table.columnList as c>
-      <#if c.isQuery?? && c.isQuery == 1>
-        <el-form-item label="${c.title}">
+      <#if c.isQuery?? && c.isQuery>
+        <el-form-item label="${c.title}" prop="${c.javaFieldId}">
           <#if c.showType == "input" || c.showType == "textarea">
               <el-input class="filter-item input-normal" v-model="listQuery.${c.javaFieldId}"></el-input>
           <#elseif c.showType == "select">
-              <AvueCrudSelect v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudSelect>
+              <CrudSelect v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudSelect>
           <#elseif c.showType == "checkbox">
-              <AvueCrudCheckbox v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudCheckbox>
+              <CrudCheckbox v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudCheckbox>
           <#elseif c.showType == "radio">
-              <AvueCrudRadio v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudRadio>
+              <CrudRadio v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudRadio>
           <#elseif c.showType == "dateselect">
               <el-date-picker v-model="form.${c.javaFieldId}" type="datetimerange"
                 range-separator="至"
@@ -31,21 +32,26 @@
       </#list>
         <el-form-item>
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-          <el-button v-if="${permissionPrefix}_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+           <el-button size="small" @click="searchReset" icon="el-icon-delete" >清空</el-button>
         </el-form-item>
       </el-form>
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
+    <!-- 表格功能列 -->
+    <div class="table-menu">
+      <div class="table-menu-left">
+        <el-button size="small" v-if="${permissionPrefix}_edit" class="filter-item" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+      </div>
+      <div class="table-menu-right">
+        <el-button icon="el-icon-search" circle size="small" @click="searchFilterVisible= !searchFilterVisible"></el-button>
+      </div>
+    </div>
+    <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
       <#list table.columnList as column>
-      <#if column.isList?? && column.isList == 1 && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
+      <#if column.isList?? && column.isList && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
       <el-table-column align="center" label="${column.title}">
         <template slot-scope="scope">
-        <#if column.simpleJavaField = 'status'>
-          <el-tag>{{scope.row.${column.simpleJavaField}}}</el-tag>
-        <#else>
           <span>{{scope.row.${column.simpleJavaField}}}</span>
-         </#if>
         </template>
       </el-table-column>
       </#if>
@@ -53,8 +59,6 @@
       <el-table-column align="center" fixed="right" label="操作" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
         <template slot-scope="scope">
           <el-button v-if="${permissionPrefix}_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
-          </el-button>
-          <el-button v-if="${permissionPrefix}_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
           </el-button>
           <el-button v-if="${permissionPrefix}_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
           </el-button>
@@ -71,18 +75,18 @@
       <el-form :model="form" ref="form" label-width="100px">
 
       <#list table.columnList as c>
-        <#if c.isEdit?? && c.isEdit == 1 && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <#if c.isEdit?? && c.isEdit && (c.isNotBaseField || c.simpleJavaField == 'description')>
         <el-form-item label="${c.title}" prop="${c.javaFieldId}" :rules="[<#if !c.nullable>{required: true,message: '请输入${c.title}'},</#if><#if c.javaType == "Long" || c.javaType == "Integer">{validator:validateDigits},</#if><#if c.javaType == "java.math.BigDecimal" || c.javaType == "Double">{ validator:validateNumber},</#if><#if c.dataLength != "0">{min: 0,max: ${c.dataLength},message: '长度在 0 到 ${c.dataLength} 个字符'},</#if><#if c.unique && !c.pk>{validator:validateUnique}</#if>]">
             <#if c.showType == "input">
                 <el-input v-model="form.${c.javaFieldId}"></el-input>
             <#elseif c.showType == "textarea">
                 <el-input type="textarea" v-model="form.${c.javaFieldId}"></el-input>
             <#elseif c.showType == "select">
-              <AvueCrudSelect v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudSelect>
+              <CrudSelect v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudSelect>
             <#elseif c.showType == "checkbox">
-              <AvueCrudCheckbox v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudCheckbox>
+              <CrudCheckbox v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudCheckbox>
             <#elseif c.showType == "radio">
-              <AvueCrudRadio v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></AvueCrudRadio>
+              <CrudRadio v-model="form.${c.javaFieldId}" :dic="${c.javaFieldId}Options"></CrudRadio>
             <#elseif c.showType == "dateselect">
               <el-date-picker v-model="form.${c.javaFieldId}" type="datetime" >
               </el-date-picker>
@@ -96,23 +100,29 @@
         <el-button type="primary" @click="save()">保 存</el-button>
       </div>
     </el-dialog>
+    </basic-container>
   </div>
 </template>
 
 <script>
-import { page${ClassName}, find${ClassName}, save${ClassName}, lock${ClassName}, remove${ClassName} } from "./service";
+import { page${ClassName}, find${ClassName}, save${ClassName}, remove${ClassName} } from "./service";
 import { mapGetters } from "vuex";
 import {DATA_STATUS} from "@/const/common";
 import {isValidateUnique, isValidateNumber, isValidateDigits, objectToString, toStr, validateNull} from "@/util/validate";
-import {MSG_TYPE_SUCCESS} from "@/const/common";
 import {parseJsonItemForm} from "@/util/util";
+import CrudSelect from "@/views/avue/crud-select";
+import CrudCheckbox from "@/views/avue/crud-checkbox";
+import CrudRadio from "@/views/avue/crud-radio";
 
 export default {
   components: {
   },
   name: "table_${permissionPrefix}",
+  components: {CrudSelect, CrudCheckbox, CrudRadio},
   data() {
     return{
+      searchFilterVisible: true,
+      dialogFormVisible: false,
       list: null,
       total: null,
       listLoading: true,
@@ -122,7 +132,7 @@ export default {
       },
       form: {
         <#list table.columnList as c>
-        <#if c.isEdit?? && c.isEdit == 1 && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <#if c.isEdit?? && c.isEdit && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: undefined,
         </#if>
         </#list>
@@ -141,7 +151,6 @@ export default {
       ${c.javaFieldId}Options: undefined,
         </#if>
        </#list>
-      dialogFormVisible: false,
       dialogStatus: 'create',
       textMap: {
         update: '编辑${functionNameSimple}',
@@ -151,15 +160,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["authorities","dicts"])
+    ...mapGetters(["permissions","dicts"])
   },
   filters: {
   },
   created() {
     this.getList();
-    this.${permissionPrefix}_edit = this.authorities.indexOf("${permissionPrefix}_edit") !== -1;
-    this.${permissionPrefix}_lock = this.authorities.indexOf("${permissionPrefix}_lock") !== -1;
-    this.${permissionPrefix}_delete = this.authorities.indexOf("${permissionPrefix}_delete") !== -1;
+    this.${permissionPrefix}_edit = this.permissions["${permissionPrefix}_edit"];
+    this.${permissionPrefix}_delete = this.permissions["${permissionPrefix}_delete"];
     <#assign index = 0 /><#list table.columnList as c><#if c.dictType?? && c.dictType != ''>
     this.${c.javaFieldId}Options = this.dicts["${c.dictType}"];
     <#assign index = index+1 />
@@ -168,17 +176,26 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      this.listQuery.isAsc = false;
       this.listQuery.queryConditionJson = parseJsonItemForm([
-      <#list table.columnList as c><#if c.isQuery?? && c.isQuery == 1>
+      <#list table.columnList as c><#if c.isQuery?? && c.isQuery>
       {fieldName: '${c.javaFieldId}',value:this.listQuery.${c.javaFieldId},operate:'${c.queryType}',attrType:'${c.javaType}'},
       </#if></#list>
       ])
       page${ClassName}(this.listQuery).then(response => {
-        this.list = response.data;
-        this.total = response.total;
+        this.list = response.data.records;
+        this.total = response.data.total;
         this.listLoading = false;
       });
+    },
+    sortChange(column){
+      if(column.order=="ascending"){
+        this.listQuery.ascs=column.prop
+        this.listQuery.descs=undefined;
+      }else{
+        this.listQuery.descs=column.prop
+        this.listQuery.ascs=undefined;
+      }
+      this.getList()
     },
     handleFilter() {
       this.listQuery.page = 1;
@@ -200,17 +217,12 @@ export default {
       }else{
         find${ClassName}(row.id).then(response => {
           this.form = response.data;
-          this.form.status=objectToString(this.form.status)
           this.dialogFormVisible = true;
         });
       }
     },
-    handleLock: function (row) {
-      lock${ClassName}(row.id).then((data) => {
-        if (data.status == MSG_TYPE_SUCCESS) {
-          this.getList();
-        }
-      });
+    searchReset() {
+      this.$refs['search${ClassName}Form'].resetFields();
     },
     cancel() {
       this.dialogFormVisible = false;
@@ -221,10 +233,8 @@ export default {
       set['form'].validate(valid => {
         if (valid) {
           save${ClassName}(this.form).then((data) => {
-            if (data.status == MSG_TYPE_SUCCESS) {
-              this.getList();
-              this.cancel('form')
-            }
+            this.getList();
+            this.cancel('form')
           });
         } else {
           return false;
@@ -248,17 +258,10 @@ export default {
           });
       });
     },
-    handleLock(row) {
-      lock${ClassName}(row.id).then((data) => {
-        if (data.status == MSG_TYPE_SUCCESS) {
-          this.getList();
-        }
-      });
-    },
     resetForm() {
       this.form = {
         <#list table.columnList as c>
-        <#if c.isEdit?? && c.isEdit == 1 && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <#if c.isEdit?? && c.isEdit && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: "",
         </#if>
         </#list>

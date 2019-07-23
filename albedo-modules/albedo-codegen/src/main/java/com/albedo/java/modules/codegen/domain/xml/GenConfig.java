@@ -15,6 +15,9 @@ import java.util.List;
 public class GenConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private String codeUiPath;
+
     private List<GenCategory> categoryList; // 代码模板分类
 
     private List<DictTemp> javaTypeList; // Java类型
@@ -80,4 +83,11 @@ public class GenConfig implements Serializable {
         this.viewTypeList = viewTypeList;
     }
 
+	public String getCodeUiPath() {
+		return codeUiPath;
+	}
+
+	public void setCodeUiPath(String codeUiPath) {
+		this.codeUiPath = codeUiPath;
+	}
 }

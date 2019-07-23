@@ -24,6 +24,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -290,14 +291,14 @@ public class GenUtil {
         model.put("packageName", StringUtil.lowerCase(scheme.getPackageName()));
         model.put("lastPackageName", StringUtil.subAfter((String) model.get("packageName"), ".",true));
         model.put("moduleName", StringUtil.lowerCase(scheme.getModuleName()));
-        model.put("subModuleName", StringUtil.lowerCase(scheme.getSubModuleName()));
-        model.put("className", StringUtil.upperFirst(scheme.getTableDataVo().getClassName()));
-        model.put("ClassName", StringUtil.lowerFirst(scheme.getTableDataVo().getClassName()));
+        model.put("subModuleName", StringUtil.lowerCase(StringUtil.isEmpty(scheme.getSubModuleName())?"": scheme.getSubModuleName()));
+        model.put("className", StringUtil.lowerCase(scheme.getTableDataVo().getClassName()));
+        model.put("ClassName", StringUtil.upperFirst(scheme.getTableDataVo().getClassName()));
 
         model.put("functionName", scheme.getFunctionName());
         model.put("functionNameSimple", scheme.getFunctionNameSimple());
         model.put("functionAuthor", StringUtil.isNotBlank(scheme.getFunctionAuthor()) ? scheme.getFunctionAuthor() : "");
-        model.put("functionVersion", DateUtil.date().toJdkDate());
+		model.put("functionVersion", DateUtil.now());
 
         model.put("urlPrefix", model.get("moduleName") + (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "/" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + "/" + model.get("className"));
         model.put("viewPrefix", // StringUtil.substringAfterLast(model.get("packageName"),".")+"/"+

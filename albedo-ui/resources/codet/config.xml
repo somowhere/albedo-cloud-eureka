@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<config>
+<config codeUiPath="../../albedo-ui/">
     <!-- 生成分类 -->
     <category>
       <category val="curd" name="增删改查（单表）">

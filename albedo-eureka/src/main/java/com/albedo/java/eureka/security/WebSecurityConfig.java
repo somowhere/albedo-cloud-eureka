@@ -17,7 +17,7 @@
 package com.albedo.java.eureka.security;
 
 /**
- * @author lengleng
+ * @author somewhere
  * @date 2019/2/1
  */
 

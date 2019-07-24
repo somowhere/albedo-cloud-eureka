@@ -1,6 +1,6 @@
 FROM mysql:5.7
 
-MAINTAINER lengleng(somewhere0813@gmail.com)
+MAINTAINER somewhere(somewhere0813@gmail.com)
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 

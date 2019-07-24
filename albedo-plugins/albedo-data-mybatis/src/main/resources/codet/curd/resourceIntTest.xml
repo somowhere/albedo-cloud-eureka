@@ -68,9 +68,9 @@ public class ${ClassName}ResourceIntTest {
     private static final int UPDATED_${column.constantJavaField} = 1;
 		<#elseif column.simpleJavaType == "Long">
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
-	private static final long DEFAULT_${column.constantJavaField} = 0;
+	private static final Long DEFAULT_${column.constantJavaField} = 0l;
 	/** UPDATED_${column.constantJavaField} ${column.nameAndTitle} */
-    private static final long UPDATED_${column.constantJavaField} = 1;
+    private static final Long UPDATED_${column.constantJavaField} = 1l;
 		<#elseif column.simpleJavaType == "Double">
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
 	private static final double DEFAULT_${column.constantJavaField} = 0;
@@ -83,7 +83,7 @@ public class ${ClassName}ResourceIntTest {
     private static final float UPDATED_${column.constantJavaField} = 1;
 		<#elseif column.simpleJavaType == "Date">
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
-	private static final ${column.simpleJavaType} DEFAULT_${column.constantJavaField} =DateUtil.date().toJdkDate();
+	private static final ${column.simpleJavaType} DEFAULT_${column.constantJavaField} = DateUtil.parse(DateUtil.format(new Date(),DateUtil.TIME_FORMAT),DateUtil.TIME_FORMAT).toJdkDate();
 	/** UPDATED_${column.constantJavaField} ${column.nameAndTitle} */
     private static final ${column.simpleJavaType} UPDATED_${column.constantJavaField} = DateUtils.addDays(DEFAULT_${column.constantJavaField}, 1);
 		<#else>
@@ -109,7 +109,7 @@ public class ${ClassName}ResourceIntTest {
 	private ${ClassName}DataVo another${ClassName}DataVo = new ${ClassName}DataVo();
 	@BeforeEach
 	public void setup() {
-		DEFAULT_API_URL = "/${urlPrefix}";
+		DEFAULT_API_URL = "/${urlPrefix}/";
 		MockitoAnnotations.initMocks(this);
 		final ${ClassName}Resource ${className}Resource = new ${ClassName}Resource(${className}Service);
 		this.rest${ClassName}MockMvc = MockMvcBuilders.standaloneSetup(${className}Resource)
@@ -231,9 +231,9 @@ public class ${ClassName}ResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
     <#list table.columnList as column>
         <#if column.pk>
-            .andExpect(jsonPath("$.data.[*].${column.simpleJavaField}").value(hasItem(${className}DataVo.get${column.simpleJavaField?cap_first}())))
+            .andExpect(jsonPath("$.data.records.[*].${column.simpleJavaField}").value(hasItem(${className}DataVo.get${column.simpleJavaField?cap_first}())))
         <#elseif column.edit && column.null && (column.isNotBaseField || column.simpleJavaField == 'description')>
-            .andExpect(jsonPath("$.data.[*].${column.simpleJavaField}").value(hasItem(<#if column.simpleJavaType == "Date">DateUtil.formatDateTime(DEFAULT_${column.constantJavaField})<#else>DEFAULT_${column.constantJavaField}</#if>)))
+            .andExpect(jsonPath("$.data.records.[*].${column.simpleJavaField}").value(hasItem(<#if column.simpleJavaType == "Date">DateUtil.formatDateTime(DEFAULT_${column.constantJavaField})<#elseif column.simpleJavaType == "Long">DEFAULT_${column.constantJavaField}.intValue()<#else>DEFAULT_${column.constantJavaField}</#if>)))
         </#if>
     </#list>;
     }
@@ -252,7 +252,7 @@ public class ${ClassName}ResourceIntTest {
         <#if column.pk>
             .andExpect(jsonPath("$.data.${column.simpleJavaField}").value(${className}DataVo.get${column.simpleJavaField?cap_first}()))
         <#elseif column.edit && column.null && (column.isNotBaseField || column.simpleJavaField == 'description')>
-            .andExpect(jsonPath("$.data.${column.simpleJavaField}").value(<#if column.simpleJavaType == "Date">DEFAULT_${column.constantJavaField}.getTime()<#else>DEFAULT_${column.constantJavaField}</#if>))
+            .andExpect(jsonPath("$.data.${column.simpleJavaField}").value(<#if column.simpleJavaType == "Date">DateUtil.formatDateTime(DEFAULT_${column.constantJavaField})<#else>DEFAULT_${column.constantJavaField}</#if>))
         </#if>
     </#list>;
     }
@@ -373,12 +373,12 @@ public class ${ClassName}ResourceIntTest {
         rest${ClassName}MockMvc.perform(get(DEFAULT_API_URL).param("queryConditionJson", Json.toJSONString(Lists.newArrayList(queryCondition))))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.data").isArray())
+            .andExpect(jsonPath("$.data.records").isArray())
     <#list table.columnList as column>
         <#if column.pk>
-            .andExpect(jsonPath("$.data.[*].${column.simpleJavaField}").value(hasItem(${className}DataVo.get${column.simpleJavaField?cap_first}())))
+            .andExpect(jsonPath("$.data.records.[*].${column.simpleJavaField}").value(hasItem(${className}DataVo.get${column.simpleJavaField?cap_first}())))
         <#elseif column.edit && column.null && (column.isNotBaseField || column.simpleJavaField == 'description')>
-            .andExpect(jsonPath("$.data.[*].${column.simpleJavaField}").value(hasItem(<#if column.simpleJavaType == "Date">DateUtil.formatDateTime(DEFAULT_${column.constantJavaField})<#else>DEFAULT_${column.constantJavaField}</#if>)))
+            .andExpect(jsonPath("$.data.records.[*].${column.simpleJavaField}").value(hasItem(<#if column.simpleJavaType == "Date">DateUtil.formatDateTime(DEFAULT_${column.constantJavaField})<#elseif column.simpleJavaType == "Long">DEFAULT_${column.constantJavaField}.intValue()<#else>DEFAULT_${column.constantJavaField}</#if>)))
         </#if>
     </#list>;
     }
@@ -390,8 +390,8 @@ public class ${ClassName}ResourceIntTest {
         rest${ClassName}MockMvc.perform(get(DEFAULT_API_URL).param("queryConditionJson", Json.toJSONString(Lists.newArrayList(queryCondition))))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.data").isArray())
-            .andExpect(jsonPath("$.data").isEmpty());
+            .andExpect(jsonPath("$.data.records").isArray())
+            .andExpect(jsonPath("$.data.records").isEmpty());
     }
 
 
@@ -400,7 +400,8 @@ public class ${ClassName}ResourceIntTest {
     public void getNonExisting${ClassName}() throws Exception {
         // Get the ${className}
         rest${ClassName}MockMvc.perform(get(DEFAULT_API_URL+"{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
+            .andExpect(status().isOk())
+			.andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test

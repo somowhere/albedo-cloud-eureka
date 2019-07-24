@@ -315,7 +315,8 @@ public class GenUtil {
      */
     public static String generateToFile(TemplateVo tpl, Map<String, Object> model, boolean isReplaceFile) {
         // 获取生成文件 "c:\\temp\\"//
-        String realFileName = FreeMarkers.renderString(tpl.getFileName(), model),fileName = StringUtil.getProjectPath(realFileName, DictUtil.getCodeItemVal("sys_gen_code_ui_path")) + File.separator
+        String realFileName = FreeMarkers.renderString(tpl.getFileName(), model),
+			fileName = StringUtil.getProjectPath(realFileName, getConfig().getCodeUiPath()) + File.separator
                 + StringUtils.replaceEach(FreeMarkers.renderString(tpl.getFilePath() + "/", model), new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})
                 + realFileName;
 

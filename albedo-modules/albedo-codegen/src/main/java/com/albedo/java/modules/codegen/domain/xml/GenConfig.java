@@ -1,5 +1,6 @@
 package com.albedo.java.modules.codegen.domain.xml;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,6 +17,7 @@ public class GenConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+	@XmlAttribute
     private String codeUiPath;
 
     private List<GenCategory> categoryList; // 代码模板分类
@@ -83,6 +85,7 @@ public class GenConfig implements Serializable {
         this.viewTypeList = viewTypeList;
     }
 
+	@XmlAttribute
 	public String getCodeUiPath() {
 		return codeUiPath;
 	}

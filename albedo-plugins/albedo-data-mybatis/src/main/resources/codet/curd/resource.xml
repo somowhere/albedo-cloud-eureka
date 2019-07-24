@@ -43,6 +43,16 @@ public class ${ClassName}Resource extends DataVoResource<${ClassName}Service, ${
     }
 
 	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@Timed
+	public R get(@PathVariable String id) {
+		log.debug("REST request to get Entity : {}", id);
+		return  R.createSuccessData(service.findOneVo(id));
+	}
+	/**
 	 * GET / : get all ${className}.
 	 *
 	 * @param pm

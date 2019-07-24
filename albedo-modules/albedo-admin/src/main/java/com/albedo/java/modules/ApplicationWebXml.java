@@ -1,4 +1,4 @@
-package com.albedo.java.modules.admin;
+package com.albedo.java.modules;
 
 import com.albedo.java.common.core.util.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;

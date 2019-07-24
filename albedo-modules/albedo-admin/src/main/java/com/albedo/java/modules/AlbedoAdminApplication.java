@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.admin;
+package com.albedo.java.modules;
 
 
 import com.albedo.java.common.security.annotation.EnablePigFeignClients;

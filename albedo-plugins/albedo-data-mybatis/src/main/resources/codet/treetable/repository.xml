@@ -19,7 +19,7 @@ import java.util.List;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-public interface ${ClassName}Repository extends TreeRepository<${ClassName}, String> {
+public interface ${ClassName}Repository extends TreeRepository<${ClassName}> {
 
 
 }

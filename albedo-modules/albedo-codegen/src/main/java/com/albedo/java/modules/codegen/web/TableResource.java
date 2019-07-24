@@ -1,4 +1,4 @@
-package com.albedo.java.modules.codegen.controller;
+package com.albedo.java.modules.codegen.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;

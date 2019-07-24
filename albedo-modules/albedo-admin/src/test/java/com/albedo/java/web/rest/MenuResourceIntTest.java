@@ -3,9 +3,9 @@ package com.albedo.java.web.rest;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.admin.AlbedoAdminApplication;
+import com.albedo.java.modules.AlbedoAdminApplication;
 import com.albedo.java.modules.admin.domain.Menu;
-import com.albedo.java.modules.admin.resource.MenuResource;
+import com.albedo.java.modules.admin.web.MenuResource;
 import com.albedo.java.modules.admin.service.MenuService;
 import com.albedo.java.modules.admin.vo.MenuDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the MenuResource REST resource.
+ * Test class for the MenuResource REST web.
  *
  * @see MenuResource
  */

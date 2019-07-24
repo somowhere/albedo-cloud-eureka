@@ -4,11 +4,11 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.admin.AlbedoAdminApplication;
+import com.albedo.java.modules.AlbedoAdminApplication;
 import com.albedo.java.modules.admin.domain.Dept;
 import com.albedo.java.modules.admin.domain.Role;
 import com.albedo.java.modules.admin.domain.User;
-import com.albedo.java.modules.admin.resource.UserResource;
+import com.albedo.java.modules.admin.web.UserResource;
 import com.albedo.java.modules.admin.service.DeptService;
 import com.albedo.java.modules.admin.service.RoleService;
 import com.albedo.java.modules.admin.service.UserService;
@@ -36,9 +36,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the UserResource REST resource.
+ * Test class for the UserResource REST web.
  *
- * @see com.albedo.java.modules.admin.resource.UserResource
+ * @see com.albedo.java.modules.admin.web.UserResource
  */
 @SpringBootTest(classes = AlbedoAdminApplication.class)
 @Slf4j

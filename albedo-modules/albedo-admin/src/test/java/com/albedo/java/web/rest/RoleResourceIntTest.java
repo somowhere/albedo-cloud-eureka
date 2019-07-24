@@ -4,9 +4,9 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.admin.AlbedoAdminApplication;
+import com.albedo.java.modules.AlbedoAdminApplication;
 import com.albedo.java.modules.admin.domain.*;
-import com.albedo.java.modules.admin.resource.RoleResource;
+import com.albedo.java.modules.admin.web.RoleResource;
 import com.albedo.java.modules.admin.service.*;
 import com.albedo.java.modules.admin.vo.RoleDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the RoleResource REST resource.
+ * Test class for the RoleResource REST web.
  *
  * @see RoleResource
  */
@@ -76,7 +76,7 @@ public class RoleResourceIntTest {
 	@Autowired
 	private GlobalExceptionHandler globalExceptionHandler;
 
-	private RoleDataVo role;
+	private RoleDataVo roleDataVo;
 
 	private RoleDataVo anotherRole = new RoleDataVo();
 	@BeforeEach
@@ -98,19 +98,19 @@ public class RoleResourceIntTest {
 	 * if they test an domain which has a required relationship to the Role domain.
 	 */
 	public RoleDataVo createEntity() {
-		RoleDataVo role = new RoleDataVo();
-		role.setName(DEFAULT_NAME);
-		role.setCode(DEFAULT_CODE);
-		role.setLockFlag(DEFAULT_LOCKFLAG);
-		role.setDataScope(DEFAULT_DATASCOPE);
-		role.setRemark(DEFAULT_REMARK);
-		role.setDescription(DEFAULT_DESCRIPTION);
-		return role;
+		RoleDataVo roleDataVo = new RoleDataVo();
+		roleDataVo.setName(DEFAULT_NAME);
+		roleDataVo.setCode(DEFAULT_CODE);
+		roleDataVo.setLockFlag(DEFAULT_LOCKFLAG);
+		roleDataVo.setDataScope(DEFAULT_DATASCOPE);
+		roleDataVo.setRemark(DEFAULT_REMARK);
+		roleDataVo.setDescription(DEFAULT_DESCRIPTION);
+		return roleDataVo;
 	}
 
 	@BeforeEach
 	public void initTest() {
-		role = createEntity();
+		roleDataVo = createEntity();
 		// Initialize the database
 		List<Menu> allMenuEntities = menuService.findAll();
 		List<Dept> allDept = deptService.findAll();
@@ -123,8 +123,8 @@ public class RoleResourceIntTest {
 		anotherRole.setMenuIdList(CollUtil.extractToList(allMenuEntities, Menu.F_ID));
 		anotherRole.setDeptIdList(CollUtil.extractToList(allDept, Menu.F_ID));
 		roleService.save(anotherRole);
-		role.setMenuIdList(anotherRole.getMenuIdList());
-		role.setDeptIdList(anotherRole.getDeptIdList());
+		roleDataVo.setMenuIdList(anotherRole.getMenuIdList());
+		roleDataVo.setDeptIdList(anotherRole.getDeptIdList());
 	}
 
 	@Test
@@ -135,14 +135,14 @@ public class RoleResourceIntTest {
 		// Create the Role
 		restRoleMockMvc.perform(post(DEFAULT_API_URL)
 			.contentType(TestUtil.APPLICATION_JSON_UTF8)
-			.content(TestUtil.convertObjectToJsonBytes(role)))
+			.content(TestUtil.convertObjectToJsonBytes(roleDataVo)))
 			.andExpect(status().isOk());
 
 		// Validate the Role in the database
 		List<Role> roleEntityList = roleService.list();
 		assertThat(roleEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		Role testRole = roleService.findOne(Wrappers.<Role>query().lambda()
-			.eq(Role::getName, role.getName()));
+			.eq(Role::getName, roleDataVo.getName()));
 		assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
 		assertThat(testRole.getCode()).isEqualTo(DEFAULT_CODE);
 		assertThat(testRole.getRemark()).isEqualTo(DEFAULT_REMARK);
@@ -154,7 +154,7 @@ public class RoleResourceIntTest {
 	@Transactional
 	public void getRolePage() throws Exception {
 		// Initialize the database
-		roleService.save(role);
+		roleService.save(roleDataVo);
 		// Get all the roles
 		restRoleMockMvc.perform(get(DEFAULT_API_URL)
 			.param(PageModel.F_DESC, Role.F_SQL_CREATEDDATE)
@@ -172,10 +172,10 @@ public class RoleResourceIntTest {
 	@Transactional
 	public void getRole() throws Exception {
 		// Initialize the database
-		roleService.save(role);
+		roleService.save(roleDataVo);
 
 		// Get the role
-		restRoleMockMvc.perform(get(DEFAULT_API_URL+"{id}", role.getId()))
+		restRoleMockMvc.perform(get(DEFAULT_API_URL+"{id}", roleDataVo.getId()))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(jsonPath("$.data.name").value(DEFAULT_NAME))
@@ -195,11 +195,11 @@ public class RoleResourceIntTest {
 	@Transactional
 	public void updateRole() throws Exception {
 		// Initialize the database
-		roleService.save(role);
+		roleService.save(roleDataVo);
 		int databaseSizeBeforeUpdate = roleService.list().size();
 
 		// Update the role
-		Role updatedRole = roleService.findOneById(role.getId());
+		Role updatedRole = roleService.findOneById(roleDataVo.getId());
 
 
 		RoleDataVo managedRoleVM = new RoleDataVo();
@@ -242,11 +242,11 @@ public class RoleResourceIntTest {
 	@Transactional
 	public void deleteRole() throws Exception {
 		// Initialize the database
-		roleService.save(role);
+		roleService.save(roleDataVo);
 		long databaseSizeBeforeDelete = roleService.findCount();
 
 		// Delete the role
-		restRoleMockMvc.perform(delete(DEFAULT_API_URL+"{id}", role.getId())
+		restRoleMockMvc.perform(delete(DEFAULT_API_URL+"{id}", roleDataVo.getId())
 			.accept(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk());
 

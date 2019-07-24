@@ -2,9 +2,9 @@ package com.albedo.java.web.rest;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
-import com.albedo.java.modules.admin.AlbedoAdminApplication;
+import com.albedo.java.modules.AlbedoAdminApplication;
 import com.albedo.java.modules.admin.domain.Dept;
-import com.albedo.java.modules.admin.resource.DeptResource;
+import com.albedo.java.modules.admin.web.DeptResource;
 import com.albedo.java.modules.admin.service.DeptService;
 import com.albedo.java.modules.admin.vo.DeptDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the DeptResource REST resource.
+ * Test class for the DeptResource REST web.
  *
  * @see DeptResource
  */

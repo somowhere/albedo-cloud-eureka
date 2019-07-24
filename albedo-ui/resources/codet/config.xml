@@ -16,7 +16,7 @@
             <template>curd/viewService.xml</template>
         </category>
         <!--<category val="curd_modal" name="增删改查（单表）弹窗">-->
-            <!--<template>curd/resource.xml</template>-->
+            <!--<template>curd/web.xml</template>-->
             <!--<template>curd/resourceIntTest.xml</template>-->
             <!--<template>category-ref:service</template>-->
             <!--<template>curd/viewModelTs.xml</template>-->
@@ -26,7 +26,7 @@
             <!--<template>curd/viewModuleTs.xml</template>-->
         <!--</category>-->
         <!--<category val="curd_many" name="增删改查（一对多）">-->
-            <!--<template>curd/resource.xml</template>-->
+            <!--<template>curd/web.xml</template>-->
             <!--<template>service/serviceMany.xml</template>-->
             <!--<template>category-ref:entity</template>-->
             <!--<template>curd/viewFormMany.xml</template>-->
@@ -38,10 +38,11 @@
         <category val="service" name="仅持久层（service/entity）">
             <template>service/repository.xml</template>
             <template>service/service.xml</template>
+            <template>service/serviceImpl.xml</template>
             <template>category-ref:entity</template>
         </category>
         <category val="entity" name="数据层（entity）">
-            <template>entity/vo/entityVo.xml</template>
+            <template>entity/vo/entityDataVo.xml</template>
             <!--<template>entity/entityId.xml</template>-->
             <template>entity/entity.xml</template>
         </category>
@@ -55,7 +56,7 @@
         <template>treetable/resourceIntTest.xml</template>
         <template>treetable/repository.xml</template>
         <template>treetable/service.xml</template>
-        <template>treetable/vo/entityVo.xml</template>
+        <template>treetable/vo/entityDataVo.xml</template>
         <template>treetable/entity.xml</template>
       </category>
       <category val="treeTable_front" name="树结构表（一体）- 前端">

@@ -20,6 +20,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
@@ -278,21 +279,13 @@ public class GenUtil {
      */
     public static Map<String, Object> getDataModel(SchemeDataVo scheme) {
         Map<String, Object> model = Maps.newHashMap();
-        String applicationId = SpringContextHolder.getApplicationContext().getId();
-        if(StringUtil.isNotEmpty(applicationId)){
-            try{
-                String substring = applicationId.substring(0, applicationId.indexOf(":"));
-                String applicationName = SpringContextHolder.getApplicationContext().getBean(substring).getClass().getName();
-                model.put("applicationName", applicationName);
-            }catch (Exception e){
-                model.put("applicationName", applicationId);
-            }
-        }
+        String applicationName = SpringContextHolder.getApplicationContext().getBeansWithAnnotation(SpringBootApplication.class).keySet().iterator().next();
+		model.put("applicationName", SpringContextHolder.getApplicationContext().getBean(applicationName).getClass().getPackage().getName() + "." + StringUtil.upperFirst(applicationName));
         model.put("packageName", StringUtil.lowerCase(scheme.getPackageName()));
         model.put("lastPackageName", StringUtil.subAfter((String) model.get("packageName"), ".",true));
         model.put("moduleName", StringUtil.lowerCase(scheme.getModuleName()));
         model.put("subModuleName", StringUtil.lowerCase(StringUtil.isEmpty(scheme.getSubModuleName())?"": scheme.getSubModuleName()));
-        model.put("className", StringUtil.lowerCase(scheme.getTableDataVo().getClassName()));
+        model.put("className", StringUtil.lowerFirst(scheme.getTableDataVo().getClassName()));
         model.put("ClassName", StringUtil.upperFirst(scheme.getTableDataVo().getClassName()));
 
         model.put("functionName", scheme.getFunctionName());
@@ -300,7 +293,7 @@ public class GenUtil {
         model.put("functionAuthor", StringUtil.isNotBlank(scheme.getFunctionAuthor()) ? scheme.getFunctionAuthor() : "");
 		model.put("functionVersion", DateUtil.now());
 
-        model.put("urlPrefix", model.get("moduleName") + (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "/" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + "/" + model.get("className"));
+        model.put("urlPrefix", (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "/" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + model.get("className"));
         model.put("viewPrefix", // StringUtil.substringAfterLast(model.get("packageName"),".")+"/"+
                 model.get("urlPrefix"));
         model.put("permissionPrefix", model.get("moduleName") + (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "_" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + "_" + model.get("className"));

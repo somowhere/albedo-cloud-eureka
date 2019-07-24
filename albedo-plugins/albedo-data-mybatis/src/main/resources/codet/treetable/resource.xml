@@ -10,7 +10,7 @@
 package ${packageName}.${moduleName}.web<#if subModuleName != "">.${subModuleName}</#if>;
 
 import com.albedo.java.common.security.SecurityUtil;
-import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Vo;
+import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}DataVo;
 import ${packageName}.${moduleName}.service<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Service;
 import com.albedo.java.util.JsonUtil;
 import com.albedo.java.util.PublicUtil;
@@ -40,8 +40,8 @@ import java.util.List;
  * @version ${functionVersion}
  */
 @Controller
-@RequestMapping(value = "${r"${application.adminPath}"}/${urlPrefix}")
-public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${ClassName}Vo> {
+@RequestMapping(value = "/${urlPrefix}")
+public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${ClassName}DataVo> {
     public ${ClassName}Resource(${ClassName}Service service) {
         super(service);
     }
@@ -72,7 +72,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	}
     @GetMapping(value = "/formData")
     @Timed
-    public ResponseEntity formData(${ClassName}Vo ${className}Vo) {
+    public ResponseEntity formData(${ClassName}DataVo ${className}Vo) {
         if (${className}Vo == null) {
             throw new RuntimeMsgException(PublicUtil.toAppendStr("查询失败，原因：无法查找到编号${functionNameSimple}"));
         }
@@ -92,13 +92,13 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	 */
 	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed
-	public ResponseEntity save(@Valid @RequestBody ${ClassName}Vo ${className}Vo) {
+	public ResponseEntity save(@Valid @RequestBody ${ClassName}DataVo ${className}Vo) {
 		log.debug("REST request to save ${ClassName} : {}", ${className}Vo);
 		<#assign firstListField = true><#list table.columnList as column>
 			<#if column.unique && !column.pk>
-		<#if firstListField><#assign firstListField = false>${ClassName}Vo </#if>${className}Validate = new ${ClassName}Vo(${className}Vo.getId());
+		<#if firstListField><#assign firstListField = false>${ClassName}DataVo </#if>${className}Validate = new ${ClassName}DataVo(${className}Vo.getId());
 		${className}Validate.set${column.simpleJavaField?cap_first}(${className}Vo.get${column.simpleJavaField?cap_first}());
-		if (<#if column.nullable>PublicUtil.isNotEmpty(${className}Vo.get${column.simpleJavaField?cap_first}()) && </#if>!checkByProperty(${className}Validate)) {
+		if (<#if column.null>PublicUtil.isNotEmpty(${className}Vo.get${column.simpleJavaField?cap_first}()) && </#if>!checkByProperty(${className}Validate)) {
 			throw new RuntimeMsgException(PublicUtil.toAppendStr("保存${functionNameSimple}'", ${className}Vo.get${column.simpleJavaField?cap_first}(),"'失败，${column.title }已存在"));
 		}
 			</#if>

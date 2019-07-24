@@ -41,7 +41,7 @@ public class UserAuthenticationExtendConverter implements UserAuthenticationConv
 	private static final String N_A = "N/A";
 
 	/**
-	 * Extract information about the userEntity to be used in an access token (i.e. for resource servers).
+	 * Extract information about the userEntity to be used in an access token (i.e. for web servers).
 	 *
 	 * @param authentication an authentication representing a userEntity
 	 * @return a map of key values representing the unique information about the userEntity

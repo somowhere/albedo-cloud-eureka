@@ -42,7 +42,7 @@ import java.nio.charset.StandardCharsets;
 
 
 /**
- * Miscellaneous utilities for resource applications.
+ * Miscellaneous utilities for web applications.
  *
  * @author L.cm
  */

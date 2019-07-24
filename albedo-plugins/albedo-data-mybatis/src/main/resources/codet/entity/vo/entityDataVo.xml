@@ -2,34 +2,34 @@
 <template>
     <name>entityForm</name>
     <filePath>src/main/java/${packageName}/${moduleName}/domain/vo/${subModuleName}</filePath>
-    <fileName>${ClassName}Vo.java</fileName>
+    <fileName>${ClassName}DataVo.java</fileName>
     <content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
 package ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>;
 
-import com.albedo.java.vo.base.TreeEntityVo;
+import com.albedo.java.common.core.vo.DataEntityVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+
 /**
- * ${functionName}Entity ${functionNameSimple}
+ * ${functionName}EntityVo ${functionNameSimple}
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
-public class ${ClassName}Vo extends TreeEntityVo {
+public class ${ClassName}DataVo extends DataEntityVo<${table.pkJavaType}> {
 
 	private static final long serialVersionUID = 1L;
 	<#list table.columnList as column>
-		<#if !column.pk && column.isNotBaseField && column.isNotBaseTreeField>
+		<#if !column.pk && column.isNotBaseField>
 	/** F_${column.constantJavaField} ${column.nameAndTitle} */
 	public static final String F_${column.constantJavaField} = "${column.simpleJavaField}";
 		</#if>
@@ -37,14 +37,11 @@ public class ${ClassName}Vo extends TreeEntityVo {
 
 	<@generateFields/>
 
-    public ${ClassName}Vo(${table.pkJavaType} id){
-	    this.setId(id);
-    }
 }
 <#macro generateFields>
 	//columns START
 	<#list table.columnList as column>
-		<#if !column.pk && column.isNotBaseField && column.isNotBaseTreeField>
+		<#if !column.pk && column.isNotBaseField>
 	/** ${column.simpleJavaField} ${column.title} */
 	        <#if table.parentExists && table.parentTableFk == column.name>
 	private ${table.parent.className} ${column.simpleJavaField};

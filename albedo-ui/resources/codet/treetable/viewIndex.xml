@@ -36,7 +36,7 @@
         <div class="filter-container">
             <el-form :inline="true">
             <#list table.columnList as c>
-            <#if c.isQuery?? && c.isQuery>
+            <#if c.query>
               <el-form-item label="${c.title}">
                 <#if c.showType == "input" || c.showType == "textarea">
                     <el-input class="filter-item input-normal" v-model="listQuery.${c.javaFieldId}"></el-input>
@@ -64,7 +64,7 @@
         </div>
         <el-table :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
           <#list table.columnList as column>
-          <#if column.isList?? && column.isList && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
+          <#if column.list && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
           <el-table-column align="center" label="${column.title}">
             <template slot-scope="scope">
             <#if column.simpleJavaField = 'status'>
@@ -111,8 +111,8 @@
           <el-input v-model="form.parentName" placeholder="选择${functionNameSimple}" @focus="handle${ClassName}()" readonly></el-input>
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
-        <#elseif c.isEdit?? && c.isEdit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
-        <el-form-item label="${c.title}" prop="${c.javaFieldId}" :rules="[<#if !c.nullable>{required: true,message: '请输入${c.title}'},</#if><#if c.javaType == "Long" || c.javaType == "Integer">{validator:validateDigits},</#if><#if c.javaType == "java.math.BigDecimal" || c.javaType == "Double">{ validator:validateNumber},</#if><#if c.dataLength != "0">{min: 0,max: ${c.dataLength},message: '长度在 0 到 ${c.dataLength} 个字符'},</#if><#if c.unique && !c.pk>{validator:validateUnique}</#if>]">
+        <#elseif c.edit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <el-form-item label="${c.title}" prop="${c.javaFieldId}" :rules="[<#if !c.null>{required: true,message: '请输入${c.title}'},</#if><#if c.javaType == "Long" || c.javaType == "Integer">{validator:validateDigits},</#if><#if c.javaType == "java.math.BigDecimal" || c.javaType == "Double">{ validator:validateNumber},</#if><#if c.dataLength != "0">{min: 0,max: ${c.dataLength},message: '长度在 0 到 ${c.dataLength} 个字符'},</#if><#if c.unique && !c.pk>{validator:validateUnique}</#if>]">
             <#if c.showType == "input">
                 <el-input v-model="form.${c.javaFieldId}"></el-input>
             <#elseif c.showType == "textarea">
@@ -173,7 +173,7 @@
         labelPosition: 'right',
         form: {
           <#list table.columnList as c>
-        <#if c.isEdit?? && c.isEdit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <#if c.edit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: undefined,
         </#if>
         </#list>
@@ -227,7 +227,7 @@
         this.listLoading = true;
         this.listQuery.isAsc = false;
         this.listQuery.queryConditionJson = parseJsonItemForm([
-        <#list table.columnList as c><#if c.isQuery?? && c.isQuery>
+        <#list table.columnList as c><#if c.query>
         {fieldName: '${c.javaFieldId}',value:this.listQuery.${c.javaFieldId},operate:'${c.queryType}',attrType:'${c.javaType}'},
         </#if></#list>
         {fieldName: 'parentId',value:this.listQuery.parentId, attrType:'eq'},
@@ -331,7 +331,7 @@
       resetForm() {
         this.form = {
           <#list table.columnList as c>
-        <#if c.isEdit?? && c.isEdit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
+        <#if c.edit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
         ${c.javaFieldId}: "",
         </#if>
         </#list>

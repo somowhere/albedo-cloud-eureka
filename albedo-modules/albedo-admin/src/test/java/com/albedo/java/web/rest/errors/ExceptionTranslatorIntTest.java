@@ -21,7 +21,7 @@
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
 ///**
-// * Test class for the ExceptionTranslator resource advice.
+// * Test class for the ExceptionTranslator web advice.
 // *
 // */
 //@RunWith(SpringRunner.class)
@@ -29,7 +29,7 @@
 //public class ExceptionTranslatorIntTest {
 //
 //    @Autowired
-//    private ExceptionTranslatorTestController resource;
+//    private ExceptionTranslatorTestController web;
 //    @Autowired
 //    private ExceptionTranslator exceptionTranslator;
 //    @Autowired
@@ -39,7 +39,7 @@
 //
 //    @Before
 //    public void setup() {
-//        mockMvc = MockMvcBuilders.standaloneSetup(resource)
+//        mockMvc = MockMvcBuilders.standaloneSetup(web)
 //            .setControllerAdvice(exceptionTranslator)
 //            .setMessageConverters(fastJsonHttpMessageConverter)
 //            .build();

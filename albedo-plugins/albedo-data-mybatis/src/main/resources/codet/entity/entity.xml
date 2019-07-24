@@ -9,10 +9,7 @@
  */
 package ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 <#list table.importList as i>
 import ${i};
 </#list>
@@ -27,7 +24,8 @@ import javax.validation.constraints.*;
  */
 @TableName(value = "${table.name}")
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
-public class ${ClassName} extends IdEntity<${ClassName}, ${table.pkJavaType}> {
+@EqualsAndHashCode(callSuper = true)
+public class ${ClassName} extends IdEntity<${ClassName}> {
 
 	private static final long serialVersionUID = 1L;
 	<#list table.columnList as column>

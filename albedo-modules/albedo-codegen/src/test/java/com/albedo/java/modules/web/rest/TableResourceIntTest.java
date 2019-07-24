@@ -1,10 +1,10 @@
-package com.albedo.java.web.rest;
+package com.albedo.java.modules.web.rest;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.codegen.AlbedoCodeGenApplication;
-import com.albedo.java.modules.codegen.controller.TableResource;
+import com.albedo.java.modules.AlbedoCodeGenApplication;
+import com.albedo.java.modules.codegen.web.TableResource;
 import com.albedo.java.modules.codegen.domain.Table;
 import com.albedo.java.modules.codegen.domain.vo.TableDataVo;
 import com.albedo.java.modules.codegen.service.impl.TableServiceImpl;
@@ -20,16 +20,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.albedo.java.web.rest.TestUtil.createFormattingConversionService;
+import static com.albedo.java.modules.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the TableResource REST resource.
+ * Test class for the TableResource REST web.
  *
- * @see com.albedo.java.modules.codegen.controller.TableResource
+ * @see com.albedo.java.modules.codegen.web.TableResource
  */
 @SpringBootTest(classes = AlbedoCodeGenApplication.class)
 @Slf4j

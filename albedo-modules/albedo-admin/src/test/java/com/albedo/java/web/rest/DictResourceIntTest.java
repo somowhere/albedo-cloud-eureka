@@ -3,9 +3,9 @@ package com.albedo.java.web.rest;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.admin.AlbedoAdminApplication;
+import com.albedo.java.modules.AlbedoAdminApplication;
 import com.albedo.java.modules.admin.domain.Dict;
-import com.albedo.java.modules.admin.resource.DictResource;
+import com.albedo.java.modules.admin.web.DictResource;
 import com.albedo.java.modules.admin.service.DictService;
 import com.albedo.java.modules.admin.vo.DictDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the DictResource REST resource.
+ * Test class for the DictResource REST web.
  *
  * @see DictResource
  */

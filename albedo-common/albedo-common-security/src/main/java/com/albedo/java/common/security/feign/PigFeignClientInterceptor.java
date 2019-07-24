@@ -42,7 +42,7 @@ public class PigFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
 	 * within Authorization header
 	 *
 	 * @param oAuth2ClientContext     provided context
-	 * @param resource                type of resource to be accessed
+	 * @param resource                type of web to be accessed
 	 * @param accessTokenContextRelay
 	 */
 	public PigFeignClientInterceptor(OAuth2ClientContext oAuth2ClientContext

@@ -166,9 +166,9 @@ public class TableDataVo extends DataEntityVo<String> {
      */
     @JSONField(serialize = false)
     public List<String> getImportList() {
-        List<String> importList = Lists.newArrayList("com.albedo.java.util.CollUtil",
+        List<String> importList = Lists.newArrayList(
             "com.baomidou.mybatisplus.annotation.*",
-                "com.albedo.java.util.annotation.SearchField"); // 引用列表
+                "com.albedo.java.common.core.annotation.SearchField"); // 引用列表
         if ("treeTable".equalsIgnoreCase(getCategory())) {
             importList.add("com.albedo.java.common.persistence.domain.TreeEntity");
             // 如果有子表，则需要导入List相关引用
@@ -216,7 +216,7 @@ public class TableDataVo extends DataEntityVo<String> {
             }
 
             if (column.isUnique()) {
-                addNoRepeatList(importList, "com.albedo.java.util.annotation.SearchField");
+                addNoRepeatList(importList, "com.albedo.java.common.core.annotation.SearchField");
             }
         }
     }

@@ -1,9 +1,6 @@
 package com.albedo.java.common.data.util;
 
-import com.albedo.java.common.core.util.ClassUtil;
-import com.albedo.java.common.core.util.CollUtil;
-import com.albedo.java.common.core.util.QueryUtil;
-import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.core.vo.Order;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
@@ -15,6 +12,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.google.common.collect.Lists;
@@ -138,17 +136,13 @@ public class QueryWrapperUtil {
     	if(null == page){
     		return wrapper;
 		}
-    	if(ArrayUtils.isEmpty(page.ascs())
-			&& ArrayUtils.isEmpty(page.descs())
+    	if(ObjectUtil.isEmpty(page.orders())
 			&& ObjectUtils.isEmpty(page.condition())){
     		return wrapper;
 		}
     	QueryWrapper queryWrapper = null == wrapper? new QueryWrapper() : (QueryWrapper) wrapper;
-    	if(ArrayUtils.isNotEmpty(page.ascs())){
-    		queryWrapper.orderByAsc(page.ascs());
-		}
-		if(ArrayUtils.isNotEmpty(page.descs())){
-			queryWrapper.orderByDesc(page.descs());
+    	if(ObjectUtil.isNotEmpty(page.orders())){
+    		page.orders().forEach(orderItem -> queryWrapper.orderBy(true, orderItem.isAsc(), orderItem.getColumn()));
 		}
 		if(ObjectUtils.isNotEmpty(page.condition())){
 			queryWrapper.allEq(page.condition());

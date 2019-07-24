@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.admin.resource;
+package com.albedo.java.modules.admin.web;
 
 
 import com.albedo.java.common.core.constant.CommonConstants;

@@ -6,7 +6,7 @@
       <el-row :gutter="20">
         <el-col :span="5"
                 style='margin-top:15px;'>
-          <el-card class="box-card" shadow="hover">
+          <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>菜单</span>
               <el-button type="text" class="card-heard-btn" icon="icon-filesearch" title="搜索" @click="searchTree=(searchTree ? false:true)"></el-button>
@@ -21,7 +21,7 @@
               :data="treeMenuData"
               ref="leftMenuTree"
               node-key="id"
-              highlight-current default-expand-all
+              highlight-current
               :expand-on-click-node="false"
               :filter-node-method="filterNode"
               @node-click="clickNodeTreeData">
@@ -49,7 +49,7 @@
               <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
-          <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
+          <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
             <el-table-column
               type="index" fixed="left" width="60">
             </el-table-column>
@@ -110,11 +110,11 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" fixed="right" width="100" label="操作" v-if="sys_menu_edit || sys_menu_lock || sys_menu_delete">
+            <el-table-column align="center" fixed="right" width="100" label="操作" v-if="sys_menu_edit || sys_menu_lock || sys_menu_del">
               <template slot-scope="scope">
                 <el-button v-if="sys_menu_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
                 </el-button>
-                <el-button v-if="sys_menu_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+                <el-button v-if="sys_menu_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
                 </el-button>
               </template>
             </el-table-column>
@@ -3308,7 +3308,7 @@
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
         <el-form :model="form" ref="form" label-width="100px">
           <el-form-item label="所属菜单" prop="parentName">
-            <el-input v-model="form.parentName" placeholder="选择菜单" @focus="selectParentMenuTree()" :disabled="disableSelectParent" readonly>
+            <el-input v-model="form.parentName" placeholder="选择菜单" @focus="selectParentMenuTree()" :disabled="disableSelectMenuParent" readonly>
             </el-input>
             <input type="hidden" v-model="form.parentId" />
           </el-form-item>
@@ -3365,8 +3365,6 @@
   import {isValidateUnique, toStr, validateNotNull} from "@/util/validate";
   import CrudSelect from "@/views/avue/crud-select";
   import CrudRadio from "@/views/avue/crud-radio";
-  import {objectToString} from "../../../util/validate";
-  import {MSG_TYPE_SUCCESS} from "../../../const/common";
 
   export default {
     name: 'Menu',
@@ -3394,7 +3392,7 @@
         menuTypeOptions: [],
         searchTree: false,
         labelPosition: 'right',
-        disableSelectParent: false,
+        disableSelectMenuParent: false,
         form: {
           name: undefined,
           parentId: undefined,
@@ -3418,7 +3416,7 @@
         },
         sys_menu_edit: false,
         sys_menu_lock: false,
-        sys_menu_delete: false,
+        sys_menu_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -3432,8 +3430,7 @@
       this.getTreeMenu()
       this.sys_menu_edit = this.permissions["sys_menu_edit"];
       this.sys_menu_lock = this.permissions["sys_menu_lock"];
-      this.sys_menu_delete = this.permissions["sys_menu_del"];
-      console.log(this.dicts)
+      this.sys_menu_del = this.permissions["sys_menu_del"];
       this.flagOptions = this.dicts['sys_flag'];
       this.menuTypeOptions = this.dicts['sys_menu_type'];
 
@@ -3489,7 +3486,6 @@
         this.getList()
       },
       clickNodeSelectData(data) {
-        console.log(data)
         this.form.parentId = data.id;
         this.form.parentName = data.label;
         this.dialogMenuVisible = false;
@@ -3529,8 +3525,7 @@
         }else{
           findMenu(row.id).then(response =>{
               this.form = response.data;
-              this.disableSelectParent = this.form.parentName ? false : true;
-              this.form.show = objectToString(this.form.show);
+              this.disableSelectMenuParent = this.form.parentName ? false : true;
               this.dialogFormVisible = true;
           });
         }
@@ -3555,9 +3550,7 @@
         this.dialogIconVisible = true;
       },
       save() {
-        console.log(this.$refs['form'])
         this.$refs['form'].validate(valid => {
-          console.log(valid)
           if (valid) {
             saveMenu(this.form).then(response =>{
                 this.getList()

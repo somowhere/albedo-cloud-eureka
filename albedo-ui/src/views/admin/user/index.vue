@@ -6,7 +6,7 @@
       <el-row :gutter="20">
         <el-col :span="6"
                 style='margin-top:15px;'>
-        <el-card class="box-card" shadow="hover">
+        <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>部门</span>
 
@@ -51,7 +51,7 @@
             <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
           </div>
         </div>
-        <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
+        <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
           <el-table-column
             type="index" fixed="left" width="50">
           </el-table-column>
@@ -102,13 +102,13 @@
           </el-table-column>
 
 
-          <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_user_edit || sys_user_lock || sys_user_delete">
+          <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_user_edit || sys_user_lock || sys_user_del">
             <template slot-scope="scope">
               <el-button v-if="sys_user_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
               </el-button>
               <el-button v-if="sys_user_lock" :icon="scope.row.lockFlag == '0' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.lockFlag == '0' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
               </el-button>
-              <el-button v-if="sys_user_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+              <el-button v-if="sys_user_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
               </el-button>
             </template>
           </el-table-column>
@@ -271,7 +271,7 @@
         },
         sys_user_edit: false,
         sys_user_lock: false,
-        sys_user_delete: false,
+        sys_user_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -286,7 +286,7 @@
       this.getList()
       this.sys_user_edit = this.permissions["sys_user_edit"];
       this.sys_user_lock = this.permissions["sys_user_lock"];
-      this.sys_user_delete = this.permissions["sys_user_del"];
+      this.sys_user_del = this.permissions["sys_user_del"];
       deptRoleList().then(response => {
         this.rolesOptions = response.data;
       });
@@ -341,7 +341,6 @@
         this.getList()
       },
       clickNodeSelectData(data) {
-        console.log(data)
         this.form.deptId = data.id;
         this.form.deptName = data.label;
         this.dialogDeptVisible = false;
@@ -394,9 +393,7 @@
         })
       },
       save() {
-        console.log(this.$refs['form'])
         this.$refs['form'].validate(valid => {
-          console.log(valid)
           if (valid) {
             saveUser(this.form).then(response => {
                 this.getList()

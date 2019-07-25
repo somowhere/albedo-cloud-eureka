@@ -327,7 +327,7 @@
       this.currentRow = row;
     },
     handleGenMenu(){
-      if(!this.currentRow || validateNull(this.currentRow.id)){
+      if(validateNull(this.currentRow) || validateNull(this.currentRow.id)){
         this.$message({
           message:'请选择方案',
           type: 'warning'
@@ -348,7 +348,7 @@
       });
     },
     handleGenMenuDialog() {
-      if(!this.currentRow || validateNull(this.currentRow.id)){
+      if(validateNull(this.currentRow) || validateNull(this.currentRow.id)){
         this.$message({
           message:'请选择方案',
           type: 'warning'
@@ -374,7 +374,6 @@
           if(validateNotNull(data.schemeVo)){
             this.resetForm();
             this.form = data.schemeVo;
-            console.log(this.form)
             // this.form.genCode = true
             // this.form.replaceFile= false
             // this.form.syncMenu=  false
@@ -409,7 +408,7 @@
       this.dialogGenCodeVisible=true;
     },
     handleGenCode(replaceFile) {
-      if(!this.currentRow || validateNull(this.currentRow.id)){
+      if(validateNull(this.currentRow) || validateNull(this.currentRow.id)){
         this.$message({
           message:'无法获取选中信息',
           type: 'warning'

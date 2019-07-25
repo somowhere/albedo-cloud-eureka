@@ -1,12 +1,9 @@
-
-
 <template>
   <div class="app-container calendar-list-container">
     <basic-container>
       <el-row :gutter="20">
-        <el-col :span="6"
-                style='margin-top:15px;'>
-          <el-card class="box-card" shadow="hover">
+        <el-col :span="6">
+          <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>字典</span>
               <el-button type="text" class="card-heard-btn" icon="icon-filesearch" title="搜索" @click="searchTree=(searchTree ? false:true)"></el-button>
@@ -49,7 +46,7 @@
               <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
-          <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :default-sort="{prop:'dict.sort'}" :data="list" v-loading="listLoading" element-loading-text="加载中..."  fit highlight-current-row>
+          <el-table :key='tableKey' @sort-change="sortChange" :default-sort="{prop:'dict.sort'}" :data="list" v-loading="listLoading" element-loading-text="加载中..."  fit highlight-current-row>
             <el-table-column
               type="index" fixed="left" width="40">
             </el-table-column>
@@ -95,11 +92,11 @@
             </el-table-column>
 
 
-            <el-table-column align="center" fixed="right" width="100" label="操作" v-if="sys_dict_edit || sys_dict_lock || sys_dict_delete">
+            <el-table-column align="center" fixed="right" width="100" label="操作" v-if="sys_dict_edit || sys_dict_del">
               <template slot-scope="scope">
                 <el-button v-if="sys_dict_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
                 </el-button>
-                <el-button v-if="sys_dict_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+                <el-button v-if="sys_dict_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
                 </el-button>
               </template>
             </el-table-column>
@@ -172,6 +169,7 @@
     data() {
       return {
         treeDictData: [],
+        treeParentDictData: [],
         dialogDictVisible: false,
         dialogFormVisible: false,
         searchFilterVisible: true,
@@ -211,8 +209,7 @@
           create: '创建'
         },
         sys_dict_edit: false,
-        sys_dict_lock: false,
-        sys_dict_delete: false,
+        sys_dict_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -225,9 +222,7 @@
     created() {
       this.getTreeDict()
       this.sys_dict_edit = this.permissions["sys_dict_edit"];
-      this.sys_dict_lock = this.permissions["sys_dict_lock"];
-      this.sys_dict_delete = this.permissions["sys_dict_del"];
-      console.log(this.dicts)
+      this.sys_dict_del = this.permissions["sys_dict_del"];
       this.flagOptions = this.dicts['sys_flag'];
     },
     computed: {
@@ -261,7 +256,7 @@
         this.getList()
       },
       getTreeDict() {
-        fetchDictTree({extId:this.form.id}).then(response => {
+        fetchDictTree().then(response => {
           this.treeDictData = parseTreeData(response.data);
           this.currentNode = this.treeDictData[0];
           this.listQuery.parentId=this.treeDictData[0].id;
@@ -281,14 +276,16 @@
         this.getList()
       },
       clickNodeSelectData(data) {
-        console.log(data)
         this.form.parentId = data.id;
         this.form.parentName = data.label;
         this.dialogDictVisible = false;
       },
       selectParentDictTree(){
-        this.dialogDictVisible=true;
-        setTimeout(()=>{this.$refs['selectParentDictTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+        fetchDictTree({extId:this.form.id}).then(response => {
+          this.treeDictData = parseTreeData(response.data);
+          this.dialogDictVisible=true;
+          setTimeout(()=>{this.$refs['selectParentDictTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+        })
       },
       //搜索清空
       searchReset() {
@@ -344,9 +341,7 @@
         })
       },
       save() {
-        console.log(this.$refs['form'])
         this.$refs['form'].validate(valid => {
-          console.log(valid)
           if (valid) {
             saveDict(this.form).then(response => {
                 this.getList()

@@ -169,7 +169,7 @@ public class MenuServiceImpl extends
 		module.setParentId(parentMenu.getId());
 		module.setType(Menu.TYPE_MENU);
 		module.setIcon("icon-right-square");
-		module.setPath(schemeDataVo.getClassName());
+		module.setPath(StringUtil.lowerFirst(schemeDataVo.getClassName()));
 		module.setComponent("views"+url+"index");
 		save(module);
 
@@ -197,7 +197,7 @@ public class MenuServiceImpl extends
 		moduleDelete.setParent(module);
 		moduleDelete.setName(moduleName+"删除");
 //        moduleDelete.setIconCls("fa-trash-o");
-		moduleDelete.setPermission(permission + "delete");
+		moduleDelete.setPermission(permission + "del");
 		moduleDelete.setParentId(module.getId());
 		moduleDelete.setType(Menu.TYPE_BUTTON);
 		moduleDelete.setSort(80);

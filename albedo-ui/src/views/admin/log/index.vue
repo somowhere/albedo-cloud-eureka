@@ -18,7 +18,6 @@
             </el-form>
           </div>
           <!-- 表格功能列 -->
-
           <div class="table-menu">
             <div class="table-menu-left">
             </div>
@@ -26,7 +25,7 @@
               <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
-          <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
+          <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
             <el-table-column
               type="index" fixed="left" width="50">
             </el-table-column>
@@ -73,9 +72,9 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="操作" fixed="right" width="60" v-if="sys_log_delete">
+            <el-table-column align="center" label="操作" fixed="right" width="60" v-if="sys_log_del">
               <template slot-scope="scope">
-                <el-button v-if="sys_log_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+                <el-button v-if="sys_log_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
                 </el-button>
               </template>
             </el-table-column>
@@ -112,7 +111,7 @@
         formEdit: true,
         flagOptions: [],
         dataScopeOptions:[],
-        sys_log_delete: false,
+        sys_log_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -121,7 +120,7 @@
     },
     created() {
       this.getList()
-      this.sys_log_delete = this.permissions["sys_log_del"];
+      this.sys_log_del = this.permissions["sys_log_del"];
     },
     computed: {
       ...mapGetters([

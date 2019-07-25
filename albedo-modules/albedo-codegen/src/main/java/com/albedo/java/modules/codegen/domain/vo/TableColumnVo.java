@@ -268,9 +268,6 @@ public class TableColumnVo extends DataEntityVo<String> implements Comparable {
         if ("This".equals(getJavaType())) {
             list.add("com.fasterxml.jackson.annotation.JsonBackReference");
         }
-        if ("java.util.Date".equals(getJavaType())) {
-            list.add("com.fasterxml.jackson.annotation.JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")");
-        }
         // 导入JSR303验证依赖包
         if (!"1".equals(isPk()) && !CommonConstants.TYPE_STRING.equals(getJavaType())) {
             list.add("javax.validation.constraints.NotNull(message=\"" + getTitle() + "不能为空\")");

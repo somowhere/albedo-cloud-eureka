@@ -180,8 +180,8 @@ public class ${ClassName}ResourceIntTest {
         int databaseSizeBeforeCreate = ${className}Service.findAll().size();
 
         // Create the ${ClassName} with an existing ID
-        ${ClassName}DataVo ${className}DataVoNew = Reflections.createObj(${ClassName}DataVo.class, Lists.newArrayList(${ClassName}DataVo.F_ID, ${ClassName}DataVo.F_${column.constantJavaField}),
-            null, ${className}.get${column.simpleJavaField?cap_first}());
+        ${ClassName}DataVo ${className}DataVoNew = ClassUtil.createObj(${ClassName}DataVo.class, Lists.newArrayList(${ClassName}DataVo.F_ID, ${ClassName}DataVo.F_${column.constantJavaField}),
+            null, ${className}DataVo.get${column.simpleJavaField?cap_first}());
 
         // An entity with an existing ID cannot be created, so this API call must fail
         rest${ClassName}MockMvc.perform(post(DEFAULT_API_URL)

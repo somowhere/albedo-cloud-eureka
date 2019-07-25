@@ -27,7 +27,7 @@
               <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
-          <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
+          <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
             <el-table-column
               type="index" fixed="left" width="50">
             </el-table-column>
@@ -69,13 +69,13 @@
             </el-table-column>
 
 
-            <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_role_edit || sys_role_lock || sys_role_delete">
+            <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_role_edit || sys_role_lock || sys_role_del">
               <template slot-scope="scope">
                 <el-button v-if="sys_role_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
                 </el-button>
                 <el-button v-if="sys_role_lock" :icon="scope.row.lockFlag == '0' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.lockFlag == '0' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
                 </el-button>
-                <el-button v-if="sys_role_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+                <el-button v-if="sys_role_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
                 </el-button>
               </template>
             </el-table-column>
@@ -186,7 +186,7 @@
         },
         sys_role_edit: false,
         sys_role_lock: false,
-        sys_role_delete: false,
+        sys_role_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -197,7 +197,7 @@
       this.getList()
       this.sys_role_edit = this.permissions["sys_role_edit"];
       this.sys_role_lock = this.permissions["sys_role_lock"];
-      this.sys_role_delete = this.permissions["sys_role_del"];
+      this.sys_role_del = this.permissions["sys_role_del"];
       this.flagOptions = this.dicts['sys_flag'];
       this.dataScopeOptions = this.dicts['sys_data_scope'];
       fetchMenuTree().then(rs => {
@@ -298,8 +298,6 @@
       },
       save() {
         this.$refs['form'].validate(valid => {
-          console.log(this.form.menuIdList)
-          console.log(this.form.deptIdList)
           if (valid) {
             saveRole(this.form).then(() => {
               this.getList()

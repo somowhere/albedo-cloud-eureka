@@ -1,5 +1,6 @@
 package com.albedo.java.common.persistence.service.impl;
 
+import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
@@ -10,6 +11,7 @@ import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.common.persistence.service.TreeService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.google.common.collect.Lists;
 import org.springframework.transaction.annotation.Transactional;
@@ -168,6 +170,11 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
 	public void deleteByParentIds(String id) {
         Assert.notNull(id, "id 信息为空，操作失败");
         T entity = repository.selectById(id);
+		// 查询父节点为当前节点的节点
+		List<T> entityList = this.findAllByParentId(id);
+		if (CollUtil.isNotEmpty(entityList)) {
+			throw new RuntimeMsgException("含有下级不能删除");
+		}
         operateStatusById(id, entity.getParentIds());
     }
 

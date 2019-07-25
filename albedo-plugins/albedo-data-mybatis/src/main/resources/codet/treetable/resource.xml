@@ -85,7 +85,8 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 		log.debug("REST request to save ${ClassName} : {}", ${className}Vo);
 		<#assign firstListField = true><#list table.columnList as column>
 			<#if column.unique && !column.pk>
-		<#if firstListField><#assign firstListField = false>${ClassName}DataVo </#if>${className}Validate = new ${ClassName}DataVo(${className}Vo.getId());
+		<#if firstListField><#assign firstListField = false>${ClassName}DataVo </#if>${className}Validate = new ${ClassName}DataVo();
+		${className}Validate.setId(${className}Vo.getId());
 		${className}Validate.set${column.simpleJavaField?cap_first}(${className}Vo.get${column.simpleJavaField?cap_first}());
 		if (<#if column.null>StringUtil.isNotEmpty(${className}Vo.get${column.simpleJavaField?cap_first}()) && </#if>!checkByProperty(${className}Validate)) {
 			throw new RuntimeMsgException(StringUtil.toAppendStr("保存${functionNameSimple}'", ${className}Vo.get${column.simpleJavaField?cap_first}(),"'失败，${column.title }已存在"));

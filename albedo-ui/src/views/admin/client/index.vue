@@ -27,7 +27,7 @@
               <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
-          <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
+          <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
             <el-table-column
               type="index" fixed="left" width="50">
             </el-table-column>
@@ -70,11 +70,11 @@
             </el-table-column>
 
 
-            <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_client_edit || sys_client_delete">
+            <el-table-column align="center" label="操作" fixed="right" width="130" v-if="sys_client_edit || sys_client_del">
               <template slot-scope="scope">
                 <el-button v-if="sys_client_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
                 </el-button>
-                <el-button v-if="sys_client_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
+                <el-button v-if="sys_client_del" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
                 </el-button>
               </template>
             </el-table-column>
@@ -171,7 +171,7 @@
           create: '创建'
         },
         sys_client_edit: false,
-        sys_client_delete: false,
+        sys_client_del: false,
         currentNode: {},
         tableKey: 0
       }
@@ -181,7 +181,7 @@
     created() {
       this.getList()
       this.sys_client_edit = this.permissions["sys_client_edit"];
-      this.sys_client_delete = this.permissions["sys_client_del"];
+      this.sys_client_del = this.permissions["sys_client_del"];
       this.flagOptions = this.dicts['sys_flag'];
       this.dataScopeOptions = this.dicts['sys_data_scope'];
       fetchMenuTree().then(rs => {
@@ -268,9 +268,7 @@
         this.form.menuIdList = obj.checkedKeys;
       },
       save() {
-        console.log(this.$refs['form'])
         this.$refs['form'].validate(valid => {
-          console.log(valid)
           if (valid) {
             saveClient(this.form).then(response => {
                 this.getList()

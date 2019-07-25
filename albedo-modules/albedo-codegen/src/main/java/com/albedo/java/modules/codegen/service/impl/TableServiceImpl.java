@@ -134,7 +134,7 @@ public class TableServiceImpl extends
             if (list.size() > 0) {
 
                 // 如果是新增，初始化表属性
-                if (ObjectUtil.isNotEmpty(tableDataVo.getId())) {
+                if (ObjectUtil.isEmpty(tableDataVo.getId())) {
                     tableDataVo = list.get(0);
                     // 设置字段说明
                     if (StringUtil.isBlank(tableDataVo.getComments())) {

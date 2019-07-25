@@ -21,6 +21,7 @@ import com.albedo.java.modules.admin.vo.RoleDataVo;
 import com.albedo.java.modules.admin.domain.Role;
 import com.albedo.java.modules.admin.repository.RoleRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,4 +49,6 @@ public interface RoleService extends DataVoService<RoleRepository, Role, String,
 	 * @return
 	 */
 	Boolean removeRoleByIds(List<String> ids);
+
+	void lockOrUnLock(List<String> idList);
 }

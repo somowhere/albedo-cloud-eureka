@@ -41,10 +41,10 @@ public class UserAuthenticationExtendConverter implements UserAuthenticationConv
 	private static final String N_A = "N/A";
 
 	/**
-	 * Extract information about the userEntity to be used in an access token (i.e. for web servers).
+	 * Extract information about the user to be used in an access token (i.e. for web servers).
 	 *
-	 * @param authentication an authentication representing a userEntity
-	 * @return a map of key values representing the unique information about the userEntity
+	 * @param authentication an authentication representing a user
+	 * @return a map of key values representing the unique information about the user
 	 */
 	@Override
 	public Map<String, ?> convertUserAuthentication(Authentication authentication) {
@@ -64,8 +64,8 @@ public class UserAuthenticationExtendConverter implements UserAuthenticationConv
 	/**
 	 * Inverse of {@link #convertUserAuthentication(Authentication)}. Extracts an Authentication from a map.
 	 *
-	 * @param map a map of userEntity information
-	 * @return an Authentication representing the userEntity or null if there is none
+	 * @param map a map of user information
+	 * @return an Authentication representing the user or null if there is none
 	 */
 	@Override
 	public Authentication extractAuthentication(Map<String, ?> map) {

@@ -82,8 +82,8 @@ public class UserResourceIntTest {
 	private GlobalExceptionHandler globalExceptionHandler;
 
     private UserDataVo user;
-	private List<Role> roleEntityList;
-	private List<Dept> deptEntityList;
+	private List<Role> roleList;
+	private List<Dept> deptList;
 	UserDataVo anotherUser = new UserDataVo();
     @BeforeEach
     public void setup() {
@@ -112,15 +112,15 @@ public class UserResourceIntTest {
         user.setPhone(DEFAULT_PHONE);
         user.setLockFlag(DEFAULT_LOCKFLAG);
 		user.setQqOpenId(DEFAULT_QQOPENID);
-        user.setDeptId(deptEntityList.get(0).getId());
-        user.setRoleIdList(CollUtil.extractToList(roleEntityList, Role.F_ID));
+        user.setDeptId(deptList.get(0).getId());
+        user.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         return user;
     }
 
     @BeforeEach
     public void initTest() {
-        deptEntityList = deptService.list();
-        roleEntityList = roleService.list();
+        deptList = deptService.list();
+        roleList = roleService.list();
         user = createEntity();
         // Initialize the database
 
@@ -129,8 +129,8 @@ public class UserResourceIntTest {
 		anotherUser.setEmail(DEFAULT_ANOTHER_EMAIL);
 		anotherUser.setPhone(DEFAULT_PHONE);
 		anotherUser.setLockFlag(DEFAULT_LOCKFLAG);
-		anotherUser.setDeptId(deptEntityList.get(0).getId());
-		anotherUser.setRoleIdList(CollUtil.extractToList(roleEntityList, Role.F_ID));
+		anotherUser.setDeptId(deptList.get(0).getId());
+		anotherUser.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         userService.save(anotherUser);
 	}
 
@@ -146,8 +146,8 @@ public class UserResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the User in the database
-        List<User> userEntityList = userService.list();
-        assertThat(userEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
+        List<User> userList = userService.list();
+        assertThat(userList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		User testUser = userService.findOne(Wrappers.<User>query().lambda()
 			.eq(User::getUsername, user.getUsername()));
         assertThat(testUser.getUsername()).isEqualTo(DEFAULT_USERNAME);
@@ -176,8 +176,8 @@ public class UserResourceIntTest {
                 .andExpect(jsonPath("$.message").isNotEmpty());
 
         // Validate the User in the database
-        List<User> userEntityList = userService.list();
-        assertThat(userEntityList).hasSize(databaseSizeBeforeCreate);
+        List<User> userList = userService.list();
+        assertThat(userList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -195,7 +195,7 @@ public class UserResourceIntTest {
                 .andExpect(jsonPath("$.data.records.[*].qqOpenId").value(hasItem(DEFAULT_QQOPENID)))
                 .andExpect(jsonPath("$.data.records.[*].phone").value(hasItem(DEFAULT_PHONE)))
                 .andExpect(jsonPath("$.data.records.[*].email").value(hasItem(DEFAULT_EMAIL)))
-//			.andExpect(jsonPath("$.data.records.[*].status").value(hasItem(DictUtil.getCode("sys_status", userEntity.getStatus()))))
+//			.andExpect(jsonPath("$.data.records.[*].status").value(hasItem(DictUtil.getCode("sys_status", user.getStatus()))))
 		;
     }
 
@@ -205,7 +205,7 @@ public class UserResourceIntTest {
         // Initialize the database
         userService.save(user);
 
-        // Get the userEntity
+        // Get the user
         restUserMockMvc.perform(get(DEFAULT_API_URL+"{id}", user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -220,13 +220,13 @@ public class UserResourceIntTest {
 		// Initialize the database
 		userService.save(user);
 
-		// Get the userEntity
+		// Get the user
 		restUserMockMvc.perform(get(DEFAULT_API_URL+"/info/{username}", user.getUsername()))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-			.andExpect(jsonPath("$.data.userEntity.username").value(user.getUsername()))
-			.andExpect(jsonPath("$.data.userEntity.qqOpenId").value(DEFAULT_QQOPENID))
-			.andExpect(jsonPath("$.data.roles").value(equalTo(CollUtil.extractToList(roleEntityList, Role.F_ID))))
+			.andExpect(jsonPath("$.data.user.username").value(user.getUsername()))
+			.andExpect(jsonPath("$.data.user.qqOpenId").value(DEFAULT_QQOPENID))
+			.andExpect(jsonPath("$.data.roles").value(equalTo(CollUtil.extractToList(roleList, Role.F_ID))))
 			.andExpect(jsonPath("$.data.permissions").isNotEmpty())
 		;
 	}
@@ -245,7 +245,7 @@ public class UserResourceIntTest {
         userService.save(user);
         int databaseSizeBeforeUpdate = userService.list().size();
 
-        // Update the userEntity
+        // Update the user
         User updatedUser = userService.findOneById(user.getId());
 
 
@@ -257,7 +257,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPhone(UPDATED_PHONE);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
-		managedUserVM.setRoleIdList(CollUtil.extractToList(roleEntityList, Role.F_ID));
+		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
 
         managedUserVM.setId(updatedUser.getId());
         restUserMockMvc.perform(post(DEFAULT_API_URL)
@@ -267,8 +267,8 @@ public class UserResourceIntTest {
                 .andExpect(jsonPath("$.code").value(CommonConstants.SUCCESS));
 
         // Validate the User in the database
-        List<User> userEntityList = userService.list();
-        assertThat(userEntityList).hasSize(databaseSizeBeforeUpdate);
+        List<User> userList = userService.list();
+        assertThat(userList).hasSize(databaseSizeBeforeUpdate);
         User testUser = userService.findOneById(updatedUser.getId());
         assertThat(testUser.getUsername()).isEqualTo(UPDATED_USERNAME);
         assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
@@ -283,7 +283,7 @@ public class UserResourceIntTest {
     public void updateUserExistingEmail() throws Exception {
 
         userService.save(user);
-        // Update the userEntity
+        // Update the user
         User updatedUser = userService.findOneById(user.getId());
 
 
@@ -295,7 +295,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPhone(UPDATED_PHONE);
 		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
-		managedUserVM.setRoleIdList(CollUtil.extractToList(roleEntityList, Role.F_ID));
+		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
         restUserMockMvc.perform(post(DEFAULT_API_URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -313,7 +313,7 @@ public class UserResourceIntTest {
     public void updateUserExistingUsername() throws Exception {
 
         userService.save(user);
-        // Update the userEntity
+        // Update the user
         User updatedUser = userService.findOneById(user.getId());
 
 
@@ -324,7 +324,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPhone(UPDATED_PHONE);
 		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
-		managedUserVM.setRoleIdList(CollUtil.extractToList(roleEntityList, Role.F_ID));
+		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
         managedUserVM.setId(updatedUser.getId());
         restUserMockMvc.perform(post(DEFAULT_API_URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -342,7 +342,7 @@ public class UserResourceIntTest {
         userService.save(user);
         long databaseSizeBeforeDelete = userService.findCount();
 
-        // Delete the userEntity
+        // Delete the user
         restUserMockMvc.perform(delete(DEFAULT_API_URL+"{id}", user.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
@@ -357,7 +357,7 @@ public class UserResourceIntTest {
 		// Initialize the database
 		userService.save(user);
 
-		// lockOrUnLock the userEntity
+		// lockOrUnLock the user
 		restUserMockMvc.perform(put(DEFAULT_API_URL+"{id}", user.getId())
 			.accept(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk());
@@ -365,7 +365,7 @@ public class UserResourceIntTest {
 		// Validate the database is empty
 		User tempUser = userService.findOneById(user.getId());
 		assertThat(CommonConstants.STR_YES.equals(tempUser.getLockFlag()));
-		// lockOrUnLock the userEntity
+		// lockOrUnLock the user
 		restUserMockMvc.perform(put(DEFAULT_API_URL+"{id}", user.getId())
 			.accept(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk());
@@ -378,18 +378,18 @@ public class UserResourceIntTest {
     @Transactional
     public void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
-        User userEntity1 = new User();
-        userEntity1.setId("1");
-        userEntity1.setUsername("User1");
-        User userEntity2 = new User();
-        userEntity2.setId(userEntity1.getId());
-        userEntity2.setUsername(userEntity1.getUsername());
-        assertThat(userEntity1).isEqualTo(userEntity2);
-        userEntity2.setId("2");
-        userEntity2.setUsername("User2");
-        assertThat(userEntity1).isNotEqualTo(userEntity2);
-        userEntity1.setId(null);
-        assertThat(userEntity1).isNotEqualTo(userEntity2);
+        User user1 = new User();
+        user1.setId("1");
+        user1.setUsername("User1");
+        User user2 = new User();
+        user2.setId(user1.getId());
+        user2.setUsername(user1.getUsername());
+        assertThat(user1).isEqualTo(user2);
+        user2.setId("2");
+        user2.setUsername("User2");
+        assertThat(user1).isNotEqualTo(user2);
+        user1.setId(null);
+        assertThat(user1).isNotEqualTo(user2);
     }
 
 }

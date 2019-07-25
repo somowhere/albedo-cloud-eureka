@@ -35,10 +35,10 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	/**
 	 * 查询用户信息
 	 *
-	 * @param userEntity 用户
+	 * @param user 用户
 	 * @return userInfo
 	 */
-	UserInfo getUserInfo(User userEntity);
+	UserInfo getUserInfo(User user);
 
 	/**
 	 * 分页查询用户信息（含有角色信息）
@@ -72,5 +72,5 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	 */
 	List<User> listAncestorUsersByUsername(String username);
 
-	void lockOrUnLock(ArrayList<String> newArrayList);
+	void lockOrUnLock(List<String> idList);
 }

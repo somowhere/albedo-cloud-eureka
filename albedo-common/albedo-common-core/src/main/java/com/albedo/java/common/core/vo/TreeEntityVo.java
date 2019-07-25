@@ -13,7 +13,7 @@ public class TreeEntityVo extends DataEntityVo<String> {
     public static final String F_NAME = "name";
     public static final String F_PARENTID = "parentId";
     public static final String F_PARENTIDS = "parentIds";
-    public static final String F_ISLEAF = "isLeaf";
+    public static final String F_ISLEAF = "leaf";
     public static final String F_SORT = "sort";
     public static final String F_PARENT = "parent";
     /*** 模块名称 */
@@ -30,6 +30,6 @@ public class TreeEntityVo extends DataEntityVo<String> {
     @BeanField
     private String parentName;
     @BeanField
-    private boolean isLeaf;
+    private boolean leaf;
 
 }

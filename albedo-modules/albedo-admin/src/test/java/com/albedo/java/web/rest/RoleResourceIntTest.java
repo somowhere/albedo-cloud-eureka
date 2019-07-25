@@ -139,8 +139,8 @@ public class RoleResourceIntTest {
 			.andExpect(status().isOk());
 
 		// Validate the Role in the database
-		List<Role> roleEntityList = roleService.list();
-		assertThat(roleEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
+		List<Role> roleList = roleService.list();
+		assertThat(roleList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		Role testRole = roleService.findOne(Wrappers.<Role>query().lambda()
 			.eq(Role::getName, roleDataVo.getName()));
 		assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
@@ -219,8 +219,8 @@ public class RoleResourceIntTest {
 			.andExpect(jsonPath("$.code").value(CommonConstants.SUCCESS));
 
 		// Validate the Role in the database
-		List<Role> roleEntityList = roleService.list();
-		assertThat(roleEntityList).hasSize(databaseSizeBeforeUpdate);
+		List<Role> roleList = roleService.list();
+		assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
 		Role testRole = roleService.findOneById(updatedRole.getId());
 		List<RoleMenu> listRoleMenuEntities = roleMenuService.list(Wrappers.<RoleMenu>query().lambda()
 			.eq(RoleMenu::getRoleId, testRole.getId()));
@@ -259,18 +259,18 @@ public class RoleResourceIntTest {
 	@Transactional
 	public void testRoleEquals() throws Exception {
 		TestUtil.equalsVerifier(Role.class);
-		Role roleEntity1 = new Role();
-		roleEntity1.setId("1");
-		roleEntity1.setName("Role1");
-		Role roleEntity2 = new Role();
-		roleEntity2.setId(roleEntity1.getId());
-		roleEntity2.setName(roleEntity1.getName());
-		assertThat(roleEntity1).isEqualTo(roleEntity2);
-		roleEntity2.setId("2");
-		roleEntity2.setName("Role2");
-		assertThat(roleEntity1).isNotEqualTo(roleEntity2);
-		roleEntity1.setId(null);
-		assertThat(roleEntity1).isNotEqualTo(roleEntity2);
+		Role role1 = new Role();
+		role1.setId("1");
+		role1.setName("Role1");
+		Role role2 = new Role();
+		role2.setId(role1.getId());
+		role2.setName(role1.getName());
+		assertThat(role1).isEqualTo(role2);
+		role2.setId("2");
+		role2.setName("Role2");
+		assertThat(role1).isNotEqualTo(role2);
+		role1.setId(null);
+		assertThat(role1).isNotEqualTo(role2);
 	}
 
 }

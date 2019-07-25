@@ -6,6 +6,6 @@ ignore:
     - /v2/**
     - /actuator/**
     - /user/info/*
-    - /menu/codegen
+    - /menu/gen
     - /dict/all
     - /log/**

@@ -17,7 +17,6 @@ public class GenConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-	@XmlAttribute
     private String codeUiPath;
 
     private List<GenCategory> categoryList; // 代码模板分类
@@ -85,7 +84,7 @@ public class GenConfig implements Serializable {
         this.viewTypeList = viewTypeList;
     }
 
-	@XmlAttribute
+	@XmlAttribute(name = "codeUiPath",required = true)
 	public String getCodeUiPath() {
 		return codeUiPath;
 	}

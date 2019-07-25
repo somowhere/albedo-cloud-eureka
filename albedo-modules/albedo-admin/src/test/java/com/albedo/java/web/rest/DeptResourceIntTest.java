@@ -116,8 +116,8 @@ public class DeptResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Dept in the database
-        List<Dept> deptEntityList = deptService.list();
-        assertThat(deptEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
+        List<Dept> deptList = deptService.list();
+        assertThat(deptList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		Dept testDept = deptService.findOne(Wrappers.<Dept>query().lambda()
 			.eq(Dept::getName, dept.getName()));
 		assertThat(testDept.getName()).isEqualTo(DEFAULT_NAME);
@@ -176,8 +176,8 @@ public class DeptResourceIntTest {
                 .andExpect(jsonPath("$.code").value(CommonConstants.SUCCESS));
 
         // Validate the Dept in the database
-        List<Dept> deptEntityList = deptService.list();
-        assertThat(deptEntityList).hasSize(databaseSizeBeforeUpdate);
+        List<Dept> deptList = deptService.list();
+        assertThat(deptList).hasSize(databaseSizeBeforeUpdate);
         Dept testDept = deptService.findOneById(updatedDept.getId());
 		assertThat(testDept.getName()).isEqualTo(UPDATED_NAME);
 		assertThat(testDept.getSort()).isEqualTo(UPDATED_SORT);
@@ -211,18 +211,18 @@ public class DeptResourceIntTest {
     @Transactional
     public void testDeptEquals() throws Exception {
         TestUtil.equalsVerifier(Dept.class);
-        Dept deptEntity1 = new Dept();
-        deptEntity1.setId("1");
-        deptEntity1.setName("Dept1");
-        Dept deptEntity2 = new Dept();
-        deptEntity2.setId(deptEntity1.getId());
-        deptEntity2.setName(deptEntity1.getName());
-        assertThat(deptEntity1).isEqualTo(deptEntity2);
-        deptEntity2.setId("2");
-        deptEntity2.setName("Dept2");
-        assertThat(deptEntity1).isNotEqualTo(deptEntity2);
-        deptEntity1.setId(null);
-        assertThat(deptEntity1).isNotEqualTo(deptEntity2);
+        Dept dept1 = new Dept();
+        dept1.setId("1");
+        dept1.setName("Dept1");
+        Dept dept2 = new Dept();
+        dept2.setId(dept1.getId());
+        dept2.setName(dept1.getName());
+        assertThat(dept1).isEqualTo(dept2);
+        dept2.setId("2");
+        dept2.setName("Dept2");
+        assertThat(dept1).isNotEqualTo(dept2);
+        dept1.setId(null);
+        assertThat(dept1).isNotEqualTo(dept2);
     }
 
 }

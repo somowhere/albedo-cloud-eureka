@@ -9,7 +9,7 @@
  */
 package ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>;
 
-import com.albedo.java.vo.base.TreeEntityVo;
+import com.albedo.java.common.core.vo.TreeEntityVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,10 +36,6 @@ public class ${ClassName}DataVo extends TreeEntityVo {
 	</#list>
 
 	<@generateFields/>
-
-    public ${ClassName}DataVo(${table.pkJavaType} id){
-	    this.setId(id);
-    }
 }
 <#macro generateFields>
 	//columns START

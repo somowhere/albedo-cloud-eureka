@@ -116,8 +116,8 @@ public class DeptServiceImpl  extends
 				.eq(DeptRelation::getAncestor, deptId))
 			.stream().map(DeptRelation::getDescendant)
 			.collect(Collectors.toList());
-		List<Dept> deptEntityList = baseMapper.selectBatchIds(descendantIdList);
-		return getNodeTree(new TreeQuery(), deptEntityList);
+		List<Dept> deptList = baseMapper.selectBatchIds(descendantIdList);
+		return getNodeTree(new TreeQuery(), deptList);
 	}
 
 }

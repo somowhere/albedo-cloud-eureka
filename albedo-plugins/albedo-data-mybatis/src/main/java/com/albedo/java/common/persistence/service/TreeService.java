@@ -40,7 +40,7 @@ public interface TreeService<Repository extends TreeRepository<T>, T extends Tre
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	T findTopByParentId(String parentId);
 
-	void deleteByParentIds(List<String> ids, String lastModifiedBy);
+	void deleteByParentIds(List<String> ids);
 
-	void deleteByParentIds(String id, String lastModifiedBy);
+	void deleteByParentIds(String id);
 }

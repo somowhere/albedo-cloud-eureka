@@ -116,7 +116,18 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	@PutMapping("/menu")
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R saveRoleMenus(String roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
-		Role roleEntity = service.getById(roleId);
-		return new R<>(roleMenuService.saveRoleMenus(roleEntity.getCode(), roleId, menuIds));
+		Role role = service.getById(roleId);
+		return new R<>(roleMenuService.saveRoleMenus(role.getCode(), roleId, menuIds));
+	}
+	/**
+	 * @param ids
+	 * @return
+	 */
+	@PutMapping(CommonConstants.URL_IDS_REGEX)
+	@SysLog("锁定/解锁用户")
+	@PreAuthorize("@pms.hasPermission('sys_role_lock')")
+	public R lockOrUnLock(@PathVariable String ids) {
+		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return R.createSuccess("操作成功");
 	}
 }

@@ -209,7 +209,7 @@ public class TableDataVo extends DataEntityVo<String> {
                 addNoRepeatList(importList, "javax.validation.constraints.NotBlank");
             }
             if (StringUtil.isNotEmpty(column.getDictType())) {
-                addNoRepeatList(importList, "com.albedo.java.util.annotation.DictType");
+                addNoRepeatList(importList, "com.albedo.java.common.core.annotation.DictType");
             }
             if (column.getName().indexOf("mail") != -1) {
                 addNoRepeatList(importList, "javax.validation.constraints.Email");

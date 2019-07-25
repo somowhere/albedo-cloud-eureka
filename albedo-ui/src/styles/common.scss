@@ -123,3 +123,8 @@ a{
 
 .el-table{margin-bottom: 20px;}
 .el-table-padding td{padding-right: 8px;}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+.el-button--mini [class^="icon-"], .el-button--small [class^="icon-"]{font-size: 12px !important; }

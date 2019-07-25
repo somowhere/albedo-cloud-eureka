@@ -98,16 +98,6 @@ public class SchemeDataVo extends DataEntityVo<String> {
      * 是否替换现有文件 true：替换文件 ；false：不替换；
      */
     private Boolean replaceFile = false;
-    @JSONField(serialize = false)
-    /**
-     * 是否同步模块数据 true：同步；false：不同步
-     */
-    private Boolean syncMenu = false;
-    @JSONField(serialize = false)
-    /**
-     * 上级模块 ID 仅当syncMenu 为 true有效
-     */
-    private String parentMenuId;
 
     /**
      * true 使用弹窗视图

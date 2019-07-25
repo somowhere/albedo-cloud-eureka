@@ -18,12 +18,13 @@
             </el-form>
           </div>
           <!-- 表格功能列 -->
+
           <div class="table-menu">
             <div class="table-menu-left">
-              <el-button size="small" v-if="sys_role_edit" class="filter-item" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+              <el-button size="mini" v-if="sys_role_edit" @click="handleEdit" type="primary" icon="el-icon-plus">添加</el-button>
             </div>
             <div class="table-menu-right">
-              <el-button icon="el-icon-search" circle size="small" @click="searchFilterVisible= !searchFilterVisible"></el-button>
+              <el-button icon="el-icon-search" circle size="mini" @click="searchFilterVisible= !searchFilterVisible"></el-button>
             </div>
           </div>
           <el-table  shadow="hover" :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
@@ -98,13 +99,25 @@
             <el-input v-model="form.code" placeholder="请输入角色标识"></el-input>
           </el-form-item>
           <el-form-item label="数据权限" prop="dataScope" :rules="[{required: true,message: '请选择' }]">
-            <CrudSelect v-model="form.dataScope" :dic="dataScopeOptions"></CrudSelect>
+            <CrudSelect v-model="form.dataScope" :dic="dataScopeOptions" @input="handleDataScopeChange"></CrudSelect>
           </el-form-item>
-            <el-form-item label="操作权限" prop="menuIdList">
-              <el-tree class="filter-tree" :data="treeMenuData" ref="treeMenu" node-key="id"
-                       show-checkbox default-expand-all :default-checked-keys="form.menuIdList" @check="getNodeTreeMenuData">
-              </el-tree>
-            </el-form-item>
+
+          <el-row :gutter="20" :span="24">
+            <el-col :span="12">
+              <el-form-item label="操作权限" prop="menuIdList">
+                <el-tree class="filter-tree" :data="treeMenuData" ref="treeMenu" node-key="id"
+                         show-checkbox :default-checked-keys="form.menuIdList" @check="getNodeTreeMenuData">
+                </el-tree>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" v-show="formTreeDeptDataVisible">
+              <el-form-item label="机构权限" prop="orgIdList" v-show="formTreeDeptDataVisible">
+                <el-tree class="filter-tree" ref="treeDept" :data="treeDeptData" node-key="id"
+                         show-checkbox default-expand-all :default-checked-keys="form.deptIdList" @check="getNodeTreeDeptData">
+                </el-tree>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-form-item label="锁定" prop="lockFlag" :rules="[{required: true,message: '请选择' }]">
             <CrudRadio v-model="form.lockFlag" :dic="flagOptions"></CrudRadio>
           </el-form-item>
@@ -128,8 +141,9 @@
   import {findRole, saveRole, removeRole, pageRole, lockRole} from "./service";
   import {fetchMenuTree} from "../menu/service";
   import {mapGetters } from 'vuex';
+  import {fetchDeptTree} from "../dept/service";
   import {parseJsonItemForm,parseTreeData} from "@/util/util";
-  import {isValidateUnique,toStr,validateNotNull} from "@/util/validate";
+  import {objectToString,validateNotNull,validateNull} from "@/util/validate";
   import CrudSelect from "@/views/avue/crud-select";
   import CrudRadio from "@/views/avue/crud-radio";
   export default {
@@ -137,7 +151,9 @@
     components: {CrudSelect,CrudRadio},
     data() {
       return {
+        treeDept:[],
         treeMenuData:[],
+        treeDeptData: [],
         dialogFormVisible: false,
         searchFilterVisible: true,
         checkedKeys: [],
@@ -156,11 +172,13 @@
           dataScope: undefined,
           code: undefined,
           menuIdList: [],
+          deptIdList: [],
           remark: undefined,
           lockFlag: undefined,
           description: undefined
         },
-
+        dialogDeptVisible: false,
+        formTreeDeptDataVisible: false,
         dialogStatus: 'create',
         textMap: {
           update: '编辑',
@@ -184,6 +202,9 @@
       this.dataScopeOptions = this.dicts['sys_data_scope'];
       fetchMenuTree().then(rs => {
         this.treeMenuData = parseTreeData(rs.data);
+      })
+      fetchDeptTree().then(response => {
+        this.treeDeptData = parseTreeData(response.data);
       })
     },
     computed: {
@@ -238,10 +259,14 @@
           findRole(row.id).then(response => {
             this.form = response.data;
             this.dialogFormVisible = true;
+            this.formTreeDeptDataVisible = (this.form.dataScope == 5);
+            if(validateNull(this.form.deptIdList)){
+              this.form.deptIdList = []
+            }
+            this.form.dataScope=objectToString(this.form.dataScope)
             if(this.$refs.treeMenu){
-              // console.log(this.$refs.treeMenu);
-              // console.log(this.form.menuIdList);
-             // this.$refs.treeMenu.setCheckedKeys(this.form.menuIdList);
+              this.$refs.treeMenu.setCheckedKeys(this.form.menuIdList);
+              this.$refs.treeDept.setCheckedKeys(this.form.deptIdList);
             }
           });
         }
@@ -262,14 +287,19 @@
           })
         })
       },
+      handleDataScopeChange(value){
+        this.formTreeDeptDataVisible = (value == 5);
+      },
       getNodeTreeMenuData(data, obj) {
         this.form.menuIdList = obj.checkedKeys;
       },
+      getNodeTreeDeptData(data, obj) {
+        this.form.deptIdList = obj.checkedKeys;
+      },
       save() {
-        console.log(this.$refs['form'])
         this.$refs['form'].validate(valid => {
-          console.log(valid)
           console.log(this.form.menuIdList)
+          console.log(this.form.deptIdList)
           if (valid) {
             saveRole(this.form).then(() => {
               this.getList()
@@ -290,11 +320,14 @@
           dataScope: undefined,
           code: undefined,
           menuIdList: [],
+          deptIdList: [],
           remark: undefined,
           lockFlag: undefined,
           description: undefined
         }
         this.$refs['form']&&this.$refs['form'].resetFields();
+        // this.$refs.treeMenu.setCheckedKeys([]);
+        // this.$refs.treeDept.setCheckedKeys([]);
       }
     }
   }

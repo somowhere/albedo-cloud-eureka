@@ -4,10 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.albedo.java.common.core.vo.ComboData;
 import com.albedo.java.common.core.vo.SelectResult;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.logging.Log;
 
 import java.util.Collection;
 import java.util.List;
@@ -73,5 +75,23 @@ public class CollUtil extends cn.hutool.core.collection.CollUtil {
 		dataList.forEach(item -> selectResultList.add(new SelectResult(StringUtil.toStrString(BeanUtil.getFieldValue(item, idFieldName)),
 			StringUtil.toStrString(ClassUtil.invokeGetter(item, nameFieldName)))));
 		return selectResultList;
+	}
+
+	/**
+	 * 从list中取第一条数据返回对应List中泛型的单个结果
+	 *
+	 * @param list ignore
+	 * @param <E>  ignore
+	 * @return ignore
+	 */
+	public static <E> E getObject(List<E> list) {
+		if (CollectionUtils.isNotEmpty(list)) {
+			int size = list.size();
+			if (size > 1) {
+				log.warn(String.format("Warn: execute Method There are  %s results.", size));
+			}
+			return list.get(0);
+		}
+		return null;
 	}
 }

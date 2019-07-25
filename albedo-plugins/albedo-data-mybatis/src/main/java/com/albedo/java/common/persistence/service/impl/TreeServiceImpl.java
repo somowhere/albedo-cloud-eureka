@@ -1,5 +1,6 @@
 package com.albedo.java.common.persistence.service.impl;
 
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeQuery;
@@ -143,33 +144,29 @@ public abstract class TreeServiceImpl<Repository extends TreeRepository<T>,
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
     public T findTopByParentId(String parentId) {
         List<T> tempList = findTop1ByParentIdOrderBySortDesc(parentId);
-        return  SqlHelper.getObject(tempList);
+        return  CollUtil.getObject(tempList);
     }
 
     /**
      * 逻辑删除，更新子节点
      *
      * @param ids
-     * @param lastModifiedBy
      * @return
      */
     @Override
-	public void deleteByParentIds(List<String> ids, String lastModifiedBy) {
+	public void deleteByParentIds(List<String> ids) {
         Assert.notNull(ids, "ids 信息为空，操作失败");
-        Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
-        ids.forEach(id ->deleteByParentIds(id, lastModifiedBy));
+        ids.forEach(id ->deleteByParentIds(id));
     }
     /**
      * 逻辑删除，更新子节点
      *
      * @param id
-     * @param lastModifiedBy
      * @return
      */
     @Override
-	public void deleteByParentIds(String id, String lastModifiedBy) {
+	public void deleteByParentIds(String id) {
         Assert.notNull(id, "id 信息为空，操作失败");
-        Assert.notNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         T entity = repository.selectById(id);
         operateStatusById(id, entity.getParentIds());
     }

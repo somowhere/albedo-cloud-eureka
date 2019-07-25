@@ -75,8 +75,8 @@ public class DictServiceImpl extends
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
 		if (cache == null || cache.get(Dict.CACHE_DICT_ALL) == null ||
 			ObjectUtil.isEmpty(cache.get(Dict.CACHE_DICT_ALL))) {
-			List<Dict> dictEntityList = findAllOrderBySort();
-			cache.put(Dict.CACHE_DICT_ALL, dictEntityList);
+			List<Dict> dictList = findAllOrderBySort();
+			cache.put(Dict.CACHE_DICT_ALL, dictList);
 		}
 	}
 

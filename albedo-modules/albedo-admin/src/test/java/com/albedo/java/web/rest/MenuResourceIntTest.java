@@ -148,8 +148,8 @@ public class MenuResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Menu in the database
-        List<Menu> menuEntityList = menuService.list();
-        assertThat(menuEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
+        List<Menu> menuList = menuService.list();
+        assertThat(menuList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		Menu testMenu = menuService.findOne(Wrappers.<Menu>query().lambda()
 			.eq(Menu::getName, menu.getName()));
 		assertThat(testMenu.getName()).isEqualTo(DEFAULT_NAME);
@@ -187,8 +187,8 @@ public class MenuResourceIntTest {
                 .andExpect(jsonPath("$.message").isNotEmpty());
 
         // Validate the Menu in the database
-        List<Menu> menuEntityList = menuService.list();
-        assertThat(menuEntityList).hasSize(databaseSizeBeforeCreate);
+        List<Menu> menuList = menuService.list();
+        assertThat(menuList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -277,8 +277,8 @@ public class MenuResourceIntTest {
                 .andExpect(jsonPath("$.code").value(CommonConstants.SUCCESS));
 
         // Validate the Menu in the database
-        List<Menu> menuEntityList = menuService.list();
-        assertThat(menuEntityList).hasSize(databaseSizeBeforeUpdate);
+        List<Menu> menuList = menuService.list();
+        assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
         Menu testMenu = menuService.findOneById(updatedMenu.getId());
 		assertThat(testMenu.getName()).isEqualTo(UPDATED_NAME);
 		assertThat(testMenu.getPermission()).isEqualTo(UPDATED_PERMISSION);
@@ -352,18 +352,18 @@ public class MenuResourceIntTest {
     @Transactional
     public void testMenuEquals() throws Exception {
         TestUtil.equalsVerifier(Menu.class);
-        Menu menuEntity1 = new Menu();
-        menuEntity1.setId("1");
-        menuEntity1.setName("Menu1");
-        Menu menuEntity2 = new Menu();
-        menuEntity2.setId(menuEntity1.getId());
-        menuEntity2.setName(menuEntity1.getName());
-        assertThat(menuEntity1).isEqualTo(menuEntity2);
-        menuEntity2.setId("2");
-        menuEntity2.setName("Menu2");
-        assertThat(menuEntity1).isNotEqualTo(menuEntity2);
-        menuEntity1.setId(null);
-        assertThat(menuEntity1).isNotEqualTo(menuEntity2);
+        Menu menu1 = new Menu();
+        menu1.setId("1");
+        menu1.setName("Menu1");
+        Menu menu2 = new Menu();
+        menu2.setId(menu1.getId());
+        menu2.setName(menu1.getName());
+        assertThat(menu1).isEqualTo(menu2);
+        menu2.setId("2");
+        menu2.setName("Menu2");
+        assertThat(menu1).isNotEqualTo(menu2);
+        menu1.setId(null);
+        assertThat(menu1).isNotEqualTo(menu2);
     }
 
 }

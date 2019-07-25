@@ -31,7 +31,7 @@ security:
 ignore:
   urls:
     - /actuator/**
-    - /userEntity/info/*
+    - /user/info/*
     - /log/**
 
 

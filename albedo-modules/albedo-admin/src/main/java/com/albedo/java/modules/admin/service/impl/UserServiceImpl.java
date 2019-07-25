@@ -71,40 +71,40 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@Transactional(rollbackFor = Exception.class)
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
 	public void save(UserDataVo userDataVo) {
-		User userEntity = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
+		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
 		if(StringUtil.isEmpty(userDataVo.getPassword())){
 			userDataVo.setPassword(null);
 		}
-		BeanVoUtil.copyProperties(userDataVo, userEntity, true);
+		BeanVoUtil.copyProperties(userDataVo, user, true);
 		if(StringUtil.isNotEmpty(userDataVo.getPassword())){
-			userEntity.setPassword(ENCODER.encode(userDataVo.getPassword()));
+			user.setPassword(ENCODER.encode(userDataVo.getPassword()));
 		}
-		super.saveOrUpdate(userEntity);
-		userDataVo.setId(userEntity.getId());
+		super.saveOrUpdate(user);
+		userDataVo.setId(user.getId());
 		List<UserRole> userRoleList = userDataVo.getRoleIdList()
 			.stream().map(roleId -> {
 				UserRole userRole = new UserRole();
-				userRole.setUserId(userEntity.getId());
+				userRole.setUserId(user.getId());
 				userRole.setRoleId(roleId);
 				return userRole;
 			}).collect(Collectors.toList());
-		userRoleService.removeRoleByUserId(userEntity.getId());
+		userRoleService.removeRoleByUserId(user.getId());
 		userRoleService.saveBatch(userRoleList);
 	}
 
 	/**
 	 * 通过查用户的全部信息
 	 *
-	 * @param userEntity 用户
+	 * @param user 用户
 	 * @return
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UserInfo getUserInfo(User userEntity) {
+	public UserInfo getUserInfo(User user) {
 		UserInfo userInfo = new UserInfo();
-		userInfo.setUser(userEntity);
+		userInfo.setUser(user);
 		//设置角色列表  （ID）
-		List<String> roleIds = roleService.listRolesByUserId(userEntity.getId())
+		List<String> roleIds = roleService.listRolesByUserId(user.getId())
 			.stream()
 			.map(Role::getId)
 			.collect(Collectors.toList());
@@ -161,13 +161,13 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	/**
 	 * 删除用户
 	 *
-	 * @param userEntity 用户
+	 * @param user 用户
 	 * @return Boolean
 	 */
-	@CacheEvict(value = "user_details", key = "#userEntity.username")
-	public Boolean removeUserById(User userEntity) {
-//		userRoleService.removeRoleByUserId(userEntity.getId());
-		this.removeById(userEntity.getId());
+	@CacheEvict(value = "user_details", key = "#user.username")
+	public Boolean removeUserById(User user) {
+//		userRoleService.removeRoleByUserId(user.getId());
+		this.removeById(user.getId());
 		return Boolean.TRUE;
 	}
 
@@ -180,25 +180,25 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<User> listAncestorUsersByUsername(String username) {
-		User userEntity = this.getOne(Wrappers.<User>query().lambda()
+		User user = this.getOne(Wrappers.<User>query().lambda()
 			.eq(User::getUsername, username));
 
-		Dept deptEntity = sysDeptService.getById(userEntity.getDeptId());
-		if (deptEntity == null) {
+		Dept dept = sysDeptService.getById(user.getDeptId());
+		if (dept == null) {
 			return null;
 		}
 
-		String parentId = deptEntity.getParentId();
+		String parentId = dept.getParentId();
 		return this.list(Wrappers.<User>query().lambda()
 			.eq(User::getDeptId, parentId));
 	}
 
 	@Override
-	public void lockOrUnLock(ArrayList<String> idList) {
+	public void lockOrUnLock(List<String> idList) {
 		idList.forEach(id -> {
-			User userEntity = baseMapper.selectById(id);
-			userEntity.setLockFlag(CommonConstants.STR_YES.equals(userEntity.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
-			baseMapper.updateById(userEntity);
+			User user = baseMapper.selectById(id);
+			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			baseMapper.updateById(user);
 		});
 	}
 

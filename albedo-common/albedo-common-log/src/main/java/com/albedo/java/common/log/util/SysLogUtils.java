@@ -46,7 +46,7 @@ public class SysLogUtils {
 		logEntity.setRemoteAddr(ServletUtil.getClientIP(request));
 		logEntity.setRequestUri(URLUtil.getPath(request.getRequestURI()));
 		logEntity.setMethod(request.getMethod());
-		logEntity.setUserAgent(request.getHeader("userEntity-agent"));
+		logEntity.setUserAgent(request.getHeader("user-agent"));
 		logEntity.setParams(HttpUtil.toParams(request.getParameterMap()));
 		logEntity.setServiceId(getClientId());
 		return logEntity;

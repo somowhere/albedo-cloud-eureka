@@ -56,6 +56,7 @@
         <template>treetable/resourceIntTest.xml</template>
         <template>treetable/repository.xml</template>
         <template>treetable/service.xml</template>
+        <template>treetable/serviceImpl.xml</template>
         <template>treetable/vo/entityDataVo.xml</template>
         <template>treetable/entity.xml</template>
       </category>

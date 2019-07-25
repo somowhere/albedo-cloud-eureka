@@ -123,8 +123,6 @@ public class SchemeServiceImpl extends DataVoServiceImpl<SchemeRepository, Schem
         if (StringUtil.isBlank(schemeDataVo.getFunctionAuthor())) {
             schemeDataVo.setFunctionAuthor(loginId);
         }
-        //同步模块数据
-        schemeDataVo.setSyncMenu(false);
         map.put("schemeVo", schemeDataVo);
         GenConfig config = GenUtil.getConfig();
         map.put("config", config);

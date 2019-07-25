@@ -325,7 +325,7 @@ public class TableColumnVo extends DataEntityVo<String> implements Comparable {
                 && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_SORT)
                 && !StringUtil.equalsIgnoreCase(getName(), "sort")
                 && !StringUtil.equalsIgnoreCase(getSimpleJavaField(), TreeEntityVo.F_ISLEAF)
-                && !StringUtil.equalsIgnoreCase(getName(), "is_leaf");
+                && !StringUtil.equalsIgnoreCase(getName(), "leaf");
 
     }
 

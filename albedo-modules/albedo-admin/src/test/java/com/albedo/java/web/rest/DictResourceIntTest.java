@@ -135,8 +135,8 @@ public class DictResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Dict in the database
-        List<Dict> dictEntityList = dictService.list();
-        assertThat(dictEntityList).hasSize(databaseSizeBeforeCreate.size() + 1);
+        List<Dict> dictList = dictService.list();
+        assertThat(dictList).hasSize(databaseSizeBeforeCreate.size() + 1);
 		Dict testDict = dictService.findOne(Wrappers.<Dict>query().lambda()
 			.eq(Dict::getName, dict.getName()));
 		assertThat(testDict.getName()).isEqualTo(DEFAULT_NAME);
@@ -171,8 +171,8 @@ public class DictResourceIntTest {
                 .andExpect(jsonPath("$.message").isNotEmpty());
 
         // Validate the Dict in the database
-        List<Dict> dictEntityList = dictService.list();
-        assertThat(dictEntityList).hasSize(databaseSizeBeforeCreate);
+        List<Dict> dictList = dictService.list();
+        assertThat(dictList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -252,8 +252,8 @@ public class DictResourceIntTest {
                 .andExpect(jsonPath("$.code").value(CommonConstants.SUCCESS));
 
         // Validate the Dict in the database
-        List<Dict> dictEntityList = dictService.list();
-        assertThat(dictEntityList).hasSize(databaseSizeBeforeUpdate);
+        List<Dict> dictList = dictService.list();
+        assertThat(dictList).hasSize(databaseSizeBeforeUpdate);
         Dict testDict = dictService.findOneById(updatedDict.getId());
 		assertThat(testDict.getName()).isEqualTo(UPDATED_NAME);
 		assertThat(testDict.getCode()).isEqualTo(UPDATED_CODE);
@@ -321,18 +321,18 @@ public class DictResourceIntTest {
     @Transactional
     public void testDictEquals() throws Exception {
         TestUtil.equalsVerifier(Dict.class);
-        Dict dictEntity1 = new Dict();
-        dictEntity1.setId("1");
-        dictEntity1.setName("Dict1");
-        Dict dictEntity2 = new Dict();
-        dictEntity2.setId(dictEntity1.getId());
-        dictEntity2.setName(dictEntity1.getName());
-        assertThat(dictEntity1).isEqualTo(dictEntity2);
-        dictEntity2.setId("2");
-        dictEntity2.setName("Dict2");
-        assertThat(dictEntity1).isNotEqualTo(dictEntity2);
-        dictEntity1.setId(null);
-        assertThat(dictEntity1).isNotEqualTo(dictEntity2);
+        Dict dict1 = new Dict();
+        dict1.setId("1");
+        dict1.setName("Dict1");
+        Dict dict2 = new Dict();
+        dict2.setId(dict1.getId());
+        dict2.setName(dict1.getName());
+        assertThat(dict1).isEqualTo(dict2);
+        dict2.setId("2");
+        dict2.setName("Dict2");
+        assertThat(dict1).isNotEqualTo(dict2);
+        dict1.setId(null);
+        assertThat(dict1).isNotEqualTo(dict2);
     }
 
 }

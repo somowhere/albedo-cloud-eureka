@@ -16,9 +16,11 @@
 
 package com.albedo.java.modules.admin.service.impl;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
 import com.albedo.java.modules.admin.domain.RoleDept;
+import com.albedo.java.modules.admin.domain.User;
 import com.albedo.java.modules.admin.service.RoleDeptService;
 import com.albedo.java.modules.admin.service.RoleMenuService;
 import com.albedo.java.modules.admin.vo.RoleDataVo;
@@ -121,6 +123,17 @@ public class RoleServiceImpl extends
 			}).collect(Collectors.toList());
 			roleDeptService.saveBatch(roleDeptList);
 		}
+		//清空userinfo
+		cacheManager.getCache("user_details").clear();
+	}
+	@Override
+	public void lockOrUnLock(List<String> idList) {
+		idList.forEach(id -> {
+			Role role = baseMapper.selectById(id);
+			role.setLockFlag(CommonConstants.STR_YES.equals(role.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			baseMapper.updateById(role);
+		});
+
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();
 	}

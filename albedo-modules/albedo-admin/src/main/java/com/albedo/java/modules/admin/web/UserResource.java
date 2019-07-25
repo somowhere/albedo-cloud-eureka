@@ -70,12 +70,12 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@GetMapping(value = {"/info"})
 	public R info() {
 		String username = SecurityUtils.getUser().getUsername();
-		User userEntity = service.getOne(Wrappers.<User>query()
+		User user = service.getOne(Wrappers.<User>query()
 			.lambda().eq(User::getUsername, username));
-		if (userEntity == null) {
+		if (user == null) {
 			return new R<>(Boolean.FALSE, "获取当前用户信息失败");
 		}
-		return new R<>(service.getUserInfo(userEntity));
+		return new R<>(service.getUserInfo(user));
 	}
 
 	/**
@@ -86,12 +86,12 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@Inner
 	@GetMapping("/info/{username}")
 	public R info(@PathVariable String username) {
-		User userEntity = service.getOne(Wrappers.<User>query()
+		User user = service.getOne(Wrappers.<User>query()
 			.lambda().eq(User::getUsername, username));
-		if (userEntity == null) {
+		if (user == null) {
 			return new R<>(Boolean.FALSE, String.format("用户信息为空 %s", username));
 		}
-		return new R<>(service.getUserInfo(userEntity));
+		return new R<>(service.getUserInfo(user));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
 	public R saveUser(@Valid @RequestBody UserDataVo userDataVo) {
 		log.debug("REST request to save userDataVo : {}", userDataVo);
-		// beanValidatorAjax(userEntity);
+		// beanValidatorAjax(user);
 		if (StringUtil.isNotEmpty(userDataVo.getPassword()) &&
 			!userDataVo.getPassword().equals(userDataVo.getConfirmPassword())) {
 			throw new RuntimeMsgException("两次输入密码不一致");

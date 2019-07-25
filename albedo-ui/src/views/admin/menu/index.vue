@@ -127,8 +127,12 @@
         </el-col>
       </el-row>
       <el-dialog title="选择菜单" :visible.sync="dialogMenuVisible">
+        <el-input placeholder="输入关键字进行过滤"
+                  v-model="filterParentTreeMenuText">
+        </el-input>
         <el-tree class="filter-tree" ref="selectParentMenuTree" default-expand-all :data="treeMenuSelectData" :default-checked-keys="checkedKeys"
-                 check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData">
+                 check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData"
+                 :filter-node-method="filterNode">
         </el-tree>
       </el-dialog>
 
@@ -3387,6 +3391,7 @@
         },
         formEdit: true,
         filterTreeMenuText: '',
+        filterParentTreeMenuText: '',
         filterFormText: '',
         formStatus: '',
         flagOptions: [],
@@ -3425,7 +3430,10 @@
     watch: {
       filterTreeMenuText(val) {
         this.$refs['leftMenuTree'].filter(val);
-      }
+      },
+      filterParentTreeMenuText(val) {
+        this.$refs['selectParentMenuTree'].filter(val);
+      },
     },
     created() {
       this.getTreeMenu()

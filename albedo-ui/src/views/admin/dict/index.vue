@@ -109,8 +109,12 @@
         </el-col>
       </el-row>
       <el-dialog title="选择字典" :visible.sync="dialogDictVisible">
+        <el-input placeholder="输入关键字进行过滤"
+                  v-model="filterParentTreeDictText">
+        </el-input>
         <el-tree class="filter-tree" ref="selectParentDictTree" default-expand-all :data="treeDictSelectData" :default-checked-keys="checkedKeys"
-                 check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData">
+                 check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData"
+                 :filter-node-method="filterNode">
         </el-tree>
       </el-dialog>
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
@@ -184,7 +188,7 @@
         },
         formEdit: true,
         filterTreeDictText: '',
-        filterFormText: '',
+        filterParentTreeDictText: '',
         formStatus: '',
         flagOptions: [],
         rolesOptions: [],
@@ -218,6 +222,9 @@
     watch: {
       filterTreeDictText(val) {
         this.$refs['leftDictTree'].filter(val);
+      },
+      filterParentTreeDictText(val) {
+        this.$refs['selectParentDictTree'].filter(val);
       }
     },
     created() {

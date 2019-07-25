@@ -256,27 +256,12 @@ export default {
         this.dialogFormVisible = true;
       }else{
         findTestBook(row.id).then(response => {
-          this.form = response.data;
-          
-          
-          
-          
-          
-          
-          this.form.activated=objectToString(this.form.activated);
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          this.form.delFlag=objectToString(this.form.delFlag);
-          this.dialogFormVisible = true;
-        });
+            this.form = response.data;
+            this.form.activated=objectToString(this.form.activated);
+            this.form.delFlag=objectToString(this.form.delFlag);
+            this.disableSelectTestBookParent = this.form.parentName ? false : true;
+            this.dialogFormVisible = true;
+          });
       }
     },
     cancel() {

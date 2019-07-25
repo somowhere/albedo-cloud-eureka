@@ -11,7 +11,7 @@
           </div>
           <el-input v-show="searchTree"
             placeholder="输入关键字进行过滤"
-            v-model="filterText">
+            v-model="filterTreeTestTreeBookText">
           </el-input>
           <el-tree
             class="filter-tree"
@@ -129,9 +129,9 @@
     </el-row>
     <el-dialog title="选择测试树书" :visible.sync="dialogTestTreeBookVisible">
       <el-input placeholder="输入关键字进行过滤"
-                v-model="filterFormText">
+                v-model="filterParentTreeTestTreeBookText">
       </el-input>
-      <el-tree class="filter-tree" ref="selectParentTreeBookTree" :data="treeTestTreeBookSelectData"
+      <el-tree class="filter-tree" ref="selectParentTestTreeBookTree" :data="treeTestTreeBookSelectData"
                check-strictly node-key="id" highlight-current @node-click="getNodeFormData"
                :filter-node-method="filterNode" default-expand-all>
       </el-tree>
@@ -139,7 +139,7 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :label-position="labelPosition" label-width="80px" :model="form" ref="form">
         <el-form-item label="上级测试树书" prop="parentName">
-          <el-input v-model="form.parentName" placeholder="选择测试树书" @focus="selectParentTestTreeBookTree()" :disabled="disableSelectTestTreeBookParent" readonly></el-input>
+          <el-input v-model="form.parentName" placeholder="选择测试树书" @focus="handleParentTestTreeBookTree()" :disabled="disableSelectTestTreeBookParent" readonly></el-input>
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
         <el-form-item label="部门名称" prop="name" :rules="[{min: 0,max: 50,message: '长度在 0 到 50 个字符'},]">
@@ -214,8 +214,8 @@
           size: 20
         },
         formEdit: true,
-        filterText: '',
-        filterFormText: '',
+        filterTreeTestTreeBookText: '',
+        filterParentTreeTestTreeBookText: '',
         formStatus: '',
         searchTree: false,
         labelPosition: 'right',
@@ -251,11 +251,11 @@
       }
     },
     watch: {
-      filterText(val) {
+      filterTreeTestTreeBookText(val) {
         this.$refs['leftTestTreeBookTree'].filter(val);
       },
-      filterFormText(val) {
-        this.$refs['selectParentTreeBookTree'].filter(val);
+      filterParentTreeTestTreeBookText(val) {
+        this.$refs['selectParentTestTreeBookTree'].filter(val);
       }
     },
     created() {
@@ -342,37 +342,19 @@
         }else{
           findTestTreeBook(row.id).then(response => {
             this.form = response.data;
-
-
-
-
-
-
-
-
-
-                    this.form.activated=objectToString(this.form.activated);
-
-
-
-
-
-
-
-                    this.form.delFlag=objectToString(this.form.delFlag);
-
-
-
-          this.disableSelectTestTreeBookParent = this.form.parentName ? false : true;
+            this.form.activated=objectToString(this.form.activated);
+            
+            this.form.delFlag=objectToString(this.form.delFlag);
+            this.disableSelectTestTreeBookParent = this.form.parentName ? false : true;
             this.dialogFormVisible = true;
           });
         }
       },
-      selectParentTestTreeBookTree() {
+      handleParentTestTreeBookTree() {
         fetchTestTreeBookTree({extId: this.form.id}).then(response => {
           this.treeTestTreeBookSelectData = parseTreeData(response.data);
           this.dialogTestTreeBookVisible = true;
-          setTimeout(()=>{this.$refs['selectParentTreeBookTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+          setTimeout(()=>{this.$refs['selectParentTestTreeBookTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
         })
       },
       handleDelete(row) {

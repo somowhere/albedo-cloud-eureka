@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * 测试树书管Entity 测试树书
  * @author admin
- * @version 2019-07-25 20:28:39
+ * @version 2019-07-25 21:24:22
  */
 @TableName(value = "test_tree_book")
 @Data @ToString @NoArgsConstructor @AllArgsConstructor

@@ -12,7 +12,7 @@ import com.albedo.java.modules.test.domain.TestBook;
 /**
  * 测试书籍管Repository 测试书籍
  * @author admin
- * @version 2019-07-25 17:51:48
+ * @version 2019-07-25 20:28:50
  */
 public interface TestBookRepository extends BaseRepository<TestBook> {
 

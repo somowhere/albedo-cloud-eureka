@@ -20,7 +20,7 @@ import javax.validation.constraints.*;
 /**
  * 测试书籍管Entity 测试书籍
  * @author admin
- * @version 2019-07-25 17:51:48
+ * @version 2019-07-25 20:28:50
  */
 @TableName(value = "test_book")
 @Data @ToString @NoArgsConstructor @AllArgsConstructor

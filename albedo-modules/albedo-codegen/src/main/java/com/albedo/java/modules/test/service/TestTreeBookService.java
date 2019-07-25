@@ -13,7 +13,7 @@ import com.albedo.java.modules.test.repository.TestTreeBookRepository;
 /**
  * 测试树书管Service 测试树书
  * @author admin
- * @version 2019-07-25 17:51:46
+ * @version 2019-07-25 20:28:39
  */
 public interface TestTreeBookService extends TreeVoService<TestTreeBookRepository, TestTreeBook, TestTreeBookDataVo>{
 

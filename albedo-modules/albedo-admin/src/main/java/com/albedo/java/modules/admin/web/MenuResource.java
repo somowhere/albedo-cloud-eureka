@@ -20,6 +20,7 @@ import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
@@ -89,8 +90,8 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 * @return 树形菜单
 	 */
 	@GetMapping(value = "/tree")
-	public R getTree() {
-		return R.createSuccessData(service.listMenuTrees());
+	public R getTree(TreeQuery treeQuery) {
+		return R.createSuccessData(service.listMenuTrees(treeQuery));
 	}
 
 	/**

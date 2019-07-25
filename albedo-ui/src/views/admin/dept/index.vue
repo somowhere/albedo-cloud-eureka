@@ -42,7 +42,7 @@
         <el-col :span="8"
                 style='margin-top:15px;'>
           <el-tree class="filter-tree"
-                   :data="treeData"
+                   :data="treeDeptData"
                    node-key="id"
                    highlight-current
                    :expand-on-click-node="false"
@@ -52,7 +52,7 @@
           </el-tree>
         </el-col>
         <el-dialog title="选择父级节点" :visible.sync="dialogDeptVisible">
-          <el-tree class="filter-tree" ref="selectParentDeptTree" default-expand-all :data="treeData"
+          <el-tree class="filter-tree" ref="selectParentDeptTree" default-expand-all :data="treeDeptSelectData"
                    check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData">
           </el-tree>
         </el-dialog>
@@ -66,7 +66,7 @@
                      ref="form">
 
               <el-form-item label="父级节点" prop="parentName">
-                <el-input v-model="form.parentName" placeholder="选择父级节点" @focus="selectParentDeptTree()" :disabled="formEdit" readonly>
+                <el-input v-model="form.parentName" placeholder="选择父级节点" @focus="handleParentDeptTree()" :disabled="formEdit" readonly>
                 </el-input>
                 <input type="hidden" v-model="form.parentId" />
               </el-form-item>
@@ -127,7 +127,8 @@
         listQuery: {
           name: undefined
         },
-        treeData: [],
+        treeDeptData: [],
+        treeDeptSelectData: [],
         rules: {
           parentId: [
             {required: true, message: '请输入父级节点', trigger: 'blur'}
@@ -165,8 +166,8 @@
     },
     methods: {
       getList() {
-        fetchTree(this.listQuery).then(response => {
-          this.treeData = response.data
+        fetchTree().then(response => {
+          this.treeDeptData = response.data
         })
       },
       filterNode(value, data) {
@@ -189,9 +190,12 @@
         this.form.parentName = data.label;
         this.dialogDeptVisible = false;
       },
-      selectParentDeptTree(){
-        this.dialogDeptVisible=true;
-        setTimeout(() => {this.$refs['selectParentDeptTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+      handleParentDeptTree(){
+        fetchTree({extId:this.form.id}).then(response => {
+          this.treeDeptSelectData = response.data;
+          this.dialogDeptVisible=true;
+          setTimeout(() => {this.$refs['selectParentDeptTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+        })
       },
       handlerEdit() {
         if (this.form.id) {

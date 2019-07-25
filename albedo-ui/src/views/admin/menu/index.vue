@@ -14,7 +14,7 @@
             </div>
             <el-input v-show="searchTree"
                       placeholder="输入关键字进行过滤"
-                      v-model="filterText">
+                      v-model="filterTreeMenuText">
             </el-input>
             <el-tree
               class="filter-tree"
@@ -127,7 +127,7 @@
         </el-col>
       </el-row>
       <el-dialog title="选择菜单" :visible.sync="dialogMenuVisible">
-        <el-tree class="filter-tree" ref="selectParentMenuTree" default-expand-all :data="treeMenuData" :default-checked-keys="checkedKeys"
+        <el-tree class="filter-tree" ref="selectParentMenuTree" default-expand-all :data="treeMenuSelectData" :default-checked-keys="checkedKeys"
                  check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData">
         </el-tree>
       </el-dialog>
@@ -3308,7 +3308,7 @@
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
         <el-form :model="form" ref="form" label-width="100px">
           <el-form-item label="所属菜单" prop="parentName">
-            <el-input v-model="form.parentName" placeholder="选择菜单" @focus="selectParentMenuTree()" :disabled="disableSelectMenuParent" readonly>
+            <el-input v-model="form.parentName" placeholder="选择菜单" @focus="handelParentMenuTree()" :disabled="disableSelectMenuParent" readonly>
             </el-input>
             <input type="hidden" v-model="form.parentId" />
           </el-form-item>
@@ -3372,6 +3372,7 @@
     data() {
       return {
         treeMenuData: [],
+        treeMenuSelectData: [],
         dialogMenuVisible: false,
         dialogIconVisible: false,
         dialogFormVisible: false,
@@ -3385,7 +3386,7 @@
           size: 20
         },
         formEdit: true,
-        filterText: '',
+        filterTreeMenuText: '',
         filterFormText: '',
         formStatus: '',
         flagOptions: [],
@@ -3422,7 +3423,7 @@
       }
     },
     watch: {
-      filterText(val) {
+      filterTreeMenuText(val) {
         this.$refs['leftMenuTree'].filter(val);
       }
     },
@@ -3466,7 +3467,7 @@
         this.getList()
       },
       getTreeMenu() {
-        fetchMenuTree({extId:this.form.id}).then(response => {
+        fetchMenuTree().then(response => {
           this.treeMenuData = parseTreeData(response.data);
           this.currentNode = this.treeMenuData[0];
           this.listQuery.parentId=this.treeMenuData[0].id;
@@ -3490,9 +3491,12 @@
         this.form.parentName = data.label;
         this.dialogMenuVisible = false;
       },
-      selectParentMenuTree(){
-        this.dialogMenuVisible=true;
-        setTimeout(()=>{this.$refs['selectParentMenuTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+      handelParentMenuTree(){
+        fetchMenuTree({extId:this.form.id}).then(response => {
+          this.treeMenuSelectData = parseTreeData(response.data);
+          this.dialogMenuVisible=true;
+          setTimeout(()=>{this.$refs['selectParentMenuTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100);
+        });
       },
       //搜索清空
       searchReset() {

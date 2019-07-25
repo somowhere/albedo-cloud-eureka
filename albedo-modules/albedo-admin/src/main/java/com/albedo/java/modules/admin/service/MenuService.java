@@ -17,6 +17,7 @@
 package com.albedo.java.modules.admin.service;
 
 
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.admin.domain.Menu;
 import com.albedo.java.modules.admin.vo.GenSchemeDataVo;
@@ -55,5 +56,5 @@ public interface MenuService extends TreeVoService<MenuRepository, Menu, MenuDat
 
 	boolean saveByGenScheme(GenSchemeDataVo schemeDataVo);
 
-	List<MenuTree> listMenuTrees();
+	List<MenuTree> listMenuTrees(TreeQuery treeQuery);
 }

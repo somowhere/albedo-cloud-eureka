@@ -21,6 +21,8 @@ import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.admin.domain.Menu;
@@ -42,7 +44,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -207,23 +212,28 @@ public class MenuServiceImpl extends
 	}
 
 	@Override
-	public List<MenuTree> listMenuTrees() {
-		List<MenuTree> trees = new ArrayList<>();
-		MenuTree node;
+	public List<MenuTree> listMenuTrees(TreeQuery treeQuery) {
 		List<Menu> menuEntities = baseMapper.selectList(Wrappers.emptyWrapper());
-		for (Menu menu : menuEntities) {
-			node = new MenuTree();
-			node.setId(menu.getId());
-			node.setParentId(menu.getParentId());
-			node.setName(menu.getName());
-			node.setPath(menu.getPath());
-			node.setCode(menu.getPermission());
-			node.setLabel(menu.getName());
-			node.setComponent(menu.getComponent());
-			node.setIcon(menu.getIcon());
-			node.setKeepAlive(menu.getKeepAlive());
-			trees.add(node);
-		}
-		return TreeUtil.buildByLoop(trees, Menu.ROOT);
+		String extId = treeQuery.getExtId();
+		Collections.sort(menuEntities, Comparator.comparing((Menu t) -> t.getSort()).reversed());
+		List<MenuTree> treeList = menuEntities.stream().filter(item ->
+				(ObjectUtil.isEmpty(extId)|| ObjectUtil.isEmpty(item.getParentIds()) ||
+					(ObjectUtil.isNotEmpty(extId) && !extId.equals(item.getId()) && item.getParentIds() != null
+						&& item.getParentIds().indexOf("," + extId + ",") == -1))
+			)
+			.map(menu -> {
+				MenuTree node = new MenuTree();
+				node.setId(menu.getId());
+				node.setParentId(menu.getParentId());
+				node.setName(menu.getName());
+				node.setPath(menu.getPath());
+				node.setCode(menu.getPermission());
+				node.setLabel(menu.getName());
+				node.setComponent(menu.getComponent());
+				node.setIcon(menu.getIcon());
+				node.setKeepAlive(menu.getKeepAlive());
+				return node;
+			}).collect(Collectors.toList());
+		return TreeUtil.buildByLoop(treeList, Menu.ROOT);
 	}
 }

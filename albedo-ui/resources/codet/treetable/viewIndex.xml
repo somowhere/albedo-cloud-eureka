@@ -18,7 +18,7 @@
           </div>
           <el-input v-show="searchTree"
             placeholder="输入关键字进行过滤"
-            v-model="filterText">
+            v-model="filterTree${ClassName}Text">
           </el-input>
           <el-tree
             class="filter-tree"
@@ -106,9 +106,9 @@
     </el-row>
     <el-dialog title="选择${functionNameSimple}" :visible.sync="dialog${ClassName}Visible">
       <el-input placeholder="输入关键字进行过滤"
-                v-model="filterFormText">
+                v-model="filterParentTree${ClassName}Text">
       </el-input>
-      <el-tree class="filter-tree" ref="form${ClassName}Tree" :data="tree${ClassName}Data"
+      <el-tree class="filter-tree" ref="selectParent${ClassName}Tree" :data="tree${ClassName}SelectData"
                check-strictly node-key="id" highlight-current @node-click="getNodeFormData"
                :filter-node-method="filterNode" default-expand-all>
       </el-tree>
@@ -118,7 +118,7 @@
       <#list table.columnList as c>
         <#if c.simpleJavaField == 'parentId'>
         <el-form-item label="上级${functionNameSimple}" prop="parentName">
-          <el-input v-model="form.parentName" placeholder="选择${functionNameSimple}" @focus="selectParent${ClassName}Tree()" :disabled="disableSelect${ClassName}Parent" readonly></el-input>
+          <el-input v-model="form.parentName" placeholder="选择${functionNameSimple}" @focus="handleParent${ClassName}Tree()" :disabled="disableSelect${ClassName}Parent" readonly></el-input>
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
         <#elseif c.edit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
@@ -165,6 +165,9 @@
     data() {
       return {
         dialog${ClassName}Visible: false,
+        disableSelect${ClassName}Parent: false,
+        tree${ClassName}Data: [],
+        tree${ClassName}SelectData: [],
         dialogFormVisible: false,
         searchFilterVisible: true,
         list: null,
@@ -175,16 +178,11 @@
           size: 20
         },
         formEdit: true,
-        filterText: '',
-        filterFormText: '',
+        filterTree${ClassName}Text: '',
+        filterParentTree${ClassName}Text: '',
         formStatus: '',
-        statusOptions: [],
-        typeOptions: [],
-        methodOptions: [],
         searchTree: false,
-        tree${ClassName}Data: [],
         labelPosition: 'right',
-        disableSelect${ClassName}Parent: false,
         form: {
           <#list table.columnList as c>
         <#if c.edit && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
@@ -211,11 +209,11 @@
       }
     },
     watch: {
-      filterText(val) {
+      filterTree${ClassName}Text(val) {
         this.$refs['left${ClassName}Tree'].filter(val);
       },
-      filterFormText(val) {
-        this.$refs['form${ClassName}Tree'].filter(val);
+      filterParentTree${ClassName}Text(val) {
+        this.$refs['selectParent${ClassName}Tree'].filter(val);
       }
     },
     created() {
@@ -311,11 +309,11 @@
           });
         }
       },
-      selectParent${ClassName}Tree() {
+      handleParent${ClassName}Tree() {
         fetch${ClassName}Tree({extId: this.form.id}).then(response => {
-          this.tree${ClassName}Data = parseTreeData(response.data);
+          this.tree${ClassName}SelectData = parseTreeData(response.data);
           this.dialog${ClassName}Visible = true;
-          setTimeout(()=>{this.$refs['form${ClassName}Tree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
+          setTimeout(()=>{this.$refs['selectParent${ClassName}Tree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
         })
       },
       handleDelete(row) {

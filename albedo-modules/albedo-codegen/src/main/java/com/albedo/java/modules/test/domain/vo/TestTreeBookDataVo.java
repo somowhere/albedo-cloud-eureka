@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * 测试树书管Entity 测试树书
  * @author admin
- * @version 2019-07-25 17:51:46
+ * @version 2019-07-25 20:28:39
  */
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
 public class TestTreeBookDataVo extends TreeEntityVo {

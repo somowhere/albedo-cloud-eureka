@@ -11,7 +11,7 @@
             </div>
             <el-input v-show="searchTree"
                       placeholder="输入关键字进行过滤"
-                      v-model="filterText">
+                      v-model="filterTreeDictText">
             </el-input>
             <el-tree
               class="filter-tree"
@@ -109,14 +109,14 @@
         </el-col>
       </el-row>
       <el-dialog title="选择字典" :visible.sync="dialogDictVisible">
-        <el-tree class="filter-tree" ref="selectParentDictTree" default-expand-all :data="treeDictData" :default-checked-keys="checkedKeys"
+        <el-tree class="filter-tree" ref="selectParentDictTree" default-expand-all :data="treeDictSelectData" :default-checked-keys="checkedKeys"
                  check-strictly node-key="id" highlight-current @node-click="clickNodeSelectData">
         </el-tree>
       </el-dialog>
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
         <el-form :model="form" ref="form" label-width="100px">
           <el-form-item label="所属字典" prop="parentName">
-            <el-input v-model="form.parentName" placeholder="选择字典" @focus="selectParentDictTree()" :disabled="disableSelectParent" readonly>
+            <el-input v-model="form.parentName" placeholder="选择字典" @focus="handleParentDictTree()" :disabled="disableSelectParent" readonly>
             </el-input>
             <input type="hidden" v-model="form.parentId" />
           </el-form-item>
@@ -169,6 +169,7 @@
     data() {
       return {
         treeDictData: [],
+        treeDictSelectData: [],
         treeParentDictData: [],
         dialogDictVisible: false,
         dialogFormVisible: false,
@@ -182,7 +183,7 @@
           size: 20
         },
         formEdit: true,
-        filterText: '',
+        filterTreeDictText: '',
         filterFormText: '',
         formStatus: '',
         flagOptions: [],
@@ -215,7 +216,7 @@
       }
     },
     watch: {
-      filterText(val) {
+      filterTreeDictText(val) {
         this.$refs['leftDictTree'].filter(val);
       }
     },
@@ -280,9 +281,9 @@
         this.form.parentName = data.label;
         this.dialogDictVisible = false;
       },
-      selectParentDictTree(){
+      handleParentDictTree(){
         fetchDictTree({extId:this.form.id}).then(response => {
-          this.treeDictData = parseTreeData(response.data);
+          this.treeDictSelectData = parseTreeData(response.data);
           this.dialogDictVisible=true;
           setTimeout(()=>{this.$refs['selectParentDictTree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
         })

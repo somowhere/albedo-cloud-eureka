@@ -63,11 +63,11 @@ services:
   albedo-admin:
     build:
       context: ./
-      dockerfile: ./albedo-admin/albedo-admin-biz/Dockerfile
+      dockerfile: ./albedo-sys/albedo-sys-biz/Dockerfile
     restart: always
-    container_name: albedo-admin
-    hostname: albedo-admin
-    image: albedo-admin
+    container_name: albedo-sys
+    hostname: albedo-sys
+    image: albedo-sys
 
   albedo-monitor:
     build:
@@ -83,11 +83,11 @@ services:
   albedo-codegen:
     build:
       context: ./
-      dockerfile: ./albedo-visual/albedo-codegen/Dockerfile
+      dockerfile: ./albedo-visual/albedo-gen/Dockerfile
     restart: always
-    container_name: albedo-codegen
-    hostname: albedo-codegen
-    image: albedo-codegen
+    container_name: albedo-gen
+    hostname: albedo-gen
+    image: albedo-gen
 
   albedo-zipkin:
     build:

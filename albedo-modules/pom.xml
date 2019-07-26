@@ -29,8 +29,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>albedo-admin</module>
-		<module>albedo-codegen</module>
+		<module>albedo-sys</module>
+		<module>albedo-gen</module>
 		<module>albedo-monitor</module>
 		<module>albedo-zipkin</module>
 	</modules>

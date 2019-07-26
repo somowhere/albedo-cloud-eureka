@@ -77,7 +77,7 @@ public interface SecurityConstants {
 	 */
 	String BCRYPT = "{bcrypt}";
 	/**
-	 * sys_oauth_client_details 表的字段，不包括client_id、client_secret
+	 * sys_oauth_client_detail 表的字段，不包括client_id、client_secret
 	 */
 	String CLIENT_FIELDS = "client_id, CONCAT('{noop}',client_secret) as client_secret, resource_ids, scope, "
 		+ "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "
@@ -87,7 +87,7 @@ public interface SecurityConstants {
 	 * JdbcClientDetailsService 查询语句
 	 */
 	String BASE_FIND_STATEMENT = "select " + CLIENT_FIELDS
-		+ " from sys_oauth_client_details";
+		+ " from sys_oauth_client_detail";
 
 	/**
 	 * 默认的查询语句

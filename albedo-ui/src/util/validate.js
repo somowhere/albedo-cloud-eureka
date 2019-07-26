@@ -33,7 +33,7 @@ export function isURL (s) {
 }
 
 export function isvalidUsername (str) {
-  const valid_map = ['admin', 'editor']
+  const valid_map = ['sys', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
 

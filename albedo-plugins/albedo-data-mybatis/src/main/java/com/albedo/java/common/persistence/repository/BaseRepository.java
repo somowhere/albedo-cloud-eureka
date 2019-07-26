@@ -24,7 +24,7 @@ public interface BaseRepository<T extends GeneralEntity> extends
 	/**
 	 * BaseRepository
 	 * 使用Wrapper 需要指定前缀 getClassNameProfix()
-	 * @author admin
+	 * @author sys
 	 * @version 2018-03-07
 	 */
 	List<T> findRelationList(@Param("ew") Wrapper<T> wrapper);

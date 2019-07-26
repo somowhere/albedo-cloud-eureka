@@ -15,10 +15,10 @@ spring:
             # 前端密码解密
             - PasswordDecoderFilter
         #系统管理 模块
-        - id: albedo-admin
-          uri: lb://albedo-admin
+        - id: albedo-sys
+          uri: lb://albedo-sys
           predicates:
-            - Path=/admin/**
+            - Path=/sys/**
           filters:
             # 限流配置
             - name: RequestRateLimiter
@@ -32,10 +32,10 @@ spring:
 #                name: default
 #                fallbackUri: 'forward:/fallback'
         # 代码生成模块
-        - id: albedo-codegen
-          uri: lb://albedo-codegen
+        - id: albedo-gen
+          uri: lb://albedo-gen
           predicates:
-            - Path=/codegen/**
+            - Path=/gen/**
 
 
 security:

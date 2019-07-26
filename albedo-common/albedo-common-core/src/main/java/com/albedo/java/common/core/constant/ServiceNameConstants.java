@@ -30,6 +30,6 @@ public interface ServiceNameConstants {
 	/**
 	 * UMPS模块
 	 */
-	String UMPS_SERVICE = "albedo-admin";
+	String UMPS_SERVICE = "albedo-sys";
 
 }

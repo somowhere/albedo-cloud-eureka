@@ -27,7 +27,7 @@
       <div class="table-menu-left">
         <el-button-group>
           <el-button size="mini" v-if="gen_scheme_edit" @click="handleEdit" type="primary" icon="el-icon-plus">添加</el-button>
-          <el-button size="mini" v-if="gen_scheme_menu"@click="handleGenMenuDialog" type="primary" icon="icon-filesync" >生成菜单</el-button>
+          <el-button size="mini" v-if="gen_scheme_menu" @click="handleGenMenuDialog" type="primary" icon="icon-filesync" >生成菜单</el-button>
         </el-button-group>
       </div>
       <div class="table-menu-right">
@@ -169,8 +169,8 @@
 
       <el-dialog title="生成菜单" :visible.sync="dialogGenMenuVisible"
                  width="30%">
-        <el-form :model="genMenuForm":inline="true" ref="genMenuForm">
-          <el-form-item label="上级菜单" prop="parentMenuId":rules="[{required: true,message: '请选择上级菜单'}]">
+        <el-form :model="genMenuForm" :inline="true" ref="genMenuForm">
+          <el-form-item label="上级菜单" prop="parentMenuId" :rules="[{required: true,message: '请选择上级菜单'}]">
             <el-input v-model="genMenuForm.parentMenuName" placeholder="选择菜单" @focus="handleMenu()" readonly></el-input>
             <input type="hidden" v-model="genMenuForm.parentMenuId" />
           </el-form-item>
@@ -190,7 +190,7 @@
   import {mapGetters} from "vuex";
   import { validateNull, validateNotNull} from "@/util/validate";
   import {parseJsonItemForm, parseTreeData} from "@/util/util";
-  import {fetchMenuTree} from "../../admin/menu/service";
+  import {fetchMenuTree} from "../../sys/menu/service";
   import CrudSelect from "@/views/avue/crud-select";
   import CrudRadio from "@/views/avue/crud-radio";
 

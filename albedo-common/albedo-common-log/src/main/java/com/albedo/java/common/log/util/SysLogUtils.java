@@ -16,10 +16,12 @@
 
 package com.albedo.java.common.log.util;
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
-import com.albedo.java.modules.admin.domain.Log;
+import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.modules.sys.domain.Log;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,16 +42,17 @@ public class SysLogUtils {
 	public Log getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-		Log logEntity = new Log();
-		logEntity.setCreatedBy(Objects.requireNonNull(getUsername()));
-//		log.setType(CommonConstants);
-		logEntity.setRemoteAddr(ServletUtil.getClientIP(request));
-		logEntity.setRequestUri(URLUtil.getPath(request.getRequestURI()));
-		logEntity.setMethod(request.getMethod());
-		logEntity.setUserAgent(request.getHeader("user-agent"));
-		logEntity.setParams(HttpUtil.toParams(request.getParameterMap()));
-		logEntity.setServiceId(getClientId());
-		return logEntity;
+		Log log = new Log();
+		log.setCreatedBy(Objects.requireNonNull(getUserId()));
+		log.setUsername(Objects.requireNonNull(getUsername()));
+		log.setType(CommonConstants.STR_YES);
+		log.setRemoteAddr(ServletUtil.getClientIP(request));
+		log.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		log.setMethod(request.getMethod());
+		log.setUserAgent(request.getHeader("user-agent"));
+		log.setParams(HttpUtil.toParams(request.getParameterMap()));
+		log.setServiceId(getClientId());
+		return log;
 	}
 
 	/**
@@ -78,5 +81,16 @@ public class SysLogUtils {
 		}
 		return authentication.getName();
 	}
-
+	/**
+	 * 获取用户Id
+	 *
+	 * @return username
+	 */
+	private String getUserId() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || authentication.getPrincipal() == null) {
+			return null;
+		}
+		return (String) ReflectUtil.getFieldValue(authentication.getPrincipal(), "id");
+	}
 }

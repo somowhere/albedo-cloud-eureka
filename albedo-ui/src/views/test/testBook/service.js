@@ -1,7 +1,7 @@
 import request from '@/router/axios';
 import {isValidateUnique, toStr} from "@/util/validate";
 
-let gateway="/codegen";
+let gateway="/gen";
 export function pageTestBook(query) {
   return request({
     url: gateway+'/testBook/',

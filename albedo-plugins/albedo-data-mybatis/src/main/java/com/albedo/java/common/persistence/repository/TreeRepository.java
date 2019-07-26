@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * TreeRepository
  *
- * @author admin
+ * @author sys
  * @version 2017-01-01
  */
 public interface TreeRepository<T extends BaseEntity> extends

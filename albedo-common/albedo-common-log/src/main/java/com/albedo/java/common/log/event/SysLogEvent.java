@@ -16,7 +16,7 @@
 
 package com.albedo.java.common.log.event;
 
-import com.albedo.java.modules.admin.domain.Log;
+import com.albedo.java.modules.sys.domain.Log;
 import org.springframework.context.ApplicationEvent;
 
 /**

@@ -7,12 +7,19 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.Json;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
+import com.albedo.java.common.persistence.DynamicSpecifications;
+import com.albedo.java.common.persistence.SpecificationDetail;
+import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.core.util.DateUtil;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
+import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.modules.test.domain.TestBook;
 import com.albedo.java.modules.test.domain.vo.TestBookDataVo;
+import com.albedo.java.modules.test.repository.TestBookRepository;
 import com.albedo.java.modules.test.service.TestBookService;
+import com.albedo.java.modules.test.web.TestBookResource;
 import com.albedo.java.modules.TestUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
@@ -202,26 +209,6 @@ public class TestBookResourceIntTest {
 		assertThat(testTestBook.getAmount()).isEqualTo(DEFAULT_AMOUNT);
 		assertThat(testTestBook.getResetDate()).isEqualTo(DEFAULT_RESETDATE);
 		assertThat(testTestBook.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-    }
-    @Test
-    @Transactional
-    public void createTestBookWithExistingName() throws Exception {
-        testBookService.save(testBookDataVo);
-        int databaseSizeBeforeCreate = testBookService.findAll().size();
-
-        // Create the TestBook with an existing ID
-        TestBookDataVo testBookDataVoNew = ClassUtil.createObj(TestBookDataVo.class, Lists.newArrayList(TestBookDataVo.F_ID, TestBookDataVo.F_NAME),
-            null, testBookDataVo.getName());
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restTestBookMockMvc.perform(post(DEFAULT_API_URL)
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(testBookDataVoNew)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the TestBook in the database
-        List<TestBook> testBookList = testBookService.findAll();
-        assertThat(testBookList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test

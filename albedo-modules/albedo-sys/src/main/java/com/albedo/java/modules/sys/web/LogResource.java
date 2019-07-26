@@ -61,7 +61,7 @@ public class LogResource {
 	 */
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_log_del')")
-	public R removeById(@PathVariable Long id) {
+	public R removeById(@PathVariable long id) {
 		return R.createSuccessData(logService.removeById(id));
 	}
 

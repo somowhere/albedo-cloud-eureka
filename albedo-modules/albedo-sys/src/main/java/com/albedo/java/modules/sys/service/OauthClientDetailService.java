@@ -16,7 +16,9 @@
 
 package com.albedo.java.modules.sys.service;
 
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.sys.domain.OauthClientDetail;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -43,4 +45,6 @@ public interface OauthClientDetailService extends IService<OauthClientDetail> {
 	 * @return
 	 */
 	Boolean updateClientDetailsById(OauthClientDetail oauthClientDetail);
+
+	IPage<OauthClientDetail> findPage(PageModel pm);
 }

@@ -7,12 +7,12 @@
 
         <el-col>
           <div class="filter-container" v-show="searchFilterVisible">
-            <el-form :inline="true" :model="listQuery" ref="searchForm">
+            <el-form :inline="true" :model="searchForm" ref="searchForm">
               <el-form-item label="标题" prop="title">
-                <el-input size="small" v-model="listQuery.title"></el-input>
+                <el-input size="small" v-model="searchForm.title"></el-input>
               </el-form-item>
               <el-form-item label="IP地址" prop="remoteAddr">
-                <el-input size="small" v-model="listQuery.remoteAddr"></el-input>
+                <el-input size="small" v-model="searchForm.remoteAddr"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button size="small" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -128,6 +128,7 @@
         list: null,
         total: null,
         listLoading: true,
+        searchForm: {},
         listQuery: {
           current: 1,
           size: 20
@@ -155,8 +156,8 @@
       getList() {
         this.listLoading = true;
         this.listQuery.queryConditionJson = parseJsonItemForm([{
-          fieldName: 'title',value:this.listQuery.title},{
-          fieldName: 'remote_addr',value:this.listQuery.remoteAddr}
+          fieldName: 'title',value:this.searchForm.title},{
+          fieldName: 'remote_addr',value:this.searchForm.remoteAddr}
 
         ])
         pageLog(this.listQuery).then(response => {

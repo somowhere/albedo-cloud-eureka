@@ -22,16 +22,16 @@
         <el-button-group>
           <el-button type="primary"
                      v-if="sys_dept_edit"
-                     icon="plus"
+                     icon="plus" size="small"
                      @click="handlerAdd">添加
           </el-button>
           <el-button type="primary"
-                     v-if="sys_dept_edit"
+                     v-if="sys_dept_edit" size="small"
                      icon="edit"
                      @click="handlerEdit">编辑
           </el-button>
           <el-button type="primary"
-                     v-if="sys_dept_del"
+                     v-if="sys_dept_del" size="small"
                      icon="delete"
                      @click="handleDelete">删除
           </el-button>
@@ -94,10 +94,10 @@
               <el-form-item label="描述" prop="description">
                 <el-input type="textarea" v-model="form.description" :disabled="formEdit" placeholder=""></el-input>
               </el-form-item>
-                <el-button type="primary"
+                <el-button type="primary" size="small"
                            @click="save">保存
                 </el-button>
-                <el-button @click="onCancel">取消</el-button>
+                <el-button @click="onCancel" size="small" >取消</el-button>
             </el-form>
           </el-card>
         </el-col>
@@ -122,11 +122,6 @@
         formAdd: true,
         formStatus: '',
         showElement: false,
-        typeOptions: ['0', '1'],
-        methodOptions: ['GET', 'POST', 'PUT', 'DELETE'],
-        listQuery: {
-          name: undefined
-        },
         treeDeptData: [],
         treeDeptSelectData: [],
         rules: {

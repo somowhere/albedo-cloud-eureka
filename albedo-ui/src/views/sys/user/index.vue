@@ -31,9 +31,9 @@
       </el-col>
       <el-col :span="18">
         <div class="filter-container" v-show="searchFilterVisible">
-          <el-form :inline="true" :model="listQuery" ref="searchForm">
+          <el-form :inline="true" :model="searchForm" ref="searchForm">
             <el-form-item label="名称" prop="username">
-              <el-input class="filter-item input-normal" size="small" v-model="listQuery.username"></el-input>
+              <el-input class="filter-item input-normal" size="small" v-model="searchForm.username"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button size="small" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -178,9 +178,9 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel()">取 消</el-button>
-        <el-button @click="resetForm()">重 置</el-button>
-        <el-button type="primary" @click="save()">保 存</el-button>
+        <el-button size="small" @click="cancel()">取 消</el-button>
+        <el-button size="small" @click="resetForm()">重 置</el-button>
+        <el-button size="small" type="primary" @click="save()">保 存</el-button>
       </div>
     </el-dialog>
     </basic-container>
@@ -214,6 +214,7 @@
         list: null,
         total: null,
         listLoading: true,
+        searchForm: {},
         listQuery: {
           current: 1,
           size: 20
@@ -302,9 +303,9 @@
         this.listLoading = true;
         // this.listQuery.isAsc = false;
         this.listQuery.queryConditionJson = parseJsonItemForm([{
-          fieldName: 'a.username',value:this.listQuery.username
+          fieldName: 'a.username',value:this.searchForm.username
         },{
-          fieldName: 'a.dept_id',value:this.listQuery.deptId
+          fieldName: 'a.dept_id',value:this.searchForm.deptId
         }])
         pageUser(this.listQuery).then(response => {
           this.list = response.data.records;

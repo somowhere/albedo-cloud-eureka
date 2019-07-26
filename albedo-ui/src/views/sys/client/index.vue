@@ -2,12 +2,12 @@
   <div class="app-container calendar-list-container">
     <basic-container>
     <div class="filter-container">
-      <el-form :inline="true"  :model="listQuery" ref="searchClientForm" v-show="searchFilterVisible">
+      <el-form :inline="true"  :model="searchClientForm" ref="searchClientForm" v-show="searchFilterVisible">
         <el-form-item label="客户端ID" prop="clientId">
-          <el-input class="filter-item input-normal" v-model="listQuery.clientId"></el-input>
+          <el-input class="filter-item input-normal" v-model="searchClientForm.clientId"></el-input>
         </el-form-item>
         <el-form-item label="作用域" prop="scope">
-          <el-input class="filter-item input-normal" v-model="listQuery.scope"></el-input>
+          <el-input class="filter-item input-normal" v-model="searchClientForm.scope"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button size="small" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -28,22 +28,46 @@
       </div>
     </div>
     <el-table :key='tableKey' @sort-change="sortChange" :data="list" v-loading="listLoading" element-loading-text="加载中..." fit highlight-current-row>
-      <el-table-column align="center" label="客户端ID">
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-form label-position="left" >
+            <el-form-item label="重定向地址">
+              <span>{{scope.row.webServerRedirectUri}}</span>
+            </el-form-item>
+            <el-form-item label="权限">
+              <span>{{scope.row.authorities}}</span>
+            </el-form-item>
+            <el-form-item label="请求令牌有效时间">
+              <span>{{scope.row.accessTokenValidity}}</span>
+            </el-form-item>
+            <el-form-item align="center" label="刷新令牌有效时间">
+              <span>{{scope.row.refreshTokenValidity}}</span>
+            </el-form-item>
+            <el-form-item align="center" label="扩展信息">
+              <span>{{scope.row.additionalInformation}}</span>
+            </el-form-item>
+            <el-form-item align="center" label="资源ID">
+              <span>{{scope.row.resourceIds}}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="客户端ID" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.clientId}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="客户端密钥">
+      <el-table-column align="center" label="客户端密钥" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.clientSecret}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="作用域">
+      <el-table-column align="center" label="作用域" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.scope}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="是否自动放行">
+      <el-table-column align="center" label="是否自动放行" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.autoapprove}}</span>
         </template>
@@ -53,37 +77,7 @@
           <span>{{scope.row.authorizedGrantTypes}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="重定向地址">
-        <template slot-scope="scope">
-          <span>{{scope.row.webServerRedirectUri}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="权限">
-        <template slot-scope="scope">
-          <span>{{scope.row.authorities}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="请求令牌有效时间">
-        <template slot-scope="scope">
-          <span>{{scope.row.accessTokenValidity}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="刷新令牌有效时间">
-        <template slot-scope="scope">
-          <span>{{scope.row.refreshTokenValidity}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="扩展信息">
-        <template slot-scope="scope">
-          <span>{{scope.row.additionalInformation}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="资源ID">
-        <template slot-scope="scope">
-          <span>{{scope.row.resourceIds}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" fixed="right" label="操作" v-if="sys_client_edit || sys_client_del">
+      <el-table-column align="center" width="130" fixed="right" label="操作" v-if="sys_client_edit || sys_client_del">
         <template slot-scope="scope">
           <el-button v-if="sys_client_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
@@ -136,8 +130,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel()">取 消</el-button>
-        <el-button type="primary" @click="save()">保 存</el-button>
+        <el-button @click="cancel()" size="small">取 消</el-button>
+        <el-button type="primary" @click="save()" size="small">保 存</el-button>
       </div>
     </el-dialog>
     </basic-container>
@@ -163,6 +157,7 @@ export default {
       list: null,
       total: null,
       listLoading: true,
+      searchClientForm:{},
       listQuery: {
         page: 1,
         size: 20
@@ -211,8 +206,8 @@ export default {
     getList() {
       this.listLoading = true;
       this.listQuery.queryConditionJson = parseJsonItemForm([
-      {fieldName: 'clientId',value:this.listQuery.clientId,operate:'like',attrType:'String'},
-      {fieldName: 'scope',value:this.listQuery.scope,operate:'like',attrType:'String'},
+      {fieldName: 'clientId',value:this.searchClientForm.clientId},
+      {fieldName: 'scope',value:this.searchClientForm.scope},
       ])
       pageClient(this.listQuery).then(response => {
         this.list = response.data.records;

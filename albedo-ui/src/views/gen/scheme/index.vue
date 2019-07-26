@@ -3,18 +3,18 @@
   <div class="app-container calendar-list-container">
     <basic-container>
     <div class="filter-container" v-show="searchFilterVisible">
-      <el-form ref="searchForm"  :model="listQuery" :inline="true">
+      <el-form ref="searchForm" :model="searchForm" :inline="true">
         <el-form-item label="名称" prop="name">
-          <el-input size="small" class="filter-item input-normal" v-model="listQuery.name"></el-input>
+          <el-input size="small" class="filter-item input-normal" v-model="searchForm.name"></el-input>
         </el-form-item>
         <el-form-item label="表名" ref="tableName">
-          <el-input size="small" class="filter-item input-normal" v-model="listQuery.tableName"></el-input>
+          <el-input size="small" class="filter-item input-normal" v-model="searchForm.tableName"></el-input>
         </el-form-item>
         <el-form-item label="功能名称" prop="functionName">
-          <el-input size="small" class="filter-item input-normal" v-model="listQuery.functionName"></el-input>
+          <el-input size="small" class="filter-item input-normal" v-model="searchForm.functionName"></el-input>
         </el-form-item>
         <el-form-item label="功能作者" prop="functionAuthor">
-          <el-input size="small" class="filter-item input-normal" v-model="listQuery.functionAuthor"></el-input>
+          <el-input size="small" class="filter-item input-normal" v-model="searchForm.functionAuthor"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button size="small" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -141,8 +141,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel()">取 消</el-button>
-        <el-button type="primary" @click="save()">保 存</el-button>
+        <el-button size="small" @click="cancel()">取 消</el-button>
+        <el-button size="small" type="primary" @click="save()">保 存</el-button>
       </div>
     </el-dialog>
 
@@ -151,9 +151,9 @@
                  width="30%">
         <span>确认要继续操作吗?</span>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogGenCodeVisible = false">取 消</el-button>
-          <el-button type="primary" @click="handleGenCode(false)">生成代码</el-button>
-          <el-button type="primary" @click="handleGenCode(true)">生成代码并覆盖</el-button>
+          <el-button size="small" @click="dialogGenCodeVisible = false">取 消</el-button>
+          <el-button size="small" type="primary" @click="handleGenCode(false)">生成代码</el-button>
+          <el-button size="small" type="primary" @click="handleGenCode(true)">生成代码并覆盖</el-button>
         </span>
       </el-dialog>
 
@@ -176,8 +176,8 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="cancelGenMenu">取 消</el-button>
-          <el-button type="primary" @click="handleGenMenu">生成菜单</el-button>
+          <el-button size="small" @click="cancelGenMenu">取 消</el-button>
+          <el-button size="small" type="primary" @click="handleGenMenu">生成菜单</el-button>
         </span>
       </el-dialog>
 
@@ -209,6 +209,7 @@
       list: null,
       total: null,
       listLoading: true,
+      searchForm: {},
       listQuery: {
         page: 1,
         size: 20
@@ -276,15 +277,14 @@
   methods: {
     getList() {
       this.listLoading = true;
-      this.listQuery.isAsc = false;
       this.listQuery.queryConditionJson = parseJsonItemForm([{
-        fieldName: 'name',value:this.listQuery.name
+        fieldName: 'name',value:this.searchForm.name
       },{
-        fieldName: 'table.name',value:this.listQuery.tableName
+        fieldName: 'table.name',value:this.searchForm.tableName
       },{
-        fieldName: 'functionName',value:this.listQuery.functionName
+        fieldName: 'functionName',value:this.searchForm.functionName
       },{
-        fieldName: 'functionAuthor',value:this.listQuery.functionAuthor
+        fieldName: 'functionAuthor',value:this.searchForm.functionAuthor
       }])
       pageGenScheme(this.listQuery).then(response => {
         this.list = response.data.records;

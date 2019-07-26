@@ -41,7 +41,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="令牌" width="250">
+            <el-table-column align="center" label="令牌">
               <template slot-scope="scope">
               <span>
                 {{scope.row.access_token}}
@@ -51,9 +51,16 @@
 
             <el-table-column align="center" label="类型" width="120">
               <template slot-scope="scope">
-          <span>
-            {{scope.row.token_type}}
-          </span>
+              <span>
+                {{scope.row.token_type}}
+              </span>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="客户端" width="120">
+              <template slot-scope="scope">
+              <span>
+                {{scope.row.client_id}}
+              </span>
               </template>
             </el-table-column>
 

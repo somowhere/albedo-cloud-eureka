@@ -268,9 +268,9 @@
         fetchDictTree().then(response => {
           this.treeDictData = parseTreeData(response.data);
           this.currentNode = this.treeDictData[0];
-          this.listQuery.parentId=this.treeDictData[0].id;
+          this.searchForm.parentId=this.treeDictData[0].id;
           setTimeout(() => {
-            this.$refs['leftDictTree'].setCurrentKey(this.listQuery.parentId);
+            this.$refs['leftDictTree'].setCurrentKey(this.searchForm.parentId);
           },0);
           this.getList();
         })
@@ -280,7 +280,7 @@
         return data.label.indexOf(value) !== -1
       },
       clickNodeTreeData(data) {
-        this.listQuery.parentId = data.id
+        this.searchForm.parentId = data.id
         this.currentNode = data;
         this.getList()
       },
@@ -299,7 +299,7 @@
       //搜索清空
       searchReset() {
         this.$refs['searchForm'].resetFields();
-        this.listQuery.parentId = undefined;
+        this.searchForm.parentId = undefined;
         this.$refs['leftDictTree'].setCurrentKey(null);
         this.currentNode=undefined;
       },

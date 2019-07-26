@@ -326,9 +326,9 @@
       getTreeDept() {
         fetchDeptTree().then(response => {
           this.treeDeptData = parseTreeData(response.data);
-          this.listQuery.parentId=this.treeDeptData[0].id;
+          this.searchForm.parentId=this.treeDeptData[0].id;
           setTimeout(() => {
-            this.$refs.leftDeptTree.setCurrentKey(this.listQuery.parentId);
+            this.$refs.leftDeptTree.setCurrentKey(this.searchForm.parentId);
           },0);
         })
       },
@@ -337,7 +337,7 @@
         return data.label.indexOf(value) !== -1
       },
       clickNodeTreeData(data) {
-        this.listQuery.deptId = data.id
+        this.searchForm.deptId = data.id
         this.currentNode = data;
         this.getList()
       },

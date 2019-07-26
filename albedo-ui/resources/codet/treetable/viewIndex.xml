@@ -264,7 +264,7 @@
         return data.label.indexOf(value) !== -1
       },
       getNodeData(data) {
-        this.listQuery.parentId = data.id
+        this.searchForm.parentId = data.id
         this.currentNode = data;
         this.getList()
       },
@@ -275,7 +275,7 @@
       },
       searchReset() {
         this.$refs['search${ClassName}Form'].resetFields();
-        this.listQuery.parentId = undefined;
+        this.searchForm.parentId = undefined;
         this.$refs['left${ClassName}Tree'].setCurrentKey(null);
         this.currentNode=undefined;
       },

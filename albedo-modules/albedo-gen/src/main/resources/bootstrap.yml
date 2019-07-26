@@ -27,3 +27,10 @@ eureka:
 #logging:
 #  level:
 #    root: info
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

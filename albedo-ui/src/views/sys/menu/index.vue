@@ -3453,7 +3453,6 @@
     methods: {
       getList() {
         this.listLoading = true;
-        // this.listQuery.isAsc = false;
         this.listQuery.queryConditionJson = parseJsonItemForm([{
           fieldName: 'name',value:this.searchForm.name
         },{
@@ -3479,9 +3478,9 @@
         fetchMenuTree().then(response => {
           this.treeMenuData = parseTreeData(response.data);
           this.currentNode = this.treeMenuData[0];
-          this.listQuery.parentId=this.treeMenuData[0].id;
+          this.searchForm.parentId=this.treeMenuData[0].id;
           setTimeout(() => {
-            this.$refs['leftMenuTree'].setCurrentKey(this.listQuery.parentId);
+            this.$refs['leftMenuTree'].setCurrentKey(this.searchForm.parentId);
           }, 100)
           this.getList();
         })
@@ -3491,7 +3490,7 @@
         return data.label.indexOf(value) !== -1
       },
       clickNodeTreeData(data) {
-        this.listQuery.parentId = data.id
+        this.searchForm.parentId = data.id
         this.currentNode = data;
         this.getList()
       },
@@ -3510,7 +3509,7 @@
       //搜索清空
       searchReset() {
         this.$refs['searchForm'].resetFields();
-        this.listQuery.parentId = undefined;
+        this.searchForm.parentId = undefined;
         this.$refs['leftMenuTree'].setCurrentKey(null);
         this.currentNode=undefined;
       },

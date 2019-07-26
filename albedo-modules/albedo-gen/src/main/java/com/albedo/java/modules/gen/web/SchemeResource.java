@@ -55,7 +55,7 @@ public class SchemeResource extends DataVoResource<SchemeServiceImpl, SchemeData
     public ResponseEntity getPage(PageModel pm) {
         return ResponseBuilder.buildOk(service.getSchemeVoPage(pm));
     }
-    @GetMapping(value = "/formData")
+    @GetMapping(value = "/form-data")
     @Timed
     public ResponseEntity formData(SchemeDataVo schemeDataVo) {
 		String username = SecurityUtils.getUser().getUsername();

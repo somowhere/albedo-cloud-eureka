@@ -106,7 +106,7 @@ public class TableResourceIntTest {
 //		tableService.save(table);
 
 		// Get the table
-		restTableMockMvc.perform(get(DEFAULT_API_URL+"/tableList"))
+		restTableMockMvc.perform(get(DEFAULT_API_URL+"/table-list"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(jsonPath("$.data").isNotEmpty())

@@ -34,13 +34,13 @@ public class TableResource extends DataVoResource<TableService, TableDataVo> {
         super(service);
     }
 
-    @GetMapping(value = "/tableList")
+    @GetMapping(value = "/table-list")
     @Timed
     public ResponseEntity tableList() {
         return ResponseBuilder.buildOk(CollUtil.convertSelectDataList(service.findTableListFormDb(null), Table.F_NAME, Table.F_NAMESANDTITLE));
     }
 
-    @GetMapping(value = "/formData")
+    @GetMapping(value = "/form-data")
     @Timed
     public ResponseEntity formData(TableFormVo tableVo) {
         Map<String, Object> map = service.findFormData(tableVo);

@@ -21,11 +21,11 @@
 	<parent>
 		<groupId>com.albedo.java</groupId>
 		<artifactId>albedo-cloud</artifactId>
-		<version>2.2.1</version>
+		<version>1.5.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>albedo-eureka</artifactId>
-	<packaging>jar</packaging>
+
 
 	<description>pig 服务中心，基于eureka</description>
 

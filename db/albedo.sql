@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 26/07/2019 14:04:05
+ Date: 26/07/2019 17:11:06
 */
 
 SET NAMES utf8mb4;
@@ -44,13 +44,6 @@ CREATE TABLE `gen_scheme`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生成方案' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of gen_scheme
--- ----------------------------
-INSERT INTO `gen_scheme` VALUES ('1c1992737bd35ddf11beb91e034017e4', '终端管理', 'curd_front', NULL, 'com.albedo.java.modules', 'admin', NULL, '终端', '终端', 'admin', '8addcc278d31bbee16b6936d7a70c98d', 0, NULL, '1', '2019-07-26 11:17:58.565', '1', '2019-07-26 11:17:58.565', '0');
-INSERT INTO `gen_scheme` VALUES ('36096a9886fe251a9b755fcfaf766b42', '测试树书管理', 'treeTable', NULL, 'com.albedo.java.modules', 'test', NULL, '测试树书管', '测试树书', 'admin', '581ba5dfe75066b5a4769b3ed83c4ce1', 2, NULL, '1', '2019-07-26 11:16:47.994', '1', '2019-07-25 14:58:40.247', '1');
-INSERT INTO `gen_scheme` VALUES ('362bf45dff219f95d092d767dac4f5fb', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', NULL, '测试书籍管', '测试书籍', 'admin', '7c0d6295f674ada7a7cf4d651250d855', 12, NULL, '1', '2019-07-26 11:16:49.604', '1', '2019-07-25 14:58:59.178', '1');
-
--- ----------------------------
 -- Table structure for gen_table
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table`;
@@ -72,15 +65,6 @@ CREATE TABLE `gen_table`  (
   UNIQUE INDEX `id`(`id`) USING BTREE,
   INDEX `gen_table_name`(`name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of gen_table
--- ----------------------------
-INSERT INTO `gen_table` VALUES ('581ba5dfe75066b5a4769b3ed83c4ce1', 'test_tree_book', '  测试树书', 'TestTreeBook', NULL, NULL, 3, NULL, '1', '2019-07-26 11:12:21.107', '1', '2019-07-25 17:28:07.111', '1');
-INSERT INTO `gen_table` VALUES ('6aed6fe18521d641a443171fa9e92893', 'test_book', '测试书籍', 'TestBook', '', NULL, 8, NULL, '1', '2019-07-25 14:55:22.657', '1', '2019-07-25 10:21:37.999', '1');
-INSERT INTO `gen_table` VALUES ('7c0d6295f674ada7a7cf4d651250d855', 'test_book', '测试书籍', 'TestBook', NULL, NULL, 2, NULL, '1', '2019-07-26 11:12:19.118', '1', '2019-07-25 17:18:40.452', '1');
-INSERT INTO `gen_table` VALUES ('8addcc278d31bbee16b6936d7a70c98d', 'sys_oauth_client_detail', '终端信息表', 'OauthClientDetail', NULL, NULL, 0, NULL, '1', '2019-07-26 11:12:02.506', '1', '2019-07-26 11:12:02.506', '0');
-INSERT INTO `gen_table` VALUES ('db46c9935ed8caae04bcefd5c6ea7f28', 'test_tree_book', '测试树书', 'TestTreeBook', NULL, NULL, 0, NULL, '1', '2019-07-25 14:55:24.738', '1', '2019-07-25 10:28:01.402', '1');
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -119,91 +103,6 @@ CREATE TABLE `gen_table_column`  (
   INDEX `gen_table_column_name`(`name`) USING BTREE,
   INDEX `gen_table_column_sort`(`sort`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表字段' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of gen_table_column
--- ----------------------------
-INSERT INTO `gen_table_column` VALUES ('003c7074b886f3e6f151ebdd98586d03', '581ba5dfe75066b5a4769b3ed83c4ce1', 'created_date', '创建时间', NULL, 'timestamp(3)', 'java.util.Date', 'createdDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 160, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.177', '0');
-INSERT INTO `gen_table_column` VALUES ('0877c9b6356cb28709c518b774145f5e', '6aed6fe18521d641a443171fa9e92893', 'number_', 'key', NULL, 'int(11)', 'Integer', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.066', '0');
-INSERT INTO `gen_table_column` VALUES ('0af5ef4e4d6bc356a6509b2f5ee3bb42', '581ba5dfe75066b5a4769b3ed83c4ce1', 'del_flag', '0-正常，1-删除', NULL, 'char(1)', 'String', 'delFlag', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'radio', 'sys_flag', NULL, 180, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.184', '0');
-INSERT INTO `gen_table_column` VALUES ('0b9410298327f9ab090208e959d3dabb', 'db46c9935ed8caae04bcefd5c6ea7f28', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 70, 0, NULL, '1', '2019-07-25 10:28:01.429', '1', '2019-07-25 10:28:01.429', '0');
-INSERT INTO `gen_table_column` VALUES ('11afe5a647bae97e46700b72da26053c', '7c0d6295f674ada7a7cf4d651250d855', 'created_date', 'created_date', NULL, 'timestamp(3)', 'java.util.Date', 'createdDate', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 130, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.505', '0');
-INSERT INTO `gen_table_column` VALUES ('13ade9ca23ead1d93e6b34b35e790605', '6aed6fe18521d641a443171fa9e92893', 'version_', 'version_', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 180, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.113', '0');
-INSERT INTO `gen_table_column` VALUES ('17a287cb8e93372566a2bde5bea27898', '581ba5dfe75066b5a4769b3ed83c4ce1', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'radio', 'sys_flag', NULL, 100, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.157', '0');
-INSERT INTO `gen_table_column` VALUES ('1c523c474827dfd56bef223e63a83ca7', '7c0d6295f674ada7a7cf4d651250d855', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.482', '0');
-INSERT INTO `gen_table_column` VALUES ('213279786f4cfe1ba1bf51cf7a727e4a', '7c0d6295f674ada7a7cf4d651250d855', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.501', '0');
-INSERT INTO `gen_table_column` VALUES ('23955926ea0d6cc2f0fb9fa8678fbf55', '8addcc278d31bbee16b6936d7a70c98d', 'refresh_token_validity', '刷新令牌有效时间', NULL, 'int(11)', 'Long', 'refreshTokenValidity', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 0, NULL, '1', '2019-07-26 11:12:02.545', '1', '2019-07-26 11:12:02.545', '0');
-INSERT INTO `gen_table_column` VALUES ('23e957ff7b9c732514bf0ee5332817f0', 'db46c9935ed8caae04bcefd5c6ea7f28', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 90, 0, NULL, '1', '2019-07-25 10:28:01.431', '1', '2019-07-25 10:28:01.431', '0');
-INSERT INTO `gen_table_column` VALUES ('2f5562914e21030f3cf341864cb6bf8a', '581ba5dfe75066b5a4769b3ed83c4ce1', 'reset_date', 'reset_date', NULL, 'timestamp(3)', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 140, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.170', '0');
-INSERT INTO `gen_table_column` VALUES ('369de751f2a36663b39f3d1d94236431', '581ba5dfe75066b5a4769b3ed83c4ce1', 'number_', 'key', NULL, 'int(11)', 'Long', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 110, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.160', '0');
-INSERT INTO `gen_table_column` VALUES ('3caf8556b0edd037e47d3fcf9b1cb06c', '6aed6fe18521d641a443171fa9e92893', 'created_date', 'created_date', NULL, 'timestamp', 'java.util.Date', 'createdDate', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 130, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.089', '0');
-INSERT INTO `gen_table_column` VALUES ('3e75a10aa0cb5eee1c45cdad10d1bd3a', '6aed6fe18521d641a443171fa9e92893', 'id_', 'id_', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.028', '0');
-INSERT INTO `gen_table_column` VALUES ('42f20b67074e0cf8595793c4a199ac60', 'db46c9935ed8caae04bcefd5c6ea7f28', 'leaf', '1 叶子节点 0 非叶子节点', NULL, 'bit(1)', 'Integer', 'leaf', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 0, NULL, '1', '2019-07-25 10:28:01.428', '1', '2019-07-25 10:28:01.428', '0');
-INSERT INTO `gen_table_column` VALUES ('4a454825fbabfbae670596aca6c0fc83', '8addcc278d31bbee16b6936d7a70c98d', 'client_secret', '客户端密钥', NULL, 'varchar(256)', 'String', 'clientSecret', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 0, NULL, '1', '2019-07-26 11:12:02.533', '1', '2019-07-26 11:12:02.533', '0');
-INSERT INTO `gen_table_column` VALUES ('4f93112d3f008fcf4ab3a35a89e2c3be', '7c0d6295f674ada7a7cf4d651250d855', 'description', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 160, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.515', '0');
-INSERT INTO `gen_table_column` VALUES ('5e6815bcc98ef19b69a5a8a87d4f599d', '581ba5dfe75066b5a4769b3ed83c4ce1', 'parent_id', 'parent_id', NULL, 'varchar(32)', 'String', 'parentId', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 20, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.129', '0');
-INSERT INTO `gen_table_column` VALUES ('5f43bc1fa39527edd1fbbd3e987d189e', '7c0d6295f674ada7a7cf4d651250d855', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.492', '0');
-INSERT INTO `gen_table_column` VALUES ('5f5e73a6ff49b05991615a59ebc77ccd', '581ba5dfe75066b5a4769b3ed83c4ce1', 'leaf', '1 叶子节点 0 非叶子节点', NULL, 'bit(1)', 'Integer', 'leaf', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.144', '0');
-INSERT INTO `gen_table_column` VALUES ('65816071ee11e7e55d153f891e0b863c', '7c0d6295f674ada7a7cf4d651250d855', 'number_', 'key', NULL, 'int(11)', 'Long', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.489', '0');
-INSERT INTO `gen_table_column` VALUES ('6760b607f3fdd951d2c94053e76226c5', '581ba5dfe75066b5a4769b3ed83c4ce1', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 120, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.163', '0');
-INSERT INTO `gen_table_column` VALUES ('677b52a641d567bc68fd5e9964cfcbd1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_date', 'last_modified_date', NULL, 'timestamp', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.099', '0');
-INSERT INTO `gen_table_column` VALUES ('6c394ff7afd679500cdf1603f5518d29', '7c0d6295f674ada7a7cf4d651250d855', 'del_flag', '0-正常，1-删除', NULL, 'char(1)', 'String', 'delFlag', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'radio', 'sys_flag', NULL, 180, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.522', '0');
-INSERT INTO `gen_table_column` VALUES ('6c6faf1de9039435e863732118ba6237', 'db46c9935ed8caae04bcefd5c6ea7f28', 'name', '部门名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'1', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 0, NULL, '1', '2019-07-25 10:28:01.425', '1', '2019-07-25 10:28:01.425', '0');
-INSERT INTO `gen_table_column` VALUES ('6fd517bdaf9bb1c3d97f93e98d2d5818', '8addcc278d31bbee16b6936d7a70c98d', 'resource_ids', '资源ID', NULL, 'varchar(256)', 'String', 'resourceIds', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 110, 0, NULL, '1', '2019-07-26 11:12:02.531', '1', '2019-07-26 11:12:02.531', '0');
-INSERT INTO `gen_table_column` VALUES ('71d61913c75cfbd8e292ea8556a704b0', '8addcc278d31bbee16b6936d7a70c98d', 'client_id', '客户端ID', NULL, 'varchar(32)', 'String', 'clientId', b'1', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 10, 0, NULL, '1', '2019-07-26 11:12:02.527', '1', '2019-07-26 11:12:02.527', '0');
-INSERT INTO `gen_table_column` VALUES ('7644a064412105de9eec01bdc2ac3de2', '6aed6fe18521d641a443171fa9e92893', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.056', '0');
-INSERT INTO `gen_table_column` VALUES ('7899be0c46d895b71a0db0b0975fe181', 'db46c9935ed8caae04bcefd5c6ea7f28', 'created_date', '创建时间', NULL, 'timestamp(3)', 'java.util.Date', 'createdDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 80, 0, NULL, '1', '2019-07-25 10:28:01.430', '1', '2019-07-25 10:28:01.430', '0');
-INSERT INTO `gen_table_column` VALUES ('7a818e013b9dddc9d59d3e03549f496c', '6aed6fe18521d641a443171fa9e92893', 'description_', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 170, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.108', '0');
-INSERT INTO `gen_table_column` VALUES ('7c781fe7b465cf0138963a0da4a21256', 'db46c9935ed8caae04bcefd5c6ea7f28', 'last_modified_date', '修改时间', NULL, 'timestamp(3)', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 100, 0, NULL, '1', '2019-07-25 10:28:01.432', '1', '2019-07-25 10:28:01.432', '0');
-INSERT INTO `gen_table_column` VALUES ('81671246990e2d74946097449c13d8cc', 'db46c9935ed8caae04bcefd5c6ea7f28', 'id', 'id', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 0, NULL, '1', '2019-07-25 10:28:01.418', '1', '2019-07-25 10:28:01.418', '0');
-INSERT INTO `gen_table_column` VALUES ('84e7532b134e28f3b94328f12e815c48', '581ba5dfe75066b5a4769b3ed83c4ce1', 'last_modified_date', '修改时间', NULL, 'timestamp(3)', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 190, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.188', '0');
-INSERT INTO `gen_table_column` VALUES ('85362f26891e9d126ede2279c8609b59', '581ba5dfe75066b5a4769b3ed83c4ce1', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'1', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.153', '0');
-INSERT INTO `gen_table_column` VALUES ('85d8630eed04192268495c134ad37c91', '7c0d6295f674ada7a7cf4d651250d855', 'name_', '名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'1', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.475', '0');
-INSERT INTO `gen_table_column` VALUES ('8874a7c3155a56474176b5c7995f352a', '581ba5dfe75066b5a4769b3ed83c4ce1', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 130, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.166', '0');
-INSERT INTO `gen_table_column` VALUES ('99994d3d43b891b812b9db40e53a771b', '6aed6fe18521d641a443171fa9e92893', 'status_', 'status_', NULL, 'int(11)', 'Long', 'status', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 160, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.103', '0');
-INSERT INTO `gen_table_column` VALUES ('9aba5223e11aecae8be66326c6b884fb', '581ba5dfe75066b5a4769b3ed83c4ce1', 'sort', '排序', NULL, 'int(11)', 'Long', 'sort', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.141', '0');
-INSERT INTO `gen_table_column` VALUES ('9b803522d4c92864080d9341a87ac895', 'db46c9935ed8caae04bcefd5c6ea7f28', 'description', '备注', NULL, 'varchar(100)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 120, 0, NULL, '1', '2019-07-25 10:28:01.433', '1', '2019-07-25 10:28:01.433', '0');
-INSERT INTO `gen_table_column` VALUES ('9bfd8282cd36b26c5e53715a1a40293b', '6aed6fe18521d641a443171fa9e92893', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.071', '0');
-INSERT INTO `gen_table_column` VALUES ('9d2e9436870e1b3f8208fd724f69b5c6', '581ba5dfe75066b5a4769b3ed83c4ce1', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 150, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.174', '0');
-INSERT INTO `gen_table_column` VALUES ('9e2ff24156f8f7c5bfba82790c50be20', '581ba5dfe75066b5a4769b3ed83c4ce1', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 170, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.181', '0');
-INSERT INTO `gen_table_column` VALUES ('9f620d41a276ede01cf4be9301f37a2d', '6aed6fe18521d641a443171fa9e92893', 'name_', '名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.046', '0');
-INSERT INTO `gen_table_column` VALUES ('9f9e94582c7f96573ee2ce0f5422d58a', '7c0d6295f674ada7a7cf4d651250d855', 'version', 'version', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 170, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.519', '0');
-INSERT INTO `gen_table_column` VALUES ('a172d22697aa8f970ddb6dbebdf1b84b', 'db46c9935ed8caae04bcefd5c6ea7f28', 'parent_id', 'parent_id', NULL, 'varchar(32)', 'String', 'parentId', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'eq', 'input', '', NULL, 20, 0, NULL, '1', '2019-07-25 10:28:01.422', '1', '2019-07-25 10:28:01.422', '0');
-INSERT INTO `gen_table_column` VALUES ('a2b0b641d21440d8920ac63337ee265f', '581ba5dfe75066b5a4769b3ed83c4ce1', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 70, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.147', '0');
-INSERT INTO `gen_table_column` VALUES ('a7645dc329637ff9ed3b1bf1a07a43b6', '581ba5dfe75066b5a4769b3ed83c4ce1', 'id', 'id', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.125', '0');
-INSERT INTO `gen_table_column` VALUES ('a76d66fe331b2e564a830fcf457a7377', '6aed6fe18521d641a443171fa9e92893', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.061', '0');
-INSERT INTO `gen_table_column` VALUES ('aa239c70b49d022c7080a1b627e30db7', '8addcc278d31bbee16b6936d7a70c98d', 'scope', '作用域', NULL, 'varchar(256)', 'String', 'scope', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 0, NULL, '1', '2019-07-26 11:12:02.534', '1', '2019-07-26 11:12:02.534', '0');
-INSERT INTO `gen_table_column` VALUES ('ab00fc0a1f91793a5a751a3d2bcc95b2', '8addcc278d31bbee16b6936d7a70c98d', 'autoapprove', '是否自动放行', NULL, 'varchar(256)', 'String', 'autoapprove', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 45, 0, NULL, '1', '2019-07-26 11:12:02.547', '1', '2019-07-26 11:12:02.547', '0');
-INSERT INTO `gen_table_column` VALUES ('b25f05215a6dc316fcc02a07d8a19e36', '8addcc278d31bbee16b6936d7a70c98d', 'access_token_validity', '请求令牌有效时间', NULL, 'int(11)', 'Long', 'accessTokenValidity', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 0, NULL, '1', '2019-07-26 11:12:02.542', '1', '2019-07-26 11:12:02.542', '0');
-INSERT INTO `gen_table_column` VALUES ('b261660f4374ab99c042700277ab66af', 'db46c9935ed8caae04bcefd5c6ea7f28', 'del_flag', '0-正常，1-删除', NULL, 'char(1)', 'String', 'delFlag', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'radio', 'sys_flag', NULL, 130, 0, NULL, '1', '2019-07-25 10:28:01.434', '1', '2019-07-25 10:28:01.434', '0');
-INSERT INTO `gen_table_column` VALUES ('b525639e645119a9f69f2472166d0e34', '581ba5dfe75066b5a4769b3ed83c4ce1', 'name', '部门名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.137', '0');
-INSERT INTO `gen_table_column` VALUES ('b8a151c7c7aac1309493648b8666e7c5', '6aed6fe18521d641a443171fa9e92893', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.085', '0');
-INSERT INTO `gen_table_column` VALUES ('ba4fe0313cadacd1a484a7e47a47258f', '7c0d6295f674ada7a7cf4d651250d855', 'reset_date', 'reset_date', NULL, 'timestamp(3)', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 110, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.498', '0');
-INSERT INTO `gen_table_column` VALUES ('bcbff4f8f7380f2f0b37311bca509ad1', '581ba5dfe75066b5a4769b3ed83c4ce1', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 80, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.150', '0');
-INSERT INTO `gen_table_column` VALUES ('bd48ae3b1ebe195921c5da3c9ebdfdc9', '581ba5dfe75066b5a4769b3ed83c4ce1', 'version', 'version', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 200, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.191', '0');
-INSERT INTO `gen_table_column` VALUES ('c05bf82fde1d193dba8e3dc8982eabb9', '581ba5dfe75066b5a4769b3ed83c4ce1', 'parent_ids', '父菜单IDs', NULL, 'varchar(2000)', 'String', 'parentIds', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.133', '0');
-INSERT INTO `gen_table_column` VALUES ('c6c341b71d428cf7f261b4f3a4027ac0', '7c0d6295f674ada7a7cf4d651250d855', 'last_modified_date', 'last_modified_date', NULL, 'timestamp(3)', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.511', '0');
-INSERT INTO `gen_table_column` VALUES ('c90414ff74d0b32507dafe3aea3e6b91', '7c0d6295f674ada7a7cf4d651250d855', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.478', '0');
-INSERT INTO `gen_table_column` VALUES ('c9782de5e492e62b8872e6c9fe63f83f', '6aed6fe18521d641a443171fa9e92893', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.076', '0');
-INSERT INTO `gen_table_column` VALUES ('cb0cc60e1f568ed16b8e70cc6651e141', '8addcc278d31bbee16b6936d7a70c98d', 'additional_information', '扩展信息', NULL, 'varchar(4096)', 'String', 'additionalInformation', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 0, NULL, '1', '2019-07-26 11:12:02.546', '1', '2019-07-26 11:12:02.546', '0');
-INSERT INTO `gen_table_column` VALUES ('d0fbc71db584f5483b108f47c24b7b24', '7c0d6295f674ada7a7cf4d651250d855', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.468', '0');
-INSERT INTO `gen_table_column` VALUES ('d39e2a5d74ca674d1a59666b1005d258', '6aed6fe18521d641a443171fa9e92893', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.036', '0');
-INSERT INTO `gen_table_column` VALUES ('d4aa80d1a3ab880d96f6e3114b1c1ab6', '8addcc278d31bbee16b6936d7a70c98d', 'web_server_redirect_uri', '重定向地址', NULL, 'varchar(256)', 'String', 'webServerRedirectUri', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 0, NULL, '1', '2019-07-26 11:12:02.539', '1', '2019-07-26 11:12:02.539', '0');
-INSERT INTO `gen_table_column` VALUES ('d51560e8721d5d9aa0300c25f3855155', '7c0d6295f674ada7a7cf4d651250d855', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 30, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.471', '0');
-INSERT INTO `gen_table_column` VALUES ('d88ff10db4f84147d504fc0fbd605ceb', '7c0d6295f674ada7a7cf4d651250d855', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'radio', 'sys_flag', NULL, 70, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.485', '0');
-INSERT INTO `gen_table_column` VALUES ('e04faad4cee1eec6ee3cdc7636276c1b', '6aed6fe18521d641a443171fa9e92893', 'reset_date', 'reset_date', NULL, 'timestamp', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 110, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.080', '0');
-INSERT INTO `gen_table_column` VALUES ('e0f3898711892f794bfb15ba30c407e5', 'db46c9935ed8caae04bcefd5c6ea7f28', 'sort', '排序', NULL, 'int(11)', 'Long', 'sort', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 0, NULL, '1', '2019-07-25 10:28:01.426', '1', '2019-07-25 10:28:01.426', '0');
-INSERT INTO `gen_table_column` VALUES ('e4f79152724169162574489621e68f46', '8addcc278d31bbee16b6936d7a70c98d', 'authorities', '权限', NULL, 'varchar(256)', 'String', 'authorities', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 0, NULL, '1', '2019-07-26 11:12:02.540', '1', '2019-07-26 11:12:02.540', '0');
-INSERT INTO `gen_table_column` VALUES ('e572dd69b916c5db2ad3b0ab5a593572', '6aed6fe18521d641a443171fa9e92893', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.041', '0');
-INSERT INTO `gen_table_column` VALUES ('e706aed2cd00c7b2df701c707a2c3650', '6aed6fe18521d641a443171fa9e92893', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.051', '0');
-INSERT INTO `gen_table_column` VALUES ('e7d739918f4395bf018c8536c54ba8a8', '8addcc278d31bbee16b6936d7a70c98d', 'authorized_grant_types', '授权方式', NULL, 'varchar(256)', 'String', 'authorizedGrantTypes', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 0, NULL, '1', '2019-07-26 11:12:02.536', '1', '2019-07-26 11:12:02.536', '0');
-INSERT INTO `gen_table_column` VALUES ('ea3302c65612ea668ace61cb3049741a', 'db46c9935ed8caae04bcefd5c6ea7f28', 'version', 'version', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 110, 0, NULL, '1', '2019-07-25 10:28:01.433', '1', '2019-07-25 10:28:01.433', '0');
-INSERT INTO `gen_table_column` VALUES ('ebd42b7dd2a110a29bccae26e329cb91', '581ba5dfe75066b5a4769b3ed83c4ce1', 'description', '备注', NULL, 'varchar(100)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 210, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.194', '0');
-INSERT INTO `gen_table_column` VALUES ('ee7ec3af0723d0011f252e02caaf5cb6', 'db46c9935ed8caae04bcefd5c6ea7f28', 'parent_ids', '父菜单IDs', NULL, 'varchar(2000)', 'String', 'parentIds', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 0, NULL, '1', '2019-07-25 10:28:01.423', '1', '2019-07-25 10:28:01.423', '0');
-INSERT INTO `gen_table_column` VALUES ('f1cfb69740f1af1ac96cefad012b3925', '7c0d6295f674ada7a7cf4d651250d855', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.495', '0');
-INSERT INTO `gen_table_column` VALUES ('f7e752965899142d20993833ddf7dae4', '7c0d6295f674ada7a7cf4d651250d855', 'id', 'id', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.463', '0');
-INSERT INTO `gen_table_column` VALUES ('fb5e5e7f6f8f63073ec7db1c83db54e1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 140, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.094', '0');
-INSERT INTO `gen_table_column` VALUES ('fe7dddf98e8ee756fab853223deb1e24', '7c0d6295f674ada7a7cf4d651250d855', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 140, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.508', '0');
 
 -- ----------------------------
 -- Table structure for gen_table_fk
@@ -391,21 +290,18 @@ CREATE TABLE `sys_log`  (
   INDEX `sys_log_request_uri`(`request_uri`) USING BTREE,
   INDEX `sys_log_type`(`type`) USING BTREE,
   INDEX `sys_log_create_date`(`created_date`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'admin', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, '1', '2019-01-24 20:56:43.000', NULL, '2019-07-26 10:54:23.249', 0, '', '0');
-INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, '1', '2019-04-27 14:55:07.000', NULL, '2019-07-26 10:54:23.256', 0, '', '0');
-INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, '1', '2019-04-27 14:55:19.000', NULL, '2019-07-26 10:54:23.258', 0, '', '0');
-INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, '1', '2019-04-27 15:45:30.000', NULL, '2019-07-26 10:54:23.261', 0, '', '0');
 INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, '1', '2019-07-07 22:16:43.000', 'system', '2019-07-26 10:54:23.264', 0, NULL, '0');
 INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, '1', '2019-07-07 22:19:27.000', 'system', '2019-07-26 10:54:23.267', 0, NULL, '0');
 INSERT INTO `sys_log` VALUES (57, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/663848c0f8206dba3fd2425812fd2fbf', 'DELETE', '', '28', NULL, 'system', '2019-07-26 11:15:45.309', 'system', '2019-07-26 11:15:45.309', 0, NULL, '0');
 INSERT INTO `sys_log` VALUES (58, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/ba842f6e126664a139c79f97a6bc01a9', 'DELETE', '', '20', NULL, 'system', '2019-07-26 11:16:02.388', 'system', '2019-07-26 11:16:02.388', 0, NULL, '0');
 INSERT INTO `sys_log` VALUES (59, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/4026ad4683346e478306cdb1559e2e7e', 'DELETE', '', '19', NULL, 'system', '2019-07-26 11:16:19.698', 'system', '2019-07-26 11:16:19.698', 0, NULL, '0');
 INSERT INTO `sys_log` VALUES (60, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/aa74553ef25bbd93d3a921f37177b66b', 'DELETE', '', '21', NULL, 'system', '2019-07-26 11:16:21.731', 'system', '2019-07-26 11:16:21.731', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (61, '1', '添加/更新菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/', 'POST', '', '60', NULL, 'system', '2019-07-26 15:50:53.318', 'system', '2019-07-26 15:50:53.318', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -447,7 +343,6 @@ INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NUL
 INSERT INTO `sys_menu` VALUES ('1201', '菜单编辑', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:15:53.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1202', '菜单锁定', 'sys_menu_lock', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:23.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:43.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('128a83339ca7f4b0ccb4379e4ffdf24a', '测试书籍管理编辑', 'test_testBook_edit', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:09:45.789', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/sys/role/index', '0', '1', '0', b'0', 3, '', '2017-11-08 10:13:37.000', NULL, '2019-07-26 13:36:36.703', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1301', '角色编辑', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:18.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1302', '角色锁定', 'sys_role_lock', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:41.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
@@ -457,10 +352,7 @@ INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NUL
 INSERT INTO `sys_menu` VALUES ('1401', '部门编辑', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:16.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1402', '部门锁定', 'sys_dept_lock', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:59.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1403', '部门删除', 'sys_dept_del', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:57:28.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('148821a9b6397dd3549d193c3036ddf5', '测试书籍管理编辑', 'test_testBook_edit', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:29.922', 'system', '2019-07-26 11:13:44.827', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('14a5edd0bd4060d28986aa8dfc44045a', '测试书籍管理查看', 'test_testBook_view', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:09:45.785', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('163dab3b2d62dd161104f3f8649930a4', '测试书籍管理', NULL, 'TestBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 13:31:23.951', 'system', '2019-07-25 16:09:45.773', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/sys', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '1', '0', b'0', 1, '', '2017-11-07 20:56:00.000', NULL, '2019-07-26 13:10:16.274', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/sys', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '1', '0', b'0', 1, '', '2017-11-07 20:56:00.000', '1', '2019-07-26 15:50:52.818', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/sys/log/index', '0', '1', '0', b'0', 5, '', '2017-11-20 14:06:22.000', NULL, '2019-07-26 13:36:45.088', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2101', '日志删除', 'sys_log_del', NULL, '2100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-20 20:37:37.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/sys/dict/index', '0', '1', '0', b'0', 6, '', '2017-11-29 11:30:52.000', NULL, '2019-07-26 13:36:48.667', NULL, 0, '0');
@@ -471,34 +363,16 @@ INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_add', NULL
 INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:37:06.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:39:16.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('247071d42ff40267c8d8c44eac92da67', '生成方案', NULL, 'scheme', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-appstore', 'views/gen/scheme/index', '0', '1', '0', b'0', 40, '1', '2019-07-21 13:27:35.000', '1', '2019-07-25 13:32:33.326', NULL, 6, '0');
-INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '1', '0', b'0', 10, '', '2018-06-26 10:50:32.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://localhost:5001', '2000', '2000,', 'icon-server', NULL, '0', '1', '0', b'1', 10, '', '2018-06-26 10:50:32.000', '1', '2019-07-26 15:50:52.837', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/sys/token/index', '0', '1', '0', b'0', 11, '', '2018-09-04 05:58:41.000', NULL, '2019-07-26 13:39:01.085', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', '1', b'0', 1, '', '2018-09-04 05:59:50.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('3a41196054c6af8ff5dfc5926e7406a0', '测试树书管理查看', 'test_testTreeBook_view', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:25.960', 'system', '2019-07-26 11:12:47.976', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('3fe010c12bb466aa3255dc269293e752', '测试树书管理', NULL, 'TestTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:09:40.703', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('4026ad4683346e478306cdb1559e2e7e', '测试树书管理', NULL, 'testTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:25.955', 'system', '2019-07-26 11:16:19.679', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/gen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48.000', '1', '2019-07-21 13:27:55.000', NULL, 16, '0');
-INSERT INTO `sys_menu` VALUES ('50a572de4e409ea88ec94c3f8ba9fc60', '测试书籍管理', NULL, 'TestBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:09:45.780', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('52715698214e88cb09fa4dd1ea5ad348', '生成方案菜单', 'gen_scheme_menu', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-25 13:03:03.805', '1', '2019-07-25 13:32:03.060', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('5aa65acd001f22f29217ca5bd6b9475e', '测试书籍管理删除', 'test_testBook_del', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:09:45.792', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('663848c0f8206dba3fd2425812fd2fbf', '测试书籍管理删除', 'test_testBook_del', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:29.926', 'system', '2019-07-26 11:15:41.104', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('7b5f88a6a783d4ed88db6dc5f4dd236d', '测试树书管理删除', 'test_testTreeBook_del', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:25.968', 'system', '2019-07-26 11:12:49.812', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('7bd63eec13b959fe5326fdc8ce1ad8fb', '测试树书管理', NULL, 'TestTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 13:34:23.331', 'system', '2019-07-25 16:09:40.695', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('8057987be8a92f2c78b1c21799aec6d9', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:25.964', 'system', '2019-07-26 11:12:51.603', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('97722c6d56c8b9990cc3c1a6eea3d6bb', '业务表编辑', 'gen_table_edit', NULL, 'a18b33e15bde209a3c9115517c56d9ec', '413892fe8d52c1163d6659f51299dc96,a18b33e15bde209a3c9115517c56d9ec,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:24:02.000', '1', '2019-07-25 13:32:12.770', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表', '', 'table', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-table', 'views/gen/table/index', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:02:02.000', '1', '2019-07-25 13:32:18.867', NULL, 12, '0');
-INSERT INTO `sys_menu` VALUES ('a296e97e320c607f7a0789d0988de4d5', '测试树书管理删除', 'test_testTreeBook_delete', NULL, '7bd63eec13b959fe5326fdc8ce1ad8fb', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 13:34:23.339', 'system', '2019-07-25 16:09:40.695', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('aa74553ef25bbd93d3a921f37177b66b', '测试书籍管理', NULL, 'testBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:29.911', 'system', '2019-07-26 11:16:21.704', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('b961670cbf3454f5927c4bd2a327e915', '生成方案删除', 'gen_scheme_del', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:30:18.000', '1', '2019-07-25 13:32:07.110', NULL, 1, '0');
-INSERT INTO `sys_menu` VALUES ('ba842f6e126664a139c79f97a6bc01a9', '测试书籍管理查看', 'test_testBook_view', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:29.919', 'system', '2019-07-26 11:16:02.366', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('bbb1aae54ec2ec16c5e2908fbddba717', '测试书籍管理编辑', 'test_testBook_edit', NULL, '163dab3b2d62dd161104f3f8649930a4', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 13:31:23.956', 'system', '2019-07-25 16:09:45.773', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('c259e3182c7d20ead4f6a31b4fefa5ea', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '3fe010c12bb466aa3255dc269293e752', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:09:40.713', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('c9b4d84c2c823961b8bce1c8635caaff', '测试树书管理查看', 'test_testTreeBook_view', NULL, '3fe010c12bb466aa3255dc269293e752', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:09:40.708', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('d1d7bbe9e5406f21a0378853892318af', '测试书籍管理删除', 'test_testBook_delete', NULL, '163dab3b2d62dd161104f3f8649930a4', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 13:31:23.960', 'system', '2019-07-25 16:09:45.773', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('d4871aa7a5a829c1529b836ea06ede75', '测试树书管理删除', 'test_testTreeBook_del', NULL, '3fe010c12bb466aa3255dc269293e752', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:09:40.716', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('e5ea38c1f97dee0043e78f3fb27b25d6', '生成方案编辑', 'gen_scheme_edit', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:29:14.000', '1', '2019-07-25 13:32:09.178', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('e710a66583fe0e324492462adb16014e', '业务表删除', 'gen_table_del', NULL, 'a18b33e15bde209a3c9115517c56d9ec', '413892fe8d52c1163d6659f51299dc96,a18b33e15bde209a3c9115517c56d9ec,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:24:45.000', '1', '2019-07-25 13:32:11.051', NULL, 1, '0');
-INSERT INTO `sys_menu` VALUES ('fc921e422e9adef5c7c39a102e3d8667', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '7bd63eec13b959fe5326fdc8ce1ad8fb', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 13:34:23.336', 'system', '2019-07-25 16:09:40.695', NULL, 0, '1');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_detail
@@ -727,12 +601,6 @@ CREATE TABLE `test_book`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试书籍' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of test_book
--- ----------------------------
-INSERT INTO `test_book` VALUES ('a3a7afa3364b4556ae3433d1122cc65b', 'test', 'test', 'test', '', 'dsfasd', b'1', 32, 12.30, 12.00, '2019-07-26 21:00:16.000', '1', '2019-07-25 16:27:40.000', '1', '2019-07-25 17:52:08.141', '', 8, '0');
-INSERT INTO `test_book` VALUES ('e26358487d5dfa123b079aa5f1c947a1', 'test', 'test', '', '', '', b'1', 123, 123.20, 123.20, NULL, '1', '2019-07-25 16:42:37.991', '1', '2019-07-25 16:39:04.741', '', 1, '1');
-
--- ----------------------------
 -- Table structure for test_tree_book
 -- ----------------------------
 DROP TABLE IF EXISTS `test_tree_book`;
@@ -760,23 +628,6 @@ CREATE TABLE `test_tree_book`  (
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '  测试树书' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of test_tree_book
--- ----------------------------
-INSERT INTO `test_tree_book` VALUES ('1', '-1', NULL, '山东农信', 30, b'0', 'ads', NULL, NULL, b'1', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.000', '1', '0', '2019-07-25 17:53:26.646', 4, '');
-INSERT INTO `test_tree_book` VALUES ('10', '8', NULL, '院校沙县', NULL, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', NULL, '0', NULL, 0, '');
-INSERT INTO `test_tree_book` VALUES ('2', '-1', NULL, '沙县国际', 30, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', '1', '0', '2019-07-25 16:54:17.980', 2, '');
-INSERT INTO `test_tree_book` VALUES ('3', '1', NULL, '潍坊农信', NULL, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', NULL, '0', NULL, 0, '');
-INSERT INTO `test_tree_book` VALUES ('4', '3', NULL, '高新农信', 30, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', '1', '0', '2019-07-25 17:09:07.360', 1, '');
-INSERT INTO `test_tree_book` VALUES ('5', '4', '4,', '院校农信', 30, b'0', 'sdfads', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.000', '1', '0', '2019-07-25 17:09:07.375', 1, '');
-INSERT INTO `test_tree_book` VALUES ('5f86e2a82b040b1f618aefc62f403024', '5', '5,', '11', 1, b'1', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', NULL, '0', NULL, 0, NULL);
-INSERT INTO `test_tree_book` VALUES ('6', '5', NULL, '潍院农信', NULL, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', NULL, '0', NULL, 0, '');
-INSERT INTO `test_tree_book` VALUES ('6690afb33a508d084a9207dab88c02e2', '2', '2,', 'dsdfadfasd', 30, b'1', '11', '', '', b'1', NULL, NULL, NULL, NULL, '1', '2019-07-25 16:54:17.985', '1', '1', '2019-07-25 16:54:26.678', 0, '');
-INSERT INTO `test_tree_book` VALUES ('7', '2', '2,', '山东沙县', 30, b'0', 'test', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.000', '1', '1', '2019-07-25 16:54:28.847', 1, '');
-INSERT INTO `test_tree_book` VALUES ('8', '7', NULL, '潍坊沙县', 30, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', '1', '0', '2019-07-25 16:53:49.316', 1, '');
-INSERT INTO `test_tree_book` VALUES ('9', '8', NULL, '高新沙县', NULL, b'0', '', NULL, NULL, b'0', NULL, NULL, NULL, NULL, '', '2019-07-25 14:54:58.055', NULL, '0', NULL, 0, '');
-INSERT INTO `test_tree_book` VALUES ('abfb1162817129ac5d8cca2425663a9b', '8', '8,', 'test', 30, b'1', 'test', '', '', b'1', NULL, NULL, NULL, NULL, '1', '2019-07-25 16:53:49.322', '1', '0', '2019-07-25 16:53:49.322', 0, '');
 
 -- ----------------------------
 -- Table structure for zipkin_annotations
@@ -809,6 +660,102 @@ CREATE TABLE `zipkin_annotations`  (
   INDEX `a_key_2`(`a_key`) USING BTREE COMMENT 'for getTraces and autocomplete values',
   INDEX `trace_id_2`(`trace_id`, `span_id`, `a_key`) USING BTREE COMMENT 'for dependencies job'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
+
+-- ----------------------------
+-- Records of zipkin_annotations
+-- ----------------------------
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, -3028944364851724551, 'cs', NULL, -1, 1564126875798069, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, -3028944364851724551, 'cr', NULL, -1, 1564126875809732, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, -3028944364851724551, 'http.method', 0x504F5354, 6, 1564126875798069, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, -3028944364851724551, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564126875798069, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'sr', NULL, -1, 1564126875787087, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'ss', NULL, -1, 1564126875832472, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'ca', 0x01, 0, 1564126875787087, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'http.method', 0x474554, 6, 1564126875787087, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'http.path', 0x2F6C6F672F, 6, 1564126875787087, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'mvc.controller.class', 0x4C6F675265736F75726365, 6, 1564126875787087, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 272343372844899494, 8650847360064451318, 'mvc.controller.method', 0x67657450616765, 6, 1564126875787087, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -2340382440083905913, 'cs', NULL, -1, 1564127042307045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -2340382440083905913, 'cr', NULL, -1, 1564127042313844, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -2340382440083905913, 'http.method', 0x504F5354, 6, 1564127042307045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -2340382440083905913, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127042307045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'sr', NULL, -1, 1564127042304040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'ss', NULL, -1, 1564127042369467, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'ca', 0x01, 0, 1564127042304040, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'http.method', 0x474554, 6, 1564127042304040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'http.path', 0x2F6D656E752F, 6, 1564127042304040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127042304040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -2563163435213653073, -3109682506393738710, 'mvc.controller.method', 0x67657450616765, 6, 1564127042304040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 582558505829247247, 'cs', NULL, -1, 1564127054021038, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 582558505829247247, 'cr', NULL, -1, 1564127054032491, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 582558505829247247, 'http.method', 0x504F5354, 6, 1564127054021038, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 582558505829247247, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127054021038, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'sr', NULL, -1, 1564127054018045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'ss', NULL, -1, 1564127054057881, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'ca', 0x01, 0, 1564127054018045, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'http.method', 0x474554, 6, 1564127054018045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'http.path', 0x2F6D656E752F, 6, 1564127054018045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127054018045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6158490369995999212, 1917815909472501094, 'mvc.controller.method', 0x67657450616765, 6, 1564127054018045, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, -2279825729456383093, 'cs', NULL, -1, 1564127133294039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, -2279825729456383093, 'cr', NULL, -1, 1564127133301527, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, -2279825729456383093, 'http.method', 0x504F5354, 6, 1564127133294039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, -2279825729456383093, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127133294039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'sr', NULL, -1, 1564127133291040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'ss', NULL, -1, 1564127133327789, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'ca', 0x01, 0, 1564127133291040, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'http.method', 0x474554, 6, 1564127133291040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'http.path', 0x2F6D656E752F, 6, 1564127133291040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127133291040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6562926606632462282, 8796924593109324980, 'mvc.controller.method', 0x67657450616765, 6, 1564127133291040, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -4856311730907896364, 'cs', NULL, -1, 1564127136022057, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -4856311730907896364, 'cr', NULL, -1, 1564127136030676, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -4856311730907896364, 'http.method', 0x504F5354, 6, 1564127136022057, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -4856311730907896364, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127136022057, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'sr', NULL, -1, 1564127136017039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'ss', NULL, -1, 1564127136059154, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'ca', 0x01, 0, 1564127136017039, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'http.method', 0x474554, 6, 1564127136017039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'http.path', 0x2F6D656E752F, 6, 1564127136017039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127136017039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -3021737358036785199, -1630741176487065905, 'mvc.controller.method', 0x67657450616765, 6, 1564127136017039, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, -5574115193676832827, 'cs', NULL, -1, 1564127148935093, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, -5574115193676832827, 'cr', NULL, -1, 1564127148943745, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, -5574115193676832827, 'http.method', 0x504F5354, 6, 1564127148935093, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, -5574115193676832827, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127148935093, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'sr', NULL, -1, 1564127148932062, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'ss', NULL, -1, 1564127148962969, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'ca', 0x01, 0, 1564127148932062, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'http.method', 0x474554, 6, 1564127148932062, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'http.path', 0x2F6D656E752F, 6, 1564127148932062, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127148932062, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -268161805056592825, 2316860013070603731, 'mvc.controller.method', 0x67657450616765, 6, 1564127148932062, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6911326512282472477, 6911326512282472477, 'lc', '', 6, 1564127280833000, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 6111860762014105667, 'cs', NULL, -1, 1564127452602389, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 6111860762014105667, 'cr', NULL, -1, 1564127452623370, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 6111860762014105667, 'http.method', 0x504F5354, 6, 1564127452602389, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 6111860762014105667, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1564127452602389, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'sr', NULL, -1, 1564127452592231, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'ss', NULL, -1, 1564127452855628, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'ca', 0x01, 0, 1564127452592231, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'http.method', 0x504F5354, 6, 1564127452592231, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'http.path', 0x2F6D656E752F, 6, 1564127452592231, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1564127452592231, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 7190951313902771152, 'mvc.controller.method', 0x73617665, 6, 1564127452592231, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'sr', NULL, -1, 1564127453271910, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'ss', NULL, -1, 1564127453333828, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'ca', 0x01, 0, 1564127453271910, -1442926724, NULL, -11160, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'http.method', 0x504F5354, 6, 1564127453271910, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'http.path', 0x2F6C6F672F, 6, 1564127453271910, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'mvc.controller.class', 0x4C6F675265736F75726365, 6, 1564127453271910, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'mvc.controller.method', 0x73617665, 6, 1564127453271910, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'cs', NULL, -1, 1564127453244839, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'cr', NULL, -1, 1564127453338774, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'http.method', 0x504F5354, 6, 1564127453244839, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, 1370163678030963890, 'http.path', 0x2F6C6F672F, 6, 1564127453244839, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, -8674154234655274627, 'class', 0x5379734C6F674C697374656E6572, 6, 1564127452854322, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, -8674154234655274627, 'method', 0x736176655379734C6F67, 6, 1564127452854322, 168100642, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4778990109135373312, -5398263470130861237, 'lc', '', 6, 1564127452853000, 168100642, NULL, NULL, 'albedo-sys');
 
 -- ----------------------------
 -- Table structure for zipkin_dependencies
@@ -848,5 +795,27 @@ CREATE TABLE `zipkin_spans`  (
   INDEX `name_2`(`name`) USING BTREE COMMENT 'for getTraces and getSpanNames',
   INDEX `start_ts_2`(`start_ts`) USING BTREE COMMENT 'for getTraces ordering and range'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
+
+-- ----------------------------
+-- Records of zipkin_spans
+-- ----------------------------
+INSERT INTO `zipkin_spans` VALUES (0, -6158490369995999212, 582558505829247247, 'post', 1917815909472501094, NULL, 1564127054021038, 11453);
+INSERT INTO `zipkin_spans` VALUES (0, -6158490369995999212, 1917815909472501094, 'get /menu/', -6158490369995999212, NULL, 1564127054018045, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, -3021737358036785199, -4856311730907896364, 'post', -1630741176487065905, NULL, 1564127136022057, 8619);
+INSERT INTO `zipkin_spans` VALUES (0, -3021737358036785199, -1630741176487065905, 'get /menu/', -3021737358036785199, NULL, 1564127136017039, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, -2563163435213653073, -3109682506393738710, 'get /menu/', -2563163435213653073, NULL, 1564127042304040, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, -2563163435213653073, -2340382440083905913, 'post', -3109682506393738710, NULL, 1564127042307045, 6799);
+INSERT INTO `zipkin_spans` VALUES (0, -268161805056592825, -5574115193676832827, 'post', 2316860013070603731, NULL, 1564127148935093, 8652);
+INSERT INTO `zipkin_spans` VALUES (0, -268161805056592825, 2316860013070603731, 'get /menu/', -268161805056592825, NULL, 1564127148932062, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 272343372844899494, -3028944364851724551, 'post', 8650847360064451318, NULL, 1564126875798069, 11663);
+INSERT INTO `zipkin_spans` VALUES (0, 272343372844899494, 8650847360064451318, 'get /log/', 272343372844899494, NULL, 1564126875787087, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, -8674154234655274627, 'save-sys-log', 7190951313902771152, NULL, 1564127452854322, 498263);
+INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, -5398263470130861237, 'async', 7190951313902771152, NULL, 1564127452853000, 499692);
+INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, 1370163678030963890, 'post', -8674154234655274627, NULL, 1564127453244839, 93935);
+INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, 6111860762014105667, 'post', 7190951313902771152, NULL, 1564127452602389, 20981);
+INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, 7190951313902771152, 'post /menu/', 4778990109135373312, NULL, 1564127452592231, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 6562926606632462282, -2279825729456383093, 'post', 8796924593109324980, NULL, 1564127133294039, 7488);
+INSERT INTO `zipkin_spans` VALUES (0, 6562926606632462282, 8796924593109324980, 'get /menu/', 6562926606632462282, NULL, 1564127133291040, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 6911326512282472477, 6911326512282472477, 'async', NULL, NULL, 1564127280833000, 43431);
 
 SET FOREIGN_KEY_CHECKS = 1;

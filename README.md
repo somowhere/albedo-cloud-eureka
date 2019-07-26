@@ -36,6 +36,7 @@ albedo
 ├── albedo-ui -- 前端工程[8080]
 ├── albedo-auth -- 授权服务提供[3000]
 └── albedo-common -- 系统公共模块 
+     ├── albedo-common-api --  服务基础api
      ├── albedo-common-core -- 公共工具类核心包
      ├── albedo-common-log -- 日志服务
      ├── albedo-common-module -- 模块基础包
@@ -44,9 +45,8 @@ albedo
 ├── albedo-eureka -- 服务注册与发现[8761]
 ├── albedo-gateway -- Spring Cloud Gateway网关[9999]
 └── albedo-module -- 功能模块
-     ├── albedo-admin-api -- 通用用户权限管理系统公共api模块
-     ├── albedo-admin-biz -- 通用用户权限管理系统业务处理模块[4000]
-     ├── albedo-codegen -- 图形化代码生成[5003]
+     ├── albedo-sys -- 通用用户权限管理系统业务处理模块[4000]
+     ├── albedo-gen -- 图形化代码生成[5003]
      ├── albedo-monitor -- Spring Boot Admin监控 [5001]
      └── albedo-zipkin -- 链路调用监控 [5002]
 └── albedo-plugin  -- 插件模块 

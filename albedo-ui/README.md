@@ -36,7 +36,7 @@ Avue | 1.5.0
 #### 模块说明
 ```lua
 pig
-├── pig-ui -- 前端工程[8080]
+├── albedo-ui -- 前端工程[8080]
 ├── pig-auth -- 授权服务提供[3000]
 └── pig-common -- 系统公共模块 
      ├── pig-common-core -- 公共工具类核心包

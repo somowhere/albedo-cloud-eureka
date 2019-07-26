@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 25/07/2019 18:02:28
+ Date: 26/07/2019 14:04:05
 */
 
 SET NAMES utf8mb4;
@@ -46,8 +46,9 @@ CREATE TABLE `gen_scheme`  (
 -- ----------------------------
 -- Records of gen_scheme
 -- ----------------------------
-INSERT INTO `gen_scheme` VALUES ('36096a9886fe251a9b755fcfaf766b42', '测试树书管理', 'treeTable', NULL, 'com.albedo.java.modules', 'test', NULL, '测试树书管', '测试树书', 'sys', '581ba5dfe75066b5a4769b3ed83c4ce1', 2, NULL, '1', '2019-07-25 12:58:19.000', '1', '2019-07-25 14:58:40.247', '0');
-INSERT INTO `gen_scheme` VALUES ('362bf45dff219f95d092d767dac4f5fb', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', NULL, '测试书籍管', '测试书籍', 'sys', '7c0d6295f674ada7a7cf4d651250d855', 12, NULL, '1', '2019-07-22 20:55:18.000', '1', '2019-07-25 14:58:59.178', '0');
+INSERT INTO `gen_scheme` VALUES ('1c1992737bd35ddf11beb91e034017e4', '终端管理', 'curd_front', NULL, 'com.albedo.java.modules', 'admin', NULL, '终端', '终端', 'admin', '8addcc278d31bbee16b6936d7a70c98d', 0, NULL, '1', '2019-07-26 11:17:58.565', '1', '2019-07-26 11:17:58.565', '0');
+INSERT INTO `gen_scheme` VALUES ('36096a9886fe251a9b755fcfaf766b42', '测试树书管理', 'treeTable', NULL, 'com.albedo.java.modules', 'test', NULL, '测试树书管', '测试树书', 'admin', '581ba5dfe75066b5a4769b3ed83c4ce1', 2, NULL, '1', '2019-07-26 11:16:47.994', '1', '2019-07-25 14:58:40.247', '1');
+INSERT INTO `gen_scheme` VALUES ('362bf45dff219f95d092d767dac4f5fb', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', NULL, '测试书籍管', '测试书籍', 'admin', '7c0d6295f674ada7a7cf4d651250d855', 12, NULL, '1', '2019-07-26 11:16:49.604', '1', '2019-07-25 14:58:59.178', '1');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -75,9 +76,10 @@ CREATE TABLE `gen_table`  (
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
-INSERT INTO `gen_table` VALUES ('581ba5dfe75066b5a4769b3ed83c4ce1', 'test_tree_book', '  测试树书', 'TestTreeBook', NULL, NULL, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.111', '0');
+INSERT INTO `gen_table` VALUES ('581ba5dfe75066b5a4769b3ed83c4ce1', 'test_tree_book', '  测试树书', 'TestTreeBook', NULL, NULL, 3, NULL, '1', '2019-07-26 11:12:21.107', '1', '2019-07-25 17:28:07.111', '1');
 INSERT INTO `gen_table` VALUES ('6aed6fe18521d641a443171fa9e92893', 'test_book', '测试书籍', 'TestBook', '', NULL, 8, NULL, '1', '2019-07-25 14:55:22.657', '1', '2019-07-25 10:21:37.999', '1');
-INSERT INTO `gen_table` VALUES ('7c0d6295f674ada7a7cf4d651250d855', 'test_book', '测试书籍', 'TestBook', NULL, NULL, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.452', '0');
+INSERT INTO `gen_table` VALUES ('7c0d6295f674ada7a7cf4d651250d855', 'test_book', '测试书籍', 'TestBook', NULL, NULL, 2, NULL, '1', '2019-07-26 11:12:19.118', '1', '2019-07-25 17:18:40.452', '1');
+INSERT INTO `gen_table` VALUES ('8addcc278d31bbee16b6936d7a70c98d', 'sys_oauth_client_detail', '终端信息表', 'OauthClientDetail', NULL, NULL, 0, NULL, '1', '2019-07-26 11:12:02.506', '1', '2019-07-26 11:12:02.506', '0');
 INSERT INTO `gen_table` VALUES ('db46c9935ed8caae04bcefd5c6ea7f28', 'test_tree_book', '测试树书', 'TestTreeBook', NULL, NULL, 0, NULL, '1', '2019-07-25 14:55:24.738', '1', '2019-07-25 10:28:01.402', '1');
 
 -- ----------------------------
@@ -130,12 +132,14 @@ INSERT INTO `gen_table_column` VALUES ('13ade9ca23ead1d93e6b34b35e790605', '6aed
 INSERT INTO `gen_table_column` VALUES ('17a287cb8e93372566a2bde5bea27898', '581ba5dfe75066b5a4769b3ed83c4ce1', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'radio', 'sys_flag', NULL, 100, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.157', '0');
 INSERT INTO `gen_table_column` VALUES ('1c523c474827dfd56bef223e63a83ca7', '7c0d6295f674ada7a7cf4d651250d855', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.482', '0');
 INSERT INTO `gen_table_column` VALUES ('213279786f4cfe1ba1bf51cf7a727e4a', '7c0d6295f674ada7a7cf4d651250d855', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.501', '0');
+INSERT INTO `gen_table_column` VALUES ('23955926ea0d6cc2f0fb9fa8678fbf55', '8addcc278d31bbee16b6936d7a70c98d', 'refresh_token_validity', '刷新令牌有效时间', NULL, 'int(11)', 'Long', 'refreshTokenValidity', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 0, NULL, '1', '2019-07-26 11:12:02.545', '1', '2019-07-26 11:12:02.545', '0');
 INSERT INTO `gen_table_column` VALUES ('23e957ff7b9c732514bf0ee5332817f0', 'db46c9935ed8caae04bcefd5c6ea7f28', 'last_modified_by', 'last_modified_by', NULL, 'varchar(50)', 'String', 'lastModifiedBy', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 90, 0, NULL, '1', '2019-07-25 10:28:01.431', '1', '2019-07-25 10:28:01.431', '0');
 INSERT INTO `gen_table_column` VALUES ('2f5562914e21030f3cf341864cb6bf8a', '581ba5dfe75066b5a4769b3ed83c4ce1', 'reset_date', 'reset_date', NULL, 'timestamp(3)', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 140, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.170', '0');
 INSERT INTO `gen_table_column` VALUES ('369de751f2a36663b39f3d1d94236431', '581ba5dfe75066b5a4769b3ed83c4ce1', 'number_', 'key', NULL, 'int(11)', 'Long', 'number', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 110, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.160', '0');
 INSERT INTO `gen_table_column` VALUES ('3caf8556b0edd037e47d3fcf9b1cb06c', '6aed6fe18521d641a443171fa9e92893', 'created_date', 'created_date', NULL, 'timestamp', 'java.util.Date', 'createdDate', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 130, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.089', '0');
 INSERT INTO `gen_table_column` VALUES ('3e75a10aa0cb5eee1c45cdad10d1bd3a', '6aed6fe18521d641a443171fa9e92893', 'id_', 'id_', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.028', '0');
 INSERT INTO `gen_table_column` VALUES ('42f20b67074e0cf8595793c4a199ac60', 'db46c9935ed8caae04bcefd5c6ea7f28', 'leaf', '1 叶子节点 0 非叶子节点', NULL, 'bit(1)', 'Integer', 'leaf', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 0, NULL, '1', '2019-07-25 10:28:01.428', '1', '2019-07-25 10:28:01.428', '0');
+INSERT INTO `gen_table_column` VALUES ('4a454825fbabfbae670596aca6c0fc83', '8addcc278d31bbee16b6936d7a70c98d', 'client_secret', '客户端密钥', NULL, 'varchar(256)', 'String', 'clientSecret', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 0, NULL, '1', '2019-07-26 11:12:02.533', '1', '2019-07-26 11:12:02.533', '0');
 INSERT INTO `gen_table_column` VALUES ('4f93112d3f008fcf4ab3a35a89e2c3be', '7c0d6295f674ada7a7cf4d651250d855', 'description', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 160, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.515', '0');
 INSERT INTO `gen_table_column` VALUES ('5e6815bcc98ef19b69a5a8a87d4f599d', '581ba5dfe75066b5a4769b3ed83c4ce1', 'parent_id', 'parent_id', NULL, 'varchar(32)', 'String', 'parentId', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 20, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.129', '0');
 INSERT INTO `gen_table_column` VALUES ('5f43bc1fa39527edd1fbbd3e987d189e', '7c0d6295f674ada7a7cf4d651250d855', 'money_', 'money_', NULL, 'decimal(20,2)', 'Double', 'money', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 90, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.492', '0');
@@ -145,6 +149,8 @@ INSERT INTO `gen_table_column` VALUES ('6760b607f3fdd951d2c94053e76226c5', '581b
 INSERT INTO `gen_table_column` VALUES ('677b52a641d567bc68fd5e9964cfcbd1', '6aed6fe18521d641a443171fa9e92893', 'last_modified_date', 'last_modified_date', NULL, 'timestamp', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.099', '0');
 INSERT INTO `gen_table_column` VALUES ('6c394ff7afd679500cdf1603f5518d29', '7c0d6295f674ada7a7cf4d651250d855', 'del_flag', '0-正常，1-删除', NULL, 'char(1)', 'String', 'delFlag', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'radio', 'sys_flag', NULL, 180, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.522', '0');
 INSERT INTO `gen_table_column` VALUES ('6c6faf1de9039435e863732118ba6237', 'db46c9935ed8caae04bcefd5c6ea7f28', 'name', '部门名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'1', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 0, NULL, '1', '2019-07-25 10:28:01.425', '1', '2019-07-25 10:28:01.425', '0');
+INSERT INTO `gen_table_column` VALUES ('6fd517bdaf9bb1c3d97f93e98d2d5818', '8addcc278d31bbee16b6936d7a70c98d', 'resource_ids', '资源ID', NULL, 'varchar(256)', 'String', 'resourceIds', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 110, 0, NULL, '1', '2019-07-26 11:12:02.531', '1', '2019-07-26 11:12:02.531', '0');
+INSERT INTO `gen_table_column` VALUES ('71d61913c75cfbd8e292ea8556a704b0', '8addcc278d31bbee16b6936d7a70c98d', 'client_id', '客户端ID', NULL, 'varchar(32)', 'String', 'clientId', b'1', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 10, 0, NULL, '1', '2019-07-26 11:12:02.527', '1', '2019-07-26 11:12:02.527', '0');
 INSERT INTO `gen_table_column` VALUES ('7644a064412105de9eec01bdc2ac3de2', '6aed6fe18521d641a443171fa9e92893', 'phone_', '手机', NULL, 'varchar(32)', 'String', 'phone', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.056', '0');
 INSERT INTO `gen_table_column` VALUES ('7899be0c46d895b71a0db0b0975fe181', 'db46c9935ed8caae04bcefd5c6ea7f28', 'created_date', '创建时间', NULL, 'timestamp(3)', 'java.util.Date', 'createdDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 80, 0, NULL, '1', '2019-07-25 10:28:01.430', '1', '2019-07-25 10:28:01.430', '0');
 INSERT INTO `gen_table_column` VALUES ('7a818e013b9dddc9d59d3e03549f496c', '6aed6fe18521d641a443171fa9e92893', 'description_', '备注', NULL, 'varchar(255)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 170, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.108', '0');
@@ -166,6 +172,9 @@ INSERT INTO `gen_table_column` VALUES ('a172d22697aa8f970ddb6dbebdf1b84b', 'db46
 INSERT INTO `gen_table_column` VALUES ('a2b0b641d21440d8920ac63337ee265f', '581ba5dfe75066b5a4769b3ed83c4ce1', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 70, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.147', '0');
 INSERT INTO `gen_table_column` VALUES ('a7645dc329637ff9ed3b1bf1a07a43b6', '581ba5dfe75066b5a4769b3ed83c4ce1', 'id', 'id', NULL, 'varchar(32)', 'String', 'id', b'1', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 10, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.125', '0');
 INSERT INTO `gen_table_column` VALUES ('a76d66fe331b2e564a830fcf457a7377', '6aed6fe18521d641a443171fa9e92893', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.061', '0');
+INSERT INTO `gen_table_column` VALUES ('aa239c70b49d022c7080a1b627e30db7', '8addcc278d31bbee16b6936d7a70c98d', 'scope', '作用域', NULL, 'varchar(256)', 'String', 'scope', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 0, NULL, '1', '2019-07-26 11:12:02.534', '1', '2019-07-26 11:12:02.534', '0');
+INSERT INTO `gen_table_column` VALUES ('ab00fc0a1f91793a5a751a3d2bcc95b2', '8addcc278d31bbee16b6936d7a70c98d', 'autoapprove', '是否自动放行', NULL, 'varchar(256)', 'String', 'autoapprove', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 45, 0, NULL, '1', '2019-07-26 11:12:02.547', '1', '2019-07-26 11:12:02.547', '0');
+INSERT INTO `gen_table_column` VALUES ('b25f05215a6dc316fcc02a07d8a19e36', '8addcc278d31bbee16b6936d7a70c98d', 'access_token_validity', '请求令牌有效时间', NULL, 'int(11)', 'Long', 'accessTokenValidity', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 80, 0, NULL, '1', '2019-07-26 11:12:02.542', '1', '2019-07-26 11:12:02.542', '0');
 INSERT INTO `gen_table_column` VALUES ('b261660f4374ab99c042700277ab66af', 'db46c9935ed8caae04bcefd5c6ea7f28', 'del_flag', '0-正常，1-删除', NULL, 'char(1)', 'String', 'delFlag', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'radio', 'sys_flag', NULL, 130, 0, NULL, '1', '2019-07-25 10:28:01.434', '1', '2019-07-25 10:28:01.434', '0');
 INSERT INTO `gen_table_column` VALUES ('b525639e645119a9f69f2472166d0e34', '581ba5dfe75066b5a4769b3ed83c4ce1', 'name', '部门名称', NULL, 'varchar(50)', 'String', 'name', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 40, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.137', '0');
 INSERT INTO `gen_table_column` VALUES ('b8a151c7c7aac1309493648b8666e7c5', '6aed6fe18521d641a443171fa9e92893', 'created_by', 'created_by', NULL, 'varchar(50)', 'String', 'createdBy', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 120, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.085', '0');
@@ -176,14 +185,18 @@ INSERT INTO `gen_table_column` VALUES ('c05bf82fde1d193dba8e3dc8982eabb9', '581b
 INSERT INTO `gen_table_column` VALUES ('c6c341b71d428cf7f261b4f3a4027ac0', '7c0d6295f674ada7a7cf4d651250d855', 'last_modified_date', 'last_modified_date', NULL, 'timestamp(3)', 'java.util.Date', 'lastModifiedDate', b'0', b'0', b'1', b'1', b'0', b'0', b'0', 'eq', 'dateselect', '', NULL, 150, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.511', '0');
 INSERT INTO `gen_table_column` VALUES ('c90414ff74d0b32507dafe3aea3e6b91', '7c0d6295f674ada7a7cf4d651250d855', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.478', '0');
 INSERT INTO `gen_table_column` VALUES ('c9782de5e492e62b8872e6c9fe63f83f', '6aed6fe18521d641a443171fa9e92893', 'amount_', 'amount_', NULL, 'double(11,2)', 'Double', 'amount', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.076', '0');
+INSERT INTO `gen_table_column` VALUES ('cb0cc60e1f568ed16b8e70cc6651e141', '8addcc278d31bbee16b6936d7a70c98d', 'additional_information', '扩展信息', NULL, 'varchar(4096)', 'String', 'additionalInformation', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 100, 0, NULL, '1', '2019-07-26 11:12:02.546', '1', '2019-07-26 11:12:02.546', '0');
 INSERT INTO `gen_table_column` VALUES ('d0fbc71db584f5483b108f47c24b7b24', '7c0d6295f674ada7a7cf4d651250d855', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.468', '0');
 INSERT INTO `gen_table_column` VALUES ('d39e2a5d74ca674d1a59666b1005d258', '6aed6fe18521d641a443171fa9e92893', 'title_', '标题', NULL, 'varchar(32)', 'String', 'title', b'0', b'0', b'1', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 20, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.036', '0');
+INSERT INTO `gen_table_column` VALUES ('d4aa80d1a3ab880d96f6e3114b1c1ab6', '8addcc278d31bbee16b6936d7a70c98d', 'web_server_redirect_uri', '重定向地址', NULL, 'varchar(256)', 'String', 'webServerRedirectUri', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 60, 0, NULL, '1', '2019-07-26 11:12:02.539', '1', '2019-07-26 11:12:02.539', '0');
 INSERT INTO `gen_table_column` VALUES ('d51560e8721d5d9aa0300c25f3855155', '7c0d6295f674ada7a7cf4d651250d855', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'1', 'like', 'input', '', NULL, 30, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.471', '0');
 INSERT INTO `gen_table_column` VALUES ('d88ff10db4f84147d504fc0fbd605ceb', '7c0d6295f674ada7a7cf4d651250d855', 'activated_', 'activated_', NULL, 'bit(1)', 'Integer', 'activated', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'radio', 'sys_flag', NULL, 70, 2, NULL, '1', '2019-07-25 14:55:56.000', '1', '2019-07-25 17:18:40.485', '0');
 INSERT INTO `gen_table_column` VALUES ('e04faad4cee1eec6ee3cdc7636276c1b', '6aed6fe18521d641a443171fa9e92893', 'reset_date', 'reset_date', NULL, 'timestamp', 'java.util.Date', 'resetDate', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'dateselect', '', NULL, 110, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.080', '0');
 INSERT INTO `gen_table_column` VALUES ('e0f3898711892f794bfb15ba30c407e5', 'db46c9935ed8caae04bcefd5c6ea7f28', 'sort', '排序', NULL, 'int(11)', 'Long', 'sort', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 0, NULL, '1', '2019-07-25 10:28:01.426', '1', '2019-07-25 10:28:01.426', '0');
+INSERT INTO `gen_table_column` VALUES ('e4f79152724169162574489621e68f46', '8addcc278d31bbee16b6936d7a70c98d', 'authorities', '权限', NULL, 'varchar(256)', 'String', 'authorities', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 70, 0, NULL, '1', '2019-07-26 11:12:02.540', '1', '2019-07-26 11:12:02.540', '0');
 INSERT INTO `gen_table_column` VALUES ('e572dd69b916c5db2ad3b0ab5a593572', '6aed6fe18521d641a443171fa9e92893', 'author_', '作者', NULL, 'varchar(50)', 'String', 'author', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.041', '0');
 INSERT INTO `gen_table_column` VALUES ('e706aed2cd00c7b2df701c707a2c3650', '6aed6fe18521d641a443171fa9e92893', 'email_', '邮箱', NULL, 'varchar(100)', 'String', 'email', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 5, NULL, '1', '2019-07-21 16:41:33.000', '1', '2019-07-25 10:21:38.051', '0');
+INSERT INTO `gen_table_column` VALUES ('e7d739918f4395bf018c8536c54ba8a8', '8addcc278d31bbee16b6936d7a70c98d', 'authorized_grant_types', '授权方式', NULL, 'varchar(256)', 'String', 'authorizedGrantTypes', b'0', b'0', b'0', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 50, 0, NULL, '1', '2019-07-26 11:12:02.536', '1', '2019-07-26 11:12:02.536', '0');
 INSERT INTO `gen_table_column` VALUES ('ea3302c65612ea668ace61cb3049741a', 'db46c9935ed8caae04bcefd5c6ea7f28', 'version', 'version', NULL, 'int(11)', 'Long', 'version', b'0', b'0', b'0', b'1', b'0', b'0', b'0', 'eq', 'input', '', NULL, 110, 0, NULL, '1', '2019-07-25 10:28:01.433', '1', '2019-07-25 10:28:01.433', '0');
 INSERT INTO `gen_table_column` VALUES ('ebd42b7dd2a110a29bccae26e329cb91', '581ba5dfe75066b5a4769b3ed83c4ce1', 'description', '备注', NULL, 'varchar(100)', 'String', 'description', b'0', b'0', b'1', b'1', b'1', b'0', b'0', 'eq', 'textarea', '', NULL, 210, 3, NULL, '1', '2019-07-25 14:58:19.000', '1', '2019-07-25 17:28:07.194', '0');
 INSERT INTO `gen_table_column` VALUES ('ee7ec3af0723d0011f252e02caaf5cb6', 'db46c9935ed8caae04bcefd5c6ea7f28', 'parent_ids', '父菜单IDs', NULL, 'varchar(2000)', 'String', 'parentIds', b'0', b'0', b'1', b'1', b'1', b'1', b'0', 'eq', 'input', '', NULL, 30, 0, NULL, '1', '2019-07-25 10:28:01.423', '1', '2019-07-25 10:28:01.423', '0');
@@ -357,6 +370,7 @@ CREATE TABLE `sys_log`  (
   `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '日志类型',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '日志标题',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `service_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '服务ID',
   `remote_addr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作IP地址',
   `user_agent` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户代理',
@@ -377,17 +391,21 @@ CREATE TABLE `sys_log`  (
   INDEX `sys_log_request_uri`(`request_uri`) USING BTREE,
   INDEX `sys_log_type`(`type`) USING BTREE,
   INDEX `sys_log_create_date`(`created_date`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, 'sys', '2019-01-24 20:56:43.000', NULL, '2019-06-15 10:56:41.000', 0, '', '0');
-INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, 'sys', '2019-04-27 14:55:07.000', NULL, '2019-06-15 10:56:41.000', 0, '', '0');
-INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, 'sys', '2019-04-27 14:55:19.000', NULL, '2019-06-15 10:56:41.000', 0, '', '0');
-INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, 'sys', '2019-04-27 15:45:30.000', NULL, '2019-06-15 10:56:41.000', 0, '', '0');
-INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, 'system', '2019-07-07 22:16:43.000', 'system', '2019-07-07 22:16:43.000', 0, NULL, '0');
-INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, 'system', '2019-07-07 22:19:27.000', 'system', '2019-07-07 22:19:27.000', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (51, '0', '添加角色', 'admin', 'test', '0:0:0:0:0:0:0:1', 'PostmanRuntime/7.6.0', '/role', 'POST', 'Authorization=%5B%5D', '65', NULL, '1', '2019-01-24 20:56:43.000', NULL, '2019-07-26 10:54:23.249', 0, '', '0');
+INSERT INTO `sys_log` VALUES (52, '0', '更新菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '40', NULL, '1', '2019-04-27 14:55:07.000', NULL, '2019-07-26 10:54:23.256', 0, '', '0');
+INSERT INTO `sys_log` VALUES (53, '0', '更新菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', '/menu', 'PUT', '', '31', NULL, '1', '2019-04-27 14:55:19.000', NULL, '2019-07-26 10:54:23.258', 0, '', '0');
+INSERT INTO `sys_log` VALUES (54, '0', '删除菜单', 'admin', 'pig', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', '/menu/9999', 'DELETE', '', '195', NULL, '1', '2019-04-27 15:45:30.000', NULL, '2019-07-26 10:54:23.261', 0, '', '0');
+INSERT INTO `sys_log` VALUES (55, '0', '锁定/解锁用户', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '10', NULL, '1', '2019-07-07 22:16:43.000', 'system', '2019-07-26 10:54:23.264', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (56, '0', '锁定/解锁用户', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '/sys/user/90da0206c39867a1b36ac36ced80c1a9', 'PUT', '', '63818', NULL, '1', '2019-07-07 22:19:27.000', 'system', '2019-07-26 10:54:23.267', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (57, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/663848c0f8206dba3fd2425812fd2fbf', 'DELETE', '', '28', NULL, 'system', '2019-07-26 11:15:45.309', 'system', '2019-07-26 11:15:45.309', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (58, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/ba842f6e126664a139c79f97a6bc01a9', 'DELETE', '', '20', NULL, 'system', '2019-07-26 11:16:02.388', 'system', '2019-07-26 11:16:02.388', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (59, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/4026ad4683346e478306cdb1559e2e7e', 'DELETE', '', '19', NULL, 'system', '2019-07-26 11:16:19.698', 'system', '2019-07-26 11:16:19.698', 0, NULL, '0');
+INSERT INTO `sys_log` VALUES (60, '1', '删除菜单', 'admin', 'albedo', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36', '/menu/aa74553ef25bbd93d3a921f37177b66b', 'DELETE', '', '21', NULL, 'system', '2019-07-26 11:16:21.731', 'system', '2019-07-26 11:16:21.731', 0, NULL, '0');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -421,58 +439,58 @@ CREATE TABLE `sys_menu`  (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1000', '权限管理', NULL, '/upms', '-1', NULL, 'icon-quanxianguanli', 'Layout', '0', '1', '0', b'0', 0, '', '2018-09-28 08:29:53.000', '1', '2019-07-20 12:03:09.000', NULL, 1, '0');
-INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', '1000,', 'icon-yonghuguanli', 'views/sys/user/index', '0', '1', '0', b'0', 1, '', '2017-11-02 22:24:37.000', '1', '2019-07-20 12:02:29.000', NULL, 1, '0');
+INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', '1000,', 'icon-yonghuguanli', 'views/sys/user/index', '0', '1', '0', b'0', 1, '', '2017-11-02 22:24:37.000', '1', '2019-07-26 13:36:28.190', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('1101', '用户编辑', 'sys_user_edit', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:52:09.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1102', '用户锁定', 'sys_user_lock', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:52:48.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1103', '用户删除', 'sys_user_del', NULL, '1100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 09:54:01.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/sys/menu/index', '0', '1', '0', b'0', 2, '', '2017-11-08 09:57:27.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1200', '菜单管理', NULL, 'menu', '1000', NULL, 'icon-caidanguanli', 'views/sys/menu/index', '0', '1', '0', b'0', 2, '', '2017-11-08 09:57:27.000', NULL, '2019-07-26 13:36:31.981', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1201', '菜单编辑', 'sys_menu_edit', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:15:53.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1202', '菜单锁定', 'sys_menu_lock', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:23.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1203', '菜单删除', 'sys_menu_del', NULL, '1200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:16:43.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('128a83339ca7f4b0ccb4379e4ffdf24a', '测试书籍管理编辑', 'test_testBook_edit', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:09:45.789', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/sys/role/index', '0', '1', '0', b'0', 3, '', '2017-11-08 10:13:37.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1300', '角色管理', NULL, 'role', '1000', NULL, 'icon-jiaoseguanli', 'views/sys/role/index', '0', '1', '0', b'0', 3, '', '2017-11-08 10:13:37.000', NULL, '2019-07-26 13:36:36.703', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1301', '角色编辑', 'sys_role_edit', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:18.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1302', '角色锁定', 'sys_role_lock', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:41.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1303', '角色删除', 'sys_role_del', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-08 10:14:59.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1304', '分配权限', 'sys_role_perm', NULL, '1300', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-04-20 07:22:55.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NULL, 'icon-web-icon-', 'views/sys/dept/index', '0', '1', '0', b'0', 4, '', '2018-01-20 13:17:19.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('1400', '部门管理', NULL, 'dept', '1000', NULL, 'icon-web-icon-', 'views/sys/dept/index', '0', '1', '0', b'0', 4, '', '2018-01-20 13:17:19.000', NULL, '2019-07-26 13:36:40.740', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1401', '部门编辑', 'sys_dept_edit', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:16.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1402', '部门锁定', 'sys_dept_lock', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:56:59.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('1403', '部门删除', 'sys_dept_del', NULL, '1400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-01-20 14:57:28.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('148821a9b6397dd3549d193c3036ddf5', '测试书籍管理编辑', 'test_testBook_edit', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:29.922', 'system', '2019-07-25 16:15:29.922', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('148821a9b6397dd3549d193c3036ddf5', '测试书籍管理编辑', 'test_testBook_edit', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:29.922', 'system', '2019-07-26 11:13:44.827', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('14a5edd0bd4060d28986aa8dfc44045a', '测试书籍管理查看', 'test_testBook_view', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:09:45.785', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('163dab3b2d62dd161104f3f8649930a4', '测试书籍管理', NULL, 'TestBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 13:31:23.951', 'system', '2019-07-25 16:09:45.773', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/sys', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '1', '0', b'0', 1, '', '2017-11-07 20:56:00.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/sys/log/index', '0', '1', '0', b'0', 5, '', '2017-11-20 14:06:22.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2000', '系统管理', NULL, '/sys', '-1', NULL, 'icon-xitongguanli', 'Layout', '0', '1', '0', b'0', 1, '', '2017-11-07 20:56:00.000', NULL, '2019-07-26 13:10:16.274', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2100', '日志管理', NULL, 'log', '2000', NULL, 'icon-rizhiguanli', 'views/sys/log/index', '0', '1', '0', b'0', 5, '', '2017-11-20 14:06:22.000', NULL, '2019-07-26 13:36:45.088', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2101', '日志删除', 'sys_log_del', NULL, '2100', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-20 20:37:37.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/sys/dict/index', '0', '1', '0', b'0', 6, '', '2017-11-29 11:30:52.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2200', '字典管理', NULL, 'dict', '2000', NULL, 'icon-navicon-zdgl', 'views/sys/dict/index', '0', '1', '0', b'0', 6, '', '2017-11-29 11:30:52.000', NULL, '2019-07-26 13:36:48.667', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2201', '字典删除', 'sys_dict_del', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2017-11-29 11:30:11.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2202', '字典编辑', 'sys_dict_edit', NULL, '2200', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-11 22:34:55.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/sys/client/index', '0', '1', '0', b'0', 9, '', '2018-01-20 13:17:19.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2400', '终端管理', '', 'client', '2000', NULL, 'icon-shouji', 'views/sys/client/index', '0', '1', '0', b'0', 9, '', '2018-01-20 13:17:19.000', NULL, '2019-07-26 13:36:52.682', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2401', '客户端新增', 'sys_client_add', NULL, '2400', NULL, '1', NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:35:18.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2402', '客户端修改', 'sys_client_edit', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:37:06.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2403', '客户端删除', 'sys_client_del', NULL, '2400', NULL, NULL, NULL, '0', '1', '1', b'0', NULL, '', '2018-05-15 21:39:16.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('247071d42ff40267c8d8c44eac92da67', '生成方案', NULL, 'scheme', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-appstore', 'views/gen/scheme/index', '0', '1', '0', b'0', 40, '1', '2019-07-21 13:27:35.000', '1', '2019-07-25 13:32:33.326', NULL, 6, '0');
 INSERT INTO `sys_menu` VALUES ('2500', '服务监控', NULL, 'http://139.224.200.249:15001', '2000', NULL, 'icon-server', NULL, '0', '1', '0', b'0', 10, '', '2018-06-26 10:50:32.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/sys/token/index', '0', '1', '0', b'0', 11, '', '2018-09-04 05:58:41.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', NULL, 'icon-denglvlingpai', 'views/sys/token/index', '0', '1', '0', b'0', 11, '', '2018-09-04 05:58:41.000', NULL, '2019-07-26 13:39:01.085', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', NULL, NULL, NULL, '0', '1', '1', b'0', 1, '', '2018-09-04 05:59:50.000', NULL, '2019-07-20 12:03:09.000', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('3a41196054c6af8ff5dfc5926e7406a0', '测试树书管理查看', 'test_testTreeBook_view', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:25.960', 'system', '2019-07-25 16:15:25.960', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('3a41196054c6af8ff5dfc5926e7406a0', '测试树书管理查看', 'test_testTreeBook_view', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:25.960', 'system', '2019-07-26 11:12:47.976', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('3fe010c12bb466aa3255dc269293e752', '测试树书管理', NULL, 'TestTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:09:40.703', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('4026ad4683346e478306cdb1559e2e7e', '测试树书管理', NULL, 'testTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:25.955', 'system', '2019-07-25 16:15:25.955', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('4026ad4683346e478306cdb1559e2e7e', '测试树书管理', NULL, 'testTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:25.955', 'system', '2019-07-26 11:16:19.679', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/gen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:00:48.000', '1', '2019-07-21 13:27:55.000', NULL, 16, '0');
 INSERT INTO `sys_menu` VALUES ('50a572de4e409ea88ec94c3f8ba9fc60', '测试书籍管理', NULL, 'TestBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:09:45.780', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('52715698214e88cb09fa4dd1ea5ad348', '生成方案菜单', 'gen_scheme_menu', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-25 13:03:03.805', '1', '2019-07-25 13:32:03.060', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('5aa65acd001f22f29217ca5bd6b9475e', '测试书籍管理删除', 'test_testBook_del', NULL, '50a572de4e409ea88ec94c3f8ba9fc60', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:09:45.792', 'system', '2019-07-25 16:15:29.907', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('663848c0f8206dba3fd2425812fd2fbf', '测试书籍管理删除', 'test_testBook_del', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:29.926', 'system', '2019-07-25 16:15:29.926', NULL, 0, '0');
-INSERT INTO `sys_menu` VALUES ('7b5f88a6a783d4ed88db6dc5f4dd236d', '测试树书管理删除', 'test_testTreeBook_del', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:25.968', 'system', '2019-07-25 16:15:25.968', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('663848c0f8206dba3fd2425812fd2fbf', '测试书籍管理删除', 'test_testBook_del', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:29.926', 'system', '2019-07-26 11:15:41.104', NULL, 0, '1');
+INSERT INTO `sys_menu` VALUES ('7b5f88a6a783d4ed88db6dc5f4dd236d', '测试树书管理删除', 'test_testTreeBook_del', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 16:15:25.968', 'system', '2019-07-26 11:12:49.812', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('7bd63eec13b959fe5326fdc8ce1ad8fb', '测试树书管理', NULL, 'TestTreeBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testTreeBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 13:34:23.331', 'system', '2019-07-25 16:09:40.695', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('8057987be8a92f2c78b1c21799aec6d9', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:25.964', 'system', '2019-07-25 16:15:25.964', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('8057987be8a92f2c78b1c21799aec6d9', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '4026ad4683346e478306cdb1559e2e7e', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:15:25.964', 'system', '2019-07-26 11:12:51.603', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('97722c6d56c8b9990cc3c1a6eea3d6bb', '业务表编辑', 'gen_table_edit', NULL, 'a18b33e15bde209a3c9115517c56d9ec', '413892fe8d52c1163d6659f51299dc96,a18b33e15bde209a3c9115517c56d9ec,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:24:02.000', '1', '2019-07-25 13:32:12.770', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表', '', 'table', '413892fe8d52c1163d6659f51299dc96', '413892fe8d52c1163d6659f51299dc96,', 'icon-table', 'views/gen/table/index', '0', '1', '0', b'0', 30, '1', '2019-07-20 12:02:02.000', '1', '2019-07-25 13:32:18.867', NULL, 12, '0');
 INSERT INTO `sys_menu` VALUES ('a296e97e320c607f7a0789d0988de4d5', '测试树书管理删除', 'test_testTreeBook_delete', NULL, '7bd63eec13b959fe5326fdc8ce1ad8fb', NULL, NULL, NULL, '0', '1', '1', b'0', 80, 'system', '2019-07-25 13:34:23.339', 'system', '2019-07-25 16:09:40.695', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('aa74553ef25bbd93d3a921f37177b66b', '测试书籍管理', NULL, 'testBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:29.911', 'system', '2019-07-25 16:15:29.911', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('aa74553ef25bbd93d3a921f37177b66b', '测试书籍管理', NULL, 'testBook', '413892fe8d52c1163d6659f51299dc96', NULL, 'icon-right-square', 'views/test/testBook/index', '0', '1', '0', b'0', 30, 'system', '2019-07-25 16:15:29.911', 'system', '2019-07-26 11:16:21.704', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('b961670cbf3454f5927c4bd2a327e915', '生成方案删除', 'gen_scheme_del', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:30:18.000', '1', '2019-07-25 13:32:07.110', NULL, 1, '0');
-INSERT INTO `sys_menu` VALUES ('ba842f6e126664a139c79f97a6bc01a9', '测试书籍管理查看', 'test_testBook_view', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:29.919', 'system', '2019-07-25 16:15:29.919', NULL, 0, '0');
+INSERT INTO `sys_menu` VALUES ('ba842f6e126664a139c79f97a6bc01a9', '测试书籍管理查看', 'test_testBook_view', NULL, 'aa74553ef25bbd93d3a921f37177b66b', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:15:29.919', 'system', '2019-07-26 11:16:02.366', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('bbb1aae54ec2ec16c5e2908fbddba717', '测试书籍管理编辑', 'test_testBook_edit', NULL, '163dab3b2d62dd161104f3f8649930a4', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 13:31:23.956', 'system', '2019-07-25 16:09:45.773', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('c259e3182c7d20ead4f6a31b4fefa5ea', '测试树书管理编辑', 'test_testTreeBook_edit', NULL, '3fe010c12bb466aa3255dc269293e752', NULL, NULL, NULL, '0', '1', '1', b'0', 40, 'system', '2019-07-25 16:09:40.713', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('c9b4d84c2c823961b8bce1c8635caaff', '测试树书管理查看', 'test_testTreeBook_view', NULL, '3fe010c12bb466aa3255dc269293e752', NULL, NULL, NULL, '0', '1', '1', b'0', 20, 'system', '2019-07-25 16:09:40.708', 'system', '2019-07-25 16:15:25.946', NULL, 0, '1');
@@ -487,28 +505,28 @@ INSERT INTO `sys_menu` VALUES ('fc921e422e9adef5c7c39a102e3d8667', '测试树书
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oauth_client_detail`;
 CREATE TABLE `sys_oauth_client_detail`  (
-  `client_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `scope` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `authorized_grant_types` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `authorities` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `access_token_validity` int(11) NULL DEFAULT NULL,
-  `refresh_token_validity` int(11) NULL DEFAULT NULL,
-  `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `client_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '客户端ID',
+  `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '资源ID',
+  `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '客户端密钥',
+  `scope` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '作用域',
+  `authorized_grant_types` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '授权方式',
+  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '重定向地址',
+  `authorities` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '权限',
+  `access_token_validity` int(11) NULL DEFAULT NULL COMMENT '请求令牌有效时间',
+  `refresh_token_validity` int(11) NULL DEFAULT NULL COMMENT '刷新令牌有效时间',
+  `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '扩展信息',
+  `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '是否自动放行',
   PRIMARY KEY (`client_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '终端信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_oauth_client_details
+-- Records of sys_oauth_client_detail
 -- ----------------------------
-INSERT INTO `sys_oauth_client_details` VALUES ('albedo', NULL, 'albedo', 'server', 'password,refresh_token,authorization_code,client_credentials', 'http://localhost:4040/sso1/login,http://localhost:4041/sso1/login', NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('app', NULL, 'app', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('daemon', NULL, 'daemon', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('gen', NULL, 'gen', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `sys_oauth_client_details` VALUES ('swagger', NULL, 'swagger', 'all', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_detail` VALUES ('albedo', NULL, 'albedo', 'server', 'password,refresh_token,authorization_code,client_credentials', 'http://localhost:4040/sso1/login,http://localhost:4041/sso1/login', NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_detail` VALUES ('app', NULL, 'app', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_detail` VALUES ('daemon', NULL, 'daemon', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_detail` VALUES ('gen', NULL, 'gen', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_detail` VALUES ('swagger', NULL, 'swagger', 'all', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -589,7 +607,6 @@ INSERT INTO `sys_role_menu` VALUES ('1', '1400');
 INSERT INTO `sys_role_menu` VALUES ('1', '1401');
 INSERT INTO `sys_role_menu` VALUES ('1', '1402');
 INSERT INTO `sys_role_menu` VALUES ('1', '1403');
-INSERT INTO `sys_role_menu` VALUES ('1', '148821a9b6397dd3549d193c3036ddf5');
 INSERT INTO `sys_role_menu` VALUES ('1', '2000');
 INSERT INTO `sys_role_menu` VALUES ('1', '2100');
 INSERT INTO `sys_role_menu` VALUES ('1', '2101');
@@ -604,18 +621,11 @@ INSERT INTO `sys_role_menu` VALUES ('1', '247071d42ff40267c8d8c44eac92da67');
 INSERT INTO `sys_role_menu` VALUES ('1', '2500');
 INSERT INTO `sys_role_menu` VALUES ('1', '2600');
 INSERT INTO `sys_role_menu` VALUES ('1', '2601');
-INSERT INTO `sys_role_menu` VALUES ('1', '3a41196054c6af8ff5dfc5926e7406a0');
-INSERT INTO `sys_role_menu` VALUES ('1', '4026ad4683346e478306cdb1559e2e7e');
 INSERT INTO `sys_role_menu` VALUES ('1', '413892fe8d52c1163d6659f51299dc96');
 INSERT INTO `sys_role_menu` VALUES ('1', '52715698214e88cb09fa4dd1ea5ad348');
-INSERT INTO `sys_role_menu` VALUES ('1', '663848c0f8206dba3fd2425812fd2fbf');
-INSERT INTO `sys_role_menu` VALUES ('1', '7b5f88a6a783d4ed88db6dc5f4dd236d');
-INSERT INTO `sys_role_menu` VALUES ('1', '8057987be8a92f2c78b1c21799aec6d9');
 INSERT INTO `sys_role_menu` VALUES ('1', '97722c6d56c8b9990cc3c1a6eea3d6bb');
 INSERT INTO `sys_role_menu` VALUES ('1', 'a18b33e15bde209a3c9115517c56d9ec');
-INSERT INTO `sys_role_menu` VALUES ('1', 'aa74553ef25bbd93d3a921f37177b66b');
 INSERT INTO `sys_role_menu` VALUES ('1', 'b961670cbf3454f5927c4bd2a327e915');
-INSERT INTO `sys_role_menu` VALUES ('1', 'ba842f6e126664a139c79f97a6bc01a9');
 INSERT INTO `sys_role_menu` VALUES ('1', 'e5ea38c1f97dee0043e78f3fb27b25d6');
 INSERT INTO `sys_role_menu` VALUES ('1', 'e710a66583fe0e324492462adb16014e');
 INSERT INTO `sys_role_menu` VALUES ('2', '1000');
@@ -670,9 +680,9 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'sys', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18.000', '1', '2019-07-13 01:13:20.000', NULL, 7, '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '17034642999', NULL, '', '1', NULL, 'o_0FT0uyg_H1vVy2H0JpSwlVGhWQ', '0', '', '2018-04-20 07:15:18.000', '1', '2019-07-13 01:13:20.000', NULL, 7, '0');
 INSERT INTO `sys_user` VALUES ('53fb3761bdd95ed3d03f4a07f78ea0eb', 'dsafdf', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, '12343543432', '837158@qq.com', NULL, '3', NULL, NULL, '1', '1', '2019-07-07 14:32:17.000', '1', '2019-07-13 01:38:33.000', NULL, 19, '1');
-INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13.000', '1', '2019-07-25 12:57:19.710', NULL, 30, '0');
+INSERT INTO `sys_user` VALUES ('90da0206c39867a1b36ac36ced80c1a9', 'adsfsd', '$2a$10$81JhU58/uM.JmWKiCAcxoOiSS///NT6rXbSRATa.UgGG8stlA1ABy', NULL, NULL, NULL, NULL, '3', NULL, NULL, '0', '1', '2019-07-07 14:35:13.000', '1', '2019-07-26 10:52:17.716', NULL, 32, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role

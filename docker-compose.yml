@@ -60,7 +60,7 @@ services:
     hostname: albedo-auth
     image: albedo-auth
 
-  albedo-admin:
+  albedo-sys:
     build:
       context: ./
       dockerfile: ./albedo-sys/albedo-sys-biz/Dockerfile
@@ -80,7 +80,7 @@ services:
     hostname: albedo-monitor
     image: albedo-monitor
 
-  albedo-codegen:
+  albedo-gen:
     build:
       context: ./
       dockerfile: ./albedo-visual/albedo-gen/Dockerfile

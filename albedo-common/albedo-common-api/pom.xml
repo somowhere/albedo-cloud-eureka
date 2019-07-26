@@ -40,8 +40,7 @@
 		<dependency>
 			<groupId>com.albedo.java</groupId>
 			<artifactId>albedo-data-mybatis</artifactId>
-			<version>2.2.1</version>
-			<scope>compile</scope>
+			<version>${project.release.version}</version>
 		</dependency>
 	</dependencies>
 </project>

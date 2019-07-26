@@ -4,12 +4,12 @@ MAINTAINER somewhere0813@gmail.com
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-RUN mkdir -p /albedo-admin
+RUN mkdir -p /albedo-sys
 
-WORKDIR /albedo-admin
+WORKDIR /albedo-sys
 
 EXPOSE 4000
 
-ADD ./albedo-module/albedo-admin-biz/target/albedo-admin-biz.jar ./
+ADD ./albedo-module/albedo-sys-biz/target/albedo-sys-biz.jar ./
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar albedo-admin-biz.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -jar albedo-sys-biz.jar

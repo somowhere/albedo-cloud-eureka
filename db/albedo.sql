@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 50725
  Source Host           : localhost:3306
- Source Schema         : albedo
+ Source Schema         : albedo-cloud
 
  Target Server Type    : MySQL
  Target Server Version : 50725

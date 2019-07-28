@@ -5,6 +5,7 @@
  </p>  
  
 **albedo-cloud Microservice Architecture**   
+- 前端<a href="https://github.com/somowhere/albedo-ui" target="_blank">albedo-ui </a>
 - 基于<a href="https://gitee.com/log4j/pig" target="_blank">pix</a>开源版本（保持更新）二次开发(同时借鉴<a href="https://www.jhipster.tech/" target="_blank">jhipster</a>)
 - 基于 Spring Cloud Greenwich.SR2 、Spring Security OAuth2 的RBAC权限管理系统  
 - 基于数据驱动视图的理念封装 Element-ui，即使没有 vue 的使用经验也能快速上手  

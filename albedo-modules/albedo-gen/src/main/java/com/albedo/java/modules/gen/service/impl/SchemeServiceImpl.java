@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 /**
  * Service class for managing schemes.
  *
- * @author somewhere
+ * @author somowhere
  */
 @Service
 public class SchemeServiceImpl extends DataVoServiceImpl<SchemeRepository, Scheme, String, SchemeDataVo> implements com.albedo.java.modules.gen.service.SchemeService {

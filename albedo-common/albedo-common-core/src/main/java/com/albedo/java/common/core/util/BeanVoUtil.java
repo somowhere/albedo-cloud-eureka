@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * bean copy 工具类
  *
- * @author somewhere
+ * @author somowhere
  */
 @Slf4j
 @UtilityClass

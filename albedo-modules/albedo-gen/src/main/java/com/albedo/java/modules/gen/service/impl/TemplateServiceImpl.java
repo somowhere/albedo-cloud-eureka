@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 /**
  * Service class for managing tables.
  *
- * @author somewhere
+ * @author somowhere
  */
 @Service
 public class TemplateServiceImpl extends DataServiceImpl<TemplateRepository, Template, String> implements com.albedo.java.modules.gen.service.TemplateService {

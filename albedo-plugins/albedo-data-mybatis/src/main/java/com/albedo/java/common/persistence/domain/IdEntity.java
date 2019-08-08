@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 /**
- * @author somewhere
+ * @author somowhere
  */
 public class IdEntity<T extends BaseEntity<T>> extends DataEntity<T> {
 

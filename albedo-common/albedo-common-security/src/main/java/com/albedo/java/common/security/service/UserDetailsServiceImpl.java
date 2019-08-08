@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, 冷冷 (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, somowhere (somewhere0813@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import java.util.Set;
 /**
  * 用户详细信息
  *
- * @author somewhere
+ * @author somowhere
  */
 @Slf4j
 @Service

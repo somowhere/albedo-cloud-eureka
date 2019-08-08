@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * 生成方案Controller
  *
- * @author somewhere
+ * @author somowhere
  */
 @Controller
 @RequestMapping(value = "/scheme")

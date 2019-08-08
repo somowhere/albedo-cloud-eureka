@@ -9,7 +9,7 @@ import java.io.InputStream;
 /**
  * 系统配置类
  *
- * @author somewhere version 2014-1-20 下午4:06:33
+ * @author somowhere version 2014-1-20 下午4:06:33
  */
 @Slf4j
 public class ApplicationConfig {

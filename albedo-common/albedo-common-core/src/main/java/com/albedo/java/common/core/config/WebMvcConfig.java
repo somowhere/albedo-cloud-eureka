@@ -32,7 +32,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author somewhere
+ * @author somowhere
  * @date 2019-06-24
  * <p>
  * 注入自自定义SQL 过滤

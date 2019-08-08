@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 数据Sql安全类
  *
- * @author somewhere version 2014-1-6 上午9:16:30
+ * @author somowhere version 2014-1-6 上午9:16:30
  */
 @UtilityClass
 @Slf4j

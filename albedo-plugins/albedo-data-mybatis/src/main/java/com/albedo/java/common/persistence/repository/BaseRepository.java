@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * DAO支持类实现
  *
- * @author somewhere
+ * @author somowhere
  * @version 2018-03-07
  */
 public interface BaseRepository<T extends GeneralEntity> extends

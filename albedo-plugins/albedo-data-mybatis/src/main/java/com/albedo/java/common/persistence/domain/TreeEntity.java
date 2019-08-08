@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 /**
  * 数据TreeEntity类
  *
- * @author somewhere version 2013-12-27 下午12:27:10
+ * @author somowhere version 2013-12-27 下午12:27:10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

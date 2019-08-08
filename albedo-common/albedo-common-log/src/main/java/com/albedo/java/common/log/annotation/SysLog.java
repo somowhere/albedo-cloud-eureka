@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, 冷冷 (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, somowhere (somewhere0813@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package com.albedo.java.common.log.annotation;
 import java.lang.annotation.*;
 
 /**
- * @author somewhere
+ * @author somowhere
  * @date 2019/2/1
  * 操作日志注解
  */

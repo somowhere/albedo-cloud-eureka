@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 代码生成工具类
  *
- * @author somewhere
+ * @author somowhere
  * @version 2013-11-16
  */
 public class GenTableColumnVoUtil {

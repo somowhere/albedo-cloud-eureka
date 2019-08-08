@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  *
- * @author somewhere version 2014-1-20 下午3:37:29
+ * @author somowhere version 2014-1-20 下午3:37:29
  */
 @UtilityClass
 @Slf4j

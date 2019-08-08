@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Service class for managing tables.
  *
- * @author somewhere
+ * @author somowhere
  */
 @Service
 public class TableColumnServiceImpl extends

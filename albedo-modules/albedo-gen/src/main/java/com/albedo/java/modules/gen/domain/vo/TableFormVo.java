@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 业务表Entity
  *
- * @author somewhere
+ * @author somowhere
  * @version 2013-10-15
  */
 @Data

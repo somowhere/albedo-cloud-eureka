@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import java.util.Iterator;
 
 /**
- * @author somewhere
+ * @author somowhere
  * @date 2018/03/08
  */
 public class PageQuery<T> extends Page<T> {

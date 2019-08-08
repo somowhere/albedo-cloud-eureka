@@ -16,7 +16,7 @@ public class ObjectUtil extends cn.hutool.core.util.ObjectUtil {
 	 *
 	 * @param obj
 	 * @return 如为不空，集合size>0|字符串不为空串|数组length>0 返回true,否则false
-	 * @author somewhere
+	 * @author somowhere
 	 */
 	public static boolean isNotEmpty(Object obj) {
 		return !isEmpty(obj);
@@ -26,7 +26,7 @@ public class ObjectUtil extends cn.hutool.core.util.ObjectUtil {
 	 *
 	 * @param obj
 	 * @return 如为空，返回true,否则false
-	 * @author somewhere
+	 * @author somowhere
 	 */
 	public static boolean isEmpty(Object obj) {
 		if (obj == null) {

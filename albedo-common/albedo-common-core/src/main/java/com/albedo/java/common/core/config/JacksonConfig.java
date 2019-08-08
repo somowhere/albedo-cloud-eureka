@@ -18,15 +18,11 @@ package com.albedo.java.common.core.config;
 
 import cn.hutool.core.date.DatePattern;
 import com.albedo.java.common.core.jackson.JavaTimeModule;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,8 +34,8 @@ import java.util.TimeZone;
 /**
  * JacksonConfig
  *
- * @author: somewhere
  * @author L.cm
+ * @author: somewhere
  * @author: lishangbu
  * @date: 2018/10/22
  */

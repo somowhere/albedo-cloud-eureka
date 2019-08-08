@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>service</name>
-    <filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}/impl</filePath>
-    <fileName>${ClassName}ServiceImpl.java</fileName>
-    <content><![CDATA[
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}/impl</filePath>
+	<fileName>${ClassName}ServiceImpl.java</fileName>
+	<content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
@@ -32,5 +32,5 @@ public class ${ClassName}ServiceImpl extends TreeVoServiceImpl<${ClassName}Repos
 
 }
 ]]>
-    </content>
+	</content>
 </template>

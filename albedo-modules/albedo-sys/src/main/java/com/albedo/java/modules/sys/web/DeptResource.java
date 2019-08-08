@@ -16,13 +16,13 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeQuery;
+import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.util.SecurityUtils;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.service.DeptService;
-import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
@@ -55,8 +55,9 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return  R.createSuccessData(service.findOneVo(id));
+		return R.createSuccessData(service.findOneVo(id));
 	}
+
 	/**
 	 * 返回树形菜单集合
 	 *

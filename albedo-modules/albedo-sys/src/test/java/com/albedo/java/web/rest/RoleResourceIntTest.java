@@ -6,9 +6,9 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.AlbedoSysApplication;
 import com.albedo.java.modules.sys.domain.*;
-import com.albedo.java.modules.sys.web.RoleResource;
 import com.albedo.java.modules.sys.service.*;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
+import com.albedo.java.modules.sys.web.RoleResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -79,6 +79,7 @@ public class RoleResourceIntTest {
 	private RoleDataVo roleDataVo;
 
 	private RoleDataVo anotherRole = new RoleDataVo();
+
 	@BeforeEach
 	public void setup() {
 		DEFAULT_API_URL = "/role/";
@@ -93,7 +94,7 @@ public class RoleResourceIntTest {
 
 	/**
 	 * Create a Role.
-	 *
+	 * <p>
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an domain which has a required relationship to the Role domain.
 	 */
@@ -175,7 +176,7 @@ public class RoleResourceIntTest {
 		roleService.save(roleDataVo);
 
 		// Get the role
-		restRoleMockMvc.perform(get(DEFAULT_API_URL+"{id}", roleDataVo.getId()))
+		restRoleMockMvc.perform(get(DEFAULT_API_URL + "{id}", roleDataVo.getId()))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(jsonPath("$.data.name").value(DEFAULT_NAME))
@@ -246,7 +247,7 @@ public class RoleResourceIntTest {
 		long databaseSizeBeforeDelete = roleService.findCount();
 
 		// Delete the role
-		restRoleMockMvc.perform(delete(DEFAULT_API_URL+"{id}", roleDataVo.getId())
+		restRoleMockMvc.perform(delete(DEFAULT_API_URL + "{id}", roleDataVo.getId())
 			.accept(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk());
 

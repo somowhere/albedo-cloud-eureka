@@ -16,11 +16,11 @@
 
 package com.albedo.java.modules.sys.service;
 
+import com.albedo.java.common.core.vo.TreeNode;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.domain.Dept;
-import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.repository.DeptRepository;
-import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ import java.util.List;
  * @author somowhere
  * @since 2019/2/1
  */
-public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
+public interface DeptService extends TreeVoService<DeptRepository, Dept, DeptDataVo> {
 
 
 	/**
@@ -40,7 +40,7 @@ public interface DeptService  extends TreeVoService<DeptRepository, Dept, DeptDa
 	 *
 	 * @return
 	 */
-	List<TreeNode> listCurrentUserDeptTrees(String deptId) ;
+	List<TreeNode> listCurrentUserDeptTrees(String deptId);
 
 	/**
 	 * 添加信息部门

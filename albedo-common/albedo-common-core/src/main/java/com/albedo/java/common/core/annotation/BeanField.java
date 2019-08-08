@@ -18,13 +18,14 @@ import static java.lang.annotation.ElementType.METHOD;
 @Inherited
 public @interface BeanField {
 
-    /**
-     * 指定属性
-     */
-    String writeProperty() default "";
-    /**
-     * 是否忽略
-     */
-    boolean ingore() default false;
+	/**
+	 * 指定属性
+	 */
+	String writeProperty() default "";
+
+	/**
+	 * 是否忽略
+	 */
+	boolean ingore() default false;
 
 }

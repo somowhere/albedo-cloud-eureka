@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>entityForm</name>
-    <filePath>src/main/java/${packageName}/${moduleName}/domain/vo/${subModuleName}</filePath>
-    <fileName>${ClassName}DataVo.java</fileName>
-    <content><![CDATA[
+	<name>entityForm</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/domain/vo/${subModuleName}</filePath>
+	<fileName>${ClassName}DataVo.java</fileName>
+	<content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
@@ -57,5 +57,5 @@ public class ${ClassName}DataVo extends DataEntityVo<${table.pkJavaType}> {
 </#macro>
 
 ]]>
-    </content>
+	</content>
 </template>

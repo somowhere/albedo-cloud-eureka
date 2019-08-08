@@ -1,13 +1,8 @@
 package com.albedo.java;
 
 import cn.hutool.core.codec.Base64;
-import com.albedo.java.common.core.exception.CheckedException;
-import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class Base64Test {
@@ -26,6 +21,7 @@ public class Base64Test {
 
 	/**
 	 * c3dhZ2dlcjpzd2FnZ2Vy
+	 *
 	 * @throws Exception
 	 */
 	@Test

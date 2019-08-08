@@ -5,8 +5,8 @@ package com.albedo.java.common.core.annotation;
  * Created by somewhere on 2016/6/13.
  */
 public interface BaseInterface {
-    /**
-     * 系统初始化
-     */
-    void init();
+	/**
+	 * 系统初始化
+	 */
+	void init();
 }

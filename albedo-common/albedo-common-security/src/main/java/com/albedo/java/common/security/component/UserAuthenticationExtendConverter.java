@@ -50,7 +50,7 @@ public class UserAuthenticationExtendConverter implements UserAuthenticationConv
 	public Map<String, ?> convertUserAuthentication(Authentication authentication) {
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(USERNAME, authentication.getName());
-		if(authentication.getPrincipal() instanceof UserDetail){
+		if (authentication.getPrincipal() instanceof UserDetail) {
 			UserDetail userDetail = (UserDetail) authentication.getPrincipal();
 			response.put(USER_ID, userDetail.getId());
 			response.put(DEPT_ID, userDetail.getDeptId());

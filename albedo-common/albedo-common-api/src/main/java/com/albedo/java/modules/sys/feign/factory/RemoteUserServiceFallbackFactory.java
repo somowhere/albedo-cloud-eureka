@@ -16,8 +16,8 @@
 
 package com.albedo.java.modules.sys.feign.factory;
 
-import com.albedo.java.modules.sys.feign.fallback.RemoteUserServiceFallbackImpl;
 import com.albedo.java.modules.sys.feign.RemoteUserService;
+import com.albedo.java.modules.sys.feign.fallback.RemoteUserServiceFallbackImpl;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 

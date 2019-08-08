@@ -29,32 +29,32 @@ public class RegistrySwaggerResourcesProvider implements SwaggerResourcesProvide
 
 
 	private final RouteDefinitionRepository routeDefinitionRepository;
-    private final RouteDefinitionLocator routeDefinitionLocator;
+	private final RouteDefinitionLocator routeDefinitionLocator;
 
-    private final FilterIgnoreProperties filterIgnoreProperties;
+	private final FilterIgnoreProperties filterIgnoreProperties;
 
 
-    @Override
-    public List<SwaggerResource> get() {
-        List<SwaggerResource> resources = new ArrayList<>();
+	@Override
+	public List<SwaggerResource> get() {
+		List<SwaggerResource> resources = new ArrayList<>();
 		List<RouteDefinition> routeDefinitions = new ArrayList<>();
-		routeDefinitionRepository.getRouteDefinitions().subscribe(route ->routeDefinitions.add(route));
-		routeDefinitionLocator.getRouteDefinitions().subscribe(route ->routeDefinitions.add(route));
-        routeDefinitions.forEach(routeDefinition -> routeDefinition.getPredicates().stream()
+		routeDefinitionRepository.getRouteDefinitions().subscribe(route -> routeDefinitions.add(route));
+		routeDefinitionLocator.getRouteDefinitions().subscribe(route -> routeDefinitions.add(route));
+		routeDefinitions.forEach(routeDefinition -> routeDefinition.getPredicates().stream()
 			.filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
 			.filter(predicateDefinition -> !filterIgnoreProperties.getSwaggerProviders().contains(routeDefinition.getId()))
 			.forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
-				predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX+"0").replace("/**", CommonConstants.SWAGGER_API_URI))))
+				predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("/**", CommonConstants.SWAGGER_API_URI))))
 		);
 
-        return resources.stream().sorted(Comparator.comparing(SwaggerResource::getName)).collect(Collectors.toList());
-    }
+		return resources.stream().sorted(Comparator.comparing(SwaggerResource::getName)).collect(Collectors.toList());
+	}
 
-    private SwaggerResource swaggerResource(String name, String location) {
-        SwaggerResource swaggerResource = new SwaggerResource();
-        swaggerResource.setName(name);
-        swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion("2.0");
-        return swaggerResource;
-    }
+	private SwaggerResource swaggerResource(String name, String location) {
+		SwaggerResource swaggerResource = new SwaggerResource();
+		swaggerResource.setName(name);
+		swaggerResource.setLocation(location);
+		swaggerResource.setSwaggerVersion("2.0");
+		return swaggerResource;
+	}
 }

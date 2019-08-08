@@ -68,26 +68,26 @@ public class MenuServiceImpl extends
 		List<MenuVo> menuAllList = baseMapper.listMenuVos(CommonConstants.YES);
 		List<MenuVo> menuVoList = baseMapper.listMenuVosByRoleId(roleId, CommonConstants.YES);
 		List<String> parentIdList = Lists.newArrayList();
-		for(MenuVo menuVo : menuVoList){
-			if(menuVo.getParentId()!=null){
-				if(!parentIdList.contains(menuVo.getParentId())){
+		for (MenuVo menuVo : menuVoList) {
+			if (menuVo.getParentId() != null) {
+				if (!parentIdList.contains(menuVo.getParentId())) {
 					parentIdList.add(menuVo.getParentId());
 				}
 			}
-			if(menuVo.getParentIds()!=null){
+			if (menuVo.getParentIds() != null) {
 				String[] parentIds = menuVo.getParentIds().split(",");
-				for(String parentId : parentIds){
-					if(!parentIdList.contains(parentId)){
+				for (String parentId : parentIds) {
+					if (!parentIdList.contains(parentId)) {
 						parentIdList.add(parentId);
 					}
 				}
 			}
 		}
-		if(ObjectUtil.isNotEmpty(parentIdList)){
-			for(String parenId: parentIdList){
-				if(!contain(parenId, menuVoList)){
+		if (ObjectUtil.isNotEmpty(parentIdList)) {
+			for (String parenId : parentIdList) {
+				if (!contain(parenId, menuVoList)) {
 					MenuVo menuVo = get(parenId, menuAllList);
-					if(menuVo!=null){
+					if (menuVo != null) {
 						menuVoList.add(menuVo);
 					}
 				}
@@ -96,9 +96,10 @@ public class MenuServiceImpl extends
 		return menuVoList;
 
 	}
-	private MenuVo get(String id, List<MenuVo> resourceList){
-		for(MenuVo resource : resourceList){
-			if(resource.getId().equals(id)){
+
+	private MenuVo get(String id, List<MenuVo> resourceList) {
+		for (MenuVo resource : resourceList) {
+			if (resource.getId().equals(id)) {
 				return resource;
 			}
 		}
@@ -106,18 +107,19 @@ public class MenuServiceImpl extends
 	}
 
 
-	private boolean contain(String id, List<MenuVo> resourceList){
-		for(MenuVo resource : resourceList){
-			if(resource.getId().equals(id)){
+	private boolean contain(String id, List<MenuVo> resourceList) {
+		for (MenuVo resource : resourceList) {
+			if (resource.getId().equals(id)) {
 				return true;
 			}
 		}
 		return false;
 	}
+
 	@Override
 	@CacheEvict(value = "menu_details", allEntries = true)
 	public void removeMenuById(List<String> ids) {
-		ids.forEach(id->{
+		ids.forEach(id -> {
 			// 查询父节点为当前节点的节点
 			List<Menu> menuList = this.list(Wrappers.<Menu>query()
 				.lambda().eq(Menu::getParentId, id));
@@ -144,20 +146,20 @@ public class MenuServiceImpl extends
 	@CacheEvict(value = "menu_details", allEntries = true)
 	public boolean saveByGenScheme(GenSchemeDataVo schemeDataVo) {
 
-		String moduleName= schemeDataVo.getSchemeName(),
-			parentMenuId= schemeDataVo.getParentMenuId(),
-			url= schemeDataVo.getUrl();
-		String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0,permission.length()-1);
+		String moduleName = schemeDataVo.getSchemeName(),
+			parentMenuId = schemeDataVo.getParentMenuId(),
+			url = schemeDataVo.getUrl();
+		String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0, permission.length() - 1);
 		List<Menu> currentMenuList = baseMapper.selectList(Wrappers.<Menu>query()
-				.lambda().eq(Menu::getName, moduleName).or()
-				.likeLeft(Menu::getPermission, permissionLike)
+			.lambda().eq(Menu::getName, moduleName).or()
+			.likeLeft(Menu::getPermission, permissionLike)
 		);
-		for(Menu currentMenu : currentMenuList){
+		for (Menu currentMenu : currentMenuList) {
 			if (currentMenu != null) {
 				baseMapper.delete(Wrappers.<Menu>query()
 					.lambda()
 					.likeLeft(Menu::getPermission, permissionLike)
-					.or(i->i.eq(Menu::getId, currentMenu.getId())
+					.or(i -> i.eq(Menu::getId, currentMenu.getId())
 						.or().eq(Menu::getParentId, currentMenu.getId()))
 				);
 			}
@@ -173,12 +175,12 @@ public class MenuServiceImpl extends
 		module.setType(Menu.TYPE_MENU);
 		module.setIcon("icon-right-square");
 		module.setPath(StringUtil.lowerFirst(schemeDataVo.getClassName()));
-		module.setComponent("views"+url+"index");
+		module.setComponent("views" + url + "index");
 		save(module);
 
 		Menu moduleView = new Menu();
 		moduleView.setParent(module);
-		moduleView.setName(moduleName+"查看");
+		moduleView.setName(moduleName + "查看");
 //		moduleView.setIcon("fa-info-circle");
 		moduleView.setPermission(permission + "view");
 		moduleView.setParentId(module.getId());
@@ -188,7 +190,7 @@ public class MenuServiceImpl extends
 		save(moduleView);
 		Menu moduleEdit = new Menu();
 		moduleEdit.setParent(module);
-		moduleEdit.setName(moduleName+"编辑");
+		moduleEdit.setName(moduleName + "编辑");
 //        moduleEdit.setIconCls("icon-edit-fill");
 		moduleEdit.setPermission(permission + "edit");
 		moduleEdit.setParentId(module.getId());
@@ -198,7 +200,7 @@ public class MenuServiceImpl extends
 		save(moduleEdit);
 		Menu moduleDelete = new Menu();
 		moduleDelete.setParent(module);
-		moduleDelete.setName(moduleName+"删除");
+		moduleDelete.setName(moduleName + "删除");
 //        moduleDelete.setIconCls("fa-trash-o");
 		moduleDelete.setPermission(permission + "del");
 		moduleDelete.setParentId(module.getId());
@@ -215,10 +217,10 @@ public class MenuServiceImpl extends
 		String extId = treeQuery.getExtId();
 		Collections.sort(menuEntities, Comparator.comparing((Menu t) -> t.getSort()).reversed());
 		List<MenuTree> treeList = menuEntities.stream().filter(item ->
-				(ObjectUtil.isEmpty(extId)|| ObjectUtil.isEmpty(item.getParentIds()) ||
-					(ObjectUtil.isNotEmpty(extId) && !extId.equals(item.getId()) && item.getParentIds() != null
-						&& item.getParentIds().indexOf("," + extId + ",") == -1))
-			)
+			(ObjectUtil.isEmpty(extId) || ObjectUtil.isEmpty(item.getParentIds()) ||
+				(ObjectUtil.isNotEmpty(extId) && !extId.equals(item.getId()) && item.getParentIds() != null
+					&& item.getParentIds().indexOf("," + extId + ",") == -1))
+		)
 			.map(menu -> {
 				MenuTree node = new MenuTree();
 				node.setId(menu.getId());

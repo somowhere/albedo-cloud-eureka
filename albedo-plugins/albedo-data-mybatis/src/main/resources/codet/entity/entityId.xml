@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>entityId</name>
-    <filePath>src/main/java/${packageName}/${moduleName}/domain/${subModuleName}</filePath>
-    <fileName>${ClassName}Id.java</fileName>
-    <content><![CDATA[
+	<name>entityId</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/domain/${subModuleName}</filePath>
+	<fileName>${ClassName}Id.java</fileName>
+	<content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
@@ -58,5 +58,5 @@ public class ${ClassName}Id implements Serializable {
 		return EqualsBuilder.reflectionEquals(this, other);
 	}
 }]]>
-    </content>
+	</content>
 </template>

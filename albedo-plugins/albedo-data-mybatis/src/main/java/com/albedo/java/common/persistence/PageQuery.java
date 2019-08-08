@@ -14,37 +14,39 @@ import java.util.Iterator;
  * @date 2018/03/08
  */
 public class PageQuery<T> extends Page<T> {
-    private static final String PAGE = "page";
-    private static final String LIMIT = "limit";
-    private static final String ORDER_BY_FIELD = "orderByField";
-    private static final String IS_ASC = "isAsc";
-    public PageQuery(long current, long size){
-        super(current, size);
-    }
-    public PageQuery(Pageable pageable) {
-        super(pageable.getPageNumber()
-            , pageable.getPageSize());
-        if (pageable.getSort()!=null) {
-            Iterator<Sort.Order> iterator = pageable.getSort().iterator();
-            while (iterator.hasNext()){
-                Sort.Order order = iterator.next();
-                if(order.getDirection().isAscending()){
-                    if(ObjectUtil.isEmpty(this.ascs())) {
-                        this.setAscs(Lists.newArrayList(order.getProperty()));
-                    }else{
-                        ArrayUtil.append(this.ascs(), order.getProperty());
-                    }
+	private static final String PAGE = "page";
+	private static final String LIMIT = "limit";
+	private static final String ORDER_BY_FIELD = "orderByField";
+	private static final String IS_ASC = "isAsc";
 
-                }else if(order.getDirection().isDescending()){
-                    if(ObjectUtil.isEmpty(this.descs())) {
-                        this.setDescs(Lists.newArrayList(order.getProperty()));
-                    }else{
-                        ArrayUtil.append(this.descs(), order.getProperty());
-                    }
+	public PageQuery(long current, long size) {
+		super(current, size);
+	}
 
-                }
-            }
-        }
+	public PageQuery(Pageable pageable) {
+		super(pageable.getPageNumber()
+			, pageable.getPageSize());
+		if (pageable.getSort() != null) {
+			Iterator<Sort.Order> iterator = pageable.getSort().iterator();
+			while (iterator.hasNext()) {
+				Sort.Order order = iterator.next();
+				if (order.getDirection().isAscending()) {
+					if (ObjectUtil.isEmpty(this.ascs())) {
+						this.setAscs(Lists.newArrayList(order.getProperty()));
+					} else {
+						ArrayUtil.append(this.ascs(), order.getProperty());
+					}
 
-    }
+				} else if (order.getDirection().isDescending()) {
+					if (ObjectUtil.isEmpty(this.descs())) {
+						this.setDescs(Lists.newArrayList(order.getProperty()));
+					} else {
+						ArrayUtil.append(this.descs(), order.getProperty());
+					}
+
+				}
+			}
+		}
+
+	}
 }

@@ -89,5 +89,4 @@ public class LogDataVo extends DataEntityVo<Long> {
 	private String serviceId;
 
 
-
 }

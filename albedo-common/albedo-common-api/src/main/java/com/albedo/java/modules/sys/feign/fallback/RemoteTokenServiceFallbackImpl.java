@@ -16,8 +16,8 @@
 
 package com.albedo.java.modules.sys.feign.fallback;
 
-import com.albedo.java.modules.sys.feign.RemoteTokenService;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.modules.sys.feign.RemoteTokenService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

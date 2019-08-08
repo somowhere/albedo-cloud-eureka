@@ -17,7 +17,6 @@
 package com.albedo.java.common.security.service;
 
 import lombok.Getter;
-import lombok.ToString;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -47,7 +46,7 @@ public class UserDetail extends User {
 	 *
 	 * @param id                    用户ID
 	 * @param deptId                部门ID
-	 * @param loginId              the username presented to the
+	 * @param loginId               the username presented to the
 	 *                              <code>DaoAuthenticationProvider</code>
 	 * @param password              the password that should be presented to the
 	 *                              <code>DaoAuthenticationProvider</code>

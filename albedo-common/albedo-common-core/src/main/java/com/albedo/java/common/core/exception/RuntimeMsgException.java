@@ -1,6 +1,7 @@
 package com.albedo.java.common.core.exception;
 
 import lombok.NoArgsConstructor;
+
 /**
  * @author somowhere
  * @date 😴2019年06月02日16:21:57

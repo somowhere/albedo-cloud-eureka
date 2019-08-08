@@ -18,16 +18,16 @@ import springfox.documentation.spring.web.plugins.Docket;
 @AutoConfigureAfter({SwaggerAutoConfiguration.class})
 public class SwaggerPluginsAutoConfiguration {
 
-    @Configuration
-    @ConditionalOnClass({Page.class})
-    public static class MybatisPlusPagePluginConfiguration {
-        public MybatisPlusPagePluginConfiguration() {
-        }
+	@Configuration
+	@ConditionalOnClass({Page.class})
+	public static class MybatisPlusPagePluginConfiguration {
+		public MybatisPlusPagePluginConfiguration() {
+		}
 
-        @Bean
-        @ConditionalOnMissingBean
-        public PageableParameterBuilderPlugin pageableParameterBuilderPlugin(TypeNameExtractor typeNameExtractor, TypeResolver typeResolver) {
-            return new PageableParameterBuilderPlugin(typeNameExtractor, typeResolver);
-        }
-    }
+		@Bean
+		@ConditionalOnMissingBean
+		public PageableParameterBuilderPlugin pageableParameterBuilderPlugin(TypeNameExtractor typeNameExtractor, TypeResolver typeResolver) {
+			return new PageableParameterBuilderPlugin(typeNameExtractor, typeResolver);
+		}
+	}
 }

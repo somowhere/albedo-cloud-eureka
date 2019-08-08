@@ -33,12 +33,12 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 	}
 
 	public ExtraFieldSerializer(ExtraFieldSerializer source,
-						 ObjectIdWriter objectIdWriter) {
+								ObjectIdWriter objectIdWriter) {
 		super(source, objectIdWriter);
 	}
 
 	public ExtraFieldSerializer(ExtraFieldSerializer source,
-						 Set<String> toIgnore) {
+								Set<String> toIgnore) {
 		super(source, toIgnore);
 	}
 
@@ -79,15 +79,15 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 
 		try {
 			codeItemData.clear();
-			for(int len = props.length; i < len; ++i) {
+			for (int len = props.length; i < len; ++i) {
 				BeanPropertyWriter prop = props[i];
 				if (prop != null) {
 					DictType dictType = prop.getAnnotation(DictType.class);
 					if (dictType != null) {
 						String code = dictType.value();
 						String result = getDictVal(code, prop.get(bean));
-						if(result!=null){
-							gen.writeStringField(prop.getName()+"Text", result);
+						if (result != null) {
+							gen.writeStringField(prop.getName() + "Text", result);
 						}
 					}
 					prop.serializeAsField(bean, gen, provider);
@@ -113,9 +113,9 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 		List<SelectResult> jobj = codeItemData.get(code);
 		if (jobj == null) {
 			Map<String, List<SelectResult>> selectResultListByCodes = DictUtil.getSelectResultListByCodes(code);
-			if(CollUtil.isNotEmpty(selectResultListByCodes)){
+			if (CollUtil.isNotEmpty(selectResultListByCodes)) {
 				codeItemData.putAll(selectResultListByCodes);
-			}else{
+			} else {
 				log.warn("can not find code {} dict data ", code);
 			}
 		}
@@ -147,10 +147,11 @@ public class ExtraFieldSerializer extends BeanSerializerBase {
 		}
 		return null;
 	}
-	private String getDictVal(List<SelectResult> selectResults,Object value){
-		for (int i=0,size=selectResults.size();i<size;i++){
+
+	private String getDictVal(List<SelectResult> selectResults, Object value) {
+		for (int i = 0, size = selectResults.size(); i < size; i++) {
 			SelectResult selectResult = selectResults.get(i);
-			if( selectResult.getValue().equals(value)){
+			if (selectResult.getValue().equals(value)) {
 				return selectResult.getLabel();
 			}
 		}

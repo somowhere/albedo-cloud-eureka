@@ -8,13 +8,11 @@ import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
-import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,51 +25,51 @@ import java.util.List;
  */
 @Transactional(rollbackFor = Exception.class)
 public abstract class DataServiceImpl<Repository extends BaseRepository<T>, T extends DataEntity, PK extends Serializable>
-        extends BaseServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.DataService<Repository, T, PK> {
+	extends BaseServiceImpl<Repository, T, PK> implements com.albedo.java.common.persistence.service.DataService<Repository, T, PK> {
 
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public T findRelationOne(Serializable id) {
-		List<T> relationList = repository.findRelationList(new QueryWrapper<T>().eq(getClassNameProfix()+DataEntity.F_SQL_ID, id));
+		List<T> relationList = repository.findRelationList(new QueryWrapper<T>().eq(getClassNameProfix() + DataEntity.F_SQL_ID, id));
 		return SqlHelper.getObject(relationList);
 	}
 
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findPage(PageModel<T> pm) {
-        return findPageQuery(pm, null, false);
-    }
-
-    @Override
+	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findRelationPage(PageModel<T> pm) {
-        return findPageQuery(pm, null, true);
-    }
+	public PageModel<T> findPage(PageModel<T> pm) {
+		return findPageQuery(pm, null, false);
+	}
 
-    @Override
+	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
-        return findPageQuery(pm, queryConditions, false);
-    }
+	public PageModel<T> findRelationPage(PageModel<T> pm) {
+		return findPageQuery(pm, null, true);
+	}
 
-    @Override
+	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findRelationPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
-        return findPageQuery(pm, queryConditions, true);
-    }
+	public PageModel<T> findPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
+		return findPageQuery(pm, queryConditions, false);
+	}
 
-    @Override
+	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions, boolean isRelation) {
-        SpecificationDetail<T> specificationDetail = DynamicSpecifications.buildSpecification(
-            getPersistentClass(),
-            pm.getQueryConditionJson()
-        );
-        if (CollUtil.isNotEmpty(authQueryConditions)) {
-            specificationDetail.orAll(authQueryConditions);
-        }
-        return isRelation ? findRelationPage(pm, specificationDetail) : findPage(pm, specificationDetail);
-    }
+	public PageModel<T> findRelationPage(PageModel<T> pm, List<QueryCondition> queryConditions) {
+		return findPageQuery(pm, queryConditions, true);
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public PageModel<T> findPageQuery(PageModel<T> pm, List<QueryCondition> authQueryConditions, boolean isRelation) {
+		SpecificationDetail<T> specificationDetail = DynamicSpecifications.buildSpecification(
+			getPersistentClass(),
+			pm.getQueryConditionJson()
+		);
+		if (CollUtil.isNotEmpty(authQueryConditions)) {
+			specificationDetail.orAll(authQueryConditions);
+		}
+		return isRelation ? findRelationPage(pm, specificationDetail) : findPage(pm, specificationDetail);
+	}
 
 }

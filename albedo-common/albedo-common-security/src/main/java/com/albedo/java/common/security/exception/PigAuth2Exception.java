@@ -16,8 +16,8 @@
 
 package com.albedo.java.common.security.exception;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.albedo.java.common.security.component.Auth2ExceptionSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 

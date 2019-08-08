@@ -21,7 +21,8 @@ import com.albedo.java.common.core.annotation.SearchField;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.persistence.domain.TreeEntity;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -62,7 +63,7 @@ public class Dict extends TreeEntity<Dict> {
 	@SearchField
 	private String code;
 	@NotNull
-	@TableField(CommonConstants.MYSQL_QUOTE +F_SQL_SHOW+CommonConstants.MYSQL_QUOTE)
+	@TableField(CommonConstants.MYSQL_QUOTE + F_SQL_SHOW + CommonConstants.MYSQL_QUOTE)
 	@DictType("sys_flag")
 	private Integer show = 1;
 	/**

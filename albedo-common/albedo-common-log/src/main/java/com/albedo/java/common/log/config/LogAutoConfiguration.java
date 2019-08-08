@@ -16,9 +16,9 @@
 
 package com.albedo.java.common.log.config;
 
+import com.albedo.java.common.log.aspect.SysLogAspect;
 import com.albedo.java.common.log.event.SysLogListener;
 import com.albedo.java.modules.sys.feign.RemoteLogService;
-import com.albedo.java.common.log.aspect.SysLogAspect;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;

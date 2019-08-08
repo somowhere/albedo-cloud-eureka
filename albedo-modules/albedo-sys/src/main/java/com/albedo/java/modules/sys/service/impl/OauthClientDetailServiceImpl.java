@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
@@ -23,9 +24,7 @@ import com.albedo.java.modules.sys.domain.OauthClientDetail;
 import com.albedo.java.modules.sys.repository.OauthClientDetailRepository;
 import com.albedo.java.modules.sys.service.OauthClientDetailService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.albedo.java.common.core.constant.SecurityConstants;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 

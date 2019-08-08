@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-public interface TreeService<Repository extends TreeRepository<T>, T extends TreeEntity> 
+public interface TreeService<Repository extends TreeRepository<T>, T extends TreeEntity>
 	extends IService<T>, BaseService<Repository, T, String>,
 	DataService<Repository, T, String> {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -20,6 +20,7 @@ public interface TreeService<Repository extends TreeRepository<T>, T extends Tre
 
 
 	List<T> findAllByParentIdsLike(String parentIds);
+
 	List<T> findAllByParentId(String parentId);
 
 	List<T> findTop1ByParentIdOrderBySortDesc(String parentId);

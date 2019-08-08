@@ -27,10 +27,10 @@ spring:
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
               # 降级配置
-#            - name: Hystrix
-#              args:
-#                name: default
-#                fallbackUri: 'forward:/fallback'
+        #            - name: Hystrix
+        #              args:
+        #                name: default
+        #                fallbackUri: 'forward:/fallback'
         # 代码生成模块
         - id: albedo-gen
           uri: lb://albedo-gen

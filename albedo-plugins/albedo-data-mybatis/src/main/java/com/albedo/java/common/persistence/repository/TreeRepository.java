@@ -5,8 +5,6 @@ package com.albedo.java.common.persistence.repository;
 
 import com.albedo.java.common.persistence.domain.BaseEntity;
 
-import java.io.Serializable;
-
 /**
  * TreeRepository
  *

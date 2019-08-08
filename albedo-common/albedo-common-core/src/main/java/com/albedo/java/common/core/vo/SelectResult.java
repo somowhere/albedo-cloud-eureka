@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- *
  * @author somowhere
  * @date 2017/3/2
  */
@@ -17,35 +16,36 @@ import java.util.Objects;
 @NoArgsConstructor
 public class SelectResult implements Serializable {
 
-    private static final long serialVersionUID = 1848699240546373048L;
-    private String value;
-    private String label;
-    private Integer version;
+	private static final long serialVersionUID = 1848699240546373048L;
+	private String value;
+	private String label;
+	private Integer version;
 
-    public SelectResult(String value, String label) {
-        this.value = value;
-        this.label = label;
-    }
+	public SelectResult(String value, String label) {
+		this.value = value;
+		this.label = label;
+	}
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SelectResult idEntity = (SelectResult) o;
-        if (idEntity.toString() == null || toString() == null) {
-            return false;
-        }
-        return Objects.equals(toString(), idEntity.toString());
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(toString());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		SelectResult idEntity = (SelectResult) o;
+		if (idEntity.toString() == null || toString() == null) {
+			return false;
+		}
+		return Objects.equals(toString(), idEntity.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(toString());
+	}
 
 
 }

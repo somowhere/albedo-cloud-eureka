@@ -16,8 +16,8 @@
 
 package com.albedo.java.common.security.feign;
 
-import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.constant.SecurityConstants;
+import com.albedo.java.common.core.util.CollUtil;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.security.oauth2.client.AccessTokenContextRelay;

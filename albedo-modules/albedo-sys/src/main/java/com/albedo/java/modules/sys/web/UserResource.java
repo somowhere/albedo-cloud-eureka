@@ -19,18 +19,18 @@ package com.albedo.java.modules.sys.web;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.common.web.resource.DataVoResource;
-import com.albedo.java.modules.sys.domain.User;
-import com.albedo.java.modules.sys.vo.UserDataVo;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.albedo.java.modules.sys.service.UserService;
-import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.web.resource.DataVoResource;
+import com.albedo.java.modules.sys.domain.User;
+import com.albedo.java.modules.sys.service.UserService;
+import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
@@ -52,6 +52,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	public UserResource(UserService service) {
 		super(service);
 	}
+
 	/**
 	 * @param id
 	 * @return
@@ -60,8 +61,9 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return  R.createSuccessData(service.getUserVoById(id));
+		return R.createSuccessData(service.getUserVoById(id));
 	}
+
 	/**
 	 * 获取当前用户全部信息
 	 *
@@ -119,6 +121,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 		service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return R.createSuccess("操作成功");
 	}
+
 	/**
 	 * 添加/更新用户信息
 	 *
@@ -144,7 +147,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 		// email before comparing with database
 		if (StringUtil.isNotEmpty(userDataVo.getEmail()) &&
 			!checkByProperty(ClassUtil.createObj(UserDataVo.class,
-			Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {
+				Lists.newArrayList(UserDataVo.F_ID, UserDataVo.F_EMAIL), userDataVo.getId(), userDataVo.getEmail()))) {
 			throw new RuntimeMsgException("邮箱已存在");
 		}
 		service.save(userDataVo);
@@ -154,7 +157,7 @@ public class UserResource extends DataVoResource<UserService, UserDataVo> {
 	/**
 	 * 分页查询用户
 	 *
-	 * @param pm    参数集
+	 * @param pm 参数集
 	 * @return 用户集合
 	 */
 	@GetMapping("/")

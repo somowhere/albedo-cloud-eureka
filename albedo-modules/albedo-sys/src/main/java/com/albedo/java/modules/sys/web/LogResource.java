@@ -16,12 +16,12 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.modules.sys.domain.Log;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.albedo.java.modules.sys.service.LogService;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.security.annotation.Inner;
+import com.albedo.java.modules.sys.domain.Log;
+import com.albedo.java.modules.sys.service.LogService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class LogResource {
 	/**
 	 * 简单分页查询
 	 *
-	 * @param pm   分页对象
+	 * @param pm 分页对象
 	 * @return
 	 */
 	@GetMapping("/")

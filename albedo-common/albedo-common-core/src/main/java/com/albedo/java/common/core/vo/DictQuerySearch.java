@@ -13,10 +13,10 @@ import org.apache.commons.lang.StringEscapeUtils;
 @ToString
 public class DictQuerySearch {
 
-    private String dictQueries;
+	private String dictQueries;
 
-    public void setDictQueries(String dictQueries) {
-        this.dictQueries = StringEscapeUtils.unescapeHtml(dictQueries);
-    }
+	public void setDictQueries(String dictQueries) {
+		this.dictQueries = StringEscapeUtils.unescapeHtml(dictQueries);
+	}
 
 }

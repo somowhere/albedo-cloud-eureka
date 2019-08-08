@@ -15,33 +15,33 @@ import java.util.Map;
  */
 public class FreeMarkers {
 
-    public static String renderString(String templateString, Map<String, ?> model) {
-        try {
-            StringWriter result = new StringWriter();
-            Template t = new Template("name", new StringReader(templateString), new Configuration());
-            t.process(model, result);
-            return result.toString();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String renderTemplate(Template template, Object model) {
-        try {
-            StringWriter result = new StringWriter();
-            template.process(model, result);
-            return result.toString();
-        } catch (Exception e) {
+	public static String renderString(String templateString, Map<String, ?> model) {
+		try {
+			StringWriter result = new StringWriter();
+			Template t = new Template("name", new StringReader(templateString), new Configuration());
+			t.process(model, result);
+			return result.toString();
+		} catch (Exception e) {
 			throw new RuntimeException(e);
-        }
-    }
+		}
+	}
 
-    public static Configuration buildConfiguration(String directory) throws IOException {
-        Configuration cfg = new Configuration();
-        Resource path = new DefaultResourceLoader().getResource(directory);
-        cfg.setDirectoryForTemplateLoading(path.getFile());
-        return cfg;
-    }
+	public static String renderTemplate(Template template, Object model) {
+		try {
+			StringWriter result = new StringWriter();
+			template.process(model, result);
+			return result.toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Configuration buildConfiguration(String directory) throws IOException {
+		Configuration cfg = new Configuration();
+		Resource path = new DefaultResourceLoader().getResource(directory);
+		cfg.setDirectoryForTemplateLoading(path.getFile());
+		return cfg;
+	}
 
 
 }

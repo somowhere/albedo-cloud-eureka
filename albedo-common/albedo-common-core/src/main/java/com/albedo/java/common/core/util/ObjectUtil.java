@@ -21,6 +21,7 @@ public class ObjectUtil extends cn.hutool.core.util.ObjectUtil {
 	public static boolean isNotEmpty(Object obj) {
 		return !isEmpty(obj);
 	}
+
 	/**
 	 * 判断某个对象是否为空 集合类、数组做特殊处理
 	 *

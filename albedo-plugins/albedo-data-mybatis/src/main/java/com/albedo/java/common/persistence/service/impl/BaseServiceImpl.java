@@ -20,12 +20,10 @@ import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +43,7 @@ import java.util.Optional;
  */
 @Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
-    T extends GeneralEntity, pk extends Serializable> extends ServiceImpl<Repository, T> implements com.albedo.java.common.persistence.service.BaseService<Repository, T, pk> {
+	T extends GeneralEntity, pk extends Serializable> extends ServiceImpl<Repository, T> implements com.albedo.java.common.persistence.service.BaseService<Repository, T, pk> {
 	public final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 	@Autowired
 	public Repository repository;
@@ -70,33 +68,36 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	}
 
 	@Override
-	public String getClassNameProfix(){
-		if (persistentClass!=null && StringUtil.isEmpty(classNameProfix)){
-			classNameProfix =  StringUtil.lowerFirst(persistentClass.getSimpleName())+".";
+	public String getClassNameProfix() {
+		if (persistentClass != null && StringUtil.isEmpty(classNameProfix)) {
+			classNameProfix = StringUtil.lowerFirst(persistentClass.getSimpleName()) + ".";
 		}
 		return classNameProfix;
 	}
+
 	@Override
 	public String getClassNameProfix(String property) {
-		return String.format("%s%s", getClassNameProfix(),property);
+		return String.format("%s%s", getClassNameProfix(), property);
 	}
 
 
 	@Override
-	public QueryWrapper<T> createEntityWrapper(List<Order> orders, QueryCondition... queryConditions){
+	public QueryWrapper<T> createEntityWrapper(List<Order> orders, QueryCondition... queryConditions) {
 
 		return DynamicSpecifications.
 			bySearchQueryCondition(getPersistentClass(), queryConditions).setOrders(orders)
 			.toEntityWrapper();
 	}
+
 	@Override
-	public QueryWrapper<T> createEntityWrapper(List<QueryCondition> queryConditions){
+	public QueryWrapper<T> createEntityWrapper(List<QueryCondition> queryConditions) {
 		return DynamicSpecifications.
 			bySearchQueryCondition(getPersistentClass(), queryConditions)
 			.toEntityWrapper();
 	}
+
 	@Override
-	public QueryWrapper<T> createEntityWrapper(QueryCondition... queryConditions){
+	public QueryWrapper<T> createEntityWrapper(QueryCondition... queryConditions) {
 		return createEntityWrapper(null, queryConditions);
 	}
 
@@ -142,22 +143,24 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	}
 
 
-
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public T findTopOne(Wrapper<T> wrapper) {
 		return findOne(wrapper, 1);
 	}
+
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public T findOne(Wrapper<T> wrapper, int max) {
 		IPage<T> iPage = repository.selectPage(new PageQuery(0, max), wrapper);
-		return iPage!=null && CollUtil.isNotEmpty(iPage.getRecords()) ? iPage.getRecords().get(0) : null;
+		return iPage != null && CollUtil.isNotEmpty(iPage.getRecords()) ? iPage.getRecords().get(0) : null;
 	}
+
 	@Override
 	public List<T> findAll() {
 		return repository.selectList(null);
 	}
+
 	@Override
 	public List<T> findAll(Map<String, Object> paramsMap) {
 		return repository.selectByMap(paramsMap);
@@ -213,15 +216,18 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	public List<T> findAll(SpecificationDetail specificationDetail) {
 		return findAll(specificationDetail.toEntityWrapper(getPersistentClass()));
 	}
+
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<T> findAll(Wrapper<T> wrapper) {
 		return repository.selectList(wrapper);
 	}
+
 	@Override
 	public PageModel<T> findPage(PageModel<T> pm) {
 		return findPage(pm, null);
 	}
+
 	/**
 	 * 动态分页查询
 	 *
@@ -232,7 +238,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel<T> findPage(PageModel<T> pm, SpecificationDetail<T> specificationDetail) {
-		if(specificationDetail!=null){
+		if (specificationDetail != null) {
 			return findPageWrapper(pm, specificationDetail.toEntityWrapper(getPersistentClass()));
 		}
 		return findPageWrapper(pm, null);
@@ -242,7 +248,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	/**
 	 * 动态分页查询
 	 *
-	 * @param pm                  分页对象
+	 * @param pm      分页对象
 	 * @param wrapper 动态条件对象
 	 * @return
 	 */
@@ -252,6 +258,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 		IPage<T> tiPage = baseMapper.selectPage(pm, wrapper);
 		return (PageModel<T>) tiPage;
 	}
+
 	/**
 	 * 动态分页查询
 	 *
@@ -262,7 +269,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PageModel<T> findRelationPage(PageModel<T> pm, SpecificationDetail<T> specificationDetail) {
-		if(specificationDetail!=null){
+		if (specificationDetail != null) {
 			specificationDetail.setRelationQuery(true);
 			return findRelationPageWrapper(pm, specificationDetail.toEntityWrapper(getPersistentClass()));
 		}
@@ -273,7 +280,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	/**
 	 * 动态分页查询
 	 *
-	 * @param pm                  分页对象
+	 * @param pm      分页对象
 	 * @param wrapper 动态条件对象
 	 * @return
 	 */
@@ -286,12 +293,13 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public Optional<T> findById(pk id){
+	public Optional<T> findById(pk id) {
 		return Optional.ofNullable(repository.selectById(id));
 	}
+
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public T findOneById(pk id){
+	public T findOneById(pk id) {
 		return repository.selectById(id);
 	}
 
@@ -299,10 +307,12 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	public long findCount() {
 		return repository.selectCount(null);
 	}
+
 	@Override
 	public long findCount(SpecificationDetail<T> specificationDetail) {
 		return repository.selectCount(specificationDetail.toEntityWrapper(persistentClass));
 	}
+
 	@Override
 	public T findOne(Wrapper<T> queryWrapper) {
 		return repository.selectOne(queryWrapper);
@@ -314,7 +324,7 @@ public abstract class BaseServiceImpl<Repository extends BaseRepository<T>,
 	}
 
 	@Override
-	public Integer deleteBatchIds(Collection<pk> ids){
+	public Integer deleteBatchIds(Collection<pk> ids) {
 		return repository.deleteBatchIds(ids);
 	}
 

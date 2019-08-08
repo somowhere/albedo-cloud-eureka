@@ -3,7 +3,7 @@
 <mapper namespace="JpaCustomeRepository">
 
 
-    <select id="_findByCombo" resultType="Module">
+	<select id="_findByCombo" resultType="Module">
         SELECT ${columns}
         FROM
         ${tableName}

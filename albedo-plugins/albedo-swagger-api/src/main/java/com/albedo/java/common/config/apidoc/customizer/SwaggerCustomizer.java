@@ -4,5 +4,5 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @FunctionalInterface
 public interface SwaggerCustomizer {
-    void customize(Docket var1);
+	void customize(Docket var1);
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>viewComponentTs</name>
-  <filePath>src/views/${moduleName}/${subModuleName}/${className}</filePath>
-    <fileName>service.js</fileName>
-    <content><![CDATA[
+	<name>viewComponentTs</name>
+	<filePath>src/views/${moduleName}/${subModuleName}/${className}</filePath>
+	<fileName>service.js</fileName>
+	<content><![CDATA[
 
 import request from '@/router/axios';
 import {isValidateUnique, toStr} from "@/util/validate";
@@ -43,5 +43,5 @@ export function validateUnique${ClassName}(rule, value, callback, id) {
   isValidateUnique(rule, value, callback, gateway+'/${urlPrefix}/checkByProperty?id='+toStr(id))
 }
 ]]>
-    </content>
+	</content>
 </template>

@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ public interface BaseRepository<T extends GeneralEntity> extends
 	/**
 	 * BaseRepository
 	 * 使用Wrapper 需要指定前缀 getClassNameProfix()
+	 *
 	 * @author sys
 	 * @version 2018-03-07
 	 */

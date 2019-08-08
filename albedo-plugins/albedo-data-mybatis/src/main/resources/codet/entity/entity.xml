@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>entity</name>
-    <filePath>src/main/java/${packageName}/${moduleName}/domain/${subModuleName}</filePath>
-    <fileName>${ClassName}.java</fileName>
-    <content><![CDATA[
+	<name>entity</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/domain/${subModuleName}</filePath>
+	<fileName>${ClassName}.java</fileName>
+	<content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
@@ -152,5 +152,5 @@ public class ${ClassName} extends IdEntity<${ClassName}> {
 	</#list>
 </#macro>
 ]]>
-    </content>
+	</content>
 </template>

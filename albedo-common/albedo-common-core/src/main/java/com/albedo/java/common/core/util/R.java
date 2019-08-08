@@ -63,15 +63,18 @@ public class R<T> implements Serializable {
 		super();
 		this.data = data;
 	}
+
 	public R(String... msg) {
 		super();
 		this.messages = msg;
 	}
+
 	public R(T data, String... msg) {
 		super();
 		this.data = data;
 		this.messages = msg;
 	}
+
 	public R(T data, int code, String... msg) {
 		super();
 		this.data = data;
@@ -89,22 +92,26 @@ public class R<T> implements Serializable {
 		return new R(messages);
 	}
 
-	public static <T>R createSuccessData(T data, String... messages) {
+	public static <T> R createSuccessData(T data, String... messages) {
 		return new R(data, messages);
 	}
 
-	public static <T>R createFailData(T data, String... messages) {
+	public static <T> R createFailData(T data, String... messages) {
 		return new R(data, CommonConstants.FAIL, messages);
 	}
-	public static <T>R createFail(String... messages) {
+
+	public static <T> R createFail(String... messages) {
 		return new R(null, CommonConstants.FAIL, messages);
 	}
-	public static <T>R create(T data, int code, String... messages) {
+
+	public static <T> R create(T data, int code, String... messages) {
 		return new R(data, code, messages);
 	}
-	public static <T>R create(int code, String... messages) {
+
+	public static <T> R create(int code, String... messages) {
 		return new R(null, code, messages);
 	}
+
 	public String getMessage() {
 		return readMessages();
 	}

@@ -81,6 +81,7 @@ public class SysLogUtils {
 		}
 		return authentication.getName();
 	}
+
 	/**
 	 * 获取用户Id
 	 *

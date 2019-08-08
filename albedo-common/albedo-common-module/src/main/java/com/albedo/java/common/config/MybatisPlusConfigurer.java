@@ -19,8 +19,6 @@ package com.albedo.java.common.config;
 import com.albedo.java.common.persistence.datascope.DataScopeInterceptor;
 import com.albedo.java.common.persistence.handler.EntityMetaObjectHandler;
 import com.albedo.java.common.persistence.injector.EntityMetaSqlInjector;
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
-import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -61,31 +59,34 @@ public class MybatisPlusConfigurer {
 
 	/**
 	 * ql注入
+	 *
 	 * @return
 	 */
 	@Bean
-	public EntityMetaSqlInjector entityMetaSqlInjector(){
+	public EntityMetaSqlInjector entityMetaSqlInjector() {
 		return new EntityMetaSqlInjector();
 	}
+
 	/**
 	 * 新增，修改 公共字段填充
+	 *
 	 * @return
 	 */
 	@Bean
-	public EntityMetaObjectHandler entityMetaObjectHandler(AuditorAware auditorAware){
+	public EntityMetaObjectHandler entityMetaObjectHandler(AuditorAware auditorAware) {
 		return new EntityMetaObjectHandler(auditorAware);
 	}
 
 
 	/**
 	 * 乐观锁拦截器 version
+	 *
 	 * @return
 	 */
 	@Bean
-	public OptimisticLockerInterceptor optimisticLockerInterceptor(){
+	public OptimisticLockerInterceptor optimisticLockerInterceptor() {
 		return new OptimisticLockerInterceptor();
 	}
-
 
 
 	@Bean

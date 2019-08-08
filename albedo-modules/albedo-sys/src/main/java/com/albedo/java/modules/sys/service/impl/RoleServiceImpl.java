@@ -19,15 +19,15 @@ package com.albedo.java.modules.sys.service.impl;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.sys.domain.RoleDept;
-import com.albedo.java.modules.sys.service.RoleDeptService;
-import com.albedo.java.modules.sys.service.RoleMenuService;
-import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.albedo.java.modules.sys.domain.Role;
+import com.albedo.java.modules.sys.domain.RoleDept;
 import com.albedo.java.modules.sys.domain.RoleMenu;
 import com.albedo.java.modules.sys.repository.RoleRepository;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.albedo.java.modules.sys.service.RoleDeptService;
+import com.albedo.java.modules.sys.service.RoleMenuService;
 import com.albedo.java.modules.sys.service.RoleService;
+import com.albedo.java.modules.sys.vo.RoleDataVo;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
@@ -87,7 +87,7 @@ public class RoleServiceImpl extends
 	@CacheEvict(value = "menu_details", allEntries = true)
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean removeRoleByIds(List<String> ids) {
-		ids.forEach(id->{
+		ids.forEach(id -> {
 			roleMenuService.remove(Wrappers
 				.<RoleMenu>update().lambda()
 				.eq(RoleMenu::getRoleId, id));
@@ -104,14 +104,14 @@ public class RoleServiceImpl extends
 		roleMenuService.remove(Wrappers.<RoleMenu>query().lambda()
 			.eq(RoleMenu::getRoleId, roleDataVo.getId()));
 		List<RoleMenu> roleMenuList = roleDataVo.getMenuIdList().stream().map(menuId -> {
-				RoleMenu roleMenu = new RoleMenu();
-				roleMenu.setRoleId(roleDataVo.getId());
-				roleMenu.setMenuId(menuId);
-				return roleMenu;
-			}).collect(Collectors.toList());
+			RoleMenu roleMenu = new RoleMenu();
+			roleMenu.setRoleId(roleDataVo.getId());
+			roleMenu.setMenuId(menuId);
+			return roleMenu;
+		}).collect(Collectors.toList());
 
 		roleMenuService.saveBatch(roleMenuList);
-		if(CollUtil.isNotEmpty(roleDataVo.getDeptIdList())){
+		if (CollUtil.isNotEmpty(roleDataVo.getDeptIdList())) {
 			roleDeptService.remove(Wrappers.<RoleDept>query().lambda()
 				.eq(RoleDept::getRoleId, roleDataVo.getId()));
 			List<RoleDept> roleDeptList = roleDataVo.getDeptIdList().stream().map(deptId -> {
@@ -125,11 +125,12 @@ public class RoleServiceImpl extends
 		//清空userinfo
 		cacheManager.getCache("user_details").clear();
 	}
+
 	@Override
 	public void lockOrUnLock(List<String> idList) {
 		idList.forEach(id -> {
 			Role role = baseMapper.selectById(id);
-			role.setLockFlag(CommonConstants.STR_YES.equals(role.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			role.setLockFlag(CommonConstants.STR_YES.equals(role.getLockFlag()) ? CommonConstants.STR_NO : CommonConstants.STR_YES);
 			baseMapper.updateById(role);
 		});
 

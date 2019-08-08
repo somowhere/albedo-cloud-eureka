@@ -29,7 +29,7 @@ import java.util.List;
  * @author somowhere
  * @since 2019/2/1
  */
-public interface RoleRepository  extends BaseRepository<Role> {
+public interface RoleRepository extends BaseRepository<Role> {
 	/**
 	 * 通过用户ID，查询角色信息
 	 *

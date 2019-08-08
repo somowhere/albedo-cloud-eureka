@@ -16,11 +16,11 @@
 
 package com.albedo.java.modules.sys.feign;
 
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.modules.sys.domain.Log;
+import com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +35,8 @@ public interface RemoteLogService {
 	/**
 	 * 保存日志
 	 *
-	 * @param log 日志实体
-	 * @param from   内部调用标志
+	 * @param log  日志实体
+	 * @param from 内部调用标志
 	 * @return succes、false
 	 */
 	@PostMapping("/log/")

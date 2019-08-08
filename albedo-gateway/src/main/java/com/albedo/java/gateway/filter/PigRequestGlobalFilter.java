@@ -18,7 +18,6 @@ package com.albedo.java.gateway.filter;
 
 import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.config.FilterIgnoreProperties;
-import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -27,12 +26,8 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.addOriginalRequestUrl;
@@ -73,7 +68,7 @@ public class PigRequestGlobalFilter implements GlobalFilter, Ordered {
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());
 		String rawPath = request.getURI().getRawPath();
-		String newPath = rawPath.substring(StringUtil.getFromIndex(rawPath,"/",2));
+		String newPath = rawPath.substring(StringUtil.getFromIndex(rawPath, "/", 2));
 		ServerHttpRequest newRequest = request.mutate()
 			.path(newPath)
 			.build();

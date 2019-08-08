@@ -53,7 +53,7 @@ public class DictServiceImpl extends
 	@Autowired
 	private CacheManager cacheManager;
 
-	public List<Dict> findAllOrderBySort(){
+	public List<Dict> findAllOrderBySort() {
 		return baseMapper.selectList(Wrappers.<Dict>query().lambda().orderByAsc(
 			Dict::getSort
 		));
@@ -65,9 +65,9 @@ public class DictServiceImpl extends
 			codes.split(StringUtil.SPLIT_DEFAULT) : null);
 	}
 
-	@Cacheable(value = Dict.CACHE_DICT_DETAILS,key="'"+ Dict.CACHE_DICT_RESULT_ALL+"'")
+	@Cacheable(value = Dict.CACHE_DICT_DETAILS, key = "'" + Dict.CACHE_DICT_RESULT_ALL + "'")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public Map<String,List<SelectResult>> findCodes(String... codes) {
+	public Map<String, List<SelectResult>> findCodes(String... codes) {
 		return DictUtil.getSelectResultListByCodes(findAllOrderBySort(), codes);
 	}
 
@@ -79,8 +79,6 @@ public class DictServiceImpl extends
 			cache.put(Dict.CACHE_DICT_ALL, dictList);
 		}
 	}
-
-
 
 
 }

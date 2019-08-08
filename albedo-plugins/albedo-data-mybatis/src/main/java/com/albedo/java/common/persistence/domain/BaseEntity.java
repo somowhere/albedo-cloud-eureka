@@ -15,16 +15,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class BaseEntity<T extends GeneralEntity<T>> extends GeneralEntity<T> {
 
-    private static final long serialVersionUID = 1L;
-    @TableField(value = GeneralEntity.F_SQL_DELFLAG)
-    @TableLogic(delval = "1")
+	private static final long serialVersionUID = 1L;
+	@TableField(value = GeneralEntity.F_SQL_DELFLAG)
+	@TableLogic(delval = "1")
 	@JsonIgnore
-    protected String delFlag;
+	protected String delFlag;
 
-    public BaseEntity() {
-        super();
-        this.delFlag = FLAG_NORMAL;
-    }
+	public BaseEntity() {
+		super();
+		this.delFlag = FLAG_NORMAL;
+	}
 
 	public String getDelFlag() {
 		return delFlag;

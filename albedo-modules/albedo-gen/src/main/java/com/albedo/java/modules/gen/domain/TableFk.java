@@ -19,14 +19,14 @@ import lombok.ToString;
 @TableName("gen_table_fk")
 public class TableFk {
 
-    @TableField("name")
-    private String name; // 名称
-    @TableField("table_name")
-    private String tableName; // 描述
-    @TableField("table_fk")
-    private String tableFk; // 外键列名
-    @TableField("table.id")
-    private Table table; // 归属表
+	@TableField("name")
+	private String name; // 名称
+	@TableField("table_name")
+	private String tableName; // 描述
+	@TableField("table_fk")
+	private String tableFk; // 外键列名
+	@TableField("table.id")
+	private Table table; // 归属表
 
 
 }

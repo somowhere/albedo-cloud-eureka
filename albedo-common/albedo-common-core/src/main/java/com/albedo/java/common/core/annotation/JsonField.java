@@ -16,5 +16,5 @@ import static java.lang.annotation.ElementType.METHOD;
 @Inherited
 public @interface JsonField {
 
-    String props() default "";
+	String props() default "";
 }

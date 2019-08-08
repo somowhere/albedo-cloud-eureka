@@ -2,7 +2,6 @@ package com.albedo.java.common.runner;
 
 import com.albedo.java.common.core.annotation.BaseInit;
 import com.albedo.java.common.core.annotation.BaseInterface;
-import com.albedo.java.common.core.util.ClassUtil;
 import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;

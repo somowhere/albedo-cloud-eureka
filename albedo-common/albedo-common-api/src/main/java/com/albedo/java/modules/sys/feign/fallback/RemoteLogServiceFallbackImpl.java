@@ -16,9 +16,9 @@
 
 package com.albedo.java.modules.sys.feign.fallback;
 
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.sys.domain.Log;
 import com.albedo.java.modules.sys.feign.RemoteLogService;
-import com.albedo.java.common.core.util.R;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -36,8 +36,8 @@ public class RemoteLogServiceFallbackImpl implements RemoteLogService {
 	/**
 	 * 保存日志
 	 *
-	 * @param log 日志实体
-	 * @param from   内部调用标志
+	 * @param log  日志实体
+	 * @param from 内部调用标志
 	 * @return succes、false
 	 */
 	@Override

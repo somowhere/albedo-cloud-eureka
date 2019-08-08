@@ -20,19 +20,19 @@ import java.util.stream.Collectors;
 public class TableColumnServiceImpl extends
 	DataVoServiceImpl<TableColumnRepository, TableColumn, String, TableColumnVo> implements com.albedo.java.modules.gen.service.TableColumnService {
 
-    List<TableColumn> findAllByGenTableIdOrderBySort(String id){
-        return findAll(new QueryWrapper<TableColumn>().eq(TableColumn.F_GENTABLEID,id)
-            .orderByAsc(TableColumn.F_SORT));
-    }
+	List<TableColumn> findAllByGenTableIdOrderBySort(String id) {
+		return findAll(new QueryWrapper<TableColumn>().eq(TableColumn.F_GENTABLEID, id)
+			.orderByAsc(TableColumn.F_SORT));
+	}
 
 
-    @Override
+	@Override
 	public void deleteByTableId(String id, String currentAuditor) {
-        List<TableColumn> tableColumnList = findAllByGenTableIdOrderBySort(id);
-        Assert.notNull(tableColumnList, "id " + id + " tableColumn 不能为空");
-        super.deleteBatchIds(tableColumnList.stream().map(item->item.getId()).collect(Collectors.toList()));
+		List<TableColumn> tableColumnList = findAllByGenTableIdOrderBySort(id);
+		Assert.notNull(tableColumnList, "id " + id + " tableColumn 不能为空");
+		super.deleteBatchIds(tableColumnList.stream().map(item -> item.getId()).collect(Collectors.toList()));
 
-    }
+	}
 
 
 }

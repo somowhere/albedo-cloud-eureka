@@ -65,5 +65,4 @@ public class DictDataVo extends TreeEntityVo {
 	private String remark;
 
 
-
 }

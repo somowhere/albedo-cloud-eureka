@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>resource</name>
-    <filePath>src/main/java/${packageName}/${moduleName}/web/${subModuleName}</filePath>
-    <fileName>${ClassName}Resource.java</fileName>
-    <content><![CDATA[
+	<name>resource</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/web/${subModuleName}</filePath>
+	<fileName>${ClassName}Resource.java</fileName>
+	<content><![CDATA[
 /**
  * Copyright &copy; 2018 <a href="https://github.com/somewhereMrli/albedo-boot">albedo-boot</a> All rights reserved.
  */
@@ -103,5 +103,5 @@ public class ${ClassName}Resource extends DataVoResource<${ClassName}Service, ${
 		return R.createSuccess("删除${functionNameSimple}成功");
 	}
 }]]>
-    </content>
+	</content>
 </template>

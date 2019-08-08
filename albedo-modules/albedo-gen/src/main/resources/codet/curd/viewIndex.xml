@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
-    <name>viewComponentHtml</name>
-    <filePath>src/views/${moduleName}/${subModuleName}/${className}</filePath>
-    <fileName>index.vue</fileName>
-    <content><![CDATA[
+	<name>viewComponentHtml</name>
+	<filePath>src/views/${moduleName}/${subModuleName}/${className}</filePath>
+	<fileName>index.vue</fileName>
+	<content><![CDATA[
 <template>
   <div class="app-container calendar-list-container">
     <basic-container>
@@ -272,5 +272,5 @@ export default {
 </script>
 
 ]]>
-    </content>
+	</content>
 </template>

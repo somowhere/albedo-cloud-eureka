@@ -16,8 +16,8 @@
 
 package com.albedo.java.common.security.exception;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.albedo.java.common.security.component.Auth2ExceptionSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author somowhere

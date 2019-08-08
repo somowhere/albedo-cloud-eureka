@@ -1,6 +1,5 @@
 package com.albedo.java.zipkin;
 
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -41,6 +40,7 @@ public class AlbedoZipkinApplication {
 			InetAddress.getLocalHost().getHostAddress(),
 			env.getProperty(SERVER_PORT));
 	}
+
 	@Bean
 	public MySQLStorage mySQLStorage(DataSource datasource) {
 		return MySQLStorage.builder().datasource(datasource).executor(Runnable::run).build();

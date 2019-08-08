@@ -102,6 +102,6 @@ public class Log extends DataEntity<Log> {
 
 	@Override
 	public void setPk(Serializable pk) {
-		this.id= (Long) pk;
+		this.id = (Long) pk;
 	}
 }

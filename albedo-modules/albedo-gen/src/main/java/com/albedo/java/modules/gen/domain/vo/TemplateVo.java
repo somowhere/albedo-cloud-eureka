@@ -22,35 +22,35 @@ import java.util.List;
 @ToString
 public class TemplateVo {
 
-    public static final String F_NAME = "name";
-    private static final long serialVersionUID = 1L;
-    @Size(min = 1, max = 200)
-    private String name; // 名称
-    private String category; // 分类
-    private String filePath; // 生成文件路径
-    private String fileName; // 文件名
-    private String content; // 内容
+	public static final String F_NAME = "name";
+	private static final long serialVersionUID = 1L;
+	@Size(min = 1, max = 200)
+	private String name; // 名称
+	private String category; // 分类
+	private String filePath; // 生成文件路径
+	private String fileName; // 文件名
+	private String content; // 内容
 
-    private boolean ignoreOutput;
+	private boolean ignoreOutput;
 
-    @XmlTransient
-    public String getCategory() {
-        return category;
-    }
+	@XmlTransient
+	public String getCategory() {
+		return category;
+	}
 
-    public List<String> getCategoryList() {
-        if (category == null) {
-            return Lists.newArrayList();
-        } else {
-            return Lists.newArrayList(StringUtil.split(category, StringUtil.SPLIT_DEFAULT));
-        }
-    }
+	public List<String> getCategoryList() {
+		if (category == null) {
+			return Lists.newArrayList();
+		} else {
+			return Lists.newArrayList(StringUtil.split(category, StringUtil.SPLIT_DEFAULT));
+		}
+	}
 
-    public void setCategoryList(List<String> categoryList) {
-        if (categoryList == null) {
-            this.category = "";
-        } else {
-            this.category = StringUtil.SPLIT_DEFAULT + StringUtils.join(categoryList, StringUtil.SPLIT_DEFAULT) + StringUtil.SPLIT_DEFAULT;
-        }
-    }
+	public void setCategoryList(List<String> categoryList) {
+		if (categoryList == null) {
+			this.category = "";
+		} else {
+			this.category = StringUtil.SPLIT_DEFAULT + StringUtils.join(categoryList, StringUtil.SPLIT_DEFAULT) + StringUtil.SPLIT_DEFAULT;
+		}
+	}
 }

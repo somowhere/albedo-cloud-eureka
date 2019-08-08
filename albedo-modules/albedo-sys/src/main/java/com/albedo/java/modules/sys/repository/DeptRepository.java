@@ -29,7 +29,7 @@ import java.util.List;
  * @author somowhere
  * @since 2019/2/1
  */
-public interface DeptRepository  extends TreeRepository<Dept> {
+public interface DeptRepository extends TreeRepository<Dept> {
 
 	/**
 	 * 关联dept——relation

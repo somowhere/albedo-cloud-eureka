@@ -16,8 +16,8 @@ import static java.lang.annotation.ElementType.METHOD;
 @Inherited
 public @interface DictType {
 
-    /**
-     * 如果是字典类型，请设置字典的name值
-     */
-    String value() default "";
+	/**
+	 * 如果是字典类型，请设置字典的name值
+	 */
+	String value() default "";
 }

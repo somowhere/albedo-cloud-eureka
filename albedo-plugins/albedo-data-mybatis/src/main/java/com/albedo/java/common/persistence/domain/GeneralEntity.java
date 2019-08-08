@@ -16,32 +16,31 @@ public abstract class GeneralEntity<T extends Model<T>> extends Model<T> impleme
 	public static final String FLAG_NORMAL = "0";
 	/*** 状态 已删除 */
 	public static final String FLAG_DELETE = "1";
-    /**
-     * 状态（0：正常 1：删除）
-     */
-    public static final String F_DELFLAG = "delFlag";
-    /*** ID */
-    public static final String F_ID = "id";
-    public static final String F_CREATEDBY = "createdBy";
-    public static final String F_CREATOR = "creator";
-    public static final String F_CREATEDDATE = "createdDate";
-    public static final String F_LASTMODIFIEDBY = "lastModifiedBy";
-    public static final String F_MODIFIER = "modifier";
-    public static final String F_LASTMODIFIEDDATE = "lastModifiedDate";
-    public static final String F_VERSION = "version";
-    public static final String F_DESCRIPTION = "description";
+	/**
+	 * 状态（0：正常 1：删除）
+	 */
+	public static final String F_DELFLAG = "delFlag";
+	/*** ID */
+	public static final String F_ID = "id";
+	public static final String F_CREATEDBY = "createdBy";
+	public static final String F_CREATOR = "creator";
+	public static final String F_CREATEDDATE = "createdDate";
+	public static final String F_LASTMODIFIEDBY = "lastModifiedBy";
+	public static final String F_MODIFIER = "modifier";
+	public static final String F_LASTMODIFIEDDATE = "lastModifiedDate";
+	public static final String F_VERSION = "version";
+	public static final String F_DESCRIPTION = "description";
 
-    public static final String F_SQL_ID = "id";
-    public static final String F_SQL_CREATEDBY = "created_by";
-    public static final String F_SQL_CREATEDDATE = "created_date";
-    public static final String F_SQL_LASTMODIFIEDBY = "last_modified_by";
-    public static final String F_SQL_MODIFIER = "modifier";
-    public static final String F_SQL_LASTMODIFIEDDATE = "last_modified_date";
-    public static final String F_SQL_VERSION = "version";
-    public static final String F_SQL_DESCRIPTION = "description";
-    public static final String F_SQL_DELFLAG = "del_flag";
-    private static final long serialVersionUID = 1L;
-
+	public static final String F_SQL_ID = "id";
+	public static final String F_SQL_CREATEDBY = "created_by";
+	public static final String F_SQL_CREATEDDATE = "created_date";
+	public static final String F_SQL_LASTMODIFIEDBY = "last_modified_by";
+	public static final String F_SQL_MODIFIER = "modifier";
+	public static final String F_SQL_LASTMODIFIEDDATE = "last_modified_date";
+	public static final String F_SQL_VERSION = "version";
+	public static final String F_SQL_DESCRIPTION = "description";
+	public static final String F_SQL_DELFLAG = "del_flag";
+	private static final long serialVersionUID = 1L;
 
 
 }

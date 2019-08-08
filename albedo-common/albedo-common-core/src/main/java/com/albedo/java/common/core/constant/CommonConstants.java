@@ -65,13 +65,12 @@ public interface CommonConstants {
 	/**
 	 *
 	 */
-	String SWAGGER_API_URI="/v2/api-docs";
+	String SWAGGER_API_URI = "/v2/api-docs";
 
 	String SPRING_PROFILE_TEST = "test";
 	String SPRING_PROFILE_DEVELOPMENT = "dev";
 	String SPRING_PROFILE_APP = "prod";
 	String SPRING_PROFILE_PRODUCTION = "prod";
-
 
 
 	// 对/错
@@ -134,13 +133,10 @@ public interface CommonConstants {
 	String SYSTEM = "system";
 
 
-
 	String BASIC_ = "Basic ";
 	String UNKNOWN = "unknown";
 
 
-
-
-	String MYSQL_QUOTE="`";
-	String ORACLE_QUOTE="\"";
+	String MYSQL_QUOTE = "`";
+	String ORACLE_QUOTE = "\"";
 }

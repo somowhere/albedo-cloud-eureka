@@ -17,16 +17,12 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.common.persistence.DynamicSpecifications;
-import com.albedo.java.common.persistence.SpecificationDetail;
-import com.albedo.java.modules.sys.domain.OauthClientDetail;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.modules.sys.service.OauthClientDetailService;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.modules.sys.domain.OauthClientDetail;
+import com.albedo.java.modules.sys.service.OauthClientDetailService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +58,7 @@ public class OauthClientDetailResource {
 	/**
 	 * 简单分页查询
 	 *
-	 * @param pm                  分页对象
+	 * @param pm 分页对象
 	 * @return
 	 */
 	@GetMapping("/")

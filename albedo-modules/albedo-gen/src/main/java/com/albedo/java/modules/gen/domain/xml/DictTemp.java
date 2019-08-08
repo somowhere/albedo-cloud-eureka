@@ -7,34 +7,34 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class DictTemp {
 
-    private String name;
-    private String val;
-    private String description;
+	private String name;
+	private String val;
+	private String description;
 
-    @XmlAttribute
-    public String getName() {
-        return name;
-    }
+	@XmlAttribute
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @XmlAttribute
-    public String getVal() {
-        return val;
-    }
+	@XmlAttribute
+	public String getVal() {
+		return val;
+	}
 
-    public void setVal(String val) {
-        this.val = val;
-    }
+	public void setVal(String val) {
+		this.val = val;
+	}
 
-    @XmlAttribute
-    public String getDescription() {
-        return description;
-    }
+	@XmlAttribute
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

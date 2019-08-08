@@ -18,12 +18,12 @@ package com.albedo.java.auth.endpoint;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.albedo.java.common.core.constant.SecurityConstants;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.service.UserDetail;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.albedo.java.common.core.constant.SecurityConstants;
-import com.albedo.java.common.core.util.R;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.ConvertingCursor;
@@ -71,13 +71,13 @@ public class AlbedoTokenEndpoint {
 	@DeleteMapping("/logout")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
-			return R.createFailData(Boolean.FALSE,"退出失败，token 为空");
+			return R.createFailData(Boolean.FALSE, "退出失败，token 为空");
 		}
 
 		String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StrUtil.EMPTY).trim();
 		OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
 		if (accessToken == null || StrUtil.isBlank(accessToken.getValue())) {
-			return R.createFailData(Boolean.FALSE,"退出失败，token 无效");
+			return R.createFailData(Boolean.FALSE, "退出失败，token 无效");
 		}
 		tokenStore.removeAccessToken(accessToken);
 
@@ -92,7 +92,7 @@ public class AlbedoTokenEndpoint {
 	 * 令牌管理调用
 	 *
 	 * @param tokens tokens
-	 * @param from  内部调用标志
+	 * @param from   内部调用标志
 	 */
 	@Inner
 	@DeleteMapping("/{tokens}")
@@ -125,7 +125,7 @@ public class AlbedoTokenEndpoint {
 			params.put(SIZE, 20);
 		}
 		//根据分页参数获取对应数据
-		List<String> tokenStrs = findKeysForPage(PROJECT_OAUTH_ACCESS + "*" , MapUtil.getStr(params, "username"), MapUtil.getInt(params, CURRENT), MapUtil.getInt(params, SIZE));
+		List<String> tokenStrs = findKeysForPage(PROJECT_OAUTH_ACCESS + "*", MapUtil.getStr(params, "username"), MapUtil.getInt(params, CURRENT), MapUtil.getInt(params, SIZE));
 
 		for (String tokenStr : tokenStrs) {
 			OAuth2AccessToken token = tokenStore.readAccessToken(tokenStr);
@@ -180,7 +180,7 @@ public class AlbedoTokenEndpoint {
 
 		assert cursor != null;
 		while (cursor.hasNext()) {
-			String token = cursor.next().toString(),targetName="";
+			String token = cursor.next().toString(), targetName = "";
 			String realToken = StrUtil.subAfter(token, PROJECT_OAUTH_ACCESS, true);
 			OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(realToken);
 			OAuth2Authentication oAuth2Auth = tokenStore.readAuthentication(oAuth2AccessToken);
@@ -189,7 +189,7 @@ public class AlbedoTokenEndpoint {
 				UserDetail user = (UserDetail) authentication.getPrincipal();
 				targetName = user.getUsername();
 			}
-			if (tmpIndex >= startIndex && tmpIndex < end && (StringUtil.isEmpty(username) || targetName.indexOf(username)!=-1)) {
+			if (tmpIndex >= startIndex && tmpIndex < end && (StringUtil.isEmpty(username) || targetName.indexOf(username) != -1)) {
 				result.add(realToken);
 				tmpIndex++;
 				continue;

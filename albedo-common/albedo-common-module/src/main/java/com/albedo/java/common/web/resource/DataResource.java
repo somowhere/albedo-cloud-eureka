@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 public class DataResource<Service extends DataService, T extends DataEntity> extends BaseResource {
 
-    protected final Service service;
+	protected final Service service;
 
-    public DataResource(Service service){
-        this.service = service;
-    }
+	public DataResource(Service service) {
+		this.service = service;
+	}
 
 
-    @ResponseBody
-    @GetMapping(value = "checkByProperty")
-    public boolean checkByProperty(T entity) {
-        return service.doCheckByProperty(entity);
-    }
+	@ResponseBody
+	@GetMapping(value = "checkByProperty")
+	public boolean checkByProperty(T entity) {
+		return service.doCheckByProperty(entity);
+	}
 
-    @ResponseBody
-    @GetMapping(value = "checkByPK")
-    public boolean checkByPK(T entity) {
-        return service.doCheckByPK(entity);
-    }
+	@ResponseBody
+	@GetMapping(value = "checkByPK")
+	public boolean checkByPK(T entity) {
+		return service.doCheckByPK(entity);
+	}
 
 
 }

@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DictTreeResult {
 
-    private String id;
-    private String pid;
-    private String name;
-    private String value;
-    private String label;
+	private String id;
+	private String pid;
+	private String name;
+	private String value;
+	private String label;
 
 
 }

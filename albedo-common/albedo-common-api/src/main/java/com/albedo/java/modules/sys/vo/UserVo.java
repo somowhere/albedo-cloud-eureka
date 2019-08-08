@@ -31,7 +31,7 @@ import java.util.List;
  * @date 2019/2/1
  */
 @Data
-public class UserVo  extends DataEntityVo<String> {
+public class UserVo extends DataEntityVo<String> {
 
 	public static final String F_USERNAME = "username";
 	public static final String F_EMAIL = "email";
@@ -94,20 +94,19 @@ public class UserVo  extends DataEntityVo<String> {
 
 	private List<String> roleIdList;
 
-	public List<String> getRoleIdList(){
-		if(CollUtil.isEmpty(roleIdList) && CollUtil.isNotEmpty(roleList)){
+	public List<String> getRoleIdList() {
+		if (CollUtil.isEmpty(roleIdList) && CollUtil.isNotEmpty(roleList)) {
 			roleIdList = CollUtil.extractToList(roleList, Role.F_ID);
 		}
 		return roleIdList;
 	}
 
-	public String getRoleNames(){
-		if(ObjectUtil.isEmpty(roleNames) && CollUtil.isNotEmpty(roleList)){
+	public String getRoleNames() {
+		if (ObjectUtil.isEmpty(roleNames) && CollUtil.isNotEmpty(roleList)) {
 			roleNames = CollUtil.convertToString(roleList, Role.F_NAME, Role.F_ID);
 		}
 		return roleNames;
 	}
-
 
 
 }

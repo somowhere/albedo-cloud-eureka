@@ -1,8 +1,8 @@
 package com.albedo.java.modules.sys.component;
 
 
-import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.util.CollUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,12 +25,12 @@ public class InitCacheDataComponent implements InitializingBean {
 	private final RedisTemplate redisTemplate;
 
 	@Override
-	public void afterPropertiesSet(){
+	public void afterPropertiesSet() {
 		Collection<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
-		if(activeProfiles.contains(CommonConstants.SPRING_PROFILE_DEVELOPMENT)){
+		if (activeProfiles.contains(CommonConstants.SPRING_PROFILE_DEVELOPMENT)) {
 			Collection<String> cacheNames = cacheManager.getCacheNames();
-			if(CollUtil.isNotEmpty(cacheNames)){
-				for(String cacheName : cacheNames){
+			if (CollUtil.isNotEmpty(cacheNames)) {
+				for (String cacheName : cacheNames) {
 					cacheManager.getCache(cacheName).clear();
 				}
 			}

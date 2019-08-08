@@ -1,7 +1,6 @@
 package com.albedo.java.common.core.util;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.ReflectUtil;
 import com.albedo.java.common.core.vo.ComboData;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -9,7 +8,6 @@ import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.logging.Log;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +23,7 @@ public class CollUtil extends cn.hutool.core.collection.CollUtil {
 	public static String convertToString(final Collection collection, final String separator) {
 		return StringUtils.join(collection, separator);
 	}
+
 	/**
 	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
 	 */
@@ -32,6 +31,7 @@ public class CollUtil extends cn.hutool.core.collection.CollUtil {
 		List list = extractToList(collection, propertyName);
 		return convertToString(list, separator);
 	}
+
 	/**
 	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
 	 *

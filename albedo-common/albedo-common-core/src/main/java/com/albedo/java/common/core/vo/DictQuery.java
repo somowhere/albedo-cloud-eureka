@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 public class DictQuery {
 
-    private String code;
-    private String filter;
+	private String code;
+	private String filter;
 
 }

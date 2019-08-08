@@ -23,15 +23,18 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.data.util.QueryWrapperUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.modules.sys.vo.*;
+import com.albedo.java.common.security.util.SecurityUtils;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
+import com.albedo.java.modules.sys.vo.MenuVo;
+import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.albedo.java.modules.sys.vo.UserInfo;
+import com.albedo.java.modules.sys.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.albedo.java.common.security.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -71,11 +74,11 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	@CacheEvict(value = "user_details", key = "#userDataVo.username")
 	public void save(UserDataVo userDataVo) {
 		User user = StringUtil.isNotEmpty(userDataVo.getId()) ? baseMapper.selectById(userDataVo.getId()) : new User();
-		if(StringUtil.isEmpty(userDataVo.getPassword())){
+		if (StringUtil.isEmpty(userDataVo.getPassword())) {
 			userDataVo.setPassword(null);
 		}
 		BeanVoUtil.copyProperties(userDataVo, user, true);
-		if(StringUtil.isNotEmpty(userDataVo.getPassword())){
+		if (StringUtil.isNotEmpty(userDataVo.getPassword())) {
 			user.setPassword(ENCODER.encode(userDataVo.getPassword()));
 		}
 		super.saveOrUpdate(user);
@@ -126,21 +129,21 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	/**
 	 * 分页查询用户信息（含有角色信息）
 	 *
-	 * @param pm    分页对象
+	 * @param pm 分页对象
 	 * @return
 	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public IPage getUserPage(PageModel pm) {
 		Wrapper wrapper = QueryWrapperUtil.getWrapperByPage(pm, getPersistentClass());
-		pm.addOrder(OrderItem.desc("a."+User.F_SQL_CREATEDDATE));
+		pm.addOrder(OrderItem.desc("a." + User.F_SQL_CREATEDDATE));
 		IPage<List<UserVo>> userVosPage = baseMapper.getUserVoPage(pm, wrapper);
 		return userVosPage;
 	}
 
 	@Override
 	public Boolean removeByIds(List<String> idList) {
-		idList.stream().forEach(id->removeUserById(baseMapper.selectById(id)));
+		idList.stream().forEach(id -> removeUserById(baseMapper.selectById(id)));
 		return Boolean.TRUE;
 	}
 
@@ -196,7 +199,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	public void lockOrUnLock(List<String> idList) {
 		idList.forEach(id -> {
 			User user = baseMapper.selectById(id);
-			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO:CommonConstants.STR_YES);
+			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO : CommonConstants.STR_YES);
 			baseMapper.updateById(user);
 		});
 	}

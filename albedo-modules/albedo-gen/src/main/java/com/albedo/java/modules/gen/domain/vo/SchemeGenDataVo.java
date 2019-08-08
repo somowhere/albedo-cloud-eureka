@@ -21,9 +21,9 @@ public class SchemeGenDataVo implements Serializable {
 
 	@NotEmpty
 	private String id;
-    /**
-     * 上级模块 ID 
-     */
+	/**
+	 * 上级模块 ID
+	 */
 	@NotEmpty
-    private String parentMenuId;
+	private String parentMenuId;
 }

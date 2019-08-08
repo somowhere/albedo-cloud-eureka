@@ -18,17 +18,17 @@ package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.log.annotation.SysLog;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.domain.Role;
+import com.albedo.java.modules.sys.service.RoleMenuService;
+import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.albedo.java.modules.sys.service.RoleMenuService;
-import com.albedo.java.modules.sys.service.RoleService;
-import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.log.annotation.SysLog;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,6 +49,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		super(service);
 		this.roleMenuService = roleMenuService;
 	}
+
 	/**
 	 * @param id
 	 * @return
@@ -57,8 +58,9 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return  R.createSuccessData(service.findOneVo(id));
+		return R.createSuccessData(service.findOneVo(id));
 	}
+
 	/**
 	 * 添加角色
 	 *
@@ -72,6 +74,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		service.save(roleDataVo);
 		return R.createSuccess("操作成功");
 	}
+
 	/**
 	 * 删除角色
 	 *
@@ -105,6 +108,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	public R<IPage> getPage(PageModel pm) {
 		return R.createSuccessData(service.findPage(pm));
 	}
+
 	/**
 	 * 更新角色菜单
 	 *
@@ -119,6 +123,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		Role role = service.getById(roleId);
 		return new R<>(roleMenuService.saveRoleMenus(role.getCode(), roleId, menuIds));
 	}
+
 	/**
 	 * @param ids
 	 * @return

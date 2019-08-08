@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 public class TreeQuery {
 
-    private String extId;
-    private String all;
+	private String extId;
+	private String all;
 
 }

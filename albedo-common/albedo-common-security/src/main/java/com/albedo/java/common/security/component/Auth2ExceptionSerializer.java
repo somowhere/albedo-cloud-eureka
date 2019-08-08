@@ -16,11 +16,11 @@
 
 package com.albedo.java.common.security.component;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.security.exception.PigAuth2Exception;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.albedo.java.common.core.constant.CommonConstants;
 import lombok.SneakyThrows;
 
 /**

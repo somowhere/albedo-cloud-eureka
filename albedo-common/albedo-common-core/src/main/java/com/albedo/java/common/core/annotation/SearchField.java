@@ -18,10 +18,10 @@ import static java.lang.annotation.ElementType.METHOD;
 @Inherited
 public @interface SearchField {
 
-    /**
-     * 属性拼接条件 支持 = / != / > / >= / < / <= / like
-     *
-     * @return
-     */
-    QueryCondition.Operator op() default QueryCondition.Operator.eq;
+	/**
+	 * 属性拼接条件 支持 = / != / > / >= / < / <= / like
+	 *
+	 * @return
+	 */
+	QueryCondition.Operator op() default QueryCondition.Operator.eq;
 }

@@ -17,8 +17,8 @@
 package com.albedo.java.modules.sys.repository;
 
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.albedo.java.modules.sys.domain.UserRole;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 /**

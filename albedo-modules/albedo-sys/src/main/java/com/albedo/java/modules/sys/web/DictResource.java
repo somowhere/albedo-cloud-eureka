@@ -71,6 +71,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	public R getTree(TreeQuery treeQuery) {
 		return R.createSuccessData(service.listTrees(treeQuery));
 	}
+
 	/**
 	 * @param id
 	 * @return
@@ -79,8 +80,9 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return  R.createSuccessData(service.findOneVo(id));
+		return R.createSuccessData(service.findOneVo(id));
 	}
+
 	/**
 	 * 分页查询字典信息
 	 *
@@ -94,14 +96,15 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 
 	/**
 	 * 通过字典类型查找字典
+	 *
 	 * @param codes
 	 * @return
 	 */
 	@ApiOperation(value = "获取字典数据", notes = "codes 不传获取所有的业务字典，多个用','隔开")
 	@GetMapping(value = "/codes")
 	public R getByCodes(String codes) {
-		Map<String,List<SelectResult>> map = codes!=null ?
-			service.findCodes(codes):service.findCodes();
+		Map<String, List<SelectResult>> map = codes != null ?
+			service.findCodes(codes) : service.findCodes();
 		return new R<>(map);
 	}
 
@@ -131,7 +134,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	/**
 	 * 删除字典，并且清除字典缓存
 	 *
-	 * @param ids   ID
+	 * @param ids ID
 	 * @return R
 	 */
 	@SysLog("删除字典")
@@ -141,7 +144,6 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	public R removeByIds(@PathVariable String ids) {
 		return new R<>(service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
-
 
 
 	/**

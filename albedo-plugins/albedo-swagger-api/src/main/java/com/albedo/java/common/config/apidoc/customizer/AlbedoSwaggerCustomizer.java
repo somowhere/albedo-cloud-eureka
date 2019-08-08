@@ -14,38 +14,38 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
-    public static final int DEFAULT_ORDER = 0;
-    private int order = 0;
-    private final ApplicationSwaggerProperties applicationSwaggerProperties;
+	public static final int DEFAULT_ORDER = 0;
+	private int order = 0;
+	private final ApplicationSwaggerProperties applicationSwaggerProperties;
 
-    public AlbedoSwaggerCustomizer(ApplicationSwaggerProperties applicationSwaggerProperties) {
-        this.applicationSwaggerProperties = applicationSwaggerProperties;
+	public AlbedoSwaggerCustomizer(ApplicationSwaggerProperties applicationSwaggerProperties) {
+		this.applicationSwaggerProperties = applicationSwaggerProperties;
 	}
 
-    @Override
-    public void customize(Docket docket) {
-        Contact contact = new Contact(this.applicationSwaggerProperties.getContactName(), this.applicationSwaggerProperties.getContactUrl(), this.applicationSwaggerProperties.getContactEmail());
-        ApiInfo apiInfo = new ApiInfo(this.applicationSwaggerProperties.getTitle(), this.applicationSwaggerProperties.getDescription(), this.applicationSwaggerProperties.getVersion(), this.applicationSwaggerProperties.getTermsOfServiceUrl(), contact, this.applicationSwaggerProperties.getLicense(), this.applicationSwaggerProperties.getLicenseUrl(), new ArrayList());
-        docket.host(this.applicationSwaggerProperties.getHost())
-            .protocols(new HashSet(Arrays.asList(this.applicationSwaggerProperties.getProtocols())))
-            .apiInfo(apiInfo).useDefaultResponseMessages(this.applicationSwaggerProperties.isUseDefaultResponseMessages())
-            .forCodeGeneration(true)
-            .securitySchemes(securitySchemes())
-            .securityContexts(securityContexts())
-            .forCodeGeneration(true).directModelSubstitute(ByteBuffer.class, String.class)
-            .genericModelSubstitutes(new Class[]{ResponseEntity.class}).select()
-            .paths(PathSelectors.regex(this.applicationSwaggerProperties.getDefaultIncludePattern()))
+	@Override
+	public void customize(Docket docket) {
+		Contact contact = new Contact(this.applicationSwaggerProperties.getContactName(), this.applicationSwaggerProperties.getContactUrl(), this.applicationSwaggerProperties.getContactEmail());
+		ApiInfo apiInfo = new ApiInfo(this.applicationSwaggerProperties.getTitle(), this.applicationSwaggerProperties.getDescription(), this.applicationSwaggerProperties.getVersion(), this.applicationSwaggerProperties.getTermsOfServiceUrl(), contact, this.applicationSwaggerProperties.getLicense(), this.applicationSwaggerProperties.getLicenseUrl(), new ArrayList());
+		docket.host(this.applicationSwaggerProperties.getHost())
+			.protocols(new HashSet(Arrays.asList(this.applicationSwaggerProperties.getProtocols())))
+			.apiInfo(apiInfo).useDefaultResponseMessages(this.applicationSwaggerProperties.isUseDefaultResponseMessages())
+			.forCodeGeneration(true)
+			.securitySchemes(securitySchemes())
+			.securityContexts(securityContexts())
+			.forCodeGeneration(true).directModelSubstitute(ByteBuffer.class, String.class)
+			.genericModelSubstitutes(new Class[]{ResponseEntity.class}).select()
+			.paths(PathSelectors.regex(this.applicationSwaggerProperties.getDefaultIncludePattern()))
 			.build();
-    }
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    @Override
-    public int getOrder() {
-        return this.order;
-    }
+	@Override
+	public int getOrder() {
+		return this.order;
+	}
 
 	/**
 	 * 这个类决定了你使用哪种认证方式，我这里使用密码模式
@@ -82,21 +82,21 @@ public class AlbedoSwaggerCustomizer implements SwaggerCustomizer, Ordered {
 	}
 
 
-    private List<SecurityScheme> securitySchemes() {
-        return Lists.newArrayList(securityOauthScheme()
+	private List<SecurityScheme> securitySchemes() {
+		return Lists.newArrayList(securityOauthScheme()
 //			,new ApiKey("Authorization", "Authorization", "header")
 		);
-    }
+	}
 
-    private List<SecurityContext> securityContexts() {
-        return Lists.newArrayList(
+	private List<SecurityContext> securityContexts() {
+		return Lists.newArrayList(
 			securityOauthContext()
 //			, SecurityContext.builder()
 //                .securityReferences(defaultAuth())
 //                .forPaths(PathSelectors.regex("^(?!auth).*$"))
 //                .build()
-        );
-    }
+		);
+	}
 
 //    List<SecurityReference> defaultAuth() {
 //        AuthorizationScope authorizationScope = new AuthorizationScope("global",

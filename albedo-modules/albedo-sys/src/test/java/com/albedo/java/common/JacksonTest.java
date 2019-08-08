@@ -15,8 +15,7 @@ public class JacksonTest {
 
 
 	@Test
-	public void testAddExtraField() throws Exception
-	{
+	public void testAddExtraField() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 
 		mapper.registerModule(new SimpleModule() {
@@ -41,7 +40,7 @@ public class JacksonTest {
 			}
 		});
 
-		mapper.writeValue(System.out, Lists.newArrayList(new MyClass1(),new MyClass2()));
+		mapper.writeValue(System.out, Lists.newArrayList(new MyClass1(), new MyClass2()));
 		//prints {"classField":"classFieldValue","extraField":"extraFieldValue"}
 	}
 
@@ -52,10 +51,12 @@ public class JacksonTest {
 		public String getClassField() {
 			return classField;
 		}
+
 		public void setClassField(String classField) {
 			this.classField = classField;
 		}
 	}
+
 	class MyClass2 {
 
 		private String classField = "classFieldValue2";
@@ -63,11 +64,11 @@ public class JacksonTest {
 		public String getClassField() {
 			return classField;
 		}
+
 		public void setClassField(String classField) {
 			this.classField = classField;
 		}
 	}
-
 
 
 }

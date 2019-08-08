@@ -14,8 +14,8 @@ import com.albedo.java.modules.gen.domain.vo.SchemeGenDataVo;
 import com.albedo.java.modules.gen.domain.vo.TableDataVo;
 import com.albedo.java.modules.gen.service.impl.SchemeServiceImpl;
 import com.albedo.java.modules.gen.service.impl.TableServiceImpl;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.albedo.java.modules.sys.feign.RemoteMenuService;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.http.MediaType;
@@ -35,55 +35,56 @@ import java.util.Map;
 @RequestMapping(value = "/scheme")
 public class SchemeResource extends DataVoResource<SchemeServiceImpl, SchemeDataVo> {
 
-    private final TableServiceImpl tableService;
+	private final TableServiceImpl tableService;
 
-    private final RemoteMenuService remoteMenuService;
+	private final RemoteMenuService remoteMenuService;
 
-    public SchemeResource(SchemeServiceImpl schemeServiceImpl, TableServiceImpl tableService,
+	public SchemeResource(SchemeServiceImpl schemeServiceImpl, TableServiceImpl tableService,
 						  RemoteMenuService remoteMenuService) {
-        super(schemeServiceImpl);
-        this.tableService = tableService;
-        this.remoteMenuService = remoteMenuService;
-    }
+		super(schemeServiceImpl);
+		this.tableService = tableService;
+		this.remoteMenuService = remoteMenuService;
+	}
 
-    /**
-     * @param pm
-     * @return
-     */
-    @GetMapping(value = "/")
-    @Timed
-    public ResponseEntity getPage(PageModel pm) {
-        return ResponseBuilder.buildOk(service.getSchemeVoPage(pm));
-    }
-    @GetMapping(value = "/form-data")
-    @Timed
-    public ResponseEntity formData(SchemeDataVo schemeDataVo) {
+	/**
+	 * @param pm
+	 * @return
+	 */
+	@GetMapping(value = "/")
+	@Timed
+	public ResponseEntity getPage(PageModel pm) {
+		return ResponseBuilder.buildOk(service.getSchemeVoPage(pm));
+	}
+
+	@GetMapping(value = "/form-data")
+	@Timed
+	public ResponseEntity formData(SchemeDataVo schemeDataVo) {
 		String username = SecurityUtils.getUser().getUsername();
-        Map<String, Object> formData = service.findFormData(schemeDataVo, username);
-        return ResponseBuilder.buildOk(formData);
-    }
+		Map<String, Object> formData = service.findFormData(schemeDataVo, username);
+		return ResponseBuilder.buildOk(formData);
+	}
 
 
 	@PutMapping(value = "/gen-code")
 	@Timed
 	public ResponseEntity genCode(@Valid @RequestBody GenCodeVo genCodeVo) {
 		SchemeDataVo genSchemeDataVo = service.findOneVo(genCodeVo.getId());
-		Assert.isTrue(genSchemeDataVo !=null, "无法获取代码生成方案信息");
+		Assert.isTrue(genSchemeDataVo != null, "无法获取代码生成方案信息");
 		genSchemeDataVo.setReplaceFile(genCodeVo.getReplaceFile());
 		service.generateCode(genSchemeDataVo);
 		return ResponseBuilder.buildOk("生成", genSchemeDataVo.getName(), "代码成功");
 	}
 
-    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @Timed
-    public ResponseEntity save(@Valid @RequestBody SchemeDataVo schemeDataVo) {
-        service.save(schemeDataVo);
-        // 生成代码
-        if (schemeDataVo.getGenCode()) {
-            service.generateCode(schemeDataVo);
-        }
-        return ResponseBuilder.buildOk("保存", schemeDataVo.getName(), "成功");
-    }
+	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@Timed
+	public ResponseEntity save(@Valid @RequestBody SchemeDataVo schemeDataVo) {
+		service.save(schemeDataVo);
+		// 生成代码
+		if (schemeDataVo.getGenCode()) {
+			service.generateCode(schemeDataVo);
+		}
+		return ResponseBuilder.buildOk("保存", schemeDataVo.getName(), "成功");
+	}
 
 	@PostMapping(value = "/gen-menu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@Timed
@@ -101,13 +102,13 @@ public class SchemeResource extends DataVoResource<SchemeServiceImpl, SchemeData
 	}
 
 
-    @DeleteMapping(CommonConstants.URL_IDS_REGEX)
-    @Timed
-    public ResponseEntity delete(@PathVariable String ids) {
-        log.debug("REST request to delete User: {}", ids);
-        service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-        return ResponseBuilder.buildOk("删除成功");
-    }
+	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
+	@Timed
+	public ResponseEntity delete(@PathVariable String ids) {
+		log.debug("REST request to delete User: {}", ids);
+		service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
+		return ResponseBuilder.buildOk("删除成功");
+	}
 
 
 }

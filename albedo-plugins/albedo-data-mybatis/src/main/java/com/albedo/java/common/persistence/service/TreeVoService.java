@@ -37,7 +37,6 @@ public interface TreeVoService<Repository extends TreeRepository<T>,
 	Optional<V> findOptionalTopByParentId(String parentId);
 
 
-
 	/**
 	 * 查询部门树菜单
 	 *

@@ -23,67 +23,69 @@ import java.util.Map;
 public class DictUtil {
 	public static CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
 	public static RemoteDictService remoteDictService = SpringContextHolder.getBean(RemoteDictService.class);
-    public static List<Dict> getDictList() {
+
+	public static List<Dict> getDictList() {
 		Cache cache = cacheManager.getCache(Dict.CACHE_DICT_DETAILS);
 		if (cache != null && cache.get(Dict.CACHE_DICT_ALL) != null) {
 			return (List<Dict>) cache.get(Dict.CACHE_DICT_ALL).get();
 		}
-		try{
+		try {
 			String dictListStr = remoteDictService.getDictAll(SecurityConstants.FROM_IN).getData();
-			if(ObjectUtil.isNotEmpty(dictListStr)){
+			if (ObjectUtil.isNotEmpty(dictListStr)) {
 				List<Dict> dictList = Json.parseArray(dictListStr, Dict.class);
 				cache.put(Dict.CACHE_DICT_ALL, dictList);
 				return dictList;
 			}
-		}catch (Exception e){
-			log.warn("{}",e);
+		} catch (Exception e) {
+			log.warn("{}", e);
 		}
 		return null;
-    }
-
-    /**
-     * 根据code 和 编码 获取数据字典对象
-     *
-     * @param code
-     * @return
-     */
-    public static Dict getCodeItem(String code) {
-        Dict dict = null;
-        List<Dict> list = DictUtil.getDictList();
-        for (Dict item : list) {
-            if (item.getCode().equals(code)) {
-                dict = item;
-
-            }
-        }
-        return dict == null ? null : dict;
-    }
-
-    /**
-     * 根据code 和 编码 获取数据字典对象 本级
-     *
-     * @param code
-     * @return
-     */
-    public static String getCodeItemVal(String code) {
-        Dict dict = getCodeItem(code);
-        return dict == null ? null : dict.getVal();
-    }
-
-	public static Map<String,List<SelectResult>> getSelectResultListByCodes(String... codes) {
-    	return getSelectResultListByCodes(DictUtil.getDictList(), codes);
 	}
-    public static Map<String,List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
+
+	/**
+	 * 根据code 和 编码 获取数据字典对象
+	 *
+	 * @param code
+	 * @return
+	 */
+	public static Dict getCodeItem(String code) {
+		Dict dict = null;
+		List<Dict> list = DictUtil.getDictList();
+		for (Dict item : list) {
+			if (item.getCode().equals(code)) {
+				dict = item;
+
+			}
+		}
+		return dict == null ? null : dict;
+	}
+
+	/**
+	 * 根据code 和 编码 获取数据字典对象 本级
+	 *
+	 * @param code
+	 * @return
+	 */
+	public static String getCodeItemVal(String code) {
+		Dict dict = getCodeItem(code);
+		return dict == null ? null : dict.getVal();
+	}
+
+	public static Map<String, List<SelectResult>> getSelectResultListByCodes(String... codes) {
+		return getSelectResultListByCodes(DictUtil.getDictList(), codes);
+	}
+
+	public static Map<String, List<SelectResult>> getSelectResultListByCodes(List<Dict> dictList, String... codes) {
 		Map<String, List<SelectResult>> map = Maps.newHashMap();
-		if(ObjectUtil.isEmpty(dictList)){
+		if (ObjectUtil.isEmpty(dictList)) {
 			return map;
 		}
 		List<Dict> dictCodes = Lists.newArrayList();
-		if(ObjectUtil.isNotEmpty(codes)){
-			for(String codeItem : codes){
-				for(Dict dict : dictList){
+		if (ObjectUtil.isNotEmpty(codes)) {
+			for (String codeItem : codes) {
+				for (Dict dict : dictList) {
 					//命中的数据字段
-					if(codeItem.equals(dict.getCode())){
+					if (codeItem.equals(dict.getCode())) {
 						dictCodes.add(dict);
 						break;
 					}
@@ -92,12 +94,12 @@ public class DictUtil {
 //                    map.put(Globals.UA_SYS_CITY, repository.findCitys());
 //                }
 			}
-		}else{
+		} else {
 			dictCodes = dictList;
 		}
-		dictCodes.forEach(dict ->{
+		dictCodes.forEach(dict -> {
 			List<SelectResult> dictTempList = getDictList(dictList, dict);
-			if(CollUtil.isNotEmpty(dictTempList)){
+			if (CollUtil.isNotEmpty(dictTempList)) {
 				map.put(dict.getCode(), dictTempList);
 			}
 		});
@@ -106,13 +108,13 @@ public class DictUtil {
 //        }
 
 		return map;
-    }
+	}
 
 	private static List<SelectResult> getDictList(List<Dict> dictList, Dict dict) {
 		List<SelectResult> list = Lists.newLinkedList();
-		if(CollUtil.isNotEmpty(dictList)){
-			for(Dict item : dictList){
-				if(CommonConstants.YES.equals(item.getShow()) && StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dict.getId())){
+		if (CollUtil.isNotEmpty(dictList)) {
+			for (Dict item : dictList) {
+				if (CommonConstants.YES.equals(item.getShow()) && StringUtil.isNotEmpty(item.getParentId()) && item.getParentId().equals(dict.getId())) {
 					list.add(new SelectResult(item.getVal(), item.getName(), item.getVersion()));
 				}
 			}

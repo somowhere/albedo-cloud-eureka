@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class TreeResult {
 
-    private String id;
-    private String pid;
-    private String label;
-    private String value;
-    private String key;
-    private String iconCls;
-    private Boolean disabled = false;
+	private String id;
+	private String pid;
+	private String label;
+	private String value;
+	private String key;
+	private String iconCls;
+	private Boolean disabled = false;
 }

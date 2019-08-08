@@ -16,15 +16,12 @@
 
 package com.albedo.java.common.core.exception;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.albedo.java.common.core.util.BeanValidators;
 import com.albedo.java.common.core.util.R;
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -63,7 +60,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
 		List<String> messages = BeanValidators.extractPropertyAndMessageAsList(exception);
-		log.warn("Valid Error:"+messages);
+		log.warn("Valid Error:" + messages);
 		return R.createFail(ArrayUtil.toArray(messages, String.class));
 	}
 

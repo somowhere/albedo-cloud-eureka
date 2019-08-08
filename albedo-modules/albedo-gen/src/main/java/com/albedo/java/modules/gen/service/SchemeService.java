@@ -15,11 +15,12 @@ public interface SchemeService extends DataVoService<SchemeRepository, Scheme, S
 
 	String generateCode(SchemeDataVo schemeDataVo);
 
-	Map<String,Object> findFormData(SchemeDataVo schemeDataVo, String loginId);
+	Map<String, Object> findFormData(SchemeDataVo schemeDataVo, String loginId);
+
 	/**
 	 * 分页查询用户信息（含有角色信息）
 	 *
-	 * @param pm    分页对象
+	 * @param pm 分页对象
 	 * @return
 	 */
 	IPage getSchemeVoPage(PageModel pm);

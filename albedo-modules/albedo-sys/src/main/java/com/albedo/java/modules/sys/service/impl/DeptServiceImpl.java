@@ -18,15 +18,15 @@ package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.StringUtil;
+import com.albedo.java.common.core.vo.TreeNode;
 import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.domain.Dept;
-import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.albedo.java.modules.sys.domain.DeptRelation;
 import com.albedo.java.modules.sys.repository.DeptRepository;
 import com.albedo.java.modules.sys.service.DeptRelationService;
 import com.albedo.java.modules.sys.service.DeptService;
-import com.albedo.java.common.core.vo.TreeNode;
+import com.albedo.java.modules.sys.vo.DeptDataVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class DeptServiceImpl  extends
+public class DeptServiceImpl extends
 	TreeVoServiceImpl<DeptRepository, Dept, DeptDataVo> implements DeptService {
 	private final DeptRelationService deptRelationService;
 
@@ -60,9 +60,9 @@ public class DeptServiceImpl  extends
 	public Boolean saveDept(DeptDataVo deptDataVo) {
 		boolean add = StringUtil.isEmpty(deptDataVo.getId());
 		super.save(deptDataVo);
-		if(add){
+		if (add) {
 			deptRelationService.saveDeptRelation(deptDataVo);
-		}else{
+		} else {
 			//更新部门关系
 			DeptRelation relation = new DeptRelation();
 			relation.setAncestor(deptDataVo.getParentId());
@@ -82,7 +82,7 @@ public class DeptServiceImpl  extends
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean removeDeptByIds(List<String> ids) {
-		ids.forEach(id->{
+		ids.forEach(id -> {
 			//级联删除部门
 			List<String> idList = deptRelationService
 				.list(Wrappers.<DeptRelation>query().lambda()

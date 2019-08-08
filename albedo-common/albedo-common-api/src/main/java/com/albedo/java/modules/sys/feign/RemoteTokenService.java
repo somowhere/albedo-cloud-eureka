@@ -16,10 +16,10 @@
 
 package com.albedo.java.modules.sys.feign;
 
-import com.albedo.java.modules.sys.feign.factory.RemoteTokenServiceFallbackFactory;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.modules.sys.feign.factory.RemoteTokenServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +45,7 @@ public interface RemoteTokenService {
 	 * 删除token
 	 *
 	 * @param tokens tokens
-	 * @param from  调用标志
+	 * @param from   调用标志
 	 * @return
 	 */
 	@DeleteMapping("/token/{tokens}")

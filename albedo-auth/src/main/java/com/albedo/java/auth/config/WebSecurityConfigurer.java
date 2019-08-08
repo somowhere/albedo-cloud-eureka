@@ -16,8 +16,8 @@
 
 package com.albedo.java.auth.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.albedo.java.common.security.handler.MobileLoginSuccessHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +58,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 			.antMatchers("/*.{js,html}")
 			.antMatchers("/webjars/**");
 	}
+
 	@Override
 	@SneakyThrows
 	protected void configure(HttpSecurity http) {

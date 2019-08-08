@@ -16,8 +16,8 @@
 
 package com.albedo.java.gateway.handler;
 
-import com.google.code.kaptcha.Producer;
 import com.albedo.java.common.core.constant.CommonConstants;
+import com.google.code.kaptcha.Producer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;

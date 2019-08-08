@@ -18,10 +18,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class GenCodeVo implements Serializable {
 
-    private String id;
-    /**
-     * 是否替换现有文件 true：替换文件 ；false：不替换；
-     */
-    private Boolean replaceFile = false;
+	private String id;
+	/**
+	 * 是否替换现有文件 true：替换文件 ；false：不替换；
+	 */
+	private Boolean replaceFile = false;
 
 }

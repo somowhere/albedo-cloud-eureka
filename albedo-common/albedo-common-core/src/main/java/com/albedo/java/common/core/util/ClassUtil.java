@@ -48,7 +48,6 @@ import java.util.Map;
 public class ClassUtil extends org.springframework.util.ClassUtils {
 
 
-
 	private static final String SETTER_PREFIX = "set";
 
 	private static final String GETTER_PREFIX = "get";
@@ -68,6 +67,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		}
 		return false;
 	}
+
 	/**
 	 * 获取方法参数信息
 	 *
@@ -93,12 +93,14 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		methodParameter.initParameterNameDiscovery(PARAMETERNAMEDISCOVERER);
 		return methodParameter;
 	}
+
 	/**
 	 * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问. 如向上转型到Object仍无法找到, 返回null.
 	 */
 	public static Field getAccessibleField(final Object obj, final String fieldName) {
 		return getAccessibleField(obj.getClass(), fieldName);
 	}
+
 	/**
 	 * 改变private/protected的成员变量为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
 	 */
@@ -108,6 +110,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 			field.setAccessible(true);
 		}
 	}
+
 	/**
 	 * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问. 如向上转型到Object仍无法找到, 返回null.
 	 */
@@ -127,8 +130,10 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		}
 		return null;
 	}
+
 	/**
 	 * 获取Annotation
+	 *
 	 * @param clazz
 	 * @param pName
 	 * @param annotationClass
@@ -136,8 +141,8 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 	 * @return
 	 */
 	public <A extends Annotation> A findAnnotation(Class<?> clazz,
-												  String pName,
-												  Class<A> annotationClass) {
+												   String pName,
+												   Class<A> annotationClass) {
 		Class<?> temp = clazz;
 
 		A an = null;
@@ -160,6 +165,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 
 		return an;
 	}
+
 	/**
 	 * 获取Annotation
 	 *
@@ -277,7 +283,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 				object = ReflectUtil.invoke(object, GETTER_PREFIX + StringUtil.upperFirst(names[i]),
 					value);
 			} else {
-				ReflectUtil.invoke(object, SETTER_PREFIX+ StringUtil.upperFirst(names[i]),
+				ReflectUtil.invoke(object, SETTER_PREFIX + StringUtil.upperFirst(names[i]),
 					value);
 			}
 		}

@@ -16,22 +16,25 @@
 
 package com.albedo.java.modules.sys.web;
 
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.vo.TreeUtil;
-import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.common.web.resource.TreeVoResource;
-import com.albedo.java.modules.sys.vo.*;
-import com.albedo.java.modules.sys.domain.Menu;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.albedo.java.modules.sys.service.MenuService;
-import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.web.resource.TreeVoResource;
+import com.albedo.java.modules.sys.domain.Menu;
+import com.albedo.java.modules.sys.service.MenuService;
+import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.vo.MenuDataVo;
+import com.albedo.java.modules.sys.vo.MenuTree;
+import com.albedo.java.modules.sys.vo.MenuVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,6 +58,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public MenuResource(MenuService service) {
 		super(service);
 	}
+
 	/**
 	 * @param id
 	 * @return
@@ -63,8 +67,9 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return  R.createSuccessData(service.findOneVo(id));
+		return R.createSuccessData(service.findOneVo(id));
 	}
+
 	/**
 	 * 返回当前用户的树形菜单集合
 	 *

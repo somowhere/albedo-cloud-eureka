@@ -13,32 +13,32 @@ import java.util.List;
 @XmlRootElement(name = "category")
 public class GenCategory extends DictTemp {
 
-    private static final long serialVersionUID = 1L;
-    public static String CATEGORY_REF = "category-ref:";
-    private List<String> template; // 主表模板
-    private List<String> childTableTemplate;// 子表模板
+	private static final long serialVersionUID = 1L;
+	public static String CATEGORY_REF = "category-ref:";
+	private List<String> template; // 主表模板
+	private List<String> childTableTemplate;// 子表模板
 
-    public GenCategory() {
-        super();
-    }
+	public GenCategory() {
+		super();
+	}
 
-    @XmlElement(name = "template")
-    public List<String> getTemplate() {
-        return template;
-    }
+	@XmlElement(name = "template")
+	public List<String> getTemplate() {
+		return template;
+	}
 
-    public void setTemplate(List<String> template) {
-        this.template = template;
-    }
+	public void setTemplate(List<String> template) {
+		this.template = template;
+	}
 
-    @XmlElementWrapper(name = "childTable")
-    @XmlElement(name = "template")
-    public List<String> getChildTableTemplate() {
-        return childTableTemplate;
-    }
+	@XmlElementWrapper(name = "childTable")
+	@XmlElement(name = "template")
+	public List<String> getChildTableTemplate() {
+		return childTableTemplate;
+	}
 
-    public void setChildTableTemplate(List<String> childTableTemplate) {
-        this.childTableTemplate = childTableTemplate;
-    }
+	public void setChildTableTemplate(List<String> childTableTemplate) {
+		this.childTableTemplate = childTableTemplate;
+	}
 
 }

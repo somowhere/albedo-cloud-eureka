@@ -102,6 +102,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			return accessToken;
 		};
 	}
+
 	@Bean
 	public AccessTokenConverter accessTokenConverter() {
 		DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();

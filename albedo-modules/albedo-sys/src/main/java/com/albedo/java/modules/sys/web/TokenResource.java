@@ -17,9 +17,9 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.sys.feign.RemoteTokenService;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.modules.sys.feign.RemoteTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

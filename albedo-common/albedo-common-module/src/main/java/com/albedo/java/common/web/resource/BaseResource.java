@@ -14,22 +14,23 @@ import java.net.URLEncoder;
 public class BaseResource extends GeneralResource {
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
-    /**
-     * 输出到客户端
-     *
-     * @param fileName 输出文件名
-     */
-    public void write(HttpServletResponse response, SXSSFWorkbook wb, String fileName) {
-        try {
-            response.reset();
-            response.setContentType("application/octet-stream; charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, DEFAULT_URL_ENCODING));
-            wb.write(response.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
+
+	/**
+	 * 输出到客户端
+	 *
+	 * @param fileName 输出文件名
+	 */
+	public void write(HttpServletResponse response, SXSSFWorkbook wb, String fileName) {
+		try {
+			response.reset();
+			response.setContentType("application/octet-stream; charset=utf-8");
+			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, DEFAULT_URL_ENCODING));
+			wb.write(response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
 
 }

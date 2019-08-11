@@ -42,6 +42,7 @@ public class Menu extends TreeEntity<Menu> {
 
 	public static final String TYPE_MENU = "0";
 	public static final String TYPE_BUTTON = "1";
+	public static final String TYPE_BUTTON_TAB = "2";
 	public static final String F_SHOW = "show";
 	public static final String F_SQL_SHOW = "show";
 	private static final long serialVersionUID = 1L;

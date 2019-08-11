@@ -16,6 +16,7 @@
 
 package com.albedo.java.modules.sys.service.impl;
 
+import cn.hutool.core.util.CharUtil;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.CollUtil;
@@ -149,7 +150,9 @@ public class MenuServiceImpl extends
 		String moduleName = schemeDataVo.getSchemeName(),
 			parentMenuId = schemeDataVo.getParentMenuId(),
 			url = schemeDataVo.getUrl();
-		String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0, permission.length() - 1);
+		String permission = StringUtil.toCamelCase(StringUtil.lowerFirst(url), CharUtil.DASHED)
+			.replace("/", "_").substring(1),
+			permissionLike = permission.substring(0, permission.length() - 1);
 		List<Menu> currentMenuList = baseMapper.selectList(Wrappers.<Menu>query()
 			.lambda().eq(Menu::getName, moduleName).or()
 			.likeLeft(Menu::getPermission, permissionLike)
@@ -174,7 +177,7 @@ public class MenuServiceImpl extends
 		module.setParentId(parentMenu.getId());
 		module.setType(Menu.TYPE_MENU);
 		module.setIcon("icon-right-square");
-		module.setPath(StringUtil.lowerFirst(schemeDataVo.getClassName()));
+		module.setPath(StringUtil.toRevertCamelCase(StringUtil.lowerFirst(schemeDataVo.getClassName()), CharUtil.DASHED));
 		module.setComponent("views" + url + "index");
 		save(module);
 
@@ -215,12 +218,12 @@ public class MenuServiceImpl extends
 	public List<MenuTree> listMenuTrees(TreeQuery treeQuery) {
 		List<Menu> menuEntities = baseMapper.selectList(Wrappers.emptyWrapper());
 		String extId = treeQuery.getExtId();
-		Collections.sort(menuEntities, Comparator.comparing((Menu t) -> t.getSort()).reversed());
 		List<MenuTree> treeList = menuEntities.stream().filter(item ->
 			(ObjectUtil.isEmpty(extId) || ObjectUtil.isEmpty(item.getParentIds()) ||
 				(ObjectUtil.isNotEmpty(extId) && !extId.equals(item.getId()) && item.getParentIds() != null
 					&& item.getParentIds().indexOf("," + extId + ",") == -1))
 		)
+			.sorted(Comparator.comparingInt(Menu::getSort))
 			.map(menu -> {
 				MenuTree node = new MenuTree();
 				node.setId(menu.getId());

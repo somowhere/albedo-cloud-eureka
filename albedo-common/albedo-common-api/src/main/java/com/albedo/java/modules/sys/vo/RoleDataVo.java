@@ -40,7 +40,7 @@ public class RoleDataVo extends DataEntityVo<String> {
 	 */
 	@DictType("sys_flag")
 	@NotBlank(message = "锁定标记 不能为空")
-	private String lockFlag;
+	private String available;
 
 	/**
 	 * 数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置

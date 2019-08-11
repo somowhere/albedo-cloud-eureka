@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @UtilityClass
-public class AuthUtils {
+public class AuthUtil {
 	private final String BASIC_ = "Basic ";
 
 	/**

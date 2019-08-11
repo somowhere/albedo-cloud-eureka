@@ -18,7 +18,7 @@ package com.albedo.java.common.log.config;
 
 import com.albedo.java.common.log.aspect.SysLogAspect;
 import com.albedo.java.common.log.event.SysLogListener;
-import com.albedo.java.modules.sys.feign.RemoteLogService;
+import com.albedo.java.modules.sys.feign.RemoteLogOperateService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -35,11 +35,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @AllArgsConstructor
 @ConditionalOnWebApplication
 public class LogAutoConfiguration {
-	private final RemoteLogService remoteLogService;
+	private final RemoteLogOperateService remoteLogOperateService;
 
 	@Bean
 	public SysLogListener sysLogListener() {
-		return new SysLogListener(remoteLogService);
+		return new SysLogListener(remoteLogOperateService);
 	}
 
 	@Bean

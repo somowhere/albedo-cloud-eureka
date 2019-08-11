@@ -17,9 +17,10 @@
 package com.albedo.java.common.log.aspect;
 
 import com.albedo.java.common.core.util.SpringContextHolder;
+import com.albedo.java.common.log.annotation.Log;
 import com.albedo.java.common.log.event.SysLogEvent;
 import com.albedo.java.common.log.util.SysLogUtils;
-import com.albedo.java.modules.sys.domain.Log;
+import com.albedo.java.modules.sys.domain.LogOperate;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -35,21 +36,27 @@ import org.aspectj.lang.annotation.Aspect;
 @Slf4j
 public class SysLogAspect {
 
-	@Around("@annotation(sysLog)")
+	@Around("@annotation(log)")
 	@SneakyThrows
-	public Object around(ProceedingJoinPoint point, com.albedo.java.common.log.annotation.SysLog sysLog) {
+	public Object around(ProceedingJoinPoint point, com.albedo.java.common.log.annotation.Log log) {
 		String strClassName = point.getTarget().getClass().getName();
 		String strMethodName = point.getSignature().getName();
-		log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);
+		SysLogAspect.log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);
 
-		Log logVo = SysLogUtils.getSysLog();
-		logVo.setTitle(sysLog.value());
-		// 发送异步日志事件
+		LogOperate logOperateVo = SysLogUtils.getSysLog();
+		logOperateVo.setTitle(log.value());
+		logOperateVo.setBusinessType(log.businessType().ordinal());
+		logOperateVo.setOperatorType(log.operatorType().ordinal());
 		Long startTime = System.currentTimeMillis();
 		Object obj = point.proceed();
 		Long endTime = System.currentTimeMillis();
-		logVo.setTime(endTime - startTime);
-		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
+		logOperateVo.setTime(endTime - startTime);
+		SysLogAspect.log.debug("[logOperateVo]:{}", logOperateVo);
+		// 是否需要保存request，参数和值
+		if (log.isSaveRequestData()) {
+			// 发送异步日志事件
+			SpringContextHolder.publishEvent(new SysLogEvent(logOperateVo));
+		}
 		return obj;
 	}
 

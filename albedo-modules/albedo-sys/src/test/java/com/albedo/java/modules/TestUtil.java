@@ -1,4 +1,4 @@
-package com.albedo.java.web.rest;
+package com.albedo.java.modules;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

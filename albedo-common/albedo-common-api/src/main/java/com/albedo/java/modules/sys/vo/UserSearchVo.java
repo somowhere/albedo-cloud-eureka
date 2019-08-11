@@ -37,7 +37,7 @@ public class UserSearchVo implements Serializable {
 	/**
 	 * 锁定标记
 	 */
-	private String lockFlag;
+	private String available;
 
 	/**
 	 * 邮箱

@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.feign.factory;
+package com.albedo.java.modules.sys.service;
 
-import com.albedo.java.modules.sys.feign.RemoteLogService;
-import com.albedo.java.modules.sys.feign.fallback.RemoteLogServiceFallbackImpl;
-import feign.hystrix.FallbackFactory;
-import org.springframework.stereotype.Component;
+import com.albedo.java.common.persistence.service.BaseService;
+import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.domain.LogOperate;
+import com.albedo.java.modules.sys.repository.LogOperateRepository;
+import com.albedo.java.modules.sys.vo.LogDataVo;
 
 /**
+ * <p>
+ * 日志表 服务类
+ * </p>
+ *
  * @author somowhere
- * @date 2019/2/1
+ * @since 2019/2/1
  */
-@Component
-public class RemoteLogServiceFallbackFactory implements FallbackFactory<RemoteLogService> {
+public interface LogOperateService extends BaseService<LogOperateRepository, LogOperate, Long> {
 
-	@Override
-	public RemoteLogService create(Throwable throwable) {
-		RemoteLogServiceFallbackImpl remoteLogServiceFallback = new RemoteLogServiceFallbackImpl();
-		remoteLogServiceFallback.setCause(throwable);
-		return remoteLogServiceFallback;
-	}
 }

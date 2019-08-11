@@ -17,7 +17,7 @@
 package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
-import com.albedo.java.modules.sys.domain.Log;
+import com.albedo.java.modules.sys.domain.LogOperate;
 
 /**
  * <p>
@@ -27,5 +27,5 @@ import com.albedo.java.modules.sys.domain.Log;
  * @author somowhere
  * @since 2019/2/1
  */
-public interface LogRepository extends BaseRepository<Log> {
+public interface LogOperateRepository extends BaseRepository<LogOperate> {
 }

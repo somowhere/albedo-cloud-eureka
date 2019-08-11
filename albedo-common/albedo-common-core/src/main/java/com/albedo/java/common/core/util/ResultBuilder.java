@@ -15,45 +15,45 @@ import java.util.stream.Collectors;
 /**
  * Created by somewhere on 2017/3/2.
  */
-public class ResponseBuilder {
+public class ResultBuilder {
 	public static ResponseEntity<R> build(R customMessage) {
 		return new ResponseEntity(customMessage, customMessage.getHttpStatus() == null ?
 			HttpStatus.OK : customMessage.getHttpStatus());
 	}
 
 	public static ResponseEntity<R> buildOk(String... messages) {
-		return new ResponseEntity(R.createSuccess(messages), HttpStatus.OK);
+		return new ResponseEntity(R.buildOk(messages), HttpStatus.OK);
 	}
 
 	public static ResponseEntity<R> buildOk(Object data, String... messages) {
-		return new ResponseEntity(R.createSuccessData(data, messages), HttpStatus.OK);
+		return new ResponseEntity(R.buildOkData(data, messages), HttpStatus.OK);
 	}
 
-	public static ResponseEntity<R> buildFailed(String... messages) {
-		return buildFailed(null, messages);
+	public static ResponseEntity<R> buildFail(String... messages) {
+		return buildFail(null, messages);
 	}
 
-	public static ResponseEntity<R> buildFailed(Object data, HttpStatus httpStatus, String... messages) {
+	public static ResponseEntity<R> buildFail(Object data, HttpStatus httpStatus, String... messages) {
 		if (ArrayUtil.isEmpty(messages)) {
 			messages = new String[]{"failed"};
 		}
-		R warn = R.createFailData(data, messages);
+		R warn = R.buildFailData(data, messages);
 		warn.setHttpStatus(httpStatus);
 		return new ResponseEntity(warn, httpStatus != null ? httpStatus : HttpStatus.OK);
 
 	}
 
-	public static ResponseEntity<R> buildFailed(HttpStatus httpStatus, String... messages) {
+	public static ResponseEntity<R> buildFail(HttpStatus httpStatus, String... messages) {
 
-		return buildFailed(null, httpStatus, messages);
+		return buildFail(null, httpStatus, messages);
 	}
 
-	public static ResponseEntity<R> buildFailed(Object data, String... messages) {
+	public static ResponseEntity<R> buildFail(Object data, String... messages) {
 
-		return buildFailed(data, HttpStatus.OK, messages);
+		return buildFail(data, HttpStatus.OK, messages);
 	}
 
-	public static ResponseEntity<R> buildDataOk(Object data) {
+	public static ResponseEntity<R> buildOkData(Object data) {
 		String[] msg;
 		if (data instanceof BindingResult) {
 			List<String> errorsList = new ArrayList();
@@ -78,7 +78,7 @@ public class ResponseBuilder {
 
 	public static <X> ResponseEntity<X> wrapOrNotFound(Optional<X> maybeResponse, HttpHeaders header) {
 		return (ResponseEntity) maybeResponse.map((response) -> ResponseEntity.ok().headers(header).
-			body(R.createSuccessData(response))).orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
+			body(R.buildOkData(response))).orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
 	}
 
 }

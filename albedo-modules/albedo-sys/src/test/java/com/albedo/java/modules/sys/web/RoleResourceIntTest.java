@@ -1,14 +1,15 @@
-package com.albedo.java.web.rest;
+package com.albedo.java.modules.sys.web;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.AlbedoSysApplication;
+import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.service.*;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
-import com.albedo.java.modules.sys.web.RoleResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.albedo.java.web.rest.TestUtil.createFormattingConversionService;
+import static com.albedo.java.modules.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -49,8 +50,8 @@ public class RoleResourceIntTest {
 	private static final String DEFAULT_ANOTHER_CODE = "ANOTHER_CODE";
 	private static final String DEFAULT_CODE = "CODE1";
 	private static final String UPDATED_CODE = "CODE2";
-	private static final String DEFAULT_LOCKFLAG = CommonConstants.STR_YES;
-	private static final String UPDATED_LOCKFLAG = CommonConstants.STR_NO;
+	private static final String DEFAULT_AVAILABLE = CommonConstants.STR_YES;
+	private static final String UPDATED_AVAILABLE = CommonConstants.STR_NO;
 	private static final String DEFAULT_DATASCOPE = CommonConstants.STR_YES;
 	private static final String UPDATED_DATASCOPE = CommonConstants.STR_NO;
 	private static final String DEFAULT_REMARK = "REMARK1";
@@ -75,6 +76,8 @@ public class RoleResourceIntTest {
 	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 	@Autowired
 	private GlobalExceptionHandler globalExceptionHandler;
+	@Autowired
+	private ApplicationProperties applicationProperties;
 
 	private RoleDataVo roleDataVo;
 
@@ -102,7 +105,7 @@ public class RoleResourceIntTest {
 		RoleDataVo roleDataVo = new RoleDataVo();
 		roleDataVo.setName(DEFAULT_NAME);
 		roleDataVo.setCode(DEFAULT_CODE);
-		roleDataVo.setLockFlag(DEFAULT_LOCKFLAG);
+		roleDataVo.setAvailable(DEFAULT_AVAILABLE);
 		roleDataVo.setDataScope(DEFAULT_DATASCOPE);
 		roleDataVo.setRemark(DEFAULT_REMARK);
 		roleDataVo.setDescription(DEFAULT_DESCRIPTION);
@@ -117,7 +120,7 @@ public class RoleResourceIntTest {
 		List<Dept> allDept = deptService.findAll();
 		anotherRole.setName(DEFAULT_ANOTHER_NAME);
 		anotherRole.setCode(DEFAULT_ANOTHER_CODE);
-		anotherRole.setLockFlag(DEFAULT_LOCKFLAG);
+		anotherRole.setAvailable(DEFAULT_AVAILABLE);
 		anotherRole.setDataScope(DEFAULT_DATASCOPE);
 		anotherRole.setRemark(DEFAULT_REMARK);
 		anotherRole.setDescription(DEFAULT_DESCRIPTION);
@@ -207,7 +210,7 @@ public class RoleResourceIntTest {
 		managedRoleVM.setName(UPDATED_NAME);
 		managedRoleVM.setCode(UPDATED_CODE);
 		managedRoleVM.setRemark(UPDATED_REMARK);
-		managedRoleVM.setLockFlag(UPDATED_LOCKFLAG);
+		managedRoleVM.setAvailable(UPDATED_AVAILABLE);
 		managedRoleVM.setDataScope(UPDATED_DATASCOPE);
 		managedRoleVM.setDescription(UPDATED_DESCRIPTION);
 		managedRoleVM.setMenuIdList(Lists.newArrayList(anotherRole.getMenuIdList().get(0)));

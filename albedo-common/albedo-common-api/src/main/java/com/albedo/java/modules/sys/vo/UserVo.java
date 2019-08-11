@@ -35,6 +35,7 @@ public class UserVo extends DataEntityVo<String> {
 
 	public static final String F_USERNAME = "username";
 	public static final String F_EMAIL = "email";
+	public static final String F_PHONE = "phone";
 	/**
 	 * 用户名
 	 */
@@ -51,7 +52,7 @@ public class UserVo extends DataEntityVo<String> {
 	 * 锁定标记
 	 */
 	@DictType("sys_flag")
-	private String lockFlag;
+	private String available;
 
 	/**
 	 * 邮箱

@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MenuTree extends TreeNode {
+public class MenuTree extends TreeNode<MenuTree> {
 	private String icon;
 	private String name;
 	private boolean spread = false;

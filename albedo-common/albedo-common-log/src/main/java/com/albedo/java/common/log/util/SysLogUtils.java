@@ -18,10 +18,12 @@ package com.albedo.java.common.log.util;
 
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
-import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.modules.sys.domain.Log;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
+import com.albedo.java.common.core.util.AddressUtil;
+import com.albedo.java.common.core.util.WebUtil;
+import com.albedo.java.modules.sys.domain.LogOperate;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +32,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -39,20 +42,29 @@ import java.util.Objects;
  */
 @UtilityClass
 public class SysLogUtils {
-	public Log getSysLog() {
+	public LogOperate getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-		Log log = new Log();
-		log.setCreatedBy(Objects.requireNonNull(getUserId()));
-		log.setUsername(Objects.requireNonNull(getUsername()));
-		log.setType(CommonConstants.STR_YES);
-		log.setRemoteAddr(ServletUtil.getClientIP(request));
-		log.setRequestUri(URLUtil.getPath(request.getRequestURI()));
-		log.setMethod(request.getMethod());
-		log.setUserAgent(request.getHeader("user-agent"));
-		log.setParams(HttpUtil.toParams(request.getParameterMap()));
-		log.setServiceId(getClientId());
-		return log;
+		LogOperate logOperate = new LogOperate();
+		logOperate.setCreatedBy(Objects.requireNonNull(getUserId()));
+		logOperate.setCreatedDate(LocalDateTime.now());
+		logOperate.setUsername(Objects.requireNonNull(getUsername()));
+		logOperate.setIpAddress(WebUtil.getIP(request));
+		logOperate.setIpLocation(AddressUtil.getRealAddressByIP(logOperate.getIpAddress()));
+		logOperate.setUserAgent(request.getHeader("User-Agent"));
+		UserAgent userAgent = UserAgentUtil.parse(logOperate.getUserAgent());
+		logOperate.setBrowser(userAgent.getBrowser().getName());
+		logOperate.setOs(userAgent.getOs().getName());
+		logOperate.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		logOperate.setMethod(request.getMethod());
+//		if (request instanceof BodyRequestWrapper) {
+//			String body = ((BodyRequestWrapper) request).getRequestBody();
+//			logOperate.setParams(body);
+//		}else{
+			logOperate.setParams(HttpUtil.toParams(request.getParameterMap()));
+//		}
+		logOperate.setServiceId(getClientId());
+		return logOperate;
 	}
 
 	/**

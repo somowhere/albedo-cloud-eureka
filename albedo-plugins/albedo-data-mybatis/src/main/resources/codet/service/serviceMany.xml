@@ -61,7 +61,7 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 		${className}.set${table.className}List(null);
 		</#list>
         ${className} = ${className}Repository.save(${className});
-        log.debug("Save Information for ${ClassName}: {}", ${className});
+        logOperate.debug("Save Information for ${ClassName}: {}", ${className});
         <#list table.childList as table>
 		if (PublicUtil.isNotEmpty(${table.className?uncap_first}List)) {
 			for (${table.className} ${table.className} : ${table.className?uncap_first}List) {
@@ -93,7 +93,7 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 			</#list>
 			</#if>
     			deleteById(id, SecurityUtil.getCurrentAuditor());
-                log.debug("Deleted ${ClassName}: {}", u);
+                logOperate.debug("Deleted ${ClassName}: {}", u);
 				return u;
 			}).orElseThrow(() -> new RuntimeMsgException("${functionNameSimple} " + id + " 信息为空，删除失败"));
     	});
@@ -104,7 +104,7 @@ public class ${ClassName}Service extends DataService<${ClassName}Repository, ${C
 		Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)).forEach(id ->{
 			${className}Repository.findOneById(id).map(u -> {
     			operateStatusById(id, BaseEntity.FLAG_NORMAL.equals(u.getStatus()) ? BaseEntity.FLAG_UNABLE : BaseEntity.FLAG_NORMAL, SecurityUtil.getCurrentAuditor());
-                log.debug("LockOrUnLock User: {}", u);
+                logOperate.debug("LockOrUnLock User: {}", u);
 				return u;
 			}).orElseThrow(() -> new RuntimeMsgException("${functionNameSimple} " + id + " 信息为空，操作失败"));
     	});

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, somowhere (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, somewhere (somewhere0813@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -54,19 +54,6 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 
 
 	private final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();
-	public static String classPackge = ApplicationConfig.get("system.base.class.path");
-
-	public static boolean checkClassIsBase(String className) {
-		if (StringUtil.isNotEmpty(className) && StringUtil.isNotEmpty(classPackge)) {
-			String[] strs = classPackge.split(StringUtil.SPLIT_DEFAULT);
-			for (String item : strs) {
-				if (className.contains(item)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * 获取方法参数信息
@@ -146,7 +133,7 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		Class<?> temp = clazz;
 
 		A an = null;
-		while (an == null && checkClassIsBase(temp.toString())) {
+		while (an == null) {
 			try {
 				an = temp.getDeclaredField(pName).getAnnotation(annotationClass);
 			} catch (Exception e) {
@@ -160,7 +147,11 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 			} catch (Exception e) {
 				// logger.debug(e.getMessage());
 			}
-			temp = temp.getSuperclass();
+			if(temp!=null && !(temp.getClass().getName().equals(Object.class.getName()) )){
+				temp = temp.getSuperclass();
+			}else{
+				break;
+			}
 		}
 
 		return an;
@@ -183,7 +174,6 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 		specificMethod = BridgeMethodResolver.findBridgedMethod(specificMethod);
 		// 先找方法，再找方法上的类
 		A annotation = AnnotatedElementUtils.findMergedAnnotation(specificMethod, annotationType);
-		;
 		if (null != annotation) {
 			return annotation;
 		}

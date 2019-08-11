@@ -1,27 +1,31 @@
 package com.albedo.java.common.core.config;
 
+import com.albedo.java.common.core.util.SpringContextHolder;
 import com.albedo.java.common.core.util.StringUtil;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * 系统配置类
  *
- * @author somowhere version 2014-1-20 下午4:06:33
+ * @author somewhere version 2014-1-20 下午4:06:33
  */
 @Slf4j
 public class ApplicationConfig {
 
-	private static java.util.Properties props = null;
+	private static Environment environment;
 
-	static {
-		try {
-			reload(null);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static Environment getEnvironment() {
+		if(environment == null){
+			environment = SpringContextHolder.getBean(Environment.class);
 		}
+		return environment;
 	}
 
 	/**
@@ -31,6 +35,7 @@ public class ApplicationConfig {
 
 	}
 
+
 	/**
 	 * 获取配置信息的静态方法。
 	 *
@@ -38,35 +43,42 @@ public class ApplicationConfig {
 	 * @return - 配置信息。如果不存在，返回null
 	 */
 	public static String get(String name) {
-		if (props == null) {
-			return null;
-		}
-		try {
-			if (props.getProperty(name) != null) {
-				return props.getProperty(name).trim();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "";
+		return getEnvironment().getProperty(name);
+	}
+
+
+	public static boolean isAddressEnabled() {
+		return Boolean.valueOf(get("application.address-enabled"));
+	}
+
+
+	/**
+	 * 获取文件上传路径
+	 */
+	public static String getStaticFileDirectory() {
+		return get("application.static-file-directory");
 	}
 
 	/**
-	 * 重新装载配置信息。
-	 *
-	 * @throws Exception
+	 * 获取头像上传路径
 	 */
-	public static void reload(String path) throws Exception {
-		if (props == null) {
-			props = new java.util.Properties();
-		}
-		PathMatchingResourcePatternResolver resourceLoader = new PathMatchingResourcePatternResolver();
-		InputStream is = resourceLoader.getResources(StringUtil.isEmpty(path) ? "/albedo.properties" : path)[0].getInputStream();
-		// in
-		// the
-		// classpath
-		props.load(is);
-		// dumpSystemConfig();
+	public static String getAvatarPath() {
+		return getStaticFileDirectory() + "/avatar";
 	}
+
+	/**
+	 * 获取下载路径
+	 */
+	public static String getDownloadPath() {
+		return getStaticFileDirectory() + "/download";
+	}
+
+	/**
+	 * 获取上传路径
+	 */
+	public static String getUploadPath() {
+		return getStaticFileDirectory() + "/upload";
+	}
+
 
 }

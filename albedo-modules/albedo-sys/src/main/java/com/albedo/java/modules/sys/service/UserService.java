@@ -21,6 +21,7 @@ import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.vo.UserDataVo;
+import com.albedo.java.modules.sys.vo.UserExcelVo;
 import com.albedo.java.modules.sys.vo.UserInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -72,4 +73,6 @@ public interface UserService extends DataVoService<UserRepository, User, String,
 	List<User> listAncestorUsersByUsername(String username);
 
 	void lockOrUnLock(List<String> idList);
+
+	void save(UserExcelVo userExcelVo);
 }

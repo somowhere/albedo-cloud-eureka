@@ -56,7 +56,7 @@ public class User extends IdEntity<User> {
 	/**
 	 * 锁定标记
 	 */
-	private String lockFlag;
+	private String available;
 
 	/**
 	 * 邮箱

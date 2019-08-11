@@ -18,9 +18,13 @@ package com.albedo.java.modules.sys.web;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.vo.PageModel;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
+import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.service.LogService;
+import com.albedo.java.common.util.ExcelUtil;
+import com.albedo.java.modules.sys.domain.LogOperate;
+import com.albedo.java.modules.sys.service.LogOperateService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,17 +34,17 @@ import javax.validation.Valid;
 
 /**
  * <p>
- * 日志表 前端控制器
+ * 操作日志表 前端控制器
  * </p>
  *
- * @author somowhere
+ * @author somewhere
  * @since 2019/2/1
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/log")
-public class LogResource {
-	private final LogService logService;
+@RequestMapping("/log-operate")
+public class LogOperateResource {
+	private final LogOperateService logOperateService;
 
 	/**
 	 * 简单分页查询
@@ -49,32 +53,34 @@ public class LogResource {
 	 * @return
 	 */
 	@GetMapping("/")
+	@PreAuthorize("@pms.hasPermission('sys_logOperate_view')")
 	public R<IPage> getPage(PageModel pm) {
-		return R.createSuccessData(logService.findPage(pm));
+		return R.buildOkData(logOperateService.findPage(pm));
 	}
 
 	/**
-	 * 删除日志
+	 * 删除操作日志
 	 *
-	 * @param id ID
+	 * @param ids ID
 	 * @return success/false
 	 */
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
-	@PreAuthorize("@pms.hasPermission('sys_log_del')")
-	public R removeById(@PathVariable long id) {
-		return R.createSuccessData(logService.removeById(id));
+	@PreAuthorize("@pms.hasPermission('sys_logOperate_del')")
+	@Log(value = "操作日志", businessType = BusinessType.DELETE)
+	public R removeById(@PathVariable String ids) {
+		return R.buildOkData(logOperateService.removeById(ids));
 	}
 
-	/**
-	 * 插入日志
-	 *
-	 * @param log 日志实体
-	 * @return success/false
-	 */
-	@Inner
-	@PostMapping("/")
-	public R save(@Valid @RequestBody Log log) {
-		return R.createSuccessData(logService.save(log));
+
+	@Log(value = "操作日志", businessType = BusinessType.EXPORT)
+	@GetMapping(value = "/export")
+	@PreAuthorize("@pms.hasPermission('sys_logOperate_export')")
+	public R importTemplate(PageModel pm) {
+		ExcelUtil<LogOperate> util = new ExcelUtil(LogOperate.class);
+		return util.exportExcel(logOperateService.list(DynamicSpecifications.buildSpecification(
+			LogOperate.class,
+			pm.getQueryConditionJson()
+		).toEntityWrapper(LogOperate.class)), "操作日志");
 	}
 
 }

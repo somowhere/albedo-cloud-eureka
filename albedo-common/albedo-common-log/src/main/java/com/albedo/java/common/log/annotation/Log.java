@@ -14,21 +14,44 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.common.log.annotation;
 
-import com.albedo.java.common.persistence.service.DataVoService;
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.repository.LogRepository;
-import com.albedo.java.modules.sys.vo.LogDataVo;
+import com.albedo.java.common.log.enums.BusinessType;
+import com.albedo.java.common.log.enums.OperatorType;
+
+import java.lang.annotation.*;
 
 /**
- * <p>
- * 日志表 服务类
- * </p>
- *
  * @author somowhere
- * @since 2019/2/1
+ * @date 2019/2/1
+ * 操作日志注解
  */
-public interface LogService extends DataVoService<LogRepository, Log, Long, LogDataVo> {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Log {
 
+	/**
+	 * 描述
+	 *
+	 * @return {String}
+	 */
+	String value();
+
+
+	/**
+	 * 功能
+	 */
+	BusinessType businessType() default BusinessType.OTHER;
+
+
+	/**
+	 * 操作人类别
+	 */
+	OperatorType operatorType() default OperatorType.MANAGE;
+
+	/**
+	 * 是否保存请求的参数
+	 */
+	boolean isSaveRequestData() default true;
 }

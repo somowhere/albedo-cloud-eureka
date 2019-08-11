@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template>
 	<name>viewComponentTs</name>
-	<filePath>src/views/${moduleName}/${subModuleName}/${className}</filePath>
+	<filePath>src/views/${moduleName}/${subModuleName}/${classNameUrl}</filePath>
 	<fileName>service.js</fileName>
 	<content><![CDATA[
 

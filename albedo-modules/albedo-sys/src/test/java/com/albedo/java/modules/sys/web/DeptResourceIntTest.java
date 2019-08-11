@@ -1,8 +1,9 @@
-package com.albedo.java.web.rest;
+package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.modules.AlbedoSysApplication;
+import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
@@ -22,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.albedo.java.web.rest.TestUtil.createFormattingConversionService;
+import static com.albedo.java.modules.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

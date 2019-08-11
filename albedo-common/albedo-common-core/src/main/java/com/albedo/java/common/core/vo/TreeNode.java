@@ -26,13 +26,13 @@ import java.util.List;
  * @date 2017年11月9日23:33:45
  */
 @Data
-public class TreeNode {
+public class TreeNode<T> {
 	protected String id;
 	protected String parentId;
 	private String label;
-	protected List<TreeNode> children = new ArrayList<TreeNode>();
+	protected List<T> children = new ArrayList<T>();
 
-	public void add(TreeNode node) {
+	public void add(T node) {
 		children.add(node);
 	}
 }

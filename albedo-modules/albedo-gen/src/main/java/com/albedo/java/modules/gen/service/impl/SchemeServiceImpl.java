@@ -1,6 +1,7 @@
 package com.albedo.java.modules.gen.service.impl;
 
 import com.albedo.java.common.core.util.CollUtil;
+import com.albedo.java.common.core.util.FreeMarkers;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.QueryCondition;
@@ -149,6 +150,56 @@ public class SchemeServiceImpl extends DataVoServiceImpl<SchemeRepository, Schem
 		pm.addOrder(OrderItem.desc("a." + Scheme.F_SQL_CREATEDDATE));
 		IPage<List<SchemeVo>> userVosPage = baseMapper.getSchemeVoPage(pm, wrapper);
 		return userVosPage;
+	}
+
+	@Override
+	public Map<String, Object> previewCode(String id, String username) {
+		Map<String, Object> result = Maps.newHashMap();
+		SchemeDataVo schemeDataVo = super.findOneVo(id);
+		// 查询主表及字段列
+		TableDataVo tableDataVo = tableServiceImpl.findOneVo(schemeDataVo.getTableId());
+		tableDataVo.setColumnList(tableColumnServiceImpl.findAll(new QueryWrapper<TableColumn>().eq(TableColumn.F_SQL_GENTABLEID,
+			tableDataVo.getId()))
+			.stream().map(item -> tableColumnServiceImpl.copyBeanToVo(item)).collect(Collectors.toList())
+		);
+		Collections.sort(tableDataVo.getColumnList());
+
+		// 获取所有代码模板
+		GenConfig config = GenUtil.getConfig();
+
+		// 获取模板列表
+		List<TemplateVo> templateList = GenUtil.getTemplateList(config, schemeDataVo.getCategory(), false);
+		List<TemplateVo> childTableTemplateList = GenUtil.getTemplateList(config, schemeDataVo.getCategory(), true);
+
+		// 如果有子表模板，则需要获取子表列表
+		if (childTableTemplateList.size() > 0) {
+			tableDataVo.setChildList(tableRepository.findAllByParentTable(tableDataVo.getId())
+				.stream().map(item -> tableServiceImpl.copyBeanToVo(item)).collect(Collectors.toList()));
+		}
+
+		// 生成子表模板代码
+		if (tableDataVo.getChildList() == null) {
+			tableDataVo.setChildList(Lists.newArrayList());
+		}
+		for (TableDataVo childTable : tableDataVo.getChildList()) {
+			Collections.sort(childTable.getColumnList());
+			childTable.setCategory(schemeDataVo.getCategory());
+			schemeDataVo.setTableDataVo(childTable);
+			Map<String, Object> childTableModel = GenUtil.getDataModel(schemeDataVo);
+			for (TemplateVo tpl : childTableTemplateList) {
+				String content = FreeMarkers.renderString(StringUtil.trimToEmpty(tpl.getContent()), childTableModel);
+				result.put(FreeMarkers.renderString(tpl.getFileName(), childTableModel), content);
+			}
+		}
+		tableDataVo.setCategory(schemeDataVo.getCategory());
+		// 生成主表模板代码
+		schemeDataVo.setTableDataVo(tableDataVo);
+		Map<String, Object> model = GenUtil.getDataModel(schemeDataVo);
+		for (TemplateVo tpl : templateList) {
+			String content = FreeMarkers.renderString(StringUtil.trimToEmpty(tpl.getContent()), model);
+			result.put(FreeMarkers.renderString(tpl.getFileName(), model), content);
+		}
+		return result;
 	}
 
 

@@ -1,6 +1,7 @@
 package com.albedo.java.common.core.util;
 
 import cn.hutool.core.util.StrUtil;
+import com.albedo.java.common.core.constant.CommonConstants;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  *
- * @author somowhere version 2014-1-20 下午3:37:29
+ * @author somewhere version 2014-1-20 下午3:37:29
  */
 @UtilityClass
 @Slf4j
@@ -28,7 +29,6 @@ public class StringUtil extends StrUtil {
 	public static final String SPLIT_DEFAULT = ",";
 	public static final String SPLIT_FILE_DEFAULT = "|";
 	private static final char SEPARATOR = '_';
-	private static final String CHARSET_NAME = "UTF-8";
 
 	/**
 	 * 获取一定位数的随机字符串
@@ -56,7 +56,7 @@ public class StringUtil extends StrUtil {
 	public static byte[] getBytes(String str) {
 		if (str != null) {
 			try {
-				return str.getBytes(CHARSET_NAME);
+				return str.getBytes(CommonConstants.UTF8);
 			} catch (UnsupportedEncodingException e) {
 				return null;
 			}
@@ -73,7 +73,7 @@ public class StringUtil extends StrUtil {
 	 */
 	public static String toString(byte[] bytes) {
 		try {
-			return new String(bytes, CHARSET_NAME);
+			return new String(bytes, CommonConstants.UTF8);
 		} catch (UnsupportedEncodingException e) {
 			return EMPTY;
 		}
@@ -286,6 +286,23 @@ public class StringUtil extends StrUtil {
 			} else if (upperCase) {
 				sb.append(Character.toUpperCase(c));
 				upperCase = false;
+			} else {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static String toRevertCamelCase(String s, Character split) {
+		if (s == null) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder(s.length());
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (Character.isUpperCase(c)) {
+				sb.append(split).append(Character.toLowerCase(c));
 			} else {
 				sb.append(c);
 			}

@@ -24,4 +24,6 @@ public interface SchemeService extends DataVoService<SchemeRepository, Scheme, S
 	 * @return
 	 */
 	IPage getSchemeVoPage(PageModel pm);
+
+	Map<String, Object> previewCode(String id, String username);
 }

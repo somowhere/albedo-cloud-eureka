@@ -130,7 +130,8 @@ public class RoleServiceImpl extends
 	public void lockOrUnLock(List<String> idList) {
 		idList.forEach(id -> {
 			Role role = baseMapper.selectById(id);
-			role.setLockFlag(CommonConstants.STR_YES.equals(role.getLockFlag()) ? CommonConstants.STR_NO : CommonConstants.STR_YES);
+			role.setAvailable(CommonConstants.STR_YES.equals(role.getAvailable()) ?
+				CommonConstants.STR_NO : CommonConstants.STR_YES);
 			baseMapper.updateById(role);
 		});
 

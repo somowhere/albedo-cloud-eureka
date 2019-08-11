@@ -6,44 +6,27 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Excel注解定义
+ * 自定义导出Excel数据注解
  *
- * @author Lijie
- * @version 2013-03-10
+ * @author somewhere
  */
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
 public @interface ExcelField {
+	/**
+	 * 导出到Excel中的名字.
+	 */
+	String title() default "";
 
 	/**
-	 * 导出字段名（默认调用当前字段的“get”方法，如指定导出字段为对象，请填写“对象名.对象属性”，例：“area.name”、“office.name”）
+	 * 日期格式, 如: yyyy-MM-dd
 	 */
-	String value() default "";
+	String dateFormat() default "";
 
 	/**
-	 * 导出字段标题（需要添加批注请用“**”分隔，标题**批注，仅对导出模板有效）
+	 * 读取内容转表达式 (如: 0=男,1=女,2=未知)
 	 */
-	String title();
-
-	/**
-	 * 字段类型（0：导出导入；1：仅导出；2：仅导入）
-	 */
-	int type() default 0;
-
-	/**
-	 * 仅字符串处理 是否去空格（true：是；false：否）
-	 */
-	boolean trim() default true;
-
-	/**
-	 * 导出字段对齐方式（0：自动；1：靠左；2：居中；3：靠右） 备注：Integer/Long类型设置居右对齐（align=3）
-	 */
-	int align() default 0;
-
-	/**
-	 * 导出字段字段排序（升序）
-	 */
-	int sort() default 0;
+	String readConverterExp() default "";
 
 	/**
 	 * 如果是字典类型，请设置字典的type值
@@ -51,12 +34,78 @@ public @interface ExcelField {
 	String dictType() default "";
 
 	/**
-	 * 反射类型
+	 * 导出类型（0数字 1字符串）
 	 */
-	Class<?> fieldType() default Class.class;
+	ColumnType cellType() default ColumnType.STRING;
 
 	/**
-	 * 字段归属组（根据分组导出导入）
+	 * 导出时在excel中每个列的高度 单位为字符
 	 */
-	int[] groups() default {};
+	double height() default 14;
+
+	/**
+	 * 导出时在excel中每个列的宽 单位为字符
+	 */
+	double width() default 16;
+
+	/**
+	 * 文字后缀,如% 90 变成90%
+	 */
+	String suffix() default "";
+
+	/**
+	 * 当值为空时,字段的默认值
+	 */
+	String defaultValue() default "";
+
+	/**
+	 * 提示信息
+	 */
+	String prompt() default "";
+
+	/**
+	 * 设置只能选择不能输入的列内容.
+	 */
+	String[] combo() default {};
+
+	/**
+	 * 是否导出数据,应对需求:有时我们需要导出一份模板,这是标题需要但内容需要用户手工填写.
+	 */
+	boolean isExport() default true;
+
+	/**
+	 * 另一个类中的属性名称,支持多级获取,以小数点隔开
+	 */
+	String targetAttr() default "";
+
+	/**
+	 * 字段类型（0：导出导入；1：仅导出；2：仅导入）
+	 */
+	Type type() default Type.ALL;
+
+	enum Type {
+		ALL(0), EXPORT(1), IMPORT(2);
+		private final int value;
+
+		Type(int value) {
+			this.value = value;
+		}
+
+		public int value() {
+			return this.value;
+		}
+	}
+
+	enum ColumnType {
+		NUMERIC(0), STRING(1);
+		private final int value;
+
+		ColumnType(int value) {
+			this.value = value;
+		}
+
+		public int value() {
+			return this.value;
+		}
+	}
 }

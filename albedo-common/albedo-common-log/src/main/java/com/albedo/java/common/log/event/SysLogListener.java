@@ -17,8 +17,8 @@
 package com.albedo.java.common.log.event;
 
 import com.albedo.java.common.core.constant.SecurityConstants;
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.feign.RemoteLogService;
+import com.albedo.java.modules.sys.domain.LogOperate;
+import com.albedo.java.modules.sys.feign.RemoteLogOperateService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -33,13 +33,13 @@ import org.springframework.scheduling.annotation.Async;
 @Slf4j
 @AllArgsConstructor
 public class SysLogListener {
-	private final RemoteLogService remoteLogService;
+	private final RemoteLogOperateService remoteLogOperateService;
 
 	@Async
 	@Order
 	@EventListener(SysLogEvent.class)
 	public void saveSysLog(SysLogEvent event) {
-		Log log = (Log) event.getSource();
-		remoteLogService.saveLog(log, SecurityConstants.FROM_IN);
+		LogOperate logOperate = (LogOperate) event.getSource();
+		remoteLogOperateService.saveLog(logOperate, SecurityConstants.FROM_IN);
 	}
 }

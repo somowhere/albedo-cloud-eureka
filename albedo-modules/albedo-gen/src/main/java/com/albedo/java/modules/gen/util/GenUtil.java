@@ -1,6 +1,7 @@
 package com.albedo.java.modules.gen.util;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.CharUtil;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.*;
 import com.albedo.java.common.persistence.domain.DataEntity;
@@ -285,20 +286,19 @@ public class GenUtil {
 		model.put("moduleName", StringUtil.lowerCase(scheme.getModuleName()));
 		model.put("subModuleName", StringUtil.lowerCase(StringUtil.isEmpty(scheme.getSubModuleName()) ? "" : scheme.getSubModuleName()));
 		model.put("className", StringUtil.lowerFirst(scheme.getTableDataVo().getClassName()));
+		model.put("classNameUrl", StringUtil.toRevertCamelCase(StringUtil.toStrString(model.get("className")), CharUtil.DASHED));
 		model.put("ClassName", StringUtil.upperFirst(scheme.getTableDataVo().getClassName()));
 
 		model.put("functionName", scheme.getFunctionName());
 		model.put("functionNameSimple", scheme.getFunctionNameSimple());
 		model.put("functionAuthor", StringUtil.isNotBlank(scheme.getFunctionAuthor()) ? scheme.getFunctionAuthor() : "");
 		model.put("functionVersion", DateUtil.now());
-
-		model.put("urlPrefix", (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "/" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + model.get("className"));
+		model.put("urlPrefix", model.get("moduleName") + (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "/" +
+			StringUtil.lowerCase(scheme.getSubModuleName()) : "") + "/" + model.get("classNameUrl")
+		);
 		model.put("viewPrefix", // StringUtil.substringAfterLast(model.get("packageName"),".")+"/"+
 			model.get("urlPrefix"));
 		model.put("permissionPrefix", model.get("moduleName") + (StringUtil.isNotBlank(scheme.getSubModuleName()) ? "_" + StringUtil.lowerCase(scheme.getSubModuleName()) : "") + "_" + model.get("className"));
-
-//        model.put("dbType", CommonConstants.get("jdbc.type"));
-
 		model.put("table", scheme.getTableDataVo());
 		model.put("scheme", scheme);
 		return model;

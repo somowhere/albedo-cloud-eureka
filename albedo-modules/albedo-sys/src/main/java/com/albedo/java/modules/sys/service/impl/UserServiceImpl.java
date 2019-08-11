@@ -18,32 +18,33 @@ package com.albedo.java.modules.sys.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
 import com.albedo.java.common.core.constant.CommonConstants;
+import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.BeanVoUtil;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.data.util.QueryWrapperUtil;
 import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
-import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.security.util.SecurityUtil;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.*;
-import com.albedo.java.modules.sys.vo.MenuVo;
-import com.albedo.java.modules.sys.vo.UserDataVo;
-import com.albedo.java.modules.sys.vo.UserInfo;
-import com.albedo.java.modules.sys.vo.UserVo;
+import com.albedo.java.modules.sys.vo.*;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,7 +61,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 	private final MenuService menuService;
 	private final RoleService roleService;
-	private final DeptService sysDeptService;
+	private final DeptService deptService;
 	private final UserRoleService userRoleService;
 	private final DeptRelationService deptRelationService;
 
@@ -185,7 +186,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 		User user = this.getOne(Wrappers.<User>query().lambda()
 			.eq(User::getUsername, username));
 
-		Dept dept = sysDeptService.getById(user.getDeptId());
+		Dept dept = deptService.getById(user.getDeptId());
 		if (dept == null) {
 			return null;
 		}
@@ -199,9 +200,27 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	public void lockOrUnLock(List<String> idList) {
 		idList.forEach(id -> {
 			User user = baseMapper.selectById(id);
-			user.setLockFlag(CommonConstants.STR_YES.equals(user.getLockFlag()) ? CommonConstants.STR_NO : CommonConstants.STR_YES);
+			user.setAvailable(CommonConstants.STR_YES.equals(user.getAvailable()) ?
+				CommonConstants.STR_NO : CommonConstants.STR_YES);
 			baseMapper.updateById(user);
 		});
+	}
+
+	public void save(@Valid UserExcelVo userExcelVo) {
+		UserDataVo user = new UserDataVo();
+		BeanUtils.copyProperties(userExcelVo, user);
+		Dept dept = deptService.findOne(
+			Wrappers.<Dept>query().lambda().eq(Dept::getName, userExcelVo.getDeptName()));
+		if (dept != null) {
+			user.setDeptId(dept.getId());
+		}
+		Role role = roleService.findOne(
+			Wrappers.<Role>query().lambda().eq(Role::getName, userExcelVo.getRoleName()));
+		if (role == null) {
+			throw new RuntimeMsgException("无法获取角色" + userExcelVo.getRoleName() + "信息");
+		}
+		user.setRoleIdList(Lists.newArrayList(role.getId()));
+		save(user);
 	}
 
 	/**
@@ -210,7 +229,7 @@ public class UserServiceImpl extends DataVoServiceImpl<UserRepository, User, Str
 	 * @return 子部门列表
 	 */
 	private List<String> getChildDepts() {
-		String deptId = SecurityUtils.getUser().getDeptId();
+		String deptId = SecurityUtil.getUser().getDeptId();
 		//获取当前部门的子部门
 		return deptRelationService
 			.list(Wrappers.<DeptRelation>query().lambda()

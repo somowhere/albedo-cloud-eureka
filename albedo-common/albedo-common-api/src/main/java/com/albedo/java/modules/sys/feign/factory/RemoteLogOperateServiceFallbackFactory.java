@@ -14,35 +14,24 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.feign.fallback;
+package com.albedo.java.modules.sys.feign.factory;
 
-import com.albedo.java.common.core.util.R;
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.feign.RemoteLogService;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import com.albedo.java.modules.sys.feign.RemoteLogOperateService;
+import com.albedo.java.modules.sys.feign.fallback.RemoteLogOperateServiceFallbackImpl;
+import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * @author somowhere
  * @date 2019/2/1
  */
-@Slf4j
 @Component
-public class RemoteLogServiceFallbackImpl implements RemoteLogService {
-	@Setter
-	private Throwable cause;
+public class RemoteLogOperateServiceFallbackFactory implements FallbackFactory<RemoteLogOperateService> {
 
-	/**
-	 * 保存日志
-	 *
-	 * @param log  日志实体
-	 * @param from 内部调用标志
-	 * @return succes、false
-	 */
 	@Override
-	public R<Boolean> saveLog(Log log, String from) {
-		RemoteLogServiceFallbackImpl.log.error("feign 插入日志失败", cause);
-		return null;
+	public RemoteLogOperateService create(Throwable throwable) {
+		RemoteLogOperateServiceFallbackImpl remoteLogServiceFallback = new RemoteLogOperateServiceFallbackImpl();
+		remoteLogServiceFallback.setCause(throwable);
+		return remoteLogServiceFallback;
 	}
 }

@@ -22,7 +22,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.exception.ValidateCodeException;
 import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.core.util.WebUtils;
+import com.albedo.java.common.core.util.WebUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -75,7 +75,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 
 			// 终端设置不校验， 直接向下执行
 			try {
-				String[] clientInfos = WebUtils.getClientId(request);
+				String[] clientInfos = WebUtil.getClientId(request);
 				if (filterIgnoreProperties.getClients().contains(clientInfos[0])) {
 					return chain.filter(exchange);
 				}
@@ -88,7 +88,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 				try {
 					return response.writeWith(Mono.just(response.bufferFactory()
 						.wrap(objectMapper.writeValueAsBytes(
-							R.create(CommonConstants.FAIL, e.getMessage())))));
+							R.buildFail(e.getMessage())))));
 				} catch (JsonProcessingException e1) {
 					log.error("对象输出异常", e1);
 				}

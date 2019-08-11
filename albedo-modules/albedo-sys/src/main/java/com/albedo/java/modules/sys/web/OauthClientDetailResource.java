@@ -19,7 +19,8 @@ package com.albedo.java.modules.sys.web;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
 import com.albedo.java.modules.sys.domain.OauthClientDetail;
 import com.albedo.java.modules.sys.service.OauthClientDetailService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -50,6 +51,7 @@ public class OauthClientDetailResource {
 	 * @return OauthClientDetail
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
+	@PreAuthorize("@pms.hasPermission('sys_client_view')")
 	public R getById(@PathVariable String id) {
 		return new R<>(oauthClientDetailService.getById(id));
 	}
@@ -62,8 +64,9 @@ public class OauthClientDetailResource {
 	 * @return
 	 */
 	@GetMapping("/")
+	@PreAuthorize("@pms.hasPermission('sys_client_view')")
 	public R<IPage> getPage(PageModel pm) {
-		return R.createSuccessData(oauthClientDetailService.findPage(pm));
+		return R.buildOkData(oauthClientDetailService.findPage(pm));
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class OauthClientDetailResource {
 	 * @param oauthClientDetail 实体
 	 * @return success/false
 	 */
-	@SysLog("保存终端")
+	@Log(value = "终端管理",businessType = BusinessType.EDIT)
 	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R save(@Valid @RequestBody OauthClientDetail oauthClientDetail) {
@@ -85,7 +88,7 @@ public class OauthClientDetailResource {
 	 * @param id ID
 	 * @return success/false
 	 */
-	@SysLog("删除终端")
+	@Log(value = "终端管理",businessType = BusinessType.DELETE)
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R removeById(@PathVariable String id) {

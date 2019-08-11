@@ -14,6 +14,8 @@ import org.springframework.cache.CacheManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 数据字典工具类 copyright 2014 albedo all right reserved author somewhere created on
@@ -42,33 +44,9 @@ public class DictUtil {
 		return null;
 	}
 
-	/**
-	 * 根据code 和 编码 获取数据字典对象
-	 *
-	 * @param code
-	 * @return
-	 */
-	public static Dict getCodeItem(String code) {
-		Dict dict = null;
-		List<Dict> list = DictUtil.getDictList();
-		for (Dict item : list) {
-			if (item.getCode().equals(code)) {
-				dict = item;
-
-			}
-		}
-		return dict == null ? null : dict;
-	}
-
-	/**
-	 * 根据code 和 编码 获取数据字典对象 本级
-	 *
-	 * @param code
-	 * @return
-	 */
-	public static String getCodeItemVal(String code) {
-		Dict dict = getCodeItem(code);
-		return dict == null ? null : dict.getVal();
+	public static List<Dict> getDictListByParentCode(String code) {
+		Optional<Dict> first = getDictList().stream().filter(dict -> dict.getCode().equals(code)).findFirst();
+		return getDictList().stream().filter(dict -> first.get().getId().equals(dict.getParentId())).collect(Collectors.toList());
 	}
 
 	public static Map<String, List<SelectResult>> getSelectResultListByCodes(String... codes) {

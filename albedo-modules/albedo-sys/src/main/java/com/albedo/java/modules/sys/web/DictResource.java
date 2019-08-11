@@ -26,7 +26,8 @@ import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.SelectResult;
 import com.albedo.java.common.core.vo.TreeQuery;
-import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
 import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Dict;
@@ -35,7 +36,6 @@ import com.albedo.java.modules.sys.vo.DictDataVo;
 import com.albedo.java.modules.sys.vo.UserDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cache.annotation.CacheEvict;
@@ -69,7 +69,7 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree(TreeQuery treeQuery) {
-		return R.createSuccessData(service.listTrees(treeQuery));
+		return R.buildOkData(service.listTrees(treeQuery));
 	}
 
 	/**
@@ -77,10 +77,9 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 * @return
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
-	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return R.createSuccessData(service.findOneVo(id));
+		return R.buildOkData(service.findOneVo(id));
 	}
 
 	/**
@@ -114,10 +113,10 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 * @param dictDataVo 字典信息
 	 * @return success、false
 	 */
-	@SysLog("添加/更新字典")
 	@PostMapping("/")
 	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
+	@Log(value = "字典管理", businessType = BusinessType.EDIT)
 	public R save(@Valid @RequestBody DictDataVo dictDataVo) {
 
 		// code before comparing with database
@@ -126,7 +125,6 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 			dictDataVo.getId(), dictDataVo.getCode()))) {
 			throw new RuntimeMsgException("编码已存在");
 		}
-
 
 		return new R<>(service.save(dictDataVo));
 	}
@@ -137,10 +135,10 @@ public class DictResource extends TreeVoResource<DictService, DictDataVo> {
 	 * @param ids ID
 	 * @return R
 	 */
-	@SysLog("删除字典")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@CacheEvict(value = Dict.CACHE_DICT_DETAILS, allEntries = true)
 	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
+	@Log(value = "字典管理", businessType = BusinessType.DELETE)
 	public R removeByIds(@PathVariable String ids) {
 		return new R<>(service.removeByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}

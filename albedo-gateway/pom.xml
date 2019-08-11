@@ -87,8 +87,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<!-- log configuration -->
-				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
+				<!-- logOperate configuration -->
+				<logback.loglevel>${profile.dev.logOperate.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,swagger</spring.profiles.active>
 			</properties>

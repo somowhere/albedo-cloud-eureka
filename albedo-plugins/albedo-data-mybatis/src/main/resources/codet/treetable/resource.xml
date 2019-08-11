@@ -16,7 +16,7 @@ import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.common.core.util.R;
-import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.logOperate.annotation.SysLog;
 import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}DataVo;
 import ${packageName}.${moduleName}.service<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -47,7 +47,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree(TreeQuery treeQuery) {
-		return R.createSuccessData(service.listTrees(treeQuery));
+		return R.buildOkData(service.listTrees(treeQuery));
 	}
 	/**
 	 * GET / : 获取数据 ${functionNameSimple}.
@@ -58,8 +58,8 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	@GetMapping(CommonConstants.URL_ID_REGEX)
 	@PreAuthorize("@pms.hasPermission('${permissionPrefix}_view')")
 	public R get(@PathVariable String id) {
-		log.debug("REST request to get Entity : {}", id);
-		return R.createSuccessData(service.findOneVo(id));
+		logOperate.debug("REST request to get Entity : {}", id);
+		return R.buildOkData(service.findOneVo(id));
 	}
 	/**
 	 * GET / : 获取分页数据源 ${functionNameSimple}.
@@ -70,7 +70,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	@GetMapping("/")
 	@PreAuthorize("@pms.hasPermission('${permissionPrefix}_view')")
 	public R<IPage> getPage(PageModel pm) {
-		return R.createSuccessData(service.findRelationPage(pm));
+		return R.buildOkData(service.findRelationPage(pm));
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	@PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@SysLog("新增/编辑${functionName}")
 	public R save(@Valid @RequestBody ${ClassName}DataVo ${className}Vo) {
-		log.debug("REST request to save ${ClassName} : {}", ${className}Vo);
+		logOperate.debug("REST request to save ${ClassName} : {}", ${className}Vo);
 		<#assign firstListField = true><#list table.columnList as column>
 			<#if column.unique && !column.pk>
 		<#if firstListField><#assign firstListField = false>${ClassName}DataVo </#if>${className}Validate = new ${ClassName}DataVo();
@@ -94,7 +94,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 			</#if>
 		</#list>
 		service.save(${className}Vo);
-		return R.createSuccess("保存${functionNameSimple}成功");
+		return R.buildOk("保存${functionNameSimple}成功");
 	}
 
 	/**
@@ -107,9 +107,9 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@SysLog("删除${functionName}")
 	public R delete(@PathVariable String ids) {
-		log.debug("REST request to delete ${ClassName}: {}", ids);
+		logOperate.debug("REST request to delete ${ClassName}: {}", ids);
 		service.deleteByParentIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("删除${functionNameSimple}成功");
+		return R.buildOk("删除${functionNameSimple}成功");
 	}
 
 }]]>

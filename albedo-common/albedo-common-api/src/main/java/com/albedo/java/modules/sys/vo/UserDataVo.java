@@ -53,7 +53,7 @@ public class UserDataVo extends DataEntityVo<String> {
 	 */
 	@NotEmpty
 
-	private String lockFlag;
+	private String available;
 
 	/**
 	 * 邮箱

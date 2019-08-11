@@ -13,8 +13,9 @@ logging:
 
 application:
   developMode: true
-  jedisKeyPrefix: albedoBootWebApp
+  address-enabled: true
   logPath: target/.logs
+  static-file-directory: D:/albedo-cloud-file
   cors: #By default CORS are not enabled. Uncomment to enable.
     allowed-origins: "*"
     allowed-methods: "*"

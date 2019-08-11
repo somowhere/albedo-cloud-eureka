@@ -21,7 +21,8 @@ import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
-import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
 import com.albedo.java.common.web.resource.DataVoResource;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.service.RoleMenuService;
@@ -29,7 +30,7 @@ import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.vo.RoleDataVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.codahale.metrics.annotation.Timed;
+
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,15 +51,15 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 		this.roleMenuService = roleMenuService;
 	}
 
+
 	/**
 	 * @param id
 	 * @return
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
-	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return R.createSuccessData(service.findOneVo(id));
+		return R.buildOkData(service.findOneVo(id));
 	}
 
 	/**
@@ -67,12 +68,12 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 * @param roleDataVo 角色信息
 	 * @return success、false
 	 */
-	@SysLog("新增/编辑角色")
+	@Log(value = "角色管理", businessType = BusinessType.EDIT)
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
 	public R save(@Valid @RequestBody RoleDataVo roleDataVo) {
 		service.save(roleDataVo);
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 	/**
@@ -81,11 +82,12 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 * @param ids
 	 * @return
 	 */
-	@SysLog("删除角色")
+	@Log(value = "角色管理", businessType = BusinessType.DELETE)
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
+	@PreAuthorize("@pms.hasPermission('sys_role_del')")
 	public R removeByIds(@PathVariable String ids) {
 		service.removeRoleByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 	/**
@@ -95,7 +97,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 */
 	@GetMapping("/combo-data")
 	public R comboData() {
-		return R.createSuccessData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), Role.F_ID, Role.F_NAME));
+		return R.buildOkData(CollUtil.convertComboDataList(service.list(Wrappers.emptyWrapper()), Role.F_ID, Role.F_NAME));
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return R.createSuccessData(service.findPage(pm));
+		return R.buildOkData(service.findPage(pm));
 	}
 
 	/**
@@ -116,8 +118,8 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 * @param menuIds 菜单ID拼成的字符串，每个id之间根据逗号分隔
 	 * @return success、false
 	 */
-	@SysLog("更新角色菜单")
 	@PutMapping("/menu")
+	@Log(value = "角色管理", businessType = BusinessType.EDIT)
 	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
 	public R saveRoleMenus(String roleId, @RequestParam(value = "menuIds", required = false) String menuIds) {
 		Role role = service.getById(roleId);
@@ -129,10 +131,10 @@ public class RoleResource extends DataVoResource<RoleService, RoleDataVo> {
 	 * @return
 	 */
 	@PutMapping(CommonConstants.URL_IDS_REGEX)
-	@SysLog("锁定/解锁用户")
+	@Log(value = "角色管理", businessType = BusinessType.LOCK)
 	@PreAuthorize("@pms.hasPermission('sys_role_lock')")
 	public R lockOrUnLock(@PathVariable String ids) {
 		service.lockOrUnLock(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 }

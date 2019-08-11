@@ -1,7 +1,7 @@
 package com.albedo.java.common.security.component;
 
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.security.util.SecurityUtil;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
 	@Override
 	public Optional<String> getCurrentAuditor() {
-		return Optional.of(SecurityUtils.getUser() == null ? CommonConstants.SYSTEM
-			: SecurityUtils.getUser().getId());
+		return Optional.of(SecurityUtil.getUser() == null ? CommonConstants.SYSTEM
+			: SecurityUtil.getUser().getId());
 	}
 }

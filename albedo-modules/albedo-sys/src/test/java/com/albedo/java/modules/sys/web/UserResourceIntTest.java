@@ -1,10 +1,12 @@
-package com.albedo.java.web.rest;
+package com.albedo.java.modules.sys.web;
 
+import com.albedo.java.common.core.config.ApplicationProperties;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.GlobalExceptionHandler;
 import com.albedo.java.common.core.util.CollUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.modules.AlbedoSysApplication;
+import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.User;
@@ -12,7 +14,6 @@ import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.service.RoleService;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.modules.sys.vo.UserDataVo;
-import com.albedo.java.modules.sys.web.UserResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.albedo.java.web.rest.TestUtil.createFormattingConversionService;
+import static com.albedo.java.modules.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @see com.albedo.java.modules.sys.web.UserResource
  */
-@SpringBootTest(classes = AlbedoSysApplication.class)
+@SpringBootTest(classes = {AlbedoSysApplication.class})
 @Slf4j
 public class UserResourceIntTest {
 
@@ -64,8 +65,8 @@ public class UserResourceIntTest {
 
 	private static final String DEFAULT_QQOPENID = "QQOPENID1";
 	private static final String UPDATED_QQOPENID = "QQOPENID2";
-	private static final String DEFAULT_LOCKFLAG = CommonConstants.STR_YES;
-	private static final String UPDATED_LOCKFLAG = CommonConstants.STR_NO;
+	private static final String DEFAULT_AVAILABLE = CommonConstants.STR_YES;
+	private static final String UPDATED_AVAILABLE = CommonConstants.STR_NO;
 
 
 	@Autowired
@@ -80,7 +81,8 @@ public class UserResourceIntTest {
 	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 	@Autowired
 	private GlobalExceptionHandler globalExceptionHandler;
-
+	@Autowired
+	private ApplicationProperties applicationProperties;
 	private UserDataVo user;
 	private List<Role> roleList;
 	private List<Dept> deptList;
@@ -111,7 +113,7 @@ public class UserResourceIntTest {
 		user.setConfirmPassword(DEFAULT_PASSWORD);
 		user.setEmail(DEFAULT_EMAIL);
 		user.setPhone(DEFAULT_PHONE);
-		user.setLockFlag(DEFAULT_LOCKFLAG);
+		user.setAvailable(DEFAULT_AVAILABLE);
 		user.setQqOpenId(DEFAULT_QQOPENID);
 		user.setDeptId(deptList.get(0).getId());
 		user.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
@@ -129,7 +131,7 @@ public class UserResourceIntTest {
 		anotherUser.setPassword(DEFAULT_PASSWORD);
 		anotherUser.setEmail(DEFAULT_ANOTHER_EMAIL);
 		anotherUser.setPhone(DEFAULT_PHONE);
-		anotherUser.setLockFlag(DEFAULT_LOCKFLAG);
+		anotherUser.setAvailable(DEFAULT_AVAILABLE);
 		anotherUser.setDeptId(deptList.get(0).getId());
 		anotherUser.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
 		userService.save(anotherUser);
@@ -196,7 +198,6 @@ public class UserResourceIntTest {
 			.andExpect(jsonPath("$.data.records.[*].qqOpenId").value(hasItem(DEFAULT_QQOPENID)))
 			.andExpect(jsonPath("$.data.records.[*].phone").value(hasItem(DEFAULT_PHONE)))
 			.andExpect(jsonPath("$.data.records.[*].email").value(hasItem(DEFAULT_EMAIL)))
-//			.andExpect(jsonPath("$.data.records.[*].status").value(hasItem(DictUtil.getCode("sys_status", user.getStatus()))))
 		;
 	}
 
@@ -258,7 +259,7 @@ public class UserResourceIntTest {
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
-		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
+		managedUserVM.setAvailable(UPDATED_AVAILABLE);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
 
 		managedUserVM.setId(updatedUser.getId());
@@ -274,7 +275,7 @@ public class UserResourceIntTest {
 		User testUser = userService.findOneById(updatedUser.getId());
 		assertThat(testUser.getUsername()).isEqualTo(UPDATED_USERNAME);
 		assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-		assertThat(testUser.getLockFlag()).isEqualTo(UPDATED_LOCKFLAG);
+		assertThat(testUser.getAvailable()).isEqualTo(UPDATED_AVAILABLE);
 		assertThat(testUser.getPhone()).isEqualTo(UPDATED_PHONE);
 		assertThat(testUser.getQqOpenId()).isEqualTo(UPDATED_QQOPENID);
 	}
@@ -294,7 +295,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
-		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
+		managedUserVM.setAvailable(UPDATED_AVAILABLE);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
 		managedUserVM.setId(updatedUser.getId());
@@ -323,7 +324,7 @@ public class UserResourceIntTest {
 		managedUserVM.setPassword(UPDATED_PASSWORD);
 		managedUserVM.setEmail(UPDATED_EMAIL);
 		managedUserVM.setPhone(UPDATED_PHONE);
-		managedUserVM.setLockFlag(UPDATED_LOCKFLAG);
+		managedUserVM.setAvailable(UPDATED_AVAILABLE);
 		managedUserVM.setQqOpenId(UPDATED_QQOPENID);
 		managedUserVM.setRoleIdList(CollUtil.extractToList(roleList, Role.F_ID));
 		managedUserVM.setId(updatedUser.getId());
@@ -367,7 +368,7 @@ public class UserResourceIntTest {
 
 		// Validate the database is empty
 		User tempUser = userService.findOneById(user.getId());
-		assertThat(CommonConstants.STR_YES.equals(tempUser.getLockFlag()));
+		assertThat(CommonConstants.STR_YES.equals(tempUser.getAvailable()));
 		// lockOrUnLock the user
 		restUserMockMvc.perform(put(DEFAULT_API_URL + "{id}", user.getId())
 			.accept(TestUtil.APPLICATION_JSON_UTF8))
@@ -375,7 +376,7 @@ public class UserResourceIntTest {
 
 		// Validate the database is empty
 		User tempUser1 = userService.findOneById(user.getId());
-		assertThat(CommonConstants.STR_NO.equals(tempUser1.getLockFlag()));
+		assertThat(CommonConstants.STR_NO.equals(tempUser1.getAvailable()));
 	}
 
 	@Test

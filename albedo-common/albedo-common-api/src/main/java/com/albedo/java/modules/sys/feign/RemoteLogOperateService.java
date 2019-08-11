@@ -19,8 +19,8 @@ package com.albedo.java.modules.sys.feign;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;
-import com.albedo.java.modules.sys.domain.Log;
-import com.albedo.java.modules.sys.feign.factory.RemoteLogServiceFallbackFactory;
+import com.albedo.java.modules.sys.domain.LogOperate;
+import com.albedo.java.modules.sys.feign.factory.RemoteLogOperateServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,15 +30,15 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * @author somowhere
  * @date 2019/2/1
  */
-@FeignClient(contextId = "remoteLogService", value = ServiceNameConstants.UMPS_SERVICE, fallbackFactory = RemoteLogServiceFallbackFactory.class)
-public interface RemoteLogService {
+@FeignClient(contextId = "remoteLogService", value = ServiceNameConstants.UMPS_SERVICE, fallbackFactory = RemoteLogOperateServiceFallbackFactory.class)
+public interface RemoteLogOperateService {
 	/**
 	 * 保存日志
 	 *
-	 * @param log  日志实体
+	 * @param logOperate  日志实体
 	 * @param from 内部调用标志
 	 * @return succes、false
 	 */
 	@PostMapping("/log/")
-	R<Boolean> saveLog(@RequestBody Log log, @RequestHeader(SecurityConstants.FROM) String from);
+	R<Boolean> saveLog(@RequestBody LogOperate logOperate, @RequestHeader(SecurityConstants.FROM) String from);
 }

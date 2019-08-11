@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.albedo.java.common.log.annotation;
+package com.albedo.java.modules.sys.service.impl;
 
-import java.lang.annotation.*;
+import com.albedo.java.common.persistence.service.impl.BaseServiceImpl;
+import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
+import com.albedo.java.modules.sys.domain.LogOperate;
+import com.albedo.java.modules.sys.repository.LogOperateRepository;
+import com.albedo.java.modules.sys.service.LogOperateService;
+import com.albedo.java.modules.sys.vo.LogDataVo;
+import org.springframework.stereotype.Service;
 
 /**
+ * <p>
+ * 日志表 服务实现类
+ * </p>
+ *
  * @author somowhere
- * @date 2019/2/1
- * 操作日志注解
+ * @since 2019/2/1
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface SysLog {
+@Service
+public class LogOperateServiceImpl extends
+	BaseServiceImpl<LogOperateRepository, LogOperate, Long> implements LogOperateService {
 
-	/**
-	 * 描述
-	 *
-	 * @return {String}
-	 */
-	String value();
 }

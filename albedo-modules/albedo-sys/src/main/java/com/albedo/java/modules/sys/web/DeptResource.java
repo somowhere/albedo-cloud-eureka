@@ -19,12 +19,12 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.TreeQuery;
-import com.albedo.java.common.log.annotation.SysLog;
-import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
+import com.albedo.java.common.security.util.SecurityUtil;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +52,9 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 * @return
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
-	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return R.createSuccessData(service.findOneVo(id));
+		return R.buildOkData(service.findOneVo(id));
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 */
 	@GetMapping(value = "/tree")
 	public R listDeptTrees(TreeQuery treeQuery) {
-		return R.createSuccessData(service.listTrees(treeQuery));
+		return R.buildOkData(service.listTrees(treeQuery));
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 */
 	@GetMapping(value = "/user-tree")
 	public R listCurrentUserDeptTrees() {
-		String deptId = SecurityUtils.getUser().getDeptId();
+		String deptId = SecurityUtil.getUser().getDeptId();
 		return new R<>(service.listCurrentUserDeptTrees(deptId));
 	}
 
@@ -85,9 +84,9 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 * @param deptDataVo 实体
 	 * @return success/false
 	 */
-	@SysLog("添加/更新部门")
 	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
+	@Log(value = "部门管理", businessType = BusinessType.EDIT)
 	public R save(@Valid @RequestBody DeptDataVo deptDataVo) {
 		return new R<>(service.saveDept(deptDataVo));
 	}
@@ -98,11 +97,12 @@ public class DeptResource extends TreeVoResource<DeptService, DeptDataVo> {
 	 * @param ids ID
 	 * @return success/false
 	 */
-	@SysLog("删除部门")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
+	@Log(value = "部门管理", businessType = BusinessType.DELETE)
 	public R removeById(@PathVariable String ids) {
 		return new R<>(service.removeDeptByIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT))));
 	}
+
 
 }

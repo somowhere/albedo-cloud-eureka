@@ -35,7 +35,7 @@ import java.util.List;
  * @author L.cm
  */
 @UtilityClass
-public class SecurityUtils {
+public class SecurityUtil {
 
 	/**
 	 * 获取Authentication

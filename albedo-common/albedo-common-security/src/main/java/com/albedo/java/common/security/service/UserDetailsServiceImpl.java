@@ -64,9 +64,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@SneakyThrows
 	public UserDetails loadUserByUsername(String username) {
 		Cache cache = cacheManager.getCache("user_details");
-//		if (cache != null && cache.get(username) != null) {
-//			return (UserDetail) cache.get(username).get();
-//		}
+		if (cache != null && cache.get(username) != null) {
+			return (UserDetail) cache.get(username).get();
+		}
 
 		R<UserInfo> result = remoteUserService.info(username, SecurityConstants.FROM_IN);
 		UserDetails userDetails = getUserDetails(result);
@@ -100,6 +100,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		// 构造security用户
 		return new UserDetail(user.getId(), user.getDeptId(), user.getUsername(), SecurityConstants.BCRYPT + user.getPassword(),
-			StrUtil.equals(user.getLockFlag(), CommonConstants.STR_NO), true, true, true, authorities);
+			StrUtil.equals(user.getAvailable(), CommonConstants.STR_YES), true, true, true, authorities);
 	}
 }

@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 	public R bodyValidExceptionHandler(MethodArgumentNotValidException exception) {
 		List<String> messages = BeanValidators.extractPropertyAndMessageAsList(exception);
 		log.warn("Valid Error:" + messages);
-		return R.createFail(ArrayUtil.toArray(messages, String.class));
+		return R.buildFail(ArrayUtil.toArray(messages, String.class));
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({RuntimeMsgException.class})
 	public R bodyRuntimeMsgExceptionHandler(RuntimeMsgException exception) {
 		log.error("runtime msg={}", exception.getMessage(), exception);
-		return R.createFail(exception.getMessage());
+		return R.buildFail(exception.getMessage());
 	}
 
 

@@ -71,13 +71,13 @@ public class AlbedoTokenEndpoint {
 	@DeleteMapping("/logout")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
-			return R.createFailData(Boolean.FALSE, "退出失败，token 为空");
+			return R.buildFailData(Boolean.FALSE, "退出失败，token 为空");
 		}
 
 		String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StrUtil.EMPTY).trim();
 		OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
 		if (accessToken == null || StrUtil.isBlank(accessToken.getValue())) {
-			return R.createFailData(Boolean.FALSE, "退出失败，token 无效");
+			return R.buildFailData(Boolean.FALSE, "退出失败，token 无效");
 		}
 		tokenStore.removeAccessToken(accessToken);
 
@@ -85,7 +85,7 @@ public class AlbedoTokenEndpoint {
 		tokenStore.removeRefreshToken(refreshToken);
 
 
-		return R.createSuccessData(Boolean.TRUE);
+		return R.buildOkData(Boolean.TRUE);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class AlbedoTokenEndpoint {
 		}
 		Lists.newArrayList(tokens.split(StringUtil.SPLIT_DEFAULT)).forEach(
 			token -> redisTemplate.delete(PROJECT_OAUTH_ACCESS + token));
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 

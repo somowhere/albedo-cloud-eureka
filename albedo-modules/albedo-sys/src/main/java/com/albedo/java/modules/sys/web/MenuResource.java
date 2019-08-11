@@ -19,14 +19,16 @@ package com.albedo.java.modules.sys.web;
 import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.exception.RuntimeMsgException;
 import com.albedo.java.common.core.util.ClassUtil;
+import com.albedo.java.common.core.util.ObjectUtil;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.common.core.util.StringUtil;
 import com.albedo.java.common.core.vo.PageModel;
 import com.albedo.java.common.core.vo.TreeQuery;
 import com.albedo.java.common.core.vo.TreeUtil;
-import com.albedo.java.common.log.annotation.SysLog;
+import com.albedo.java.common.log.annotation.Log;
+import com.albedo.java.common.log.enums.BusinessType;
 import com.albedo.java.common.security.annotation.Inner;
-import com.albedo.java.common.security.util.SecurityUtils;
+import com.albedo.java.common.security.util.SecurityUtil;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.service.MenuService;
@@ -35,16 +37,13 @@ import com.albedo.java.modules.sys.vo.MenuDataVo;
 import com.albedo.java.modules.sys.vo.MenuTree;
 import com.albedo.java.modules.sys.vo.MenuVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.codahale.metrics.annotation.Timed;
+
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -64,10 +63,9 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 * @return
 	 */
 	@GetMapping(CommonConstants.URL_ID_REGEX)
-	@Timed
 	public R get(@PathVariable String id) {
 		log.debug("REST request to get Entity : {}", id);
-		return R.createSuccessData(service.findOneVo(id));
+		return R.buildOkData(service.findOneVo(id));
 	}
 
 	/**
@@ -79,15 +77,65 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	public R getUserMenu() {
 		// 获取符合条件的菜单
 		Set<MenuVo> all = new HashSet<>();
-		SecurityUtils.getRoles()
+		SecurityUtil.getRoles()
 			.forEach(roleId -> all.addAll(service.getMenuByRoleId(roleId)));
 		List<MenuTree> menuTreeList = all.stream()
-			.filter(menuVo -> CommonConstants.MENU.equals(menuVo.getType()))
+			.filter(menuVo -> Menu.TYPE_MENU.equals(menuVo.getType()) ||
+				Menu.TYPE_BUTTON_TAB.equals(menuVo.getType()))
 			.map(MenuTree::new)
 			.sorted(Comparator.comparingInt(MenuTree::getSort))
 			.collect(Collectors.toList());
-		return new R<>(TreeUtil.buildByLoop(menuTreeList, Menu.ROOT));
+		return R.buildOkData(buildByLoop(menuTreeList, Menu.ROOT));
 	}
+
+
+	/**
+	 * 两层循环实现建树
+	 *
+	 * @param treeNodes 传入的树节点列表
+	 * @return
+	 */
+	public List<MenuTree> buildByLoop(List<MenuTree> treeNodes, Object root) {
+
+		List<MenuTree> trees = new ArrayList<>();
+
+		for (MenuTree treeNode : treeNodes) {
+
+			if (root.equals(treeNode.getParentId())) {
+				trees.add(treeNode);
+			}
+
+			for (MenuTree it : treeNodes) {
+				if (it.getParentId().equals(treeNode.getId()) && Menu.TYPE_MENU.equals(it.getType())) {
+					if (treeNode.getChildren() == null) {
+						treeNode.setChildren(new ArrayList<>());
+					}
+					treeNode.add(it);
+				}
+			}
+		}
+
+		treeNodes.stream()
+			.filter(item -> Menu.TYPE_BUTTON_TAB.equals(item.getType()))
+			.forEach(item -> addTypeButtonTab(trees, item));
+
+		return trees;
+	}
+
+	private void addTypeButtonTab(List<MenuTree> trees, MenuTree menuTree) {
+		for (MenuTree treeNode : trees) {
+			if (ObjectUtil.isNotEmpty(treeNode.getChildren())) {
+				for (MenuTree childNode : treeNode.getChildren()) {
+					if (childNode.getId().equals(menuTree.getParentId())) {
+						treeNode.add(menuTree);
+						return;
+					}
+				}
+				addTypeButtonTab(treeNode.getChildren(), menuTree);
+			}
+		}
+	}
+
 
 	/**
 	 * 返回树形菜单集合
@@ -96,7 +144,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 */
 	@GetMapping(value = "/tree")
 	public R getTree(TreeQuery treeQuery) {
-		return R.createSuccessData(service.listMenuTrees(treeQuery));
+		return R.buildOkData(service.listMenuTrees(treeQuery));
 	}
 
 	/**
@@ -119,7 +167,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 * @param menuDataVo 菜单信息
 	 * @return success/false
 	 */
-	@SysLog("添加/更新菜单")
+	@Log(value = "菜单管理", businessType = BusinessType.EDIT)
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
 	public R save(@Valid @RequestBody MenuDataVo menuDataVo) {
@@ -132,7 +180,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 		}
 
 		service.save(menuDataVo);
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 	/**
@@ -141,12 +189,12 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 * @param ids 菜单ID
 	 * @return success/false
 	 */
-	@SysLog("删除菜单")
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
+	@Log(value = "菜单管理", businessType = BusinessType.DELETE)
 	public R removeByIds(@PathVariable String ids) {
 		service.removeMenuById(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 	/**
@@ -157,9 +205,8 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	 */
 	@GetMapping("/")
 	public R<IPage> getPage(PageModel pm) {
-		return new R<>(service.findRelationPage(pm));
+		return R.buildOkData(service.findRelationPage(pm));
 	}
-
 
 	/**
 	 * 新增代码生成菜单
@@ -171,7 +218,7 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 	@PostMapping("/gen")
 	public R saveByGenScheme(@Valid @RequestBody GenSchemeDataVo schemeDataVo) {
 		service.saveByGenScheme(schemeDataVo);
-		return R.createSuccess("操作成功");
+		return R.buildOk("操作成功");
 	}
 
 }

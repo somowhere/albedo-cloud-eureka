@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import java.beans.PropertyDescriptor;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -111,15 +111,8 @@ public class QueryUtil {
 				if (queryCondition.getValue() instanceof String) { //字符串编码处理
 					String tempStr = queryCondition.getValue().toString();
 					if (tempStr.contains("&")) {
-						try {
-							queryCondition.setValue(
-								new String(StringEscapeUtils.unescapeHtml(tempStr).getBytes("ISO-8859-1"), "UTF-8"));
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-							log.warn("Illegal query conditions ---------> queryFieldName[",
-								queryCondition.getFieldName(), "]  operation[", operate,
-								"] value[", queryCondition.getValue(), "], please check!!!");
-						}
+						queryCondition.setValue(
+							new String(StringEscapeUtils.unescapeHtml(tempStr).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
 					}
 				}
 				//sql合法性检查
@@ -168,7 +161,7 @@ public class QueryUtil {
 							case CommonConstants.CONDITION_ILIKE:
 								String val = (String) queryCondition.getValue();
 								buildConditionCaluse(sb, paramFieldName);
-								paramMap.put(paramFieldName, !val.startsWith("%") && !val.toString().endsWith("%")
+								paramMap.put(paramFieldName, !val.startsWith("%") && !val.endsWith("%")
 									? StringUtil.toAppendStr("%", val, "%") : val);
 								break;
 							case CommonConstants.CONDITION_BETWEEN:
@@ -287,8 +280,8 @@ public class QueryUtil {
 			List<String> argList = Lists.newArrayList();
 			List<Object> paramEntityList = Lists.newArrayList();
 			paramEntityList.add(Lists.newArrayList(entity, argList));
-			Object obj = null;
-			String targetClassName = entity.getClass().getName(), baseClassName = StringUtil.sub(targetClassName, 0, StringUtil.getFromIndex(targetClassName, StringUtil.DOT, 3));
+			Object obj;
+			String targetClassName = entity.getClass().getName(), baseClassName = StringUtil.sub(targetClassName, 0, StringUtil.getFromIndex(targetClassName, "\\.", 3));
 			while (CollUtil.isNotEmpty(paramEntityList)) {
 				List<Object> tempList = Lists.newArrayList(paramEntityList);
 				paramEntityList.clear();

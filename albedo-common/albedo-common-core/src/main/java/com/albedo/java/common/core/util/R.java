@@ -31,7 +31,6 @@ import java.io.Serializable;
  * @param <T>
  * @author somowhere
  */
-@Builder
 @ToString
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -88,27 +87,27 @@ public class R<T> implements Serializable {
 		this.code = CommonConstants.FAIL;
 	}
 
-	public static R createSuccess(String... messages) {
+	public static R buildOk(String... messages) {
 		return new R(messages);
 	}
 
-	public static <T> R createSuccessData(T data, String... messages) {
+	public static <T> R buildOkData(T data, String... messages) {
 		return new R(data, messages);
 	}
 
-	public static <T> R createFailData(T data, String... messages) {
+	public static <T> R buildFailData(T data, String... messages) {
 		return new R(data, CommonConstants.FAIL, messages);
 	}
 
-	public static <T> R createFail(String... messages) {
+	public static <T> R buildFail(String... messages) {
 		return new R(null, CommonConstants.FAIL, messages);
 	}
 
-	public static <T> R create(T data, int code, String... messages) {
+	public static <T> R build(T data, int code, String... messages) {
 		return new R(data, code, messages);
 	}
 
-	public static <T> R create(int code, String... messages) {
+	public static <T> R build(int code, String... messages) {
 		return new R(null, code, messages);
 	}
 

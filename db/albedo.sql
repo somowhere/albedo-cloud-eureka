@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 11/08/2019 17:42:37
+ Date: 17/08/2019 14:15:42
 */
 
 SET NAMES utf8mb4;
@@ -196,6 +196,212 @@ CREATE TABLE `gen_table_fk`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for qrtz_blob_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_blob_triggers`;
+CREATE TABLE `qrtz_blob_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `blob_data` blob NULL,
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_calendars
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_calendars`;
+CREATE TABLE `qrtz_calendars`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `calendar_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `calendar` blob NOT NULL,
+  PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_cron_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE `qrtz_cron_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cron_expression` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `time_zone_id` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_cron_triggers
+-- ----------------------------
+INSERT INTO `qrtz_cron_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', '0/10 * * * * ?', 'Asia/Singapore');
+INSERT INTO `qrtz_cron_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', '0/15 * * * * ?', 'Asia/Singapore');
+INSERT INTO `qrtz_cron_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', '0/20 * * * * ?', 'Asia/Singapore');
+
+-- ----------------------------
+-- Table structure for qrtz_fired_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_fired_triggers`;
+CREATE TABLE `qrtz_fired_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `entry_id` varchar(95) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `instance_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `fired_time` bigint(13) NOT NULL,
+  `sched_time` bigint(13) NOT NULL,
+  `priority` int(11) NOT NULL,
+  `state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_job_details
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_job_details`;
+CREATE TABLE `qrtz_job_details`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `job_class_name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `is_durable` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `is_update_data` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_data` blob NULL,
+  PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_job_details
+-- ----------------------------
+INSERT INTO `qrtz_job_details` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 'com.albedo.java.modules.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E616C6265646F2E6A6176612E6D6F64756C65732E71756172747A2E646F6D61696E2E4A6F6200000000000000010200074C0009617661696C61626C657400124C6A6176612F6C616E672F537472696E673B4C000A636F6E63757272656E7471007E00094C000E63726F6E45787072657373696F6E71007E00094C000567726F757071007E00094C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C00046E616D6571007E000978720032636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E4964456E7469747900000000000000010200014C0002696471007E000978720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E44617461456E7469747900000000000000010200064C000963726561746564427971007E00094C000B63726561746564446174657400194C6A6176612F74696D652F4C6F63616C4461746554696D653B4C000B6465736372697074696F6E71007E00094C000E6C6173744D6F646966696564427971007E00094C00106C6173744D6F6469666965644461746571007E000C4C000776657273696F6E7400134C6A6176612F6C616E672F496E74656765723B78720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E42617365456E7469747900000000000000010200014C000764656C466C616771007E000978720037636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E47656E6572616C456E74697479000000000000000102000078720035636F6D2E62616F6D69646F752E6D796261746973706C75732E657874656E73696F6E2E6163746976657265636F72642E4D6F64656C00000000000000010200007870740001307400007372000D6A6176612E74696D652E536572955D84BA1B2248B20C00007870770A05000007E3080E0A15DB7870740001317371007E0014770E05000007E3080F102B1831A6924078737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000574000131740001307400013174000E302F3130202A202A202A202A203F74000744454641554C5474001573696D706C655461736B2E646F4E6F506172616D7374000133740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E697A0E58F82EFBC897800);
+INSERT INTO `qrtz_job_details` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 'com.albedo.java.modules.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E616C6265646F2E6A6176612E6D6F64756C65732E71756172747A2E646F6D61696E2E4A6F6200000000000000010200074C0009617661696C61626C657400124C6A6176612F6C616E672F537472696E673B4C000A636F6E63757272656E7471007E00094C000E63726F6E45787072657373696F6E71007E00094C000567726F757071007E00094C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C00046E616D6571007E000978720032636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E4964456E7469747900000000000000010200014C0002696471007E000978720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E44617461456E7469747900000000000000010200064C000963726561746564427971007E00094C000B63726561746564446174657400194C6A6176612F74696D652F4C6F63616C4461746554696D653B4C000B6465736372697074696F6E71007E00094C000E6C6173744D6F646966696564427971007E00094C00106C6173744D6F6469666965644461746571007E000C4C000776657273696F6E7400134C6A6176612F6C616E672F496E74656765723B78720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E42617365456E7469747900000000000000010200014C000764656C466C616771007E000978720037636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E47656E6572616C456E74697479000000000000000102000078720035636F6D2E62616F6D69646F752E6D796261746973706C75732E657874656E73696F6E2E6163746976657265636F72642E4D6F64656C00000000000000010200007870740001307400007372000D6A6176612E74696D652E536572955D84BA1B2248B20C00007870770E05000007E3080E0A1524389FD9807870740001317371007E0014770E05000007E3080F110A382E8D1D4078737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000B74000132740001317400013174000E302F3135202A202A202A202A203F74000744454641554C5474001D73696D706C655461736B2E646F506172616D732827616C6265646F272974000133740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E69C89E58F82EFBC897800);
+INSERT INTO `qrtz_job_details` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', NULL, 'com.albedo.java.modules.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E616C6265646F2E6A6176612E6D6F64756C65732E71756172747A2E646F6D61696E2E4A6F6200000000000000010200074C0009617661696C61626C657400124C6A6176612F6C616E672F537472696E673B4C000A636F6E63757272656E7471007E00094C000E63726F6E45787072657373696F6E71007E00094C000567726F757071007E00094C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C00046E616D6571007E000978720032636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E4964456E7469747900000000000000010200014C0002696471007E000978720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E44617461456E7469747900000000000000010200064C000963726561746564427971007E00094C000B63726561746564446174657400194C6A6176612F74696D652F4C6F63616C4461746554696D653B4C000B6465736372697074696F6E71007E00094C000E6C6173744D6F646966696564427971007E00094C00106C6173744D6F6469666965644461746571007E000C4C000776657273696F6E7400134C6A6176612F6C616E672F496E74656765723B78720034636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E42617365456E7469747900000000000000010200014C000764656C466C616771007E000978720037636F6D2E616C6265646F2E6A6176612E636F6D6D6F6E2E70657273697374656E63652E646F6D61696E2E47656E6572616C456E74697479000000000000000102000078720035636F6D2E62616F6D69646F752E6D796261746973706C75732E657874656E73696F6E2E6163746976657265636F72642E4D6F64656C00000000000000010200007870740001307400007372000D6A6176612E74696D652E536572955D84BA1B2248B20C00007870770A05000007E3080E0A15DB7870740001317371007E0014770E05000007E3080F102B161DDCA74078737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000374000133740001307400013174000E302F3230202A202A202A202A203F74000744454641554C5474004073696D706C655461736B2E646F4D756C7469706C65506172616D732827616C6265646F272C20747275652C20323030304C2C203331362E3530442C203130302974000133740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E5A49AE58F82EFBC897800);
+
+-- ----------------------------
+-- Table structure for qrtz_locks
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE `qrtz_locks`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `lock_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_locks
+-- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('AlbedoScheduler', 'STATE_ACCESS');
+INSERT INTO `qrtz_locks` VALUES ('AlbedoScheduler', 'TRIGGER_ACCESS');
+
+-- ----------------------------
+-- Table structure for qrtz_paused_trigger_grps
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE `qrtz_paused_trigger_grps`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_scheduler_state
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE `qrtz_scheduler_state`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `instance_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `last_checkin_time` bigint(13) NOT NULL,
+  `checkin_interval` bigint(13) NOT NULL,
+  PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_scheduler_state
+-- ----------------------------
+INSERT INTO `qrtz_scheduler_state` VALUES ('AlbedoScheduler', 'somewhere1566020091230', 1566022500583, 15000);
+INSERT INTO `qrtz_scheduler_state` VALUES ('RuoyiScheduler', 'DESKTOP-CHC8CQ91565759389736', 1565759603030, 15000);
+
+-- ----------------------------
+-- Table structure for qrtz_simple_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE `qrtz_simple_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `repeat_count` bigint(7) NOT NULL,
+  `repeat_interval` bigint(12) NOT NULL,
+  `times_triggered` bigint(10) NOT NULL,
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_simprop_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE `qrtz_simprop_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `str_prop_1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `str_prop_2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `str_prop_3` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `int_prop_1` int(11) NULL DEFAULT NULL,
+  `int_prop_2` int(11) NULL DEFAULT NULL,
+  `long_prop_1` bigint(20) NULL DEFAULT NULL,
+  `long_prop_2` bigint(20) NULL DEFAULT NULL,
+  `dec_prop_1` decimal(13, 4) NULL DEFAULT NULL,
+  `dec_prop_2` decimal(13, 4) NULL DEFAULT NULL,
+  `bool_prop_1` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `bool_prop_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for qrtz_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_triggers`;
+CREATE TABLE `qrtz_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `next_fire_time` bigint(13) NULL DEFAULT NULL,
+  `prev_fire_time` bigint(13) NULL DEFAULT NULL,
+  `priority` int(11) NULL DEFAULT NULL,
+  `trigger_state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `trigger_type` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `start_time` bigint(13) NOT NULL,
+  `end_time` bigint(13) NULL DEFAULT NULL,
+  `calendar_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `misfire_instr` smallint(2) NULL DEFAULT NULL,
+  `job_data` blob NULL,
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  INDEX `sched_name`(`sched_name`, `job_name`, `job_group`) USING BTREE,
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_triggers
+-- ----------------------------
+INSERT INTO `qrtz_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 1566020100000, -1, 5, 'PAUSED', 'CRON', 1566020091000, 0, NULL, 2, '');
+INSERT INTO `qrtz_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 1566022515000, 1566022500000, 5, 'WAITING', 'CRON', 1566020091000, 0, NULL, 2, '');
+INSERT INTO `qrtz_triggers` VALUES ('AlbedoScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', 'TASK_CLASS_NAME3', 'DEFAULT', NULL, 1566020100000, -1, 5, 'PAUSED', 'CRON', 1566020091000, 0, NULL, 2, '');
+
+-- ----------------------------
 -- Table structure for sys_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
@@ -333,6 +539,562 @@ INSERT INTO `sys_dict` VALUES ('f3592a047c466e348279983336ebaf28', '在线状态
 INSERT INTO `sys_dict` VALUES ('f83a718756762758707c67db3d271c9d', '手机端用户', '2', 'sys_operate_type_2', '6b8211aef2fec451b0398b19857443a7', '1,cfd5f62f601817a3b0f38f5ccb1f5128,6b8211aef2fec451b0398b19857443a7,', 30, b'1', b'1', NULL, '1', '2019-08-07 16:49:00.766', '1', '2019-08-09 11:26:04.746', 2, NULL, '0');
 
 -- ----------------------------
+-- Table structure for sys_job
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job`;
+CREATE TABLE `sys_job`  (
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+  `group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
+  `cron_expression` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
+  `misfire_policy` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+  `concurrent` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '是否并发执行（1允许 0禁止）',
+  `available` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '状态(1-正常，0-锁定)',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(3) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(3),
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `version` int(11) NOT NULL,
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '0' COMMENT '0-正常，1-删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job
+-- ----------------------------
+INSERT INTO `sys_job` VALUES ('1', '系统默认（无参）', 'DEFAULT', 'simpleTask.doNoParams', '0/10 * * * * ?', '3', '1', '0', '', '2019-08-14 10:21:36.000', '1', '2019-08-15 16:43:24.833', NULL, 5, '0');
+INSERT INTO `sys_job` VALUES ('2', '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '0/15 * * * * ?', '3', '1', '1', '', '2019-08-14 10:21:36.950', '1', '2019-08-15 17:10:56.781', NULL, 11, '0');
+INSERT INTO `sys_job` VALUES ('3', '系统默认（多参）', 'DEFAULT', 'simpleTask.doMultipleParams(\'albedo\', true, 2000L, 316.50D, 100)', '0/20 * * * * ?', '3', '1', '0', '', '2019-08-14 10:21:36.000', '1', '2019-08-15 16:43:22.501', NULL, 3, '0');
+
+-- ----------------------------
+-- Table structure for sys_job_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job_log`;
+CREATE TABLE `sys_job_log`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
+  `job_message` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '日志信息',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
+  `start_time` datetime(3) NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime(3) NULL DEFAULT NULL COMMENT '结束时间',
+  `create_time` datetime(3) NULL DEFAULT NULL COMMENT '创建时间',
+  `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '异常信息',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 504 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job_log
+-- ----------------------------
+INSERT INTO `sys_job_log` VALUES (1, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:57:45.014', '2019-08-16 13:57:45.014', '2019-08-16 13:57:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (2, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:58:00.015', '2019-08-16 13:58:00.015', '2019-08-16 13:58:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (3, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:58:15.008', '2019-08-16 13:58:15.008', '2019-08-16 13:58:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (4, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-16 13:58:30.012', '2019-08-16 13:58:30.013', '2019-08-16 13:58:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (5, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:58:45.014', '2019-08-16 13:58:45.014', '2019-08-16 13:58:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (6, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:59:00.021', '2019-08-16 13:59:00.021', '2019-08-16 13:59:00.021', '', NULL);
+INSERT INTO `sys_job_log` VALUES (7, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:59:15.009', '2019-08-16 13:59:15.009', '2019-08-16 13:59:15.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (8, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-16 13:59:30.009', '2019-08-16 13:59:30.009', '2019-08-16 13:59:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (9, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：5毫秒', '1', '2019-08-17 10:11:45.020', '2019-08-17 10:11:45.025', '2019-08-17 10:11:45.025', '', NULL);
+INSERT INTO `sys_job_log` VALUES (10, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:12:00.022', '2019-08-17 10:12:00.022', '2019-08-17 10:12:00.022', '', NULL);
+INSERT INTO `sys_job_log` VALUES (11, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:12:15.011', '2019-08-17 10:12:15.011', '2019-08-17 10:12:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (12, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:12:30.010', '2019-08-17 10:12:30.010', '2019-08-17 10:12:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (13, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:12:45.008', '2019-08-17 10:12:45.008', '2019-08-17 10:12:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (14, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:13:00.203', '2019-08-17 10:13:00.203', '2019-08-17 10:13:00.203', '', NULL);
+INSERT INTO `sys_job_log` VALUES (15, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:13:15.013', '2019-08-17 10:13:15.014', '2019-08-17 10:13:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (16, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:13:30.013', '2019-08-17 10:13:30.013', '2019-08-17 10:13:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (17, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:13:45.009', '2019-08-17 10:13:45.009', '2019-08-17 10:13:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (18, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:14:00.016', '2019-08-17 10:14:00.016', '2019-08-17 10:14:00.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (19, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:14:15.014', '2019-08-17 10:14:15.014', '2019-08-17 10:14:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (20, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:14:30.006', '2019-08-17 10:14:30.006', '2019-08-17 10:14:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (21, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:14:45.015', '2019-08-17 10:14:45.015', '2019-08-17 10:14:45.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (22, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:15:00.015', '2019-08-17 10:15:00.016', '2019-08-17 10:15:00.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (23, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:15:15.015', '2019-08-17 10:15:15.015', '2019-08-17 10:15:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (24, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:15:30.025', '2019-08-17 10:15:30.025', '2019-08-17 10:15:30.025', '', NULL);
+INSERT INTO `sys_job_log` VALUES (25, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:15:45.014', '2019-08-17 10:15:45.014', '2019-08-17 10:15:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (26, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:16:00.012', '2019-08-17 10:16:00.013', '2019-08-17 10:16:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (27, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:16:15.015', '2019-08-17 10:16:15.015', '2019-08-17 10:16:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (28, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:16:30.006', '2019-08-17 10:16:30.006', '2019-08-17 10:16:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (29, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:16:45.016', '2019-08-17 10:16:45.016', '2019-08-17 10:16:45.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (30, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:17:00.007', '2019-08-17 10:17:00.007', '2019-08-17 10:17:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (31, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:17:15.013', '2019-08-17 10:17:15.013', '2019-08-17 10:17:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (32, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:17:30.013', '2019-08-17 10:17:30.013', '2019-08-17 10:17:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (33, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:17:45.015', '2019-08-17 10:17:45.015', '2019-08-17 10:17:45.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (34, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:18:00.014', '2019-08-17 10:18:00.014', '2019-08-17 10:18:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (35, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:18:15.009', '2019-08-17 10:18:15.010', '2019-08-17 10:18:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (36, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:18:30.013', '2019-08-17 10:18:30.013', '2019-08-17 10:18:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (37, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:18:45.106', '2019-08-17 10:18:45.106', '2019-08-17 10:18:45.106', '', NULL);
+INSERT INTO `sys_job_log` VALUES (38, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:19:00.011', '2019-08-17 10:19:00.011', '2019-08-17 10:19:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (39, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:19:15.005', '2019-08-17 10:19:15.005', '2019-08-17 10:19:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (40, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:19:30.010', '2019-08-17 10:19:30.010', '2019-08-17 10:19:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (41, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:19:45.006', '2019-08-17 10:19:45.006', '2019-08-17 10:19:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (42, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:20:00.020', '2019-08-17 10:20:00.020', '2019-08-17 10:20:00.020', '', NULL);
+INSERT INTO `sys_job_log` VALUES (43, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:20:15.005', '2019-08-17 10:20:15.005', '2019-08-17 10:20:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (44, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:20:30.007', '2019-08-17 10:20:30.007', '2019-08-17 10:20:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (45, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:20:45.013', '2019-08-17 10:20:45.013', '2019-08-17 10:20:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (46, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:21:00.008', '2019-08-17 10:21:00.008', '2019-08-17 10:21:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (47, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:21:15.015', '2019-08-17 10:21:15.015', '2019-08-17 10:21:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (48, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:21:30.011', '2019-08-17 10:21:30.012', '2019-08-17 10:21:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (49, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:21:45.014', '2019-08-17 10:21:45.014', '2019-08-17 10:21:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (50, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:22:00.013', '2019-08-17 10:22:00.013', '2019-08-17 10:22:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (51, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:22:15.012', '2019-08-17 10:22:15.012', '2019-08-17 10:22:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (52, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:22:30.013', '2019-08-17 10:22:30.013', '2019-08-17 10:22:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (53, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:22:45.014', '2019-08-17 10:22:45.014', '2019-08-17 10:22:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (54, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:23:00.014', '2019-08-17 10:23:00.014', '2019-08-17 10:23:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (55, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:23:15.011', '2019-08-17 10:23:15.011', '2019-08-17 10:23:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (56, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:23:30.008', '2019-08-17 10:23:30.008', '2019-08-17 10:23:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (57, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:23:45.065', '2019-08-17 10:23:45.065', '2019-08-17 10:23:45.065', '', NULL);
+INSERT INTO `sys_job_log` VALUES (58, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:24:00.006', '2019-08-17 10:24:00.006', '2019-08-17 10:24:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (59, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:24:15.009', '2019-08-17 10:24:15.009', '2019-08-17 10:24:15.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (60, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:24:30.013', '2019-08-17 10:24:30.013', '2019-08-17 10:24:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (61, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:24:45.010', '2019-08-17 10:24:45.010', '2019-08-17 10:24:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (62, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:25:00.008', '2019-08-17 10:25:00.008', '2019-08-17 10:25:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (63, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:25:15.013', '2019-08-17 10:25:15.013', '2019-08-17 10:25:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (64, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:25:30.013', '2019-08-17 10:25:30.013', '2019-08-17 10:25:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (65, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:25:45.013', '2019-08-17 10:25:45.013', '2019-08-17 10:25:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (66, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:26:00.011', '2019-08-17 10:26:00.011', '2019-08-17 10:26:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (67, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:26:15.010', '2019-08-17 10:26:15.011', '2019-08-17 10:26:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (68, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:26:30.012', '2019-08-17 10:26:30.013', '2019-08-17 10:26:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (69, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:26:45.013', '2019-08-17 10:26:45.013', '2019-08-17 10:26:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (70, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:27:00.015', '2019-08-17 10:27:00.015', '2019-08-17 10:27:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (71, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:27:15.006', '2019-08-17 10:27:15.006', '2019-08-17 10:27:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (72, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:27:30.062', '2019-08-17 10:27:30.062', '2019-08-17 10:27:30.062', '', NULL);
+INSERT INTO `sys_job_log` VALUES (73, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:27:45.008', '2019-08-17 10:27:45.008', '2019-08-17 10:27:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (74, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:28:00.013', '2019-08-17 10:28:00.013', '2019-08-17 10:28:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (75, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:28:15.113', '2019-08-17 10:28:15.113', '2019-08-17 10:28:15.113', '', NULL);
+INSERT INTO `sys_job_log` VALUES (76, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:28:30.005', '2019-08-17 10:28:30.005', '2019-08-17 10:28:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (77, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:28:45.010', '2019-08-17 10:28:45.010', '2019-08-17 10:28:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (78, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:29:00.012', '2019-08-17 10:29:00.012', '2019-08-17 10:29:00.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (79, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:29:15.006', '2019-08-17 10:29:15.006', '2019-08-17 10:29:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (80, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:29:30.052', '2019-08-17 10:29:30.052', '2019-08-17 10:29:30.052', '', NULL);
+INSERT INTO `sys_job_log` VALUES (81, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:29:45.012', '2019-08-17 10:29:45.012', '2019-08-17 10:29:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (82, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:30:00.013', '2019-08-17 10:30:00.013', '2019-08-17 10:30:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (83, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:30:15.013', '2019-08-17 10:30:15.013', '2019-08-17 10:30:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (84, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:30:30.005', '2019-08-17 10:30:30.005', '2019-08-17 10:30:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (85, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:30:45.012', '2019-08-17 10:30:45.012', '2019-08-17 10:30:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (86, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:31:00.015', '2019-08-17 10:31:00.015', '2019-08-17 10:31:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (87, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:31:15.009', '2019-08-17 10:31:15.009', '2019-08-17 10:31:15.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (88, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:31:30.008', '2019-08-17 10:31:30.008', '2019-08-17 10:31:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (89, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:31:45.012', '2019-08-17 10:31:45.012', '2019-08-17 10:31:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (90, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:32:00.012', '2019-08-17 10:32:00.012', '2019-08-17 10:32:00.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (91, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:32:15.010', '2019-08-17 10:32:15.010', '2019-08-17 10:32:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (92, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:32:30.012', '2019-08-17 10:32:30.012', '2019-08-17 10:32:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (93, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:32:45.012', '2019-08-17 10:32:45.012', '2019-08-17 10:32:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (94, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:33:00.013', '2019-08-17 10:33:00.013', '2019-08-17 10:33:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (95, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:33:15.010', '2019-08-17 10:33:15.010', '2019-08-17 10:33:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (96, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:33:30.010', '2019-08-17 10:33:30.010', '2019-08-17 10:33:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (97, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:33:45.007', '2019-08-17 10:33:45.007', '2019-08-17 10:33:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (98, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:34:00.013', '2019-08-17 10:34:00.014', '2019-08-17 10:34:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (99, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:34:15.010', '2019-08-17 10:34:15.010', '2019-08-17 10:34:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (100, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:34:30.005', '2019-08-17 10:34:30.005', '2019-08-17 10:34:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (101, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:34:45.006', '2019-08-17 10:34:45.006', '2019-08-17 10:34:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (102, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:35:00.009', '2019-08-17 10:35:00.009', '2019-08-17 10:35:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (103, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:35:15.005', '2019-08-17 10:35:15.005', '2019-08-17 10:35:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (104, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:35:30.010', '2019-08-17 10:35:30.010', '2019-08-17 10:35:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (105, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:35:45.012', '2019-08-17 10:35:45.012', '2019-08-17 10:35:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (106, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:36:00.008', '2019-08-17 10:36:00.008', '2019-08-17 10:36:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (107, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:36:15.013', '2019-08-17 10:36:15.013', '2019-08-17 10:36:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (108, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:36:30.008', '2019-08-17 10:36:30.008', '2019-08-17 10:36:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (109, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:36:45.013', '2019-08-17 10:36:45.013', '2019-08-17 10:36:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (110, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:37:00.014', '2019-08-17 10:37:00.014', '2019-08-17 10:37:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (111, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:37:15.006', '2019-08-17 10:37:15.006', '2019-08-17 10:37:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (112, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:37:30.011', '2019-08-17 10:37:30.011', '2019-08-17 10:37:30.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (113, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:37:45.011', '2019-08-17 10:37:45.011', '2019-08-17 10:37:45.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (114, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:38:00.014', '2019-08-17 10:38:00.014', '2019-08-17 10:38:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (115, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:38:15.008', '2019-08-17 10:38:15.008', '2019-08-17 10:38:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (116, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:38:30.006', '2019-08-17 10:38:30.006', '2019-08-17 10:38:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (117, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:38:45.012', '2019-08-17 10:38:45.012', '2019-08-17 10:38:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (118, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:39:00.014', '2019-08-17 10:39:00.014', '2019-08-17 10:39:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (119, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:39:15.006', '2019-08-17 10:39:15.006', '2019-08-17 10:39:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (120, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:39:30.010', '2019-08-17 10:39:30.010', '2019-08-17 10:39:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (121, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:39:45.006', '2019-08-17 10:39:45.006', '2019-08-17 10:39:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (122, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:40:00.008', '2019-08-17 10:40:00.008', '2019-08-17 10:40:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (123, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:40:15.006', '2019-08-17 10:40:15.007', '2019-08-17 10:40:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (124, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:40:30.009', '2019-08-17 10:40:30.009', '2019-08-17 10:40:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (125, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:40:45.012', '2019-08-17 10:40:45.012', '2019-08-17 10:40:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (126, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:41:00.009', '2019-08-17 10:41:00.009', '2019-08-17 10:41:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (127, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:41:15.006', '2019-08-17 10:41:15.006', '2019-08-17 10:41:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (128, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:41:30.013', '2019-08-17 10:41:30.013', '2019-08-17 10:41:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (129, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:41:45.007', '2019-08-17 10:41:45.007', '2019-08-17 10:41:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (130, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:42:00.007', '2019-08-17 10:42:00.007', '2019-08-17 10:42:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (131, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:42:15.009', '2019-08-17 10:42:15.009', '2019-08-17 10:42:15.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (132, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:42:30.006', '2019-08-17 10:42:30.006', '2019-08-17 10:42:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (133, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:42:45.008', '2019-08-17 10:42:45.008', '2019-08-17 10:42:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (134, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:43:00.011', '2019-08-17 10:43:00.011', '2019-08-17 10:43:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (135, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:43:15.008', '2019-08-17 10:43:15.008', '2019-08-17 10:43:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (136, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:43:30.006', '2019-08-17 10:43:30.006', '2019-08-17 10:43:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (137, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:43:45.006', '2019-08-17 10:43:45.006', '2019-08-17 10:43:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (138, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:44:00.011', '2019-08-17 10:44:00.012', '2019-08-17 10:44:00.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (139, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:44:15.010', '2019-08-17 10:44:15.010', '2019-08-17 10:44:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (140, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:44:30.005', '2019-08-17 10:44:30.005', '2019-08-17 10:44:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (141, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:44:45.013', '2019-08-17 10:44:45.013', '2019-08-17 10:44:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (142, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:45:00.008', '2019-08-17 10:45:00.008', '2019-08-17 10:45:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (143, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:45:15.005', '2019-08-17 10:45:15.005', '2019-08-17 10:45:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (144, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:45:30.012', '2019-08-17 10:45:30.012', '2019-08-17 10:45:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (145, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:45:45.010', '2019-08-17 10:45:45.010', '2019-08-17 10:45:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (146, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:46:00.010', '2019-08-17 10:46:00.010', '2019-08-17 10:46:00.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (147, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:46:15.006', '2019-08-17 10:46:15.006', '2019-08-17 10:46:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (148, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:46:30.008', '2019-08-17 10:46:30.008', '2019-08-17 10:46:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (149, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:46:45.013', '2019-08-17 10:46:45.013', '2019-08-17 10:46:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (150, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:47:00.013', '2019-08-17 10:47:00.013', '2019-08-17 10:47:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (151, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:47:15.013', '2019-08-17 10:47:15.013', '2019-08-17 10:47:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (152, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:47:30.012', '2019-08-17 10:47:30.013', '2019-08-17 10:47:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (153, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:47:45.010', '2019-08-17 10:47:45.010', '2019-08-17 10:47:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (154, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:48:00.008', '2019-08-17 10:48:00.008', '2019-08-17 10:48:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (155, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:48:15.011', '2019-08-17 10:48:15.011', '2019-08-17 10:48:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (156, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:48:30.010', '2019-08-17 10:48:30.010', '2019-08-17 10:48:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (157, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:48:45.006', '2019-08-17 10:48:45.006', '2019-08-17 10:48:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (158, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:49:00.007', '2019-08-17 10:49:00.007', '2019-08-17 10:49:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (159, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:49:15.007', '2019-08-17 10:49:15.007', '2019-08-17 10:49:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (160, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:49:30.010', '2019-08-17 10:49:30.010', '2019-08-17 10:49:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (161, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:49:45.007', '2019-08-17 10:49:45.007', '2019-08-17 10:49:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (162, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:50:00.006', '2019-08-17 10:50:00.006', '2019-08-17 10:50:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (163, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:50:15.005', '2019-08-17 10:50:15.005', '2019-08-17 10:50:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (164, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:50:30.008', '2019-08-17 10:50:30.008', '2019-08-17 10:50:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (165, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:50:45.008', '2019-08-17 10:50:45.008', '2019-08-17 10:50:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (166, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:51:00.014', '2019-08-17 10:51:00.014', '2019-08-17 10:51:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (167, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:51:15.009', '2019-08-17 10:51:15.010', '2019-08-17 10:51:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (168, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:51:30.007', '2019-08-17 10:51:30.007', '2019-08-17 10:51:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (169, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:51:45.005', '2019-08-17 10:51:45.005', '2019-08-17 10:51:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (170, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:52:00.008', '2019-08-17 10:52:00.008', '2019-08-17 10:52:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (171, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:52:15.011', '2019-08-17 10:52:15.011', '2019-08-17 10:52:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (172, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:52:30.006', '2019-08-17 10:52:30.006', '2019-08-17 10:52:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (173, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:52:45.008', '2019-08-17 10:52:45.008', '2019-08-17 10:52:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (174, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:53:00.011', '2019-08-17 10:53:00.011', '2019-08-17 10:53:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (175, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:53:15.014', '2019-08-17 10:53:15.015', '2019-08-17 10:53:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (176, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:53:30.006', '2019-08-17 10:53:30.006', '2019-08-17 10:53:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (177, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:53:45.007', '2019-08-17 10:53:45.007', '2019-08-17 10:53:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (178, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:54:00.007', '2019-08-17 10:54:00.007', '2019-08-17 10:54:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (179, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:54:15.008', '2019-08-17 10:54:15.008', '2019-08-17 10:54:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (180, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:54:30.038', '2019-08-17 10:54:30.038', '2019-08-17 10:54:30.038', '', NULL);
+INSERT INTO `sys_job_log` VALUES (181, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:54:45.060', '2019-08-17 10:54:45.060', '2019-08-17 10:54:45.060', '', NULL);
+INSERT INTO `sys_job_log` VALUES (182, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:55:00.053', '2019-08-17 10:55:00.054', '2019-08-17 10:55:00.054', '', NULL);
+INSERT INTO `sys_job_log` VALUES (183, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:55:15.083', '2019-08-17 10:55:15.084', '2019-08-17 10:55:15.084', '', NULL);
+INSERT INTO `sys_job_log` VALUES (184, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:55:30.007', '2019-08-17 10:55:30.007', '2019-08-17 10:55:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (185, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:55:45.025', '2019-08-17 10:55:45.025', '2019-08-17 10:55:45.025', '', NULL);
+INSERT INTO `sys_job_log` VALUES (186, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:56:00.016', '2019-08-17 10:56:00.016', '2019-08-17 10:56:00.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (187, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:56:15.166', '2019-08-17 10:56:15.166', '2019-08-17 10:56:15.166', '', NULL);
+INSERT INTO `sys_job_log` VALUES (188, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:56:30.017', '2019-08-17 10:56:30.017', '2019-08-17 10:56:30.017', '', NULL);
+INSERT INTO `sys_job_log` VALUES (189, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:56:45.011', '2019-08-17 10:56:45.011', '2019-08-17 10:56:45.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (190, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:57:00.011', '2019-08-17 10:57:00.011', '2019-08-17 10:57:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (191, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:57:15.005', '2019-08-17 10:57:15.005', '2019-08-17 10:57:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (192, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:57:30.007', '2019-08-17 10:57:30.008', '2019-08-17 10:57:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (193, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:57:45.004', '2019-08-17 10:57:45.004', '2019-08-17 10:57:45.004', '', NULL);
+INSERT INTO `sys_job_log` VALUES (194, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:58:00.011', '2019-08-17 10:58:00.011', '2019-08-17 10:58:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (195, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:58:15.005', '2019-08-17 10:58:15.005', '2019-08-17 10:58:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (196, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:58:30.007', '2019-08-17 10:58:30.007', '2019-08-17 10:58:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (197, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:58:45.007', '2019-08-17 10:58:45.007', '2019-08-17 10:58:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (198, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 10:59:00.007', '2019-08-17 10:59:00.008', '2019-08-17 10:59:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (199, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:59:15.031', '2019-08-17 10:59:15.031', '2019-08-17 10:59:15.031', '', NULL);
+INSERT INTO `sys_job_log` VALUES (200, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:59:30.011', '2019-08-17 10:59:30.011', '2019-08-17 10:59:30.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (201, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 10:59:45.008', '2019-08-17 10:59:45.008', '2019-08-17 10:59:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (202, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:00:00.008', '2019-08-17 11:00:00.008', '2019-08-17 11:00:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (203, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:00:15.008', '2019-08-17 11:00:15.008', '2019-08-17 11:00:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (204, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:00:30.009', '2019-08-17 11:00:30.009', '2019-08-17 11:00:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (205, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:00:45.009', '2019-08-17 11:00:45.009', '2019-08-17 11:00:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (206, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:01:00.007', '2019-08-17 11:01:00.007', '2019-08-17 11:01:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (207, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:01:15.005', '2019-08-17 11:01:15.005', '2019-08-17 11:01:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (208, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:01:30.008', '2019-08-17 11:01:30.008', '2019-08-17 11:01:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (209, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:01:45.092', '2019-08-17 11:01:45.092', '2019-08-17 11:01:45.092', '', NULL);
+INSERT INTO `sys_job_log` VALUES (210, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:02:00.013', '2019-08-17 11:02:00.013', '2019-08-17 11:02:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (211, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:02:15.017', '2019-08-17 11:02:15.017', '2019-08-17 11:02:15.017', '', NULL);
+INSERT INTO `sys_job_log` VALUES (212, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:02:30.011', '2019-08-17 11:02:30.011', '2019-08-17 11:02:30.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (213, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:02:45.089', '2019-08-17 11:02:45.089', '2019-08-17 11:02:45.089', '', NULL);
+INSERT INTO `sys_job_log` VALUES (214, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:03:00.015', '2019-08-17 11:03:00.015', '2019-08-17 11:03:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (215, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:03:15.197', '2019-08-17 11:03:15.197', '2019-08-17 11:03:15.197', '', NULL);
+INSERT INTO `sys_job_log` VALUES (216, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:03:30.006', '2019-08-17 11:03:30.006', '2019-08-17 11:03:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (217, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:03:45.009', '2019-08-17 11:03:45.009', '2019-08-17 11:03:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (218, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:04:00.014', '2019-08-17 11:04:00.015', '2019-08-17 11:04:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (219, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:04:15.009', '2019-08-17 11:04:15.010', '2019-08-17 11:04:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (220, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:04:30.009', '2019-08-17 11:04:30.009', '2019-08-17 11:04:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (221, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:04:45.005', '2019-08-17 11:04:45.005', '2019-08-17 11:04:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (222, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:05:00.018', '2019-08-17 11:05:00.018', '2019-08-17 11:05:00.018', '', NULL);
+INSERT INTO `sys_job_log` VALUES (223, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:05:15.010', '2019-08-17 11:05:15.010', '2019-08-17 11:05:15.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (224, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:05:30.007', '2019-08-17 11:05:30.007', '2019-08-17 11:05:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (225, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:05:45.005', '2019-08-17 11:05:45.005', '2019-08-17 11:05:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (226, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:06:00.010', '2019-08-17 11:06:00.011', '2019-08-17 11:06:00.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (227, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:06:15.035', '2019-08-17 11:06:15.035', '2019-08-17 11:06:15.036', '', NULL);
+INSERT INTO `sys_job_log` VALUES (228, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:06:30.008', '2019-08-17 11:06:30.008', '2019-08-17 11:06:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (229, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:06:45.007', '2019-08-17 11:06:45.007', '2019-08-17 11:06:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (230, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:07:00.015', '2019-08-17 11:07:00.015', '2019-08-17 11:07:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (231, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:07:15.012', '2019-08-17 11:07:15.013', '2019-08-17 11:07:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (232, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:07:30.014', '2019-08-17 11:07:30.014', '2019-08-17 11:07:30.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (233, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:07:45.015', '2019-08-17 11:07:45.016', '2019-08-17 11:07:45.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (234, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:08:00.012', '2019-08-17 11:08:00.013', '2019-08-17 11:08:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (235, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:08:15.005', '2019-08-17 11:08:15.005', '2019-08-17 11:08:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (236, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:08:30.013', '2019-08-17 11:08:30.013', '2019-08-17 11:08:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (237, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:08:45.013', '2019-08-17 11:08:45.013', '2019-08-17 11:08:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (238, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:09:00.037', '2019-08-17 11:09:00.037', '2019-08-17 11:09:00.037', '', NULL);
+INSERT INTO `sys_job_log` VALUES (239, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:09:15.017', '2019-08-17 11:09:15.017', '2019-08-17 11:09:15.017', '', NULL);
+INSERT INTO `sys_job_log` VALUES (240, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:09:30.042', '2019-08-17 11:09:30.042', '2019-08-17 11:09:30.042', '', NULL);
+INSERT INTO `sys_job_log` VALUES (241, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:09:45.091', '2019-08-17 11:09:45.091', '2019-08-17 11:09:45.091', '', NULL);
+INSERT INTO `sys_job_log` VALUES (242, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:10:00.123', '2019-08-17 11:10:00.124', '2019-08-17 11:10:00.124', '', NULL);
+INSERT INTO `sys_job_log` VALUES (243, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:10:15.013', '2019-08-17 11:10:15.013', '2019-08-17 11:10:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (244, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:10:30.075', '2019-08-17 11:10:30.075', '2019-08-17 11:10:30.075', '', NULL);
+INSERT INTO `sys_job_log` VALUES (245, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:10:45.034', '2019-08-17 11:10:45.034', '2019-08-17 11:10:45.034', '', NULL);
+INSERT INTO `sys_job_log` VALUES (246, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:11:00.018', '2019-08-17 11:11:00.018', '2019-08-17 11:11:00.018', '', NULL);
+INSERT INTO `sys_job_log` VALUES (247, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:11:15.014', '2019-08-17 11:11:15.014', '2019-08-17 11:11:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (248, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:11:30.010', '2019-08-17 11:11:30.010', '2019-08-17 11:11:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (249, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:11:45.007', '2019-08-17 11:11:45.007', '2019-08-17 11:11:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (250, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:12:00.009', '2019-08-17 11:12:00.009', '2019-08-17 11:12:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (251, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:12:15.011', '2019-08-17 11:12:15.011', '2019-08-17 11:12:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (252, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:12:30.007', '2019-08-17 11:12:30.007', '2019-08-17 11:12:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (253, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:12:45.010', '2019-08-17 11:12:45.010', '2019-08-17 11:12:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (254, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:13:00.006', '2019-08-17 11:13:00.006', '2019-08-17 11:13:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (255, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:13:15.005', '2019-08-17 11:13:15.005', '2019-08-17 11:13:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (256, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：4毫秒', '1', '2019-08-17 11:45:06.408', '2019-08-17 11:45:06.412', '2019-08-17 11:45:06.412', '', NULL);
+INSERT INTO `sys_job_log` VALUES (257, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:45:15.019', '2019-08-17 11:45:15.019', '2019-08-17 11:45:15.019', '', NULL);
+INSERT INTO `sys_job_log` VALUES (258, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:45:30.008', '2019-08-17 11:45:30.008', '2019-08-17 11:45:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (259, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:45:45.008', '2019-08-17 11:45:45.009', '2019-08-17 11:45:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (260, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:46:00.010', '2019-08-17 11:46:00.010', '2019-08-17 11:46:00.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (261, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:46:15.007', '2019-08-17 11:46:15.007', '2019-08-17 11:46:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (262, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:46:30.008', '2019-08-17 11:46:30.008', '2019-08-17 11:46:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (263, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:46:45.008', '2019-08-17 11:46:45.008', '2019-08-17 11:46:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (264, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:47:00.009', '2019-08-17 11:47:00.009', '2019-08-17 11:47:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (265, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:47:15.006', '2019-08-17 11:47:15.006', '2019-08-17 11:47:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (266, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:47:30.009', '2019-08-17 11:47:30.009', '2019-08-17 11:47:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (267, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:47:45.005', '2019-08-17 11:47:45.005', '2019-08-17 11:47:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (268, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:48:00.009', '2019-08-17 11:48:00.009', '2019-08-17 11:48:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (269, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:48:15.007', '2019-08-17 11:48:15.007', '2019-08-17 11:48:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (270, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:48:30.005', '2019-08-17 11:48:30.005', '2019-08-17 11:48:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (271, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:48:45.010', '2019-08-17 11:48:45.010', '2019-08-17 11:48:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (272, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:49:00.006', '2019-08-17 11:49:00.007', '2019-08-17 11:49:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (273, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:49:15.007', '2019-08-17 11:49:15.007', '2019-08-17 11:49:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (274, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:49:30.006', '2019-08-17 11:49:30.006', '2019-08-17 11:49:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (275, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:49:45.006', '2019-08-17 11:49:45.006', '2019-08-17 11:49:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (276, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:50:00.007', '2019-08-17 11:50:00.007', '2019-08-17 11:50:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (277, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:50:15.008', '2019-08-17 11:50:15.008', '2019-08-17 11:50:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (278, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:50:30.006', '2019-08-17 11:50:30.006', '2019-08-17 11:50:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (279, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:50:45.007', '2019-08-17 11:50:45.007', '2019-08-17 11:50:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (280, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:51:00.008', '2019-08-17 11:51:00.008', '2019-08-17 11:51:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (281, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:51:15.006', '2019-08-17 11:51:15.006', '2019-08-17 11:51:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (282, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:51:30.007', '2019-08-17 11:51:30.007', '2019-08-17 11:51:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (283, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:51:45.006', '2019-08-17 11:51:45.007', '2019-08-17 11:51:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (284, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:52:00.008', '2019-08-17 11:52:00.008', '2019-08-17 11:52:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (285, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:52:15.005', '2019-08-17 11:52:15.005', '2019-08-17 11:52:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (286, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:52:30.006', '2019-08-17 11:52:30.007', '2019-08-17 11:52:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (287, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:52:45.011', '2019-08-17 11:52:45.011', '2019-08-17 11:52:45.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (288, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:53:00.006', '2019-08-17 11:53:00.006', '2019-08-17 11:53:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (289, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:53:15.006', '2019-08-17 11:53:15.006', '2019-08-17 11:53:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (290, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:53:30.007', '2019-08-17 11:53:30.007', '2019-08-17 11:53:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (291, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:53:45.007', '2019-08-17 11:53:45.007', '2019-08-17 11:53:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (292, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:54:00.006', '2019-08-17 11:54:00.006', '2019-08-17 11:54:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (293, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:54:15.070', '2019-08-17 11:54:15.070', '2019-08-17 11:54:15.070', '', NULL);
+INSERT INTO `sys_job_log` VALUES (294, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:54:30.007', '2019-08-17 11:54:30.007', '2019-08-17 11:54:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (295, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:54:45.006', '2019-08-17 11:54:45.006', '2019-08-17 11:54:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (296, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 11:55:00.007', '2019-08-17 11:55:00.008', '2019-08-17 11:55:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (297, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:55:15.008', '2019-08-17 11:55:15.008', '2019-08-17 11:55:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (298, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:55:30.006', '2019-08-17 11:55:30.006', '2019-08-17 11:55:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (299, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:55:45.006', '2019-08-17 11:55:45.006', '2019-08-17 11:55:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (300, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:56:00.006', '2019-08-17 11:56:00.006', '2019-08-17 11:56:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (301, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:56:15.007', '2019-08-17 11:56:15.007', '2019-08-17 11:56:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (302, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:56:30.007', '2019-08-17 11:56:30.007', '2019-08-17 11:56:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (303, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:56:45.006', '2019-08-17 11:56:45.006', '2019-08-17 11:56:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (304, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:57:00.005', '2019-08-17 11:57:00.005', '2019-08-17 11:57:00.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (305, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:57:15.007', '2019-08-17 11:57:15.007', '2019-08-17 11:57:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (306, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:57:30.006', '2019-08-17 11:57:30.006', '2019-08-17 11:57:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (307, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:57:45.007', '2019-08-17 11:57:45.007', '2019-08-17 11:57:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (308, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:58:00.006', '2019-08-17 11:58:00.006', '2019-08-17 11:58:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (309, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:58:15.006', '2019-08-17 11:58:15.006', '2019-08-17 11:58:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (310, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:58:30.043', '2019-08-17 11:58:30.043', '2019-08-17 11:58:30.043', '', NULL);
+INSERT INTO `sys_job_log` VALUES (311, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:58:45.069', '2019-08-17 11:58:45.069', '2019-08-17 11:58:45.069', '', NULL);
+INSERT INTO `sys_job_log` VALUES (312, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:59:00.006', '2019-08-17 11:59:00.006', '2019-08-17 11:59:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (313, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:59:15.007', '2019-08-17 11:59:15.007', '2019-08-17 11:59:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (314, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:59:30.007', '2019-08-17 11:59:30.007', '2019-08-17 11:59:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (315, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 11:59:45.006', '2019-08-17 11:59:45.006', '2019-08-17 11:59:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (316, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 12:00:00.005', '2019-08-17 12:00:00.006', '2019-08-17 12:00:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (317, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:00:15.007', '2019-08-17 12:00:15.007', '2019-08-17 12:00:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (318, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:00:30.008', '2019-08-17 12:00:30.008', '2019-08-17 12:00:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (319, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:00:45.008', '2019-08-17 12:00:45.008', '2019-08-17 12:00:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (320, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:01:00.006', '2019-08-17 12:01:00.006', '2019-08-17 12:01:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (321, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:01:15.007', '2019-08-17 12:01:15.007', '2019-08-17 12:01:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (322, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:01:30.008', '2019-08-17 12:01:30.008', '2019-08-17 12:01:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (323, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:01:45.007', '2019-08-17 12:01:45.007', '2019-08-17 12:01:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (324, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:02:00.005', '2019-08-17 12:02:00.005', '2019-08-17 12:02:00.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (325, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:02:15.005', '2019-08-17 12:02:15.005', '2019-08-17 12:02:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (326, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 12:02:30.020', '2019-08-17 12:02:30.021', '2019-08-17 12:02:30.021', '', NULL);
+INSERT INTO `sys_job_log` VALUES (327, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:02:45.010', '2019-08-17 12:02:45.010', '2019-08-17 12:02:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (328, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:03:00.047', '2019-08-17 12:03:00.047', '2019-08-17 12:03:00.047', '', NULL);
+INSERT INTO `sys_job_log` VALUES (329, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:03:15.020', '2019-08-17 12:03:15.020', '2019-08-17 12:03:15.020', '', NULL);
+INSERT INTO `sys_job_log` VALUES (330, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:03:30.009', '2019-08-17 12:03:30.009', '2019-08-17 12:03:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (331, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:03:45.006', '2019-08-17 12:03:45.006', '2019-08-17 12:03:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (332, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:04:00.014', '2019-08-17 12:04:00.014', '2019-08-17 12:04:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (333, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:04:15.014', '2019-08-17 12:04:15.014', '2019-08-17 12:04:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (334, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:04:30.006', '2019-08-17 12:04:30.006', '2019-08-17 12:04:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (335, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:04:45.006', '2019-08-17 12:04:45.006', '2019-08-17 12:04:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (336, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:05:00.015', '2019-08-17 12:05:00.015', '2019-08-17 12:05:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (337, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:05:15.006', '2019-08-17 12:05:15.006', '2019-08-17 12:05:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (338, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:05:30.081', '2019-08-17 12:05:30.081', '2019-08-17 12:05:30.081', '', NULL);
+INSERT INTO `sys_job_log` VALUES (339, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:05:45.050', '2019-08-17 12:05:45.050', '2019-08-17 12:05:45.050', '', NULL);
+INSERT INTO `sys_job_log` VALUES (340, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 12:06:00.007', '2019-08-17 12:06:00.008', '2019-08-17 12:06:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (341, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:06:15.005', '2019-08-17 12:06:15.005', '2019-08-17 12:06:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (342, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 12:06:30.008', '2019-08-17 12:06:30.008', '2019-08-17 12:06:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (343, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：3毫秒', '1', '2019-08-17 13:35:00.434', '2019-08-17 13:35:00.437', '2019-08-17 13:35:00.437', '', NULL);
+INSERT INTO `sys_job_log` VALUES (344, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:35:15.035', '2019-08-17 13:35:15.035', '2019-08-17 13:35:15.035', '', NULL);
+INSERT INTO `sys_job_log` VALUES (345, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:35:30.019', '2019-08-17 13:35:30.019', '2019-08-17 13:35:30.019', '', NULL);
+INSERT INTO `sys_job_log` VALUES (346, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:35:45.012', '2019-08-17 13:35:45.012', '2019-08-17 13:35:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (347, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:36:00.012', '2019-08-17 13:36:00.012', '2019-08-17 13:36:00.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (348, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:36:15.015', '2019-08-17 13:36:15.015', '2019-08-17 13:36:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (349, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:36:30.009', '2019-08-17 13:36:30.010', '2019-08-17 13:36:30.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (350, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:36:45.014', '2019-08-17 13:36:45.014', '2019-08-17 13:36:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (351, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:37:00.021', '2019-08-17 13:37:00.021', '2019-08-17 13:37:00.021', '', NULL);
+INSERT INTO `sys_job_log` VALUES (352, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:37:15.008', '2019-08-17 13:37:15.008', '2019-08-17 13:37:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (353, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:37:30.005', '2019-08-17 13:37:30.005', '2019-08-17 13:37:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (354, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:37:45.020', '2019-08-17 13:37:45.020', '2019-08-17 13:37:45.020', '', NULL);
+INSERT INTO `sys_job_log` VALUES (355, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:38:00.008', '2019-08-17 13:38:00.008', '2019-08-17 13:38:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (356, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:38:15.015', '2019-08-17 13:38:15.016', '2019-08-17 13:38:15.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (357, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:38:30.007', '2019-08-17 13:38:30.007', '2019-08-17 13:38:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (358, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:38:45.027', '2019-08-17 13:38:45.028', '2019-08-17 13:38:45.028', '', NULL);
+INSERT INTO `sys_job_log` VALUES (359, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:39:00.016', '2019-08-17 13:39:00.017', '2019-08-17 13:39:00.017', '', NULL);
+INSERT INTO `sys_job_log` VALUES (360, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:39:15.013', '2019-08-17 13:39:15.013', '2019-08-17 13:39:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (361, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:39:30.014', '2019-08-17 13:39:30.015', '2019-08-17 13:39:30.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (362, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:39:45.010', '2019-08-17 13:39:45.010', '2019-08-17 13:39:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (363, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:40:00.015', '2019-08-17 13:40:00.015', '2019-08-17 13:40:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (364, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:40:15.012', '2019-08-17 13:40:15.012', '2019-08-17 13:40:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (365, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:40:30.014', '2019-08-17 13:40:30.014', '2019-08-17 13:40:30.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (366, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:40:45.014', '2019-08-17 13:40:45.015', '2019-08-17 13:40:45.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (367, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:41:00.008', '2019-08-17 13:41:00.008', '2019-08-17 13:41:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (368, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:41:15.006', '2019-08-17 13:41:15.006', '2019-08-17 13:41:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (369, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:41:30.007', '2019-08-17 13:41:30.007', '2019-08-17 13:41:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (370, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:41:45.008', '2019-08-17 13:41:45.008', '2019-08-17 13:41:45.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (371, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:42:00.015', '2019-08-17 13:42:00.015', '2019-08-17 13:42:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (372, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:42:15.007', '2019-08-17 13:42:15.007', '2019-08-17 13:42:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (373, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:42:30.009', '2019-08-17 13:42:30.009', '2019-08-17 13:42:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (374, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:42:45.011', '2019-08-17 13:42:45.011', '2019-08-17 13:42:45.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (375, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:43:00.007', '2019-08-17 13:43:00.007', '2019-08-17 13:43:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (376, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:43:15.007', '2019-08-17 13:43:15.007', '2019-08-17 13:43:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (377, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:43:30.012', '2019-08-17 13:43:30.012', '2019-08-17 13:43:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (378, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:43:45.010', '2019-08-17 13:43:45.010', '2019-08-17 13:43:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (379, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:44:00.010', '2019-08-17 13:44:00.010', '2019-08-17 13:44:00.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (380, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:44:15.008', '2019-08-17 13:44:15.008', '2019-08-17 13:44:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (381, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:44:30.007', '2019-08-17 13:44:30.007', '2019-08-17 13:44:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (382, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:44:45.007', '2019-08-17 13:44:45.007', '2019-08-17 13:44:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (383, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:45:00.009', '2019-08-17 13:45:00.009', '2019-08-17 13:45:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (384, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:45:15.013', '2019-08-17 13:45:15.014', '2019-08-17 13:45:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (385, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:45:30.007', '2019-08-17 13:45:30.007', '2019-08-17 13:45:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (386, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:45:45.012', '2019-08-17 13:45:45.012', '2019-08-17 13:45:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (387, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:46:00.008', '2019-08-17 13:46:00.008', '2019-08-17 13:46:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (388, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:46:15.016', '2019-08-17 13:46:15.016', '2019-08-17 13:46:15.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (389, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:46:30.014', '2019-08-17 13:46:30.014', '2019-08-17 13:46:30.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (390, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:46:45.015', '2019-08-17 13:46:45.016', '2019-08-17 13:46:45.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (391, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:47:00.014', '2019-08-17 13:47:00.014', '2019-08-17 13:47:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (392, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:47:15.161', '2019-08-17 13:47:15.161', '2019-08-17 13:47:15.161', '', NULL);
+INSERT INTO `sys_job_log` VALUES (393, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:47:30.013', '2019-08-17 13:47:30.013', '2019-08-17 13:47:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (394, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:47:45.007', '2019-08-17 13:47:45.007', '2019-08-17 13:47:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (395, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:48:00.014', '2019-08-17 13:48:00.015', '2019-08-17 13:48:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (396, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:48:15.014', '2019-08-17 13:48:15.014', '2019-08-17 13:48:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (397, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:48:30.019', '2019-08-17 13:48:30.019', '2019-08-17 13:48:30.019', '', NULL);
+INSERT INTO `sys_job_log` VALUES (398, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:48:45.014', '2019-08-17 13:48:45.014', '2019-08-17 13:48:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (399, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:49:00.007', '2019-08-17 13:49:00.007', '2019-08-17 13:49:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (400, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:49:15.013', '2019-08-17 13:49:15.014', '2019-08-17 13:49:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (401, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:49:30.012', '2019-08-17 13:49:30.012', '2019-08-17 13:49:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (402, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:49:45.012', '2019-08-17 13:49:45.012', '2019-08-17 13:49:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (403, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:50:00.014', '2019-08-17 13:50:00.014', '2019-08-17 13:50:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (404, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:50:15.007', '2019-08-17 13:50:15.007', '2019-08-17 13:50:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (405, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:50:30.007', '2019-08-17 13:50:30.007', '2019-08-17 13:50:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (406, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:50:45.006', '2019-08-17 13:50:45.006', '2019-08-17 13:50:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (407, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:51:00.014', '2019-08-17 13:51:00.014', '2019-08-17 13:51:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (408, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:51:15.007', '2019-08-17 13:51:15.007', '2019-08-17 13:51:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (409, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:51:30.012', '2019-08-17 13:51:30.012', '2019-08-17 13:51:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (410, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:51:45.014', '2019-08-17 13:51:45.014', '2019-08-17 13:51:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (411, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:52:00.007', '2019-08-17 13:52:00.007', '2019-08-17 13:52:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (412, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:52:15.016', '2019-08-17 13:52:15.016', '2019-08-17 13:52:15.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (413, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:52:30.012', '2019-08-17 13:52:30.012', '2019-08-17 13:52:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (414, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:52:45.009', '2019-08-17 13:52:45.009', '2019-08-17 13:52:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (415, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:53:00.008', '2019-08-17 13:53:00.008', '2019-08-17 13:53:00.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (416, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:53:15.012', '2019-08-17 13:53:15.012', '2019-08-17 13:53:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (417, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:53:30.009', '2019-08-17 13:53:30.009', '2019-08-17 13:53:30.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (418, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:53:45.015', '2019-08-17 13:53:45.016', '2019-08-17 13:53:45.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (419, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:54:00.015', '2019-08-17 13:54:00.015', '2019-08-17 13:54:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (420, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:54:15.007', '2019-08-17 13:54:15.007', '2019-08-17 13:54:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (421, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:54:30.011', '2019-08-17 13:54:30.012', '2019-08-17 13:54:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (422, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:54:45.007', '2019-08-17 13:54:45.007', '2019-08-17 13:54:45.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (423, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:55:00.015', '2019-08-17 13:55:00.015', '2019-08-17 13:55:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (424, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:55:15.008', '2019-08-17 13:55:15.008', '2019-08-17 13:55:15.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (425, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:55:30.013', '2019-08-17 13:55:30.013', '2019-08-17 13:55:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (426, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:55:45.010', '2019-08-17 13:55:45.010', '2019-08-17 13:55:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (427, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:56:00.013', '2019-08-17 13:56:00.013', '2019-08-17 13:56:00.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (428, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:56:15.013', '2019-08-17 13:56:15.013', '2019-08-17 13:56:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (429, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:56:30.007', '2019-08-17 13:56:30.007', '2019-08-17 13:56:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (430, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:56:45.005', '2019-08-17 13:56:45.005', '2019-08-17 13:56:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (431, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:57:00.014', '2019-08-17 13:57:00.015', '2019-08-17 13:57:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (432, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:57:15.012', '2019-08-17 13:57:15.012', '2019-08-17 13:57:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (433, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:57:30.012', '2019-08-17 13:57:30.013', '2019-08-17 13:57:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (434, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:57:45.080', '2019-08-17 13:57:45.080', '2019-08-17 13:57:45.080', '', NULL);
+INSERT INTO `sys_job_log` VALUES (435, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:58:00.007', '2019-08-17 13:58:00.007', '2019-08-17 13:58:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (436, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:58:15.012', '2019-08-17 13:58:15.012', '2019-08-17 13:58:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (437, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:58:30.015', '2019-08-17 13:58:30.015', '2019-08-17 13:58:30.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (438, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:58:45.005', '2019-08-17 13:58:45.005', '2019-08-17 13:58:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (439, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:59:00.009', '2019-08-17 13:59:00.009', '2019-08-17 13:59:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (440, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 13:59:15.012', '2019-08-17 13:59:15.013', '2019-08-17 13:59:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (441, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:59:30.006', '2019-08-17 13:59:30.006', '2019-08-17 13:59:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (442, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 13:59:45.012', '2019-08-17 13:59:45.012', '2019-08-17 13:59:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (443, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:00:00.006', '2019-08-17 14:00:00.006', '2019-08-17 14:00:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (444, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:00:15.007', '2019-08-17 14:00:15.007', '2019-08-17 14:00:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (445, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:00:30.011', '2019-08-17 14:00:30.012', '2019-08-17 14:00:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (446, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:00:45.013', '2019-08-17 14:00:45.013', '2019-08-17 14:00:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (447, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:01:00.085', '2019-08-17 14:01:00.085', '2019-08-17 14:01:00.085', '', NULL);
+INSERT INTO `sys_job_log` VALUES (448, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:01:15.014', '2019-08-17 14:01:15.015', '2019-08-17 14:01:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (449, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:01:30.013', '2019-08-17 14:01:30.013', '2019-08-17 14:01:30.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (450, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:01:45.009', '2019-08-17 14:01:45.009', '2019-08-17 14:01:45.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (451, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:02:00.014', '2019-08-17 14:02:00.015', '2019-08-17 14:02:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (452, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:02:15.013', '2019-08-17 14:02:15.014', '2019-08-17 14:02:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (453, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:02:30.012', '2019-08-17 14:02:30.012', '2019-08-17 14:02:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (454, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:02:45.013', '2019-08-17 14:02:45.013', '2019-08-17 14:02:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (455, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:03:00.079', '2019-08-17 14:03:00.080', '2019-08-17 14:03:00.080', '', NULL);
+INSERT INTO `sys_job_log` VALUES (456, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:03:15.006', '2019-08-17 14:03:15.007', '2019-08-17 14:03:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (457, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:03:30.007', '2019-08-17 14:03:30.007', '2019-08-17 14:03:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (458, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:03:45.012', '2019-08-17 14:03:45.012', '2019-08-17 14:03:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (459, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:04:00.015', '2019-08-17 14:04:00.016', '2019-08-17 14:04:00.016', '', NULL);
+INSERT INTO `sys_job_log` VALUES (460, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:04:15.014', '2019-08-17 14:04:15.014', '2019-08-17 14:04:15.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (461, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:04:30.011', '2019-08-17 14:04:30.011', '2019-08-17 14:04:30.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (462, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:04:45.006', '2019-08-17 14:04:45.006', '2019-08-17 14:04:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (463, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:05:00.148', '2019-08-17 14:05:00.148', '2019-08-17 14:05:00.148', '', NULL);
+INSERT INTO `sys_job_log` VALUES (464, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:05:15.123', '2019-08-17 14:05:15.124', '2019-08-17 14:05:15.124', '', NULL);
+INSERT INTO `sys_job_log` VALUES (465, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:05:30.006', '2019-08-17 14:05:30.006', '2019-08-17 14:05:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (466, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:05:45.014', '2019-08-17 14:05:45.014', '2019-08-17 14:05:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (467, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:06:00.014', '2019-08-17 14:06:00.015', '2019-08-17 14:06:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (468, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:06:15.007', '2019-08-17 14:06:15.007', '2019-08-17 14:06:15.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (469, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:06:30.005', '2019-08-17 14:06:30.005', '2019-08-17 14:06:30.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (470, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:06:45.014', '2019-08-17 14:06:45.014', '2019-08-17 14:06:45.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (471, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:07:00.014', '2019-08-17 14:07:00.014', '2019-08-17 14:07:00.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (472, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:07:15.013', '2019-08-17 14:07:15.013', '2019-08-17 14:07:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (473, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:07:30.013', '2019-08-17 14:07:30.014', '2019-08-17 14:07:30.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (474, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:07:45.012', '2019-08-17 14:07:45.012', '2019-08-17 14:07:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (475, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:08:00.015', '2019-08-17 14:08:00.015', '2019-08-17 14:08:00.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (476, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:08:15.015', '2019-08-17 14:08:15.015', '2019-08-17 14:08:15.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (477, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:08:30.014', '2019-08-17 14:08:30.014', '2019-08-17 14:08:30.014', '', NULL);
+INSERT INTO `sys_job_log` VALUES (478, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:08:45.012', '2019-08-17 14:08:45.012', '2019-08-17 14:08:45.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (479, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:09:00.081', '2019-08-17 14:09:00.081', '2019-08-17 14:09:00.081', '', NULL);
+INSERT INTO `sys_job_log` VALUES (480, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:09:15.012', '2019-08-17 14:09:15.012', '2019-08-17 14:09:15.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (481, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:09:30.054', '2019-08-17 14:09:30.054', '2019-08-17 14:09:30.054', '', NULL);
+INSERT INTO `sys_job_log` VALUES (482, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:09:45.027', '2019-08-17 14:09:45.027', '2019-08-17 14:09:45.027', '', NULL);
+INSERT INTO `sys_job_log` VALUES (483, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:10:00.006', '2019-08-17 14:10:00.006', '2019-08-17 14:10:00.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (484, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:10:15.011', '2019-08-17 14:10:15.011', '2019-08-17 14:10:15.011', '', NULL);
+INSERT INTO `sys_job_log` VALUES (485, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:10:30.015', '2019-08-17 14:10:30.015', '2019-08-17 14:10:30.015', '', NULL);
+INSERT INTO `sys_job_log` VALUES (486, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:10:45.006', '2019-08-17 14:10:45.006', '2019-08-17 14:10:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (487, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:11:00.010', '2019-08-17 14:11:00.010', '2019-08-17 14:11:00.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (488, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：1毫秒', '1', '2019-08-17 14:11:15.004', '2019-08-17 14:11:15.005', '2019-08-17 14:11:15.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (489, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:11:30.007', '2019-08-17 14:11:30.007', '2019-08-17 14:11:30.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (490, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:11:45.013', '2019-08-17 14:11:45.013', '2019-08-17 14:11:45.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (491, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:12:00.007', '2019-08-17 14:12:00.007', '2019-08-17 14:12:00.007', '', NULL);
+INSERT INTO `sys_job_log` VALUES (492, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:12:15.013', '2019-08-17 14:12:15.013', '2019-08-17 14:12:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (493, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:12:30.008', '2019-08-17 14:12:30.008', '2019-08-17 14:12:30.008', '', NULL);
+INSERT INTO `sys_job_log` VALUES (494, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:12:45.010', '2019-08-17 14:12:45.010', '2019-08-17 14:12:45.010', '', NULL);
+INSERT INTO `sys_job_log` VALUES (495, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:13:00.017', '2019-08-17 14:13:00.017', '2019-08-17 14:13:00.017', '', NULL);
+INSERT INTO `sys_job_log` VALUES (496, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:13:15.006', '2019-08-17 14:13:15.006', '2019-08-17 14:13:15.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (497, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:13:30.006', '2019-08-17 14:13:30.006', '2019-08-17 14:13:30.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (498, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:13:45.005', '2019-08-17 14:13:45.005', '2019-08-17 14:13:45.005', '', NULL);
+INSERT INTO `sys_job_log` VALUES (499, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:14:00.009', '2019-08-17 14:14:00.009', '2019-08-17 14:14:00.009', '', NULL);
+INSERT INTO `sys_job_log` VALUES (500, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:14:15.013', '2019-08-17 14:14:15.013', '2019-08-17 14:14:15.013', '', NULL);
+INSERT INTO `sys_job_log` VALUES (501, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:14:30.012', '2019-08-17 14:14:30.012', '2019-08-17 14:14:30.012', '', NULL);
+INSERT INTO `sys_job_log` VALUES (502, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:14:45.006', '2019-08-17 14:14:45.006', '2019-08-17 14:14:45.006', '', NULL);
+INSERT INTO `sys_job_log` VALUES (503, '系统默认（有参）', 'DEFAULT', 'simpleTask.doParams(\'albedo\')', '系统默认（有参） 总共耗时：0毫秒', '1', '2019-08-17 14:15:00.009', '2019-08-17 14:15:00.009', '2019-08-17 14:15:00.009', '', NULL);
+
+-- ----------------------------
 -- Table structure for sys_log_operate
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log_operate`;
@@ -423,7 +1185,7 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('06874adacf1f272be7928badd4fe8ed1', '配置日志', NULL, 'log', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-read', 'views/admin/log/index', '0', '1', '0', b'1', 30, '1', '2019-08-05 16:16:06.000', '1', '2019-08-05 16:17:17.483', NULL, 1, '0');
+INSERT INTO `sys_menu` VALUES ('06874adacf1f272be7928badd4fe8ed1', '配置日志', NULL, 'log', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-read', 'views/admin/log/index', '0', '1', '0', b'1', 30, '1', '2019-08-05 16:16:06.000', '1', '2019-08-17 14:13:15.046', NULL, 1, '1');
 INSERT INTO `sys_menu` VALUES ('0d0be247863fcbf08b3db943e5f45992', '在线用户查看', 'sys_userOnline_view', NULL, '6e3f89cda84ac2c6e715e7812c102ae8', 'ef2382c0cc2d99ee73444e684237a88a,6e3f89cda84ac2c6e715e7812c102ae8,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-08-07 09:05:28.000', '1', '2019-08-11 16:44:23.605', NULL, 1, '1');
 INSERT INTO `sys_menu` VALUES ('1000', '权限管理', NULL, '/upms', '-1', NULL, 'icon-quanxianguanli', 'Layout', '0', '1', '0', b'0', 10, '', '2018-09-28 08:29:53.000', '1', '2019-08-11 10:42:49.232', NULL, 9, '0');
 INSERT INTO `sys_menu` VALUES ('1100', '用户管理', NULL, 'user', '1000', '1000,', 'icon-yonghuguanli', 'views/sys/user/index', '0', '1', '0', b'0', 1, '', '2017-11-02 22:24:37.000', '1', '2019-08-09 10:55:47.702', NULL, 7, '0');
@@ -457,7 +1219,7 @@ INSERT INTO `sys_menu` VALUES ('2600', '令牌管理', NULL, 'token', '2000', '2
 INSERT INTO `sys_menu` VALUES ('2601', '令牌删除', 'sys_token_del', NULL, '2600', '2000,2600,', NULL, NULL, '0', '1', '1', b'1', 1, '', '2018-09-04 05:59:50.000', '1', '2019-08-11 17:35:57.367', NULL, 5, '0');
 INSERT INTO `sys_menu` VALUES ('2836ced373377be75936827ecddf7fad', '测试树管理编辑', 'test_testTreeBook_edit', NULL, '8d3517427e527df11d51da528261c915', NULL, NULL, NULL, '0', '1', '1', b'0', 40, '1', '2019-08-11 14:32:06.856', '1', '2019-08-11 14:43:59.833', NULL, 0, '1');
 INSERT INTO `sys_menu` VALUES ('2af0268f695b79abdf6e8b10d559d081', '测试树管理删除', 'test_testTreeBook_del', NULL, '8d3517427e527df11d51da528261c915', NULL, NULL, NULL, '0', '1', '1', b'0', 80, '1', '2019-08-11 14:32:06.859', '1', '2019-08-11 14:44:03.802', NULL, 0, '1');
-INSERT INTO `sys_menu` VALUES ('34dae0db3f9c97482d598f964bd4c9c7', '配置管理', NULL, 'configuration', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-slack', 'views/admin/configuration/index', '0', '1', '0', b'1', 50, '1', '2019-08-05 17:46:50.000', '1', '2019-08-05 17:47:28.719', NULL, 1, '0');
+INSERT INTO `sys_menu` VALUES ('34dae0db3f9c97482d598f964bd4c9c7', '配置管理', NULL, 'configuration', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-slack', 'views/admin/configuration/index', '0', '1', '0', b'1', 50, '1', '2019-08-05 17:46:50.000', '1', '2019-08-17 14:13:17.960', NULL, 1, '1');
 INSERT INTO `sys_menu` VALUES ('413892fe8d52c1163d6659f51299dc96', '代码生成', NULL, '/gen', '-1', NULL, 'icon-weibiaoti46', 'Layout', '0', '1', '0', b'0', 100, '1', '2019-07-20 12:00:48.000', '1', '2019-08-11 08:49:50.093', NULL, 21, '0');
 INSERT INTO `sys_menu` VALUES ('52715698214e88cb09fa4dd1ea5ad348', '生成方案菜单', 'gen_scheme_menu', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-25 13:03:03.000', '1', '2019-08-11 09:20:09.081', NULL, 6, '0');
 INSERT INTO `sys_menu` VALUES ('6e3f89cda84ac2c6e715e7812c102ae8', '在线用户', '', 'online-user', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-team', 'views/admin/online-user/index', '0', '1', '0', b'0', 30, '1', '2019-08-07 09:03:52.000', '1', '2019-08-11 16:45:02.964', NULL, 5, '1');
@@ -471,7 +1233,7 @@ INSERT INTO `sys_menu` VALUES ('a18b33e15bde209a3c9115517c56d9ec', '业务表', 
 INSERT INTO `sys_menu` VALUES ('b961670cbf3454f5927c4bd2a327e915', '生成方案删除', 'gen_scheme_del', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-07-21 13:30:18.000', '1', '2019-08-11 08:50:09.304', NULL, 6, '0');
 INSERT INTO `sys_menu` VALUES ('bb9dd4b7a2a462193d0f01517308f812', '业务表查看', 'gen_table_view', NULL, 'a18b33e15bde209a3c9115517c56d9ec', '413892fe8d52c1163d6659f51299dc96,a18b33e15bde209a3c9115517c56d9ec,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-08-11 08:47:39.828', '1', '2019-08-11 08:47:39.828', NULL, 0, '0');
 INSERT INTO `sys_menu` VALUES ('bd62904371247f56594741ff8e9bded9', '用户管理导入', 'sys_user_import', NULL, '1100', '1000,1100,', NULL, NULL, '0', '1', '1', b'1', 80, '1', '2019-08-07 17:50:02.000', '1', '2019-08-09 10:55:47.711', NULL, 3, '0');
-INSERT INTO `sys_menu` VALUES ('c0ba37c10abaecd89a738c5cf2a2fd24', '服务状态', NULL, 'health', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-boxplot', 'views/admin/health/index', '0', '1', '0', b'1', 40, '1', '2019-08-05 17:21:10.000', '1', '2019-08-05 17:23:22.745', NULL, 2, '0');
+INSERT INTO `sys_menu` VALUES ('c0ba37c10abaecd89a738c5cf2a2fd24', '服务状态', NULL, 'health', 'ef2382c0cc2d99ee73444e684237a88a', 'ef2382c0cc2d99ee73444e684237a88a,', 'icon-boxplot', 'views/admin/health/index', '0', '1', '0', b'1', 40, '1', '2019-08-05 17:21:10.000', '1', '2019-08-17 14:13:22.779', NULL, 2, '1');
 INSERT INTO `sys_menu` VALUES ('caaec41413c5713c6f290efe08c11415', '生成方案查看', 'gen_scheme_view', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-08-11 08:48:09.000', '1', '2019-08-11 08:50:16.065', NULL, 3, '0');
 INSERT INTO `sys_menu` VALUES ('d4c16faad8f883650a3a8eab829ebad9', '操作日志查看', 'sys_logOperate_view', NULL, '2100', '2000,2100,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-08-07 17:51:38.454', '1', '2019-08-08 15:06:52.844', NULL, 1, '0');
 INSERT INTO `sys_menu` VALUES ('e086c4aa4943a883b29cf94680608b89', '生成方案代码', 'gen_scheme_code', NULL, '247071d42ff40267c8d8c44eac92da67', '413892fe8d52c1163d6659f51299dc96,247071d42ff40267c8d8c44eac92da67,', NULL, NULL, '0', '1', '1', b'1', 30, '1', '2019-08-11 08:55:37.000', '1', '2019-08-11 09:19:50.418', NULL, 1, '0');
@@ -534,7 +1296,7 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51.000', '1', '2019-08-11 17:41:02.879', NULL, 53, '0');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'ROLE_ADMIN', '管理员', '1', '1', '', '2017-10-29 15:45:51.000', '1', '2019-08-17 14:13:29.798', NULL, 54, '0');
 INSERT INTO `sys_role` VALUES ('2', 'ROLE_CQQ', 'ROLE_CQQ', 'ROLE_CQQ', '5', '1', '', '2018-11-11 19:42:26.000', '1', '2019-08-07 18:00:54.000', NULL, 8, '0');
 
 -- ----------------------------
@@ -551,9 +1313,9 @@ CREATE TABLE `sys_role_dept`  (
 -- ----------------------------
 -- Records of sys_role_dept
 -- ----------------------------
-INSERT INTO `sys_role_dept` VALUES ('00c3ff46b5a33daa50b82755ccdebeb2', '1', '8');
 INSERT INTO `sys_role_dept` VALUES ('067f6ef72da05584b6a2fadf9e148bd7', '2', '1');
 INSERT INTO `sys_role_dept` VALUES ('239cec91e90626a61f9d8032325093fe', '2', '3');
+INSERT INTO `sys_role_dept` VALUES ('39b406c21b50fd62276c923205923675', '1', '8');
 INSERT INTO `sys_role_dept` VALUES ('92d988094cded15b88e112f168ca3f9b', '2', '4');
 INSERT INTO `sys_role_dept` VALUES ('dc7028df1d55ae7e0b3044d493643b0c', '2', '5');
 
@@ -570,7 +1332,6 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('1', '06874adacf1f272be7928badd4fe8ed1');
 INSERT INTO `sys_role_menu` VALUES ('1', '1000');
 INSERT INTO `sys_role_menu` VALUES ('1', '1100');
 INSERT INTO `sys_role_menu` VALUES ('1', '1101');
@@ -601,7 +1362,6 @@ INSERT INTO `sys_role_menu` VALUES ('1', '247071d42ff40267c8d8c44eac92da67');
 INSERT INTO `sys_role_menu` VALUES ('1', '2500');
 INSERT INTO `sys_role_menu` VALUES ('1', '2600');
 INSERT INTO `sys_role_menu` VALUES ('1', '2601');
-INSERT INTO `sys_role_menu` VALUES ('1', '34dae0db3f9c97482d598f964bd4c9c7');
 INSERT INTO `sys_role_menu` VALUES ('1', '413892fe8d52c1163d6659f51299dc96');
 INSERT INTO `sys_role_menu` VALUES ('1', '52715698214e88cb09fa4dd1ea5ad348');
 INSERT INTO `sys_role_menu` VALUES ('1', '7b14af9e9fbff286856338a194422b07');
@@ -612,7 +1372,6 @@ INSERT INTO `sys_role_menu` VALUES ('1', 'a18b33e15bde209a3c9115517c56d9ec');
 INSERT INTO `sys_role_menu` VALUES ('1', 'b961670cbf3454f5927c4bd2a327e915');
 INSERT INTO `sys_role_menu` VALUES ('1', 'bb9dd4b7a2a462193d0f01517308f812');
 INSERT INTO `sys_role_menu` VALUES ('1', 'bd62904371247f56594741ff8e9bded9');
-INSERT INTO `sys_role_menu` VALUES ('1', 'c0ba37c10abaecd89a738c5cf2a2fd24');
 INSERT INTO `sys_role_menu` VALUES ('1', 'caaec41413c5713c6f290efe08c11415');
 INSERT INTO `sys_role_menu` VALUES ('1', 'd4c16faad8f883650a3a8eab829ebad9');
 INSERT INTO `sys_role_menu` VALUES ('1', 'e086c4aa4943a883b29cf94680608b89');
@@ -1503,6 +2262,78 @@ INSERT INTO `zipkin_annotations` VALUES (0, 3185167637884786959, 544365760885970
 INSERT INTO `zipkin_annotations` VALUES (0, 3185167637884786959, 544365760885970297, 'http.path', 0x2F646570742F757365722D74726565, 6, 1565516480263036, -1062724095, NULL, NULL, 'albedo-sys');
 INSERT INTO `zipkin_annotations` VALUES (0, 3185167637884786959, 544365760885970297, 'mvc.controller.class', 0x446570745265736F75726365, 6, 1565516480263036, -1062724095, NULL, NULL, 'albedo-sys');
 INSERT INTO `zipkin_annotations` VALUES (0, 3185167637884786959, 544365760885970297, 'mvc.controller.method', 0x6C69737443757272656E7455736572446570745472656573, 6, 1565516480263036, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7610887752079939934, 7610887752079939934, 'lc', '', 6, 1566013507351000, -1062724095, NULL, NULL, 'albedo-quartz');
+INSERT INTO `zipkin_annotations` VALUES (0, 8115825570070754608, 8115825570070754608, 'lc', '', 6, 1566020101285000, -1062724095, NULL, NULL, 'albedo-quartz');
+INSERT INTO `zipkin_annotations` VALUES (0, -491077864830843261, -383381829308966000, 'sr', NULL, -1, 1566020253360626, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -491077864830843261, -383381829308966000, 'ss', NULL, -1, 1566020253502000, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -491077864830843261, -383381829308966000, 'ca', 0x01, 0, 1566020253360626, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -491077864830843261, -383381829308966000, 'http.method', 0x474554, 6, 1566020253360626, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -491077864830843261, -383381829308966000, 'http.path', 0x2F76322F6170692D646F6373, 6, 1566020253360626, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -7363482646801388892, -3123088345577420541, 'sr', NULL, -1, 1566020256644188, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -7363482646801388892, -3123088345577420541, 'ss', NULL, -1, 1566020256667167, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -7363482646801388892, -3123088345577420541, 'ca', 0x01, 0, 1566020256644188, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -7363482646801388892, -3123088345577420541, 'http.method', 0x474554, 6, 1566020256644188, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -7363482646801388892, -3123088345577420541, 'http.path', 0x2F76322F6170692D646F6373, 6, 1566020256644188, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6680900699482679288, -8575029914461506808, 'sr', NULL, -1, 1566020433861058, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6680900699482679288, -8575029914461506808, 'ss', NULL, -1, 1566020433885972, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6680900699482679288, -8575029914461506808, 'ca', 0x01, 0, 1566020433861058, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -6680900699482679288, -8575029914461506808, 'http.method', 0x474554, 6, 1566020433861058, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -6680900699482679288, -8575029914461506808, 'http.path', 0x2F76322F6170692D646F6373, 6, 1566020433861058, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, 7433681128120479622, 'cs', NULL, -1, 1566022353210125, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, 7433681128120479622, 'cr', NULL, -1, 1566022353224210, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, 7433681128120479622, 'http.method', 0x504F5354, 6, 1566022353210125, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, 7433681128120479622, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1566022353210125, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'sr', NULL, -1, 1566022353207059, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'ss', NULL, -1, 1566022353252049, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'ca', 0x01, 0, 1566022353207059, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'http.method', 0x474554, 6, 1566022353207059, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'http.path', 0x2F757365722F696E666F, 6, 1566022353207059, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'mvc.controller.class', 0x557365725265736F75726365, 6, 1566022353207059, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 7499200519655978951, -5672175635464032231, 'mvc.controller.method', 0x696E666F, 6, 1566022353207059, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, 4514679528761094025, 'cs', NULL, -1, 1566022363148080, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, 4514679528761094025, 'cr', NULL, -1, 1566022363168716, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, 4514679528761094025, 'http.method', 0x504F5354, 6, 1566022363148080, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, 4514679528761094025, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1566022363148080, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, 1940882414332737998, 'cs', NULL, -1, 1566022363159111, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, 1940882414332737998, 'cr', NULL, -1, 1566022363173630, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, 1940882414332737998, 'http.method', 0x504F5354, 6, 1566022363159111, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, 1940882414332737998, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1566022363159111, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'sr', NULL, -1, 1566022363145122, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'ss', NULL, -1, 1566022363317142, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'ca', 0x01, 0, 1566022363145122, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'http.method', 0x474554, 6, 1566022363145122, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'http.path', 0x2F6D656E752F74726565, 6, 1566022363145122, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1566022363145122, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 4909776268729705650, -6897733441299925228, 'mvc.controller.method', 0x67657454726565, 6, 1566022363145122, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'sr', NULL, -1, 1566022363140282, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'ss', NULL, -1, 1566022363327103, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'ca', 0x01, 0, 1566022363140282, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'http.method', 0x474554, 6, 1566022363140282, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'http.path', 0x2F726F6C652F, 6, 1566022363140282, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'mvc.controller.class', 0x526F6C655265736F75726365, 6, 1566022363140282, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 3018022057925972397, -4342284854115108489, 'mvc.controller.method', 0x67657450616765, 6, 1566022363140282, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -8011911462331719453, 'cs', NULL, -1, 1566022373640473, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -8011911462331719453, 'cr', NULL, -1, 1566022373809233, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -8011911462331719453, 'http.method', 0x504F5354, 6, 1566022373640473, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -8011911462331719453, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1566022373640473, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'sr', NULL, -1, 1566022373314051, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'ss', NULL, -1, 1566022374105892, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'ca', 0x01, 0, 1566022373314051, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'http.method', 0x474554, 6, 1566022373314051, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'http.path', 0x2F7461626C652F, 6, 1566022373314051, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'mvc.controller.class', 0x5461626C655265736F75726365, 6, 1566022373314051, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, -240078901033205946, -6854533347371995129, 'mvc.controller.method', 0x67657450616765, 6, 1566022373314051, -1062724095, NULL, NULL, 'albedo-gen');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 2608699163923058582, 'cs', NULL, -1, 1566022412281061, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 2608699163923058582, 'cr', NULL, -1, 1566022412292784, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 2608699163923058582, 'http.method', 0x504F5354, 6, 1566022412281061, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 2608699163923058582, 'http.path', 0x2F6F617574682F636865636B5F746F6B656E, 6, 1566022412281061, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'sr', NULL, -1, 1566022412275097, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'ss', NULL, -1, 1566022412340134, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'ca', 0x01, 0, 1566022412275097, 2130706433, NULL, NULL, '');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'http.method', 0x474554, 6, 1566022412275097, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'http.path', 0x2F6D656E752F757365722D6D656E75, 6, 1566022412275097, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'mvc.controller.class', 0x4D656E755265736F75726365, 6, 1566022412275097, -1062724095, NULL, NULL, 'albedo-sys');
+INSERT INTO `zipkin_annotations` VALUES (0, 6885068868983485372, 7473558721986038682, 'mvc.controller.method', 0x676574557365724D656E75, 6, 1566022412275097, -1062724095, NULL, NULL, 'albedo-sys');
 
 -- ----------------------------
 -- Table structure for zipkin_dependencies
@@ -1562,9 +2393,11 @@ INSERT INTO `zipkin_spans` VALUES (0, -7802855738292136311, -4007501789172264277
 INSERT INTO `zipkin_spans` VALUES (0, -7523391195008277533, 3361787619712472526, 'get /dict/', -7523391195008277533, NULL, 1565513376023063, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -7523391195008277533, 5499364981133141459, 'post', 3361787619712472526, NULL, 1565513376026052, 9837);
 INSERT INTO `zipkin_spans` VALUES (0, -7482253234374756369, -7482253234374756369, 'async', NULL, NULL, 1565513723476000, 28868);
+INSERT INTO `zipkin_spans` VALUES (0, -7363482646801388892, -3123088345577420541, 'get', -7363482646801388892, NULL, 1566020256644188, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -7363059286881599968, 821353517389264534, 'post', 5493875958703770684, NULL, 1565512953013051, 7653);
 INSERT INTO `zipkin_spans` VALUES (0, -7363059286881599968, 5493875958703770684, 'get /menu/', -7363059286881599968, NULL, 1565512953011049, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -6936895372755776972, -6936895372755776972, 'async', NULL, NULL, 1564143730234000, 30354);
+INSERT INTO `zipkin_spans` VALUES (0, -6680900699482679288, -8575029914461506808, 'get', -6680900699482679288, NULL, 1566020433861058, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -6648472576722263832, -6648472576722263832, 'async', NULL, NULL, 1565316734249000, 31901);
 INSERT INTO `zipkin_spans` VALUES (0, -6204279053785215442, -3818632110213054470, 'get /menu/', -6204279053785215442, NULL, 1565513411007033, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -6204279053785215442, 7741963634081025648, 'post', -3818632110213054470, NULL, 1565513411009037, 7546);
@@ -1600,12 +2433,15 @@ INSERT INTO `zipkin_spans` VALUES (0, -1304104302293840455, -8523546588327824222
 INSERT INTO `zipkin_spans` VALUES (0, -1304104302293840455, -5764359237784661948, 'post', -8523546588327824222, NULL, 1565513061039038, 9741);
 INSERT INTO `zipkin_spans` VALUES (0, -973501318611360127, -162399283020514936, 'post', 3691625396749899606, NULL, 1565516201294066, 14631);
 INSERT INTO `zipkin_spans` VALUES (0, -973501318611360127, 3691625396749899606, 'get /menu/', -973501318611360127, NULL, 1565516201291189, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, -491077864830843261, -383381829308966000, 'get', -491077864830843261, NULL, 1566020253360626, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -431207948352572260, -6752047083918617771, 'get /user/', -431207948352572260, NULL, 1564147867313038, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -431207948352572260, 2749338896832596103, 'post', -6752047083918617771, NULL, 1564147867315037, 36653);
 INSERT INTO `zipkin_spans` VALUES (0, -372925305519050998, -7368083627760655627, 'post', 7306810891675108622, NULL, 1565516219086091, 16558);
 INSERT INTO `zipkin_spans` VALUES (0, -372925305519050998, 7306810891675108622, 'get /role/', -372925305519050998, NULL, 1565516219082057, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, -268161805056592825, -5574115193676832827, 'post', 2316860013070603731, NULL, 1564127148935093, 8652);
 INSERT INTO `zipkin_spans` VALUES (0, -268161805056592825, 2316860013070603731, 'get /menu/', -268161805056592825, NULL, 1564127148932062, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, -240078901033205946, -8011911462331719453, 'post', -6854533347371995129, NULL, 1566022373640473, 168760);
+INSERT INTO `zipkin_spans` VALUES (0, -240078901033205946, -6854533347371995129, 'get /table/', -240078901033205946, NULL, 1566022373314051, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 172356668049389335, 172356668049389335, 'get', NULL, NULL, 1565316823333617, 37840);
 INSERT INTO `zipkin_spans` VALUES (0, 272343372844899494, -3028944364851724551, 'post', 8650847360064451318, NULL, 1564126875798069, 11663);
 INSERT INTO `zipkin_spans` VALUES (0, 272343372844899494, 8650847360064451318, 'get /log/', 272343372844899494, NULL, 1564126875787087, NULL);
@@ -1618,6 +2454,8 @@ INSERT INTO `zipkin_spans` VALUES (0, 1879345426996711639, -7612878910295443125,
 INSERT INTO `zipkin_spans` VALUES (0, 1879345426996711639, 3220647193235117175, 'post', -7612878910295443125, NULL, 1565515397173231, 73861);
 INSERT INTO `zipkin_spans` VALUES (0, 2689939368749152554, -5545688115408127641, 'post', 655296934707481513, NULL, 1565512921265215, 109736);
 INSERT INTO `zipkin_spans` VALUES (0, 2689939368749152554, 655296934707481513, 'get /user/info', 2689939368749152554, NULL, 1565512921252438, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 3018022057925972397, -4342284854115108489, 'get /role/', 3018022057925972397, NULL, 1566022363140282, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 3018022057925972397, 4514679528761094025, 'post', -4342284854115108489, NULL, 1566022363148080, 20636);
 INSERT INTO `zipkin_spans` VALUES (0, 3129301285365936962, -8044878592960487486, 'delete /menu/{ids:^[_\',.@a-za-z0-9-]*$}', 3129301285365936962, NULL, 1564147813509038, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 3129301285365936962, -2614130353363870953, 'save-sys-log', -8044878592960487486, NULL, 1564147813544075, 24347);
 INSERT INTO `zipkin_spans` VALUES (0, 3129301285365936962, 3730770745487628212, 'post', -8044878592960487486, NULL, 1564147813512036, 9488);
@@ -1643,6 +2481,8 @@ INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, 6111860762014105667, 
 INSERT INTO `zipkin_spans` VALUES (0, 4778990109135373312, 7190951313902771152, 'post /menu/', 4778990109135373312, NULL, 1564127452592231, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 4899617154936566187, -3742288722538773892, 'post', -3546005529701156241, NULL, 1565513269784275, 18306);
 INSERT INTO `zipkin_spans` VALUES (0, 4899617154936566187, -3546005529701156241, 'get /user/info', 4899617154936566187, NULL, 1565513269778072, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 4909776268729705650, -6897733441299925228, 'get /menu/tree', 4909776268729705650, NULL, 1566022363145122, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 4909776268729705650, 1940882414332737998, 'post', -6897733441299925228, NULL, 1566022363159111, 14519);
 INSERT INTO `zipkin_spans` VALUES (0, 5238252700695042326, -3995930151166512581, 'post', -605517523891978658, NULL, 1565513527449040, 9641);
 INSERT INTO `zipkin_spans` VALUES (0, 5238252700695042326, -605517523891978658, 'get /user/{id:^[_\',.@a-za-z0-9-]*$}', 5238252700695042326, NULL, 1565513527446039, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 5511027341642523932, -4691941664588638033, 'get /scheme/form-data', 5511027341642523932, NULL, 1564147630218085, NULL);
@@ -1658,6 +2498,8 @@ INSERT INTO `zipkin_spans` VALUES (0, 6013133406702748688, 6164247087470285309, 
 INSERT INTO `zipkin_spans` VALUES (0, 6562926606632462282, -2279825729456383093, 'post', 8796924593109324980, NULL, 1564127133294039, 7488);
 INSERT INTO `zipkin_spans` VALUES (0, 6562926606632462282, 8796924593109324980, 'get /menu/', 6562926606632462282, NULL, 1564127133291040, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 6835945609450209147, 6835945609450209147, 'async', NULL, NULL, 1565515336254000, 35594);
+INSERT INTO `zipkin_spans` VALUES (0, 6885068868983485372, 2608699163923058582, 'post', 7473558721986038682, NULL, 1566022412281061, 11723);
+INSERT INTO `zipkin_spans` VALUES (0, 6885068868983485372, 7473558721986038682, 'get /menu/user-menu', 6885068868983485372, NULL, 1566022412275097, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 6894246148321329473, -4488172146535554564, 'post', -1142619961319169511, NULL, 1564147800497037, 9220);
 INSERT INTO `zipkin_spans` VALUES (0, 6894246148321329473, -1142619961319169511, 'get /menu/', 6894246148321329473, NULL, 1564147800495042, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 6911326512282472477, 6911326512282472477, 'async', NULL, NULL, 1564127280833000, 43431);
@@ -1672,8 +2514,12 @@ INSERT INTO `zipkin_spans` VALUES (0, 7181797609704093568, -3198899466499725070,
 INSERT INTO `zipkin_spans` VALUES (0, 7268522765970669814, 7268522765970669814, 'async', NULL, NULL, 1565512200133000, 803274);
 INSERT INTO `zipkin_spans` VALUES (0, 7472449667980354619, -2675402958197466783, 'post', 8810264056298482633, NULL, 1565516414712044, 9766);
 INSERT INTO `zipkin_spans` VALUES (0, 7472449667980354619, 8810264056298482633, 'get /menu/', 7472449667980354619, NULL, 1565516414709098, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 7499200519655978951, -5672175635464032231, 'get /user/info', 7499200519655978951, NULL, 1566022353207059, NULL);
+INSERT INTO `zipkin_spans` VALUES (0, 7499200519655978951, 7433681128120479622, 'post', -5672175635464032231, NULL, 1566022353210125, 14085);
+INSERT INTO `zipkin_spans` VALUES (0, 7610887752079939934, 7610887752079939934, 'async', NULL, NULL, 1566013507351000, 796043);
 INSERT INTO `zipkin_spans` VALUES (0, 7674822648128898262, -4731720891015785583, 'get /table/table-list', 7674822648128898262, NULL, 1564147615088096, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 7674822648128898262, 694147418137379562, 'post', -4731720891015785583, NULL, 1564147615089075, 11069);
+INSERT INTO `zipkin_spans` VALUES (0, 8115825570070754608, 8115825570070754608, 'async', NULL, NULL, 1566020101285000, 768243);
 INSERT INTO `zipkin_spans` VALUES (0, 8678807562662393941, -7387131151831318932, 'get /dept/user-tree', 8678807562662393941, NULL, 1564149792191044, NULL);
 INSERT INTO `zipkin_spans` VALUES (0, 8678807562662393941, -4101361604169486532, 'post', -7387131151831318932, NULL, 1564149792194038, 9174);
 INSERT INTO `zipkin_spans` VALUES (0, 8992016267829347601, -4193095262562206421, 'get /dept/user-tree', 8992016267829347601, NULL, 1564144476870049, NULL);

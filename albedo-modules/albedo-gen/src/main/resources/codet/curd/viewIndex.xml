@@ -32,7 +32,7 @@
       </#list>
         <el-form-item>
           <el-button size="small" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-          <el-button size="small" @click="searchReset" icon="el-icon-delete" >清空</el-button>
+          <el-button size="small" @click="searchReset" icon="icon-rest">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -53,7 +53,11 @@
       <#if column.list && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
       <el-table-column align="center" label="${column.title}">
         <template slot-scope="scope">
-          <span>{{scope.row.${column.simpleJavaField}}}</span>
+        <#if column.dictType?? && column.dictType != "">
+		  <el-tag>{{scope.row.${column.simpleJavaField}Text}}</el-tag>
+		<#else>
+		  <span>{{scope.row.${column.simpleJavaField}}}</span>
+		 </#if>
         </template>
       </el-table-column>
       </#if>
@@ -93,6 +97,9 @@
               <el-date-picker v-model="form.${c.javaFieldId}" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" >
               </el-date-picker>
            </#if>
+        <#if c.comments??&& c.comments != ''><div>
+		  <el-tag type="info" size="mini">${c.comments}</el-tag>
+		</div></#if>
         </el-form-item>
         </#if>
     </#list>
@@ -107,10 +114,10 @@
 </template>
 
 <script>
-import { page${ClassName}, find${ClassName}, save${ClassName}, remove${ClassName}, validateUnique${ClassName}} from "./service";
 import { mapGetters } from "vuex";
-import {isValidateUnique, isValidateNumber, isValidateDigits, objectToString, validateNull} from "@/util/validate";
-import {parseJsonItemForm} from "@/util/util";
+import ${className}Service from "./${classNameUrl}-service";
+import validate from "@/util/validate";
+import util from "@/util/util";
 import CrudSelect from "@/views/avue/crud-select";
 import CrudCheckbox from "@/views/avue/crud-checkbox";
 import CrudRadio from "@/views/avue/crud-radio";
@@ -138,13 +145,13 @@ export default {
         </#list>
       },
       validateUnique: (rule, value, callback) => {
-          validateUnique${ClassName}(rule, value, callback, this.form.id)
+          validate.isUnique(rule, value, callback, this.form.id)
         },
         validateNumber: (rule, value, callback) => {
-          isValidateNumber(rule, value, callback)
+          validate.isNumber(rule, value, callback)
         },
         validateDigits: (rule, value, callback) => {
-          isValidateDigits(rule, value, callback)
+          validate.isDigits(rule, value, callback)
         },
       <#list table.columnList as c>
         <#if c.dictType??&& c.dictType != ''>
@@ -176,12 +183,12 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      this.listQuery.queryConditionJson = parseJsonItemForm([
+      this.listQuery.queryConditionJson = util.parseJsonItemForm([
       <#list table.columnList as c><#if c.query>
       {fieldName: '${c.javaFieldId}',value:this.search${ClassName}Form.${c.javaFieldId},operate:'${c.queryType}',attrType:'${c.javaType}'},
       </#if></#list>
       ])
-      page${ClassName}(this.listQuery).then(response => {
+      ${className}Service.page(this.listQuery).then(response => {
         this.list = response.data.records;
         this.total = response.data.total;
         this.listLoading = false;
@@ -214,13 +221,13 @@ export default {
     },
     handleEdit(row) {
       this.resetForm();
-      this.dialogStatus = row && !validateNull(row.id)? "update" : "create";
+      this.dialogStatus = row && !validate.checkNull(row.id)? "update" : "create";
       if(this.dialogStatus == "create"){
         this.dialogFormVisible = true;
       }else{
-        find${ClassName}(row.id).then(response => {
+        ${className}Service.find(row.id).then(response => {
             this.form = response.data;<#list table.columnList as c><#if c.dictType??&& c.dictType != ''>
-            this.form.${c.javaFieldId}=objectToString(this.form.${c.javaFieldId});</#if></#list>
+            this.form.${c.javaFieldId}=validate.objectToString(this.form.${c.javaFieldId});</#if></#list>
             this.dialogFormVisible = true;
           });
       }
@@ -233,7 +240,7 @@ export default {
       const set = this.$refs;
       set['form'].validate(valid => {
         if (valid) {
-          save${ClassName}(this.form).then((data) => {
+          ${className}Service.save(this.form).then((data) => {
             this.getList();
             this.cancel()
           });
@@ -252,7 +259,7 @@ export default {
           type: "warning"
         }
       ).then(() => {
-        remove${ClassName}(row.id).then((data) => {
+        ${className}Service.remove(row.id).then((data) => {
             this.getList();
           });
       });

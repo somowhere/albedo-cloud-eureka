@@ -75,7 +75,7 @@ public class OauthClientDetailResource {
 	 * @param oauthClientDetail 实体
 	 * @return success/false
 	 */
-	@Log(value = "终端管理",businessType = BusinessType.EDIT)
+	@Log(value = "终端管理", businessType = BusinessType.EDIT)
 	@PostMapping("/")
 	@PreAuthorize("@pms.hasPermission('sys_client_edit')")
 	public R save(@Valid @RequestBody OauthClientDetail oauthClientDetail) {
@@ -88,7 +88,7 @@ public class OauthClientDetailResource {
 	 * @param id ID
 	 * @return success/false
 	 */
-	@Log(value = "终端管理",businessType = BusinessType.DELETE)
+	@Log(value = "终端管理", businessType = BusinessType.DELETE)
 	@DeleteMapping(CommonConstants.URL_IDS_REGEX)
 	@PreAuthorize("@pms.hasPermission('sys_client_del')")
 	public R removeById(@PathVariable String id) {

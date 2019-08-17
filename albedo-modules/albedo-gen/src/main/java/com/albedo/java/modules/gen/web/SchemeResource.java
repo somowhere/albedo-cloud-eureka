@@ -17,11 +17,8 @@ import com.albedo.java.modules.gen.domain.vo.SchemeGenDataVo;
 import com.albedo.java.modules.gen.domain.vo.TableDataVo;
 import com.albedo.java.modules.gen.service.SchemeService;
 import com.albedo.java.modules.gen.service.TableService;
-import com.albedo.java.modules.gen.service.impl.SchemeServiceImpl;
-import com.albedo.java.modules.gen.service.impl.TableServiceImpl;
 import com.albedo.java.modules.sys.feign.RemoteMenuService;
 import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-
 import com.google.common.collect.Lists;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -124,7 +121,6 @@ public class SchemeResource extends DataVoResource<SchemeService, SchemeDataVo> 
 		service.deleteBatchIds(Lists.newArrayList(ids.split(StringUtil.SPLIT_DEFAULT)));
 		return ResultBuilder.buildOk("删除成功");
 	}
-
 
 
 }

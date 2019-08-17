@@ -61,7 +61,7 @@ public class SysLogUtils {
 //			String body = ((BodyRequestWrapper) request).getRequestBody();
 //			logOperate.setParams(body);
 //		}else{
-			logOperate.setParams(HttpUtil.toParams(request.getParameterMap()));
+		logOperate.setParams(HttpUtil.toParams(request.getParameterMap()));
 //		}
 		logOperate.setServiceId(getClientId());
 		return logOperate;

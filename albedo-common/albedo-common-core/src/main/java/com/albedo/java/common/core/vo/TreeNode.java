@@ -29,8 +29,8 @@ import java.util.List;
 public class TreeNode<T> {
 	protected String id;
 	protected String parentId;
-	private String label;
 	protected List<T> children = new ArrayList<T>();
+	private String label;
 
 	public void add(T node) {
 		children.add(node);

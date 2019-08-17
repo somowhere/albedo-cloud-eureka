@@ -57,6 +57,14 @@ public interface CommonConstants {
 	Integer FAIL = 0;
 
 	/**
+	 * 成功标记
+	 */
+	String STR_SUCCESS = "1";
+	/**
+	 * 失败标记
+	 */
+	String STR_FAIL = "0";
+	/**
 	 * 验证码前缀
 	 */
 	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY_";

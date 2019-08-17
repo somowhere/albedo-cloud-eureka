@@ -22,6 +22,7 @@ import com.albedo.java.common.core.constant.CommonConstants;
 import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.core.exception.ValidateCodeException;
 import com.albedo.java.common.core.util.R;
+import com.albedo.java.common.core.util.SpringContextHolder;
 import com.albedo.java.common.core.util.WebUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +58,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 
 			// 不是登录请求，直接向下执行
 			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath()
-				, SecurityConstants.OAUTH_TOKEN_URL)) {
+				, SecurityConstants.OAUTH_TOKEN_URL) || SpringContextHolder.isDevelopment()) {
 				return chain.filter(exchange);
 			}
 

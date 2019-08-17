@@ -43,14 +43,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 @TableName("sys_dict")
 public class Dict extends TreeEntity<Dict> {
 
-	private static final long serialVersionUID = 1L;
-
 	public static final String F_VAL = "val";
 	public static final String F_SHOW = "show";
 	public static final String F_SQL_SHOW = "show";
 	public static final String CACHE_DICT_ALL = "DictAll";
 	public static final String CACHE_DICT_RESULT_ALL = "DictResultAll";
 	public static final String CACHE_DICT_DETAILS = "dict_details";
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 数据值
 	 */

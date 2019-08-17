@@ -17,11 +17,9 @@
 package com.albedo.java.modules.sys.service.impl;
 
 import com.albedo.java.common.persistence.service.impl.BaseServiceImpl;
-import com.albedo.java.common.persistence.service.impl.DataVoServiceImpl;
 import com.albedo.java.modules.sys.domain.LogOperate;
 import com.albedo.java.modules.sys.repository.LogOperateRepository;
 import com.albedo.java.modules.sys.service.LogOperateService;
-import com.albedo.java.modules.sys.vo.LogDataVo;
 import org.springframework.stereotype.Service;
 
 /**

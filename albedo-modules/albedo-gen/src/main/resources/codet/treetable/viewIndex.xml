@@ -58,7 +58,7 @@
           </#list>
             <el-form-item>
               <el-button size="small" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-              <el-button size="small" @click="searchReset" icon="el-icon-delete" >清空</el-button>
+              <el-button size="small" @click="searchReset" icon="icon-rest">重置</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -79,11 +79,11 @@
           <#if column.list && column.simpleJavaField!="parentId" && column.simpleJavaField!="parentIds" && column.simpleJavaField!="parent">
           <el-table-column align="center" label="${column.title}">
             <template slot-scope="scope">
-            <#if column.simpleJavaField = 'status'>
-              <el-tag>{{scope.row.${column.simpleJavaField}}}</el-tag>
-            <#else>
-              <span>{{scope.row.${column.simpleJavaField}}}</span>
-             </#if>
+            <#if column.dictType?? && column.dictType != "">
+			  <el-tag>{{scope.row.${column.simpleJavaField}Text}}</el-tag>
+			<#else>
+			  <span>{{scope.row.${column.simpleJavaField}}}</span>
+			 </#if>
             </template>
           </el-table-column>
           </#if>
@@ -137,6 +137,9 @@
               <el-date-picker v-model="form.${c.javaFieldId}" type="datetime" >
               </el-date-picker>
            </#if>
+        <#if c.comments??&& c.comments != ''><div>
+		  <el-tag type="info" size="mini">${c.comments}</el-tag>
+		</div></#if>
         </el-form-item>
         </#if>
     </#list>
@@ -151,10 +154,10 @@
 </template>
 
 <script>
-  import {fetch${ClassName}Tree, find${ClassName}, save${ClassName}, remove${ClassName}, page${ClassName}, validateUnique${ClassName}} from "./service";
   import { mapGetters } from "vuex";
-  import {isValidateUnique, isValidateNumber, isValidateDigits, objectToString, validateNotNull} from "@/util/validate";
-  import {parseJsonItemForm, parseTreeData} from "@/util/util";
+  import ${className}Service from "./${classNameUrl}-service";
+  import validate from "@/util/validate";
+  import util from "@/util/util";
   import CrudSelect from "@/views/avue/crud-select";
   import CrudCheckbox from "@/views/avue/crud-checkbox";
   import CrudRadio from "@/views/avue/crud-radio";
@@ -190,13 +193,13 @@
         </#if></#list>
         },
         validateUnique: (rule, value, callback) => {
-          validateUnique${ClassName}(rule, value, callback, this.form.id)
+          validate.isUnique(rule, value, callback, this.form.id)
         },
         validateNumber: (rule, value, callback) => {
-          isValidateNumber(rule, value, callback)
+          validate.isNumber(rule, value, callback)
         },
         validateDigits: (rule, value, callback) => {
-          isValidateDigits(rule, value, callback)
+          validate.isDigits(rule, value, callback)
         },
       <#list table.columnList as c><#if c.dictType??&& c.dictType != ''>${c.javaFieldId}Options: undefined,</#if></#list>
         dialogStatus: 'create',
@@ -232,13 +235,13 @@
       getList() {
         this.listLoading = true;
         this.listQuery.isAsc = false;
-        this.listQuery.queryConditionJson = parseJsonItemForm([
+        this.listQuery.queryConditionJson = util.parseJsonItemForm([
         <#list table.columnList as c><#if c.query>
         {fieldName: '${c.javaFieldId}',value:this.search${ClassName}Form.${c.javaFieldId},operate:'${c.queryType}',attrType:'${c.javaType}'},
         </#if></#list>
         {fieldName: 'parentId',value:this.search${ClassName}Form.parentId, attrType:'eq'},
         ])
-        page${ClassName}(this.listQuery).then(response => {
+        ${className}Service.page(this.listQuery).then(response => {
         this.list = response.data.records;
         this.total = response.data.total;
           this.listLoading = false;
@@ -255,8 +258,8 @@
         this.getList()
       },
       get${ClassName}Tree() {
-        fetch${ClassName}Tree({all:true}).then(response => {
-          this.tree${ClassName}Data = parseTreeData(response.data);
+        ${className}Service.fetchTree({all:true}).then(response => {
+          this.tree${ClassName}Data = util.parseTreeData(response.data);
         })
       },
       filterNode(value, data) {
@@ -264,7 +267,7 @@
         return data.label.indexOf(value) !== -1
       },
       getNodeData(data) {
-        this.searchForm.parentId = data.id
+        this.search${ClassName}Form.parentId = data.id
         this.currentNode = data;
         this.getList()
       },
@@ -275,7 +278,7 @@
       },
       searchReset() {
         this.$refs['search${ClassName}Form'].resetFields();
-        this.searchForm.parentId = undefined;
+        this.search${ClassName}Form.parentId = undefined;
         this.$refs['left${ClassName}Tree'].setCurrentKey(null);
         this.currentNode=undefined;
       },
@@ -293,23 +296,23 @@
       },
       handleEdit(row) {
         this.resetForm();
-        this.dialogStatus = row && validateNotNull(row.id)? "update" : "create";
+        this.dialogStatus = row && validate.checkNotNull(row.id)? "update" : "create";
         if(this.dialogStatus == "create"){
           this.dialogFormVisible = true;
           this.form.parentId = this.currentNode.id
           this.form.parentName = this.currentNode.label;
         }else{
-          find${ClassName}(row.id).then(response => {
+          ${className}Service.find(row.id).then(response => {
             this.form = response.data;<#list table.columnList as c><#if c.dictType??&& c.dictType != ''>
-            this.form.${c.javaFieldId}=objectToString(this.form.${c.javaFieldId});
+            this.form.${c.javaFieldId}=validate.objectToString(this.form.${c.javaFieldId});
             </#if></#list>this.disableSelect${ClassName}Parent = this.form.parentName ? false : true;
             this.dialogFormVisible = true;
           });
         }
       },
       handleParent${ClassName}Tree() {
-        fetch${ClassName}Tree({extId: this.form.id}).then(response => {
-          this.tree${ClassName}SelectData = parseTreeData(response.data);
+        ${className}Service.fetchTree({extId: this.form.id}).then(response => {
+          this.tree${ClassName}SelectData = util.parseTreeData(response.data);
           this.dialog${ClassName}Visible = true;
           setTimeout(()=>{this.$refs['selectParent${ClassName}Tree'].setCurrentKey(this.form.parentId ? this.form.parentId : null);}, 100)
         })
@@ -320,7 +323,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          remove${ClassName}(row.id).then(() => {
+          ${className}Service.remove(row.id).then(() => {
             this.getList();
           })
         })
@@ -329,7 +332,7 @@
         const set = this.$refs;
         set['form'].validate(valid => {
           if (valid) {
-            save${ClassName}(this.form).then(() => {
+            ${className}Service.save(this.form).then(() => {
               this.getList()
               this.cancel()
             })

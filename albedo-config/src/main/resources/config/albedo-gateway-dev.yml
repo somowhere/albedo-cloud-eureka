@@ -36,7 +36,10 @@ spring:
           uri: lb://albedo-gen
           predicates:
             - Path=/gen/**
-
+        - id: albedo-quartz
+          uri: lb://albedo-quartz
+          predicates:
+            - Path=/quartz/**
 
 security:
   encode:

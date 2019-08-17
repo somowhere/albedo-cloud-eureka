@@ -19,15 +19,14 @@ package com.albedo.java.modules.sys.domain;
 import com.albedo.java.common.core.annotation.DictType;
 import com.albedo.java.common.core.annotation.ExcelField;
 import com.albedo.java.common.persistence.domain.BaseEntity;
-import com.albedo.java.common.persistence.domain.DataEntity;
-import com.albedo.java.common.persistence.domain.GeneralEntity;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * <p>
@@ -42,7 +41,12 @@ import java.util.Date;
 public class LogOperate extends BaseEntity<LogOperate> {
 
 	private static final long serialVersionUID = 1L;
-
+	protected String createdBy;
+	/**
+	 * 创建时间
+	 */
+	@ExcelField(title = "创建时间")
+	protected LocalDateTime createdDate;
 	/**
 	 * 编号
 	 */
@@ -77,7 +81,6 @@ public class LogOperate extends BaseEntity<LogOperate> {
 	 */
 	@ExcelField(title = "操作IP")
 	private String ipAddress;
-
 	/**
 	 * 登录地址
 	 */
@@ -93,7 +96,6 @@ public class LogOperate extends BaseEntity<LogOperate> {
 	 */
 	@ExcelField(title = "浏览器类型")
 	private String browser;
-
 	/**
 	 * 操作系统
 	 */
@@ -119,27 +121,16 @@ public class LogOperate extends BaseEntity<LogOperate> {
 	 */
 	@ExcelField(title = "执行时间")
 	private Long time;
-
 	/**
 	 * 异常信息
 	 */
 	@ExcelField(title = "异常信息")
 	private String exception;
-
 	/**
 	 * 服务ID
 	 */
 	@ExcelField(title = "服务ID")
 	private String serviceId;
-
-	protected String createdBy;
-
-	/**
-	 * 创建时间
-	 */
-	@ExcelField(title = "创建时间")
-	protected LocalDateTime createdDate;
-
 
 	@Override
 	public Serializable pkVal() {

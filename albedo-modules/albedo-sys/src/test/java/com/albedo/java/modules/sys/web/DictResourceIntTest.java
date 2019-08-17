@@ -8,7 +8,6 @@ import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.service.DictService;
 import com.albedo.java.modules.sys.vo.DictDataVo;
-import com.albedo.java.modules.sys.web.DictResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DictResourceIntTest {
 
 
-	private String DEFAULT_API_URL;
-
 	private static final String DEFAULT_ANOTHER_NAME = "ANOTHER_NAME";
 	private static final String DEFAULT_NAME = "NAME1";
 	private static final String UPDATED_NAME = "NAME2";
@@ -62,8 +59,7 @@ public class DictResourceIntTest {
 	private static final String UPDATED_REMARK = "REMARK2";
 	private static final String DEFAULT_DESCRIPTION = "DESCRIPTION1";
 	private static final String UPDATED_DESCRIPTION = "DESCRIPTION2";
-
-
+	private String DEFAULT_API_URL;
 	@Autowired
 	private DictService dictService;
 

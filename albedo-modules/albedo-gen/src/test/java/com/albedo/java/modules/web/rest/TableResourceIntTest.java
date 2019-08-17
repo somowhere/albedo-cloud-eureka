@@ -34,40 +34,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TableResourceIntTest {
 
 
-	private String DEFAULT_API_URL;
-
 	private static final String DEFAULT_ANOTHER_USERNAME = "johndoeddd";
 	private static final String DEFAULT_USERNAME = "johndoe";
 	private static final String UPDATED_USERNAME = "jhipster";
-
 	private static final String DEFAULT_PASSWORD = "passjohndoe";
 	private static final String UPDATED_PASSWORD = "passjhipster";
-
 	private static final String DEFAULT_PHONE = "13258812456";
 	private static final String UPDATED_PHONE = "13222222222";
-
 	private static final String DEFAULT_ANOTHER_EMAIL = "23423432@localhost";
 	private static final String DEFAULT_EMAIL = "johndoe@localhost";
 	private static final String UPDATED_EMAIL = "jhipster@localhost";
-
-
 	private static final String DEFAULT_QQOPENID = "QQOPENID1";
 	private static final String UPDATED_QQOPENID = "QQOPENID2";
 	private static final String DEFAULT_LOCKFLAG = CommonConstants.STR_YES;
 	private static final String UPDATED_LOCKFLAG = CommonConstants.STR_NO;
-
-
+	TableDataVo anotherTable = new TableDataVo();
+	private String DEFAULT_API_URL;
 	@Autowired
 	private TableServiceImpl tableServiceImpl;
-
 	private MockMvc restTableMockMvc;
 	@Autowired
 	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 	@Autowired
 	private GlobalExceptionHandler globalExceptionHandler;
-
 	private TableDataVo table;
-	TableDataVo anotherTable = new TableDataVo();
 
 	@BeforeEach
 	public void setup() {

@@ -1,15 +1,8 @@
 package com.albedo.java.common.core.config;
 
 import com.albedo.java.common.core.util.SpringContextHolder;
-import com.albedo.java.common.core.util.StringUtil;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.InputStream;
-import java.util.Map;
 
 /**
  * 系统配置类
@@ -21,13 +14,6 @@ public class ApplicationConfig {
 
 	private static Environment environment;
 
-	public static Environment getEnvironment() {
-		if(environment == null){
-			environment = SpringContextHolder.getBean(Environment.class);
-		}
-		return environment;
-	}
-
 	/**
 	 * 将构造函数私有化，不能new实例
 	 */
@@ -35,6 +21,12 @@ public class ApplicationConfig {
 
 	}
 
+	public static Environment getEnvironment() {
+		if (environment == null) {
+			environment = SpringContextHolder.getBean(Environment.class);
+		}
+		return environment;
+	}
 
 	/**
 	 * 获取配置信息的静态方法。

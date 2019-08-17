@@ -18,7 +18,6 @@ package com.albedo.java.common.core.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.albedo.java.common.core.config.ApplicationConfig;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.Validate;
@@ -147,9 +146,9 @@ public class ClassUtil extends org.springframework.util.ClassUtils {
 			} catch (Exception e) {
 				// logger.debug(e.getMessage());
 			}
-			if(temp!=null && !(temp.getClass().getName().equals(Object.class.getName()) )){
+			if (temp != null && !(temp.getClass().getName().equals(Object.class.getName()))) {
 				temp = temp.getSuperclass();
-			}else{
+			} else {
 				break;
 			}
 		}

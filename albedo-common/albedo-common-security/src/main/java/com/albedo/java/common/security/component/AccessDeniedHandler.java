@@ -23,13 +23,12 @@ package com.albedo.java.common.security.component;
 
 import cn.hutool.http.HttpStatus;
 import com.albedo.java.common.core.constant.CommonConstants;
-import com.albedo.java.common.core.exception.PigDeniedException;
+import com.albedo.java.common.core.exception.AccessDeniedException;
 import com.albedo.java.common.core.util.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
@@ -57,11 +56,11 @@ public class AccessDeniedHandler extends OAuth2AccessDeniedHandler {
 	 */
 	@Override
 	@SneakyThrows
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) {
+	public void handle(HttpServletRequest request, HttpServletResponse response, org.springframework.security.access.AccessDeniedException authException) {
 		log.info("授权失败，禁止访问 {}", request.getRequestURI());
 		response.setCharacterEncoding(CommonConstants.UTF8);
 		response.setContentType(CommonConstants.CONTENT_TYPE);
-		R<String> result = new R<>(new PigDeniedException("授权失败，禁止访问"));
+		R<String> result = new R<>(new AccessDeniedException("授权失败，禁止访问"));
 		response.setStatus(HttpStatus.HTTP_FORBIDDEN);
 		PrintWriter printWriter = response.getWriter();
 		printWriter.append(objectMapper.writeValueAsString(result));

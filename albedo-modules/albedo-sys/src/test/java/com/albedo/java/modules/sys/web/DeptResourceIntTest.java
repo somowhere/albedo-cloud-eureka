@@ -7,7 +7,6 @@ import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.Dept;
 import com.albedo.java.modules.sys.service.DeptService;
 import com.albedo.java.modules.sys.vo.DeptDataVo;
-import com.albedo.java.modules.sys.web.DeptResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DeptResourceIntTest {
 
 
-	private String DEFAULT_API_URL;
-
 	private static final String DEFAULT_ANOTHER_NAME = "ANOTHER_NAME";
 	private static final String DEFAULT_NAME = "NAME1";
 	private static final String UPDATED_NAME = "NAME2";
@@ -50,8 +47,7 @@ public class DeptResourceIntTest {
 	private static final Integer UPDATED_SORT = 20;
 	private static final String DEFAULT_DESCRIPTION = "DESCRIPTION1";
 	private static final String UPDATED_DESCRIPTION = "DESCRIPTION2";
-
-
+	private String DEFAULT_API_URL;
 	@Autowired
 	private DeptService deptService;
 

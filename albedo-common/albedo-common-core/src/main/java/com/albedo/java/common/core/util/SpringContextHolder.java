@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, somowhere (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, somewhere (somewhere0813@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package com.albedo.java.common.core.util;
 
+import cn.hutool.core.util.ArrayUtil;
+import com.albedo.java.common.core.constant.CommonConstants;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
@@ -23,10 +25,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 /**
- * @author somowhere
+ * @author somewhere
  * @date 2019/2/1
  * Spring 工具类
  */
@@ -36,6 +39,22 @@ import org.springframework.stereotype.Service;
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
 	private static ApplicationContext applicationContext = null;
+	private static Environment environment;
+
+	public static Environment getEnvironment() {
+		if (environment == null)
+			environment = SpringContextHolder.getBean(Environment.class);
+		return environment;
+	}
+
+	public static boolean isDevelopment() {
+		return isDevelopment(getEnvironment());
+	}
+
+	public static boolean isDevelopment(Environment environment) {
+		return ArrayUtil.contains(environment.getActiveProfiles(), CommonConstants.SPRING_PROFILE_DEVELOPMENT);
+	}
+
 
 	/**
 	 * 取得存储在静态变量中的ApplicationContext.

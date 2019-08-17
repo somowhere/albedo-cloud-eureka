@@ -17,10 +17,8 @@
 package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.common.persistence.service.BaseService;
-import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.sys.domain.LogOperate;
 import com.albedo.java.modules.sys.repository.LogOperateRepository;
-import com.albedo.java.modules.sys.vo.LogDataVo;
 
 /**
  * <p>

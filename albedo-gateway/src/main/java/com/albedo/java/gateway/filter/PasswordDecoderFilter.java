@@ -52,10 +52,9 @@ import java.util.Map;
 public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 	private static final String PASSWORD = "password";
 	private static final String KEY_ALGORITHM = "AES";
+	private final FilterIgnoreProperties filterIgnoreProperties;
 	@Value("${security.encode.key:1234567812345678}")
 	private String encodeKey;
-
-	private final FilterIgnoreProperties filterIgnoreProperties;
 
 	public PasswordDecoderFilter(FilterIgnoreProperties filterIgnoreProperties) {
 		this.filterIgnoreProperties = filterIgnoreProperties;

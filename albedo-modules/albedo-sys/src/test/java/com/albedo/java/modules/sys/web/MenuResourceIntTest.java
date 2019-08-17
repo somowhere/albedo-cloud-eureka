@@ -8,7 +8,6 @@ import com.albedo.java.modules.TestUtil;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.service.MenuService;
 import com.albedo.java.modules.sys.vo.MenuDataVo;
-import com.albedo.java.modules.sys.web.MenuResource;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MenuResourceIntTest {
 
 
-	private String DEFAULT_API_URL;
-
 	private static final String DEFAULT_ANOTHER_NAME = "ANOTHER_NAME";
 	private static final String DEFAULT_NAME = "NAME1";
 	private static final String UPDATED_NAME = "NAME2";
@@ -68,8 +65,7 @@ public class MenuResourceIntTest {
 	private static final String UPDATED_PATH = "PATH2";
 	private static final String DEFAULT_DESCRIPTION = "DESCRIPTION1";
 	private static final String UPDATED_DESCRIPTION = "DESCRIPTION2";
-
-
+	private String DEFAULT_API_URL;
 	@Autowired
 	private MenuService menuService;
 

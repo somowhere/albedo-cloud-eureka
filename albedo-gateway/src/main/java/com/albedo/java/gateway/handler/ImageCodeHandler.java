@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
+public class  	ImageCodeHandler implements HandlerFunction<ServerResponse> {
 	private final Producer producer;
 	private final RedisTemplate redisTemplate;
 

@@ -30,7 +30,7 @@ import java.net.InetAddress;
 /**
  * @author somowhere
  * @date 2018年06月21日
- * 用户统一管理系统
+ * 代码生成系统
  */
 @EnablePigResourceServer
 @EnablePigFeignClients

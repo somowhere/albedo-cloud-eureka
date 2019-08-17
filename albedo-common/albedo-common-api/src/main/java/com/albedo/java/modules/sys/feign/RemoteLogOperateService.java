@@ -35,8 +35,8 @@ public interface RemoteLogOperateService {
 	/**
 	 * 保存日志
 	 *
-	 * @param logOperate  日志实体
-	 * @param from 内部调用标志
+	 * @param logOperate 日志实体
+	 * @param from       内部调用标志
 	 * @return succes、false
 	 */
 	@PostMapping("/log/")

@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 @RefreshScope
 public class ApplicationProperties {
 
+	private final CorsConfiguration cors = new CorsConfiguration();
 	private String defaultView;
 	private String name = "albedo";
 	private String jedisKeyPrefix = "";
@@ -28,9 +29,6 @@ public class ApplicationProperties {
 	private Boolean cluster = false;
 	private String staticFileDirectory = "";
 	private String logPath = ".logs/";
-
-
-	private final CorsConfiguration cors = new CorsConfiguration();
 
 
 //    public String getStaticUrlPath(String strs) {

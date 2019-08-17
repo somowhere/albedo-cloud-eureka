@@ -13,9 +13,7 @@ import com.albedo.java.modules.gen.domain.vo.TableDataVo;
 import com.albedo.java.modules.gen.domain.vo.TableFormVo;
 import com.albedo.java.modules.gen.service.TableService;
 import com.albedo.java.modules.gen.service.impl.TableServiceImpl;
-
 import com.google.common.collect.Lists;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

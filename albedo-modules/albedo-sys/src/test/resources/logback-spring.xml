@@ -16,7 +16,8 @@
   -->
 
 <configuration debug="false" scan="false">
-	<springProperty scope="context" name="application.logPath" source="application.logPath" defaultValue="target/.logOperate"/>
+	<springProperty scope="context" name="application.logPath" source="application.logPath"
+					defaultValue="target/.logOperate"/>
 	<springProperty scope="context" name="spring.application.name" source="spring.application.name" defaultValue=""/>
 	<property name="logOperate.path" value="${application.logPath}/${spring.application.name}"/>
 	<!-- 彩色日志格式 -->

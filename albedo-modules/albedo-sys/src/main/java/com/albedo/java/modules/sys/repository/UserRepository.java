@@ -18,7 +18,7 @@ package com.albedo.java.modules.sys.repository;
 
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.modules.sys.domain.User;
-import com.albedo.java.modules.sys.vo.UserVo;
+import com.albedo.java.modules.sys.domain.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
@@ -40,7 +40,7 @@ public interface UserRepository extends BaseRepository<User> {
 	 * @param username 用户名
 	 * @return userVo
 	 */
-	com.albedo.java.modules.sys.vo.UserVo getUserVoByUsername(String username);
+	UserVo getUserVoByUsername(String username);
 
 	/**
 	 * 分页查询用户信息（含角色）
@@ -57,5 +57,5 @@ public interface UserRepository extends BaseRepository<User> {
 	 * @param id 用户ID
 	 * @return userVo
 	 */
-	com.albedo.java.modules.sys.vo.UserVo getUserVoById(String id);
+	UserVo getUserVoById(String id);
 }

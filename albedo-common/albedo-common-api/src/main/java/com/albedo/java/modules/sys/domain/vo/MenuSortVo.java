@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019-2020, somowhere (somewhere0813@gmail.com).
+ *  Copyright (c) 2019-2020, somewhere (somewhere0813@gmail.com).
  *  <p>
  *  Licensed under the GNU Lesser General Public License 3.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,36 +14,31 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
-import com.albedo.java.modules.sys.domain.User;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * @author somowhere
- * @date 2019/2/1
  * <p>
- * commit('SET_ROLES', data)
- * commit('SET_NAME', data)
- * commit('SET_AVATAR', data)
- * commit('SET_INTRODUCTION', data)
- * commit('SET_PERMISSIONS', data)
+ * 菜单序号
+ * </p>
+ *
+ * @author somewhere
+ * @since 2019/2/1
  */
 @Data
-public class UserInfo implements Serializable {
-	/**
-	 * 用户基本信息
-	 */
-	private User user;
-	/**
-	 * 权限标识集合
-	 */
-	private String[] permissions;
+public class MenuSortVo implements Serializable {
 
-	/**
-	 * 角色集合
-	 */
-	private String[] roles;
+	private static final long serialVersionUID = 1L;
+
+	/*** id */
+	@NotEmpty
+	protected String id;
+	/*** 序号 */
+	@NotNull
+	protected Integer sort;
 }

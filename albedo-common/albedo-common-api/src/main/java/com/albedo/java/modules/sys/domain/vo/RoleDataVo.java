@@ -14,54 +14,56 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
 import com.albedo.java.common.core.annotation.DictType;
-import com.albedo.java.common.core.vo.TreeEntityVo;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.albedo.java.common.core.vo.DataEntityVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
- * <p>
- * 字典表
- * </p>
- *
  * @author somowhere
- * @since 2019/2/1
+ * @date 2019/2/1
+ * 角色Dto
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictDataVo extends TreeEntityVo {
+public class RoleDataVo extends DataEntityVo<String> {
 
-	public static final String F_VAL = "val";
-	public static final String F_CODE = "code";
-	public static final String F_SHOW = "show";
-	public static final String F_SQL_SHOW = "show";
-	public static final String CACHE_GET_DICT_ALL = "getDictAll";
-	public static final String CACHE_DICT_DETAILS = "dict_details";
-	private static final long serialVersionUID = 1L;
+
 	/**
-	 * 数据值
+	 * 锁定标记
 	 */
-//	@NotBlank(message = "字典项数据值不能为空")
-	private String val;
-	/**
-	 * 类型
-	 */
-	@NotBlank(message = "字典项数据类型不能为空")
-	private String code;
-	@NotNull
-	@TableField(F_SQL_SHOW)
 	@DictType("sys_flag")
-	private Integer show = 1;
+	@NotBlank(message = "锁定标记 不能为空")
+	private String available;
+
 	/**
-	 * 备注信息
+	 * 数据权限 1全部 2所在机构及以下数据  3 所在机构数据  4仅本人数据 5 按明细设置
 	 */
+	@DictType("sys_data_scope")
+	@NotBlank(message = "数据权限 不能为空")
+	private String dataScope;
+	@NotBlank(message = "角色名称 不能为空")
+	private String name;
+
+	@NotBlank(message = "角色标识 不能为空")
+	private String code;
+
+	@NotBlank(message = "角色描述 不能为空")
 	private String remark;
 
-
+	/**
+	 * 角色ID
+	 */
+	@NotNull
+	private List<String> menuIdList;
+	/**
+	 * 部门ID
+	 */
+	private List<String> deptIdList;
 }

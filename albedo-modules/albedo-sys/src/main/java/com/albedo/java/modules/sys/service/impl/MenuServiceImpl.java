@@ -27,13 +27,10 @@ import com.albedo.java.common.core.vo.TreeUtil;
 import com.albedo.java.common.persistence.service.impl.TreeVoServiceImpl;
 import com.albedo.java.modules.sys.domain.Menu;
 import com.albedo.java.modules.sys.domain.RoleMenu;
+import com.albedo.java.modules.sys.domain.vo.*;
 import com.albedo.java.modules.sys.repository.MenuRepository;
 import com.albedo.java.modules.sys.repository.RoleMenuRepository;
 import com.albedo.java.modules.sys.service.MenuService;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-import com.albedo.java.modules.sys.vo.MenuDataVo;
-import com.albedo.java.modules.sys.vo.MenuTree;
-import com.albedo.java.modules.sys.vo.MenuVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
@@ -237,5 +234,18 @@ public class MenuServiceImpl extends
 				return node;
 			}).collect(Collectors.toList());
 		return TreeUtil.buildByLoop(treeList, Menu.ROOT);
+	}
+	@Override
+	@CacheEvict(value = "menu_details", allEntries = true)
+	public void sortUpdate(MenuDataSortVo menuDataSortVo) {
+
+		menuDataSortVo.getMenuSortVoList().forEach(menuSortVo -> {
+			Menu menu = repository.selectById(menuSortVo.getId());
+			if (menu != null) {
+				menu.setSort(menuSortVo.getSort());
+				repository.updateById(menu);
+			}
+		});
+
 	}
 }

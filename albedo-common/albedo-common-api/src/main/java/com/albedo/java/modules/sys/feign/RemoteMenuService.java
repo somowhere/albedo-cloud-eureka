@@ -5,7 +5,7 @@ import com.albedo.java.common.core.constant.ServiceNameConstants;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.feign.factory.RemoteUserServiceFallbackFactory;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.domain.vo.GenSchemeDataVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

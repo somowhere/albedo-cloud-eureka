@@ -14,23 +14,36 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
-import com.albedo.java.common.core.vo.TreeEntityVo;
+import com.albedo.java.modules.sys.domain.User;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
- * <p>
- * 部门管理
- * </p>
- *
  * @author somowhere
- * @since 2019/2/1
+ * @date 2019/2/1
+ * <p>
+ * commit('SET_ROLES', data)
+ * commit('SET_NAME', data)
+ * commit('SET_AVATAR', data)
+ * commit('SET_INTRODUCTION', data)
+ * commit('SET_PERMISSIONS', data)
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DeptDataVo extends TreeEntityVo {
+public class UserInfo implements Serializable {
+	/**
+	 * 用户基本信息
+	 */
+	private User user;
+	/**
+	 * 权限标识集合
+	 */
+	private String[] permissions;
 
-
+	/**
+	 * 角色集合
+	 */
+	private String[] roles;
 }

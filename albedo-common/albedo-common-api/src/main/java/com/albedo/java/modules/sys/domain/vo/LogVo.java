@@ -14,30 +14,21 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
+import com.albedo.java.modules.sys.domain.LogOperate;
 import lombok.Data;
 
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
 
 /**
  * @author somowhere
  * @date 2019/2/1
  */
 @Data
-public class ImageCode implements Serializable {
-	private String code;
+public class LogVo implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private LocalDateTime expireTime;
-
-	private BufferedImage image;
-
-	public ImageCode(BufferedImage image, String sRand, int defaultImageExpire) {
-		this.image = image;
-		this.code = sRand;
-		this.expireTime = LocalDateTime.now().plusSeconds(defaultImageExpire);
-	}
+	private LogOperate logOperate;
+	private String username;
 }

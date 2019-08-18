@@ -14,40 +14,56 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.modules.sys.domain.vo;
 
-import com.albedo.java.modules.sys.domain.DeptRelation;
-import com.albedo.java.modules.sys.domain.vo.DeptDataVo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * <p>
- * 服务类
- * </p>
- *
  * @author somowhere
- * @since 2019/2/1
+ * @date 2019/2/1
  */
-public interface DeptRelationService extends IService<DeptRelation> {
+@Data
+public class UserSearchVo implements Serializable {
+
+	public static final String F_USERNAME = "username";
+	public static final String F_EMAIL = "email";
+	/**
+	 * 用户名
+	 */
+	private String username;
 
 	/**
-	 * 新建部门关系
-	 *
-	 * @param deptDataVo 部门
+	 * 锁定标记
 	 */
-	void saveDeptRelation(DeptDataVo deptDataVo);
+	private String available;
 
 	/**
-	 * 通过ID删除部门关系
-	 *
-	 * @param id
+	 * 邮箱
 	 */
-	void removeDeptRelationById(String id);
+	private String email;
+	/**
+	 * 电话
+	 */
+	private String phone;
+	/**
+	 * 头像
+	 */
+	private String avatar;
 
 	/**
-	 * 更新部门关系
-	 *
-	 * @param relation
+	 * 部门ID
 	 */
-	void updateDeptRelation(DeptRelation relation);
+	private String deptId;
+
+	/**
+	 * 微信openId
+	 */
+	private String wxOpenId;
+
+	/**
+	 * QQ openId
+	 */
+	private String qqOpenId;
 }

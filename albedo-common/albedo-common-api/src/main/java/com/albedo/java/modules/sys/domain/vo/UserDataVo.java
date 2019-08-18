@@ -14,79 +14,83 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
 import com.albedo.java.common.core.vo.DataEntityVo;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
- * <p>
- * 日志表
- * </p>
- *
  * @author somowhere
- * @since 2019/2/1
+ * @date 2019/2/1
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LogDataVo extends DataEntityVo<Long> {
+public class UserDataVo extends DataEntityVo<String> {
 
-	private static final long serialVersionUID = 1L;
+	public static final String F_USERNAME = "username";
+	public static final String F_EMAIL = "email";
+	/**
+	 * 用户名
+	 */
+	@NotEmpty
+	private String username;
 
+	private String password;
 	/**
-	 * 编号
+	 * 随机盐
 	 */
-	@TableId(value = "id", type = IdType.AUTO)
-	private Long id;
-	/**
-	 * 日志类型
-	 */
-	@NotBlank(message = "日志类型不能为空")
-	private String type;
-	/**
-	 * 日志标题
-	 */
-	@NotBlank(message = "日志标题不能为空")
-	private String title;
-	/**
-	 * 操作IP地址
-	 */
-	private String remoteAddr;
-	/**
-	 * 用户代理
-	 */
-	private String userAgent;
-	/**
-	 * 请求URI
-	 */
-	private String requestUri;
-	/**
-	 * 操作方式
-	 */
-	private String method;
-	/**
-	 * 操作提交的数据
-	 */
-	private String params;
-	/**
-	 * 执行时间
-	 */
-	private Long time;
+	@JsonIgnore
+	private String salt;
 
 	/**
-	 * 异常信息
+	 * 锁定标记
 	 */
-	private String exception;
+	@NotEmpty
+
+	private String available;
 
 	/**
-	 * 服务ID
+	 * 邮箱
 	 */
-	private String serviceId;
+	private String email;
+	/**
+	 * 电话
+	 */
+	private String phone;
+	/**
+	 * 头像
+	 */
+	private String avatar;
 
+	/**
+	 * 部门ID
+	 */
+	private String deptId;
 
+	/**
+	 * 微信openId
+	 */
+	private String wxOpenId;
+
+	/**
+	 * QQ openId
+	 */
+	private String qqOpenId;
+
+	/**
+	 * 角色ID
+	 */
+	@NotNull
+	private List<String> roleIdList;
+
+	/**
+	 * 新密码
+	 */
+	private String confirmPassword;
 }

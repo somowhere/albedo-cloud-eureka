@@ -19,7 +19,7 @@ package com.albedo.java.modules.sys.feign.fallback;
 import com.albedo.java.common.core.util.R;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.feign.RemoteMenuService;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
+import com.albedo.java.modules.sys.domain.vo.GenSchemeDataVo;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

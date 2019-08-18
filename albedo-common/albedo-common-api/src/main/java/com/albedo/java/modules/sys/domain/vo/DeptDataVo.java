@@ -14,40 +14,23 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.service;
+package com.albedo.java.modules.sys.domain.vo;
 
-import com.albedo.java.common.persistence.service.DataVoService;
-import com.albedo.java.modules.sys.domain.Role;
-import com.albedo.java.modules.sys.repository.RoleRepository;
-import com.albedo.java.modules.sys.domain.vo.RoleDataVo;
-
-import java.util.List;
+import com.albedo.java.common.core.vo.TreeEntityVo;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 服务类
+ * 部门管理
  * </p>
  *
  * @author somowhere
  * @since 2019/2/1
  */
-public interface RoleService extends DataVoService<RoleRepository, Role, String, RoleDataVo> {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class DeptDataVo extends TreeEntityVo {
 
-	/**
-	 * 通过用户ID，查询角色信息
-	 *
-	 * @param userId
-	 * @return
-	 */
-	List<Role> listRolesByUserId(String userId);
 
-	/**
-	 * 通过角色ID，删除角色
-	 *
-	 * @param ids
-	 * @return
-	 */
-	Boolean removeRoleByIds(List<String> ids);
-
-	void lockOrUnLock(List<String> idList);
 }

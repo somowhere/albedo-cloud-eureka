@@ -14,56 +14,30 @@
  * limitations under the License.
  */
 
-package com.albedo.java.modules.sys.vo;
+package com.albedo.java.modules.sys.domain.vo;
 
 import lombok.Data;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 
 /**
  * @author somowhere
  * @date 2019/2/1
  */
 @Data
-public class UserSearchVo implements Serializable {
+public class ImageCode implements Serializable {
+	private String code;
 
-	public static final String F_USERNAME = "username";
-	public static final String F_EMAIL = "email";
-	/**
-	 * 用户名
-	 */
-	private String username;
+	private LocalDateTime expireTime;
 
-	/**
-	 * 锁定标记
-	 */
-	private String available;
+	private BufferedImage image;
 
-	/**
-	 * 邮箱
-	 */
-	private String email;
-	/**
-	 * 电话
-	 */
-	private String phone;
-	/**
-	 * 头像
-	 */
-	private String avatar;
-
-	/**
-	 * 部门ID
-	 */
-	private String deptId;
-
-	/**
-	 * 微信openId
-	 */
-	private String wxOpenId;
-
-	/**
-	 * QQ openId
-	 */
-	private String qqOpenId;
+	public ImageCode(BufferedImage image, String sRand, int defaultImageExpire) {
+		this.image = image;
+		this.code = sRand;
+		this.expireTime = LocalDateTime.now().plusSeconds(defaultImageExpire);
+	}
 }

@@ -30,11 +30,8 @@ import com.albedo.java.common.security.annotation.Inner;
 import com.albedo.java.common.security.util.SecurityUtil;
 import com.albedo.java.common.web.resource.TreeVoResource;
 import com.albedo.java.modules.sys.domain.Menu;
+import com.albedo.java.modules.sys.domain.vo.*;
 import com.albedo.java.modules.sys.service.MenuService;
-import com.albedo.java.modules.sys.vo.GenSchemeDataVo;
-import com.albedo.java.modules.sys.vo.MenuDataVo;
-import com.albedo.java.modules.sys.vo.MenuTree;
-import com.albedo.java.modules.sys.vo.MenuVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -178,6 +175,20 @@ public class MenuResource extends TreeVoResource<MenuService, MenuDataVo> {
 		}
 
 		service.save(menuDataVo);
+		return R.buildOk("操作成功");
+	}
+
+	/**
+	 * 更新菜单序号
+	 *
+	 * @param menuDataSortVo 菜单信息
+	 * @return success/false
+	 */
+	@Log(value = "菜单管理", businessType = BusinessType.EDIT)
+	@PostMapping("/sort-update")
+	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
+	public R sortUpdate(@Valid @RequestBody MenuDataSortVo menuDataSortVo) {
+		service.sortUpdate(menuDataSortVo);
 		return R.buildOk("操作成功");
 	}
 

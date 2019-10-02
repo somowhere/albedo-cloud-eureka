@@ -165,7 +165,7 @@ public class AlbedoTokenEndpoint {
 		Page result = new Page(MapUtil.getInt(params, CURRENT), MapUtil.getInt(params, SIZE));
 		result.setRecords(list);
 		result.setTotal(Long.valueOf(redisTemplate.keys(PROJECT_OAUTH_ACCESS + "*").size()));
-		return new R(result);
+		return R.buildOkData(result);
 
 	}
 

@@ -21,6 +21,7 @@ import com.albedo.java.common.core.constant.SecurityConstants;
 import com.albedo.java.common.security.component.UserAuthenticationExtendConverter;
 import com.albedo.java.common.security.component.WebResponseExceptionExtendTranslator;
 import com.albedo.java.common.security.service.ClientDetailsService;
+import com.albedo.java.common.security.service.UserDetail;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -97,7 +98,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public TokenEnhancer tokenEnhancer() {
 		return (accessToken, authentication) -> {
 			final Map<String, Object> additionalInfo = new HashMap<>(1);
-			additionalInfo.put("license", SecurityConstants.PROJECT_LICENSE);
+			UserDetail userDetail = (UserDetail) authentication.getUserAuthentication().getPrincipal();
+			additionalInfo.put(SecurityConstants.DETAILS_LICENSE, SecurityConstants.PROJECT_LICENSE);
+			additionalInfo.put(SecurityConstants.DETAILS_USER_ID, userDetail.getId());
+			additionalInfo.put(SecurityConstants.DETAILS_USERNAME, userDetail.getUsername());
+			additionalInfo.put(SecurityConstants.DETAILS_DEPT_ID, userDetail.getDeptId());
 			((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
 			return accessToken;
 		};

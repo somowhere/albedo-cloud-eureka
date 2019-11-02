@@ -74,10 +74,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -88,7 +84,7 @@
 			</activation>
 			<properties>
 				<!-- logOperate configuration -->
-				<logback.loglevel>${profile.dev.logOperate.level}</logback.loglevel>
+				<logback.loglevel>${profile.dev.log.level}</logback.loglevel>
 				<!-- default Spring profiles -->
 				<spring.profiles.active>dev,swagger</spring.profiles.active>
 			</properties>

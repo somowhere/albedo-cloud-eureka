@@ -1,7 +1,7 @@
  <p align="center">
-  <img src="https://img.shields.io/badge/Avue-1.6.0-green.svg" alt="Build Status">
+  <img src="https://img.shields.io/badge/Avue-2.2.0-green.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.9.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.1.RELEASE-blue.svg" alt="Downloads">
  </p>  
  
 **albedo-cloud Microservice Architecture**   

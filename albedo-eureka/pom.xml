@@ -20,7 +20,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.albedo.java</groupId>
-		<artifactId>albedo-cloud</artifactId>
+		<artifactId>albedo-cloud-eureka</artifactId>
 		<version>2.0.1-SNAPSHOT</version>
 	</parent>
 

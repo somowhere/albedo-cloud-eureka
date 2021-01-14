@@ -12,7 +12,7 @@
 	<artifactId>albedo-common-module</artifactId>
 
 	<properties>
-		<poi.version>3.9</poi.version>
+		<poi.version>4.1.2</poi.version>
 	</properties>
 	<dependencies>
 		<!--工具类核心包-->

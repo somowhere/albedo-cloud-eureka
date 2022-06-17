@@ -30,7 +30,7 @@
 	<description>pig 公共工具类核心包</description>
 
 	<properties>
-		<fastjson.version>1.2.31</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 		<swagger.version>1.5.20</swagger.version>
 	</properties>
 	<dependencies>
